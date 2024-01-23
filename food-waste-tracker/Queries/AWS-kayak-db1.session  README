@@ -1,0 +1,13 @@
+AWS-kayak-db1.session.sql is the sql file I used as a workspace to see the live changes I made in the database.
+This includes:
+  -Table Creation
+  -Table Removal
+  -Modifications
+  -Appendices
+  -Descriptions
+  -Comparisons
+  -Insertions
+  -Deletions
+  -Selections
+
+The --@block allows individual queries to be run in the same file

@@ -1,0 +1,16 @@
+name: Front end render tests
+on: [push]
+defaults:
+  run:
+    working-directory: ./food-waste-tracker
+jobs:
+  render-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run render tests
+        run: npm run test

@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "wastewatcherdb-1.cpspsl1vtcl5.us-east-1.rds.amazonaws.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Waste Watcher DB",
+            "username": "KayakDB",
+            "database": "WasteWatcher",
+            "askForPassword": true
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+name: Lint and Format Checking
+on: [push]
+defaults:
+  run:
+    working-directory: ./food-waste-tracker
+jobs:
+  check-src:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+
+      - name: Format source code
+        run: npm run format
+
+      - name: Lint source code
+        run: npm run lint

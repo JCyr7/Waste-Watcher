@@ -1,0 +1,97 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-70.2313031113183, 44.5868532476275, 0]
+      },
+      "properties": {
+        "FID": 1,
+        "NAME": "Collins Cakes & Bakes Inc.",
+        "ADDRESS": "285 Main St",
+        "CITY": "Wilton",
+        "COUNTY": "Franklin",
+        "STATE": "ME",
+        "EXCESSFOOD": 0.5,
+        "EXCESSFO_1": 117,
+        "FEATURE_CL": "Baked Goods Stores",
+        "Phone": " ",
+        "Website": " ",
+        "Class": "Specialty",
+        "ZipCode": "04294"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-69.5979396859417, 44.591444099483, 0]
+      },
+      "properties": {
+        "FID": 2,
+        "NAME": "Lawrence R Hillman",
+        "ADDRESS": "16 Western Ave",
+        "CITY": "Fairfield",
+        "COUNTY": "Somerset",
+        "STATE": "ME",
+        "EXCESSFOOD": 2.03482495,
+        "EXCESSFO_1": 117,
+        "FEATURE_CL": "Baked Goods Stores",
+        "Phone": " ",
+        "Website": " ",
+        "Class": "Specialty",
+        "ZipCode": "04937"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 3,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.2190674003593, 44.5855526999685, 0]
+      },
+      "properties": {
+        "FID": 3,
+        "NAME": "Sullivan Harbor",
+        "ADDRESS": "24 Brooklyn",
+        "CITY": "Franklin",
+        "COUNTY": "Hancock",
+        "STATE": "ME",
+        "EXCESSFOOD": 4.1102451,
+        "EXCESSFO_1": 147,
+        "FEATURE_CL": "Fish and Seafood Merchant Wholesalers",
+        "Phone": " ",
+        "Website": " ",
+        "Class": "Wholesale",
+        "ZipCode": "04634"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 4,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-67.3727190715211, 44.636816640897, 0]
+      },
+      "properties": {
+        "FID": 4,
+        "NAME": "Lt Steu-Mach, LLC",
+        "ADDRESS": "188 Pettegrow Point Rd",
+        "CITY": "Machiasport",
+        "COUNTY": "Washington",
+        "STATE": "ME",
+        "EXCESSFOOD": 2.2,
+        "EXCESSFO_1": 117,
+        "FEATURE_CL": "Fish and Seafood Markets",
+        "Phone": " ",
+        "Website": " ",
+        "Class": "Specialty",
+        "ZipCode": "04655"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "lambda-fxn",
+  "version": "1.0.0",
+  "description": "lambda",
+  "main": "index.js",
+  "scripts": {
+    "node-install": "npm install node@16",
+    "mysql2-install": "npm install mysql2"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "mysql2": "^3.1.2",
+    "node": "^16.19.0"
+  }
+}

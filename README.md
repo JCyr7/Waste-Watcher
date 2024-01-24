@@ -66,7 +66,13 @@ npx expo start
 ### Usage
 Once you've completed all the steps for installation, enter the following command into your terminal to run a local development server
 ```
-npm start
+1. Login to ExpoGo
+```
+npx expo login
+```
+2. Run project using ExpoGo
+```
+npx expo start
 ```
 Next scan the qr code displayed in your terminal and open with Expo Go on a mobile device
 

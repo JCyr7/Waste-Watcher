@@ -74,7 +74,7 @@ npx expo login
 ```
 npx expo start
 ```
-Next scan the qr code displayed in your terminal and open with Expo Go on a mobile device
+Next press "i" to open iOS simulator
 
 ## Contact
 Callen Shaeffer

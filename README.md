@@ -54,14 +54,7 @@ cd food-waste-tracker
 ```
 npm install
 ```
-4. Login to ExpoGo
-```
-npx expo login
-```
-5. Run project using ExpoGo
-```
-npx expo start
-```
+
 
 ### Usage
 Once you've completed all the steps for installation, enter the following command into your terminal to run a local development server

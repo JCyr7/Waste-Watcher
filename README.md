@@ -58,7 +58,7 @@ npm install
 
 ### Usage
 Once you've completed all the steps for installation, enter the following command into your terminal to run a local development server
-```
+
 1. Login to ExpoGo
 ```
 npx expo login

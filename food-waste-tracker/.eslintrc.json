@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "react-native/react-native": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-native", "eslint-plugin-no-inline-styles"],
+  "rules": {
+    // allow .js files to contain JSX code
+    "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx"]}],
+    "no-unused-vars": [1, {}],
+    "react/prop-types": "off",
+    "no-inline-styles/no-inline-styles": [1, {}],
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2
+    // "react-native/no-color-literals": 2,
+    // "react-native/no-raw-text": 2
+  }
+}

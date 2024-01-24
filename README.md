@@ -80,3 +80,7 @@ Next press "i" to open iOS simulator
 Callen Shaeffer
 
 Project Link: https://github.com/callenshaeffer/Waste-Watcher
+
+Site Map: https://www.canva.com/design/DAF2DqKcdIU/r8k-ZiaDVcGwhOBNDxIgVA/edit
+
+User Interface: https://www.canva.com/design/DAF2E-vRQaA/mMkEDYx6u_IHxUedWaO6Yw/edit

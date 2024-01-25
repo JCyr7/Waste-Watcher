@@ -373,6 +373,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16
   },
+  signUpText: {
+    color: COLORS.darkGreen,
+    fontWeight: '600',
+    fontSize: 16
   input: {
     borderRadius: 10,
     borderWidth: 3,

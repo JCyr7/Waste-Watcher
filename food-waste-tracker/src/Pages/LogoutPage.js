@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import {
   StyleSheet,
@@ -158,145 +159,150 @@ export default class LogoutPage extends Component {
     const {navigation} = this.props
     return (
       // Container view
-      <SafeAreaView style={styles.container}>
-        <Image
-          source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
-        />
-        <Text style={styles.title}>Waste Watcher</Text>
-        <Pressable
-          style={({pressed}) => [
-            {
-              backgroundColor: pressed ? COLORS.lightGreen : COLORS.darkGreen
-            },
-            styles.createAccountButton
-          ]}
-          onPress={() => {
-            this.setModalVisible(true)
-          }}>
-          <Text style={styles.createAccountText}>
-            I AM NEW TO WASTE WATCHER
-          </Text>
-        </Pressable>
-        <Text style={styles.signin}>Already have an account?</Text>
-
-        {/* Pressable component for navigating to the login page if user already has an account */}
-        <Pressable
-          onPress={() => navigation.navigate('LoginPage')}
-          style={styles.signinContainer}>
-          <Text style={styles.link}>Sign-In</Text>
-        </Pressable>
-
-        {/* Create account modal */}
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setModalVisible(false)
-            this.toggleCheckbox(false)
-          }}>
-          {/* Pressable component so that when the user taps outside the modal, it closes */}
+      <LinearGradient colors={[COLORS.white, COLORS.lightestGreen ]} style={styles.container}>
+        <SafeAreaView style={styles.container}>
+          <Image
+            source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
+            style={styles.image}
+          />
+          <Text style={styles.title}>Waste Watcher</Text>
+          <Text style={styles.subtitle}>A Food Waste Tracking App</Text>
+          <Text style={styles.signintext}>Sign in</Text>
           <Pressable
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed ? COLORS.lightGreen : COLORS.transparent
+              },
+              styles.createAccountButton
+            ]}
             onPress={() => {
+              this.setModalVisible(true)
+            }}>
+            <Text style={styles.createAccountText}>
+              Dont have an account? <Text style={styles.signUpText}>Sign up</Text>
+            </Text>
+          </Pressable>
+          <Text style={styles.signin}>Already have an account?</Text>
+
+          {/* Pressable component for navigating to the login page if user already has an account */}
+          <Pressable
+            onPress={() => navigation.navigate('LoginPage')}
+            style={styles.signinContainer}>
+            <Text style={styles.link}>Sign-In</Text>
+          </Pressable>
+
+          {/* Create account modal */}
+          <Modal
+            animationType='slide'
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
               this.setModalVisible(false)
               this.toggleCheckbox(false)
-            }}
-            style={styles.pressable}>
-            {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
-            <TouchableWithoutFeedback>
-              <KeyboardAvoidingView behavior='padding' style={styles.modal}>
-                <Text style={styles.createAccount}>Create an Account</Text>
-                <View>
-                  {/* Text input for email */}
-                  <Text style={styles.inputTitle}>Email</Text>
-                  <TextInput
-                    defaultValue={this.state.email}
-                    onChangeText={(emailInput) =>
-                      this.setState({email: emailInput})
-                    }
-                    cursorColor={'black'}
-                    style={styles.input}></TextInput>
-                </View>
-                <View>
-                  {/* Text input for username */}
-                  <Text style={styles.inputTitle}>Username</Text>
-                  <TextInput
-                    defaultValue={this.state.username}
-                    onChangeText={(usernameInput) =>
-                      this.setState({username: usernameInput})
-                    }
-                    cursorColor={'black'}
-                    style={styles.input}></TextInput>
-                </View>
-                <View>
-                  {/* Text input for password */}
-                  <Text style={styles.inputTitle}>Password</Text>
-                  <TextInput
-                    onChangeText={(newText) =>
-                      this.setState({password: newText})
-                    }
-                    cursorColor={'black'}
-                    secureTextEntry
-                    style={styles.input}></TextInput>
-                </View>
-                <View>
-                  {/* Text input for password re-enter */}
-                  <Text style={styles.inputTitle}>Re-Enter Password</Text>
-                  <TextInput
-                    onChangeText={(newText) =>
-                      this.setState({passwordRenter: newText})
-                    }
-                    cursorColor={'black'}
-                    secureTextEntry
-                    style={styles.input}></TextInput>
-                </View>
-                {/* Password requirements */}
-                <View style={styles.passReqsContainer}>
-                  <Text style={styles.passReqLabel}>
-                    Password must contain the following:
-                  </Text>
-                  <Text style={styles.passReq}>8 or more characters</Text>
-                  <Text style={styles.passReq}>1 or more numbers</Text>
-                  <Text style={styles.passReq}>
-                    1 or more uppercase letters
-                  </Text>
-                  <Text style={styles.passReq}>
-                    1 or more lowercase letters
-                  </Text>
-                  <Text style={styles.passReq}>
-                    1 or more special characters (!@#$)
-                  </Text>
-                </View>
-                {/* Checkbox for ensuring user is over 18 */}
-                <BouncyCheckbox
-                  size={22}
-                  style={styles.checkBox}
-                  fillColor={COLORS.lightGreen}
-                  unfillColor='white'
-                  text="I'm at least 18 years old and agree to the Privacy Policy"
-                  innerIconStyle={{borderWidth: 2}}
-                  onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
-                  textStyle={styles.tosText}
-                />
+            }}>
+            {/* Pressable component so that when the user taps outside the modal, it closes */}
+            <Pressable
+              onPress={() => {
+                this.setModalVisible(false)
+                this.toggleCheckbox(false)
+              }}
+              style={styles.pressable}>
+              {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
+              <TouchableWithoutFeedback>
+                <KeyboardAvoidingView behavior='padding' style={styles.modal}>
+                  <Text style={styles.createAccount}>Create an Account</Text>
+                  <View>
+                    {/* Text input for email */}
+                    <Text style={styles.inputTitle}>Email</Text>
+                    <TextInput
+                      defaultValue={this.state.email}
+                      onChangeText={(emailInput) =>
+                        this.setState({email: emailInput})
+                      }
+                      cursorColor={'black'}
+                      style={styles.input}></TextInput>
+                  </View>
+                  <View>
+                    {/* Text input for username */}
+                    <Text style={styles.inputTitle}>Username</Text>
+                    <TextInput
+                      defaultValue={this.state.username}
+                      onChangeText={(usernameInput) =>
+                        this.setState({username: usernameInput})
+                      }
+                      cursorColor={'black'}
+                      style={styles.input}></TextInput>
+                  </View>
+                  <View>
+                    {/* Text input for password */}
+                    <Text style={styles.inputTitle}>Password</Text>
+                    <TextInput
+                      onChangeText={(newText) =>
+                        this.setState({password: newText})
+                      }
+                      cursorColor={'black'}
+                      secureTextEntry
+                      style={styles.input}></TextInput>
+                  </View>
+                  <View>
+                    {/* Text input for password re-enter */}
+                    <Text style={styles.inputTitle}>Re-Enter Password</Text>
+                    <TextInput
+                      onChangeText={(newText) =>
+                        this.setState({passwordRenter: newText})
+                      }
+                      cursorColor={'black'}
+                      secureTextEntry
+                      style={styles.input}></TextInput>
+                  </View>
+                  {/* Password requirements */}
+                  <View style={styles.passReqsContainer}>
+                    <Text style={styles.passReqLabel}>
+                      Password must contain the following:
+                    </Text>
+                    <Text style={styles.passReq}>8 or more characters</Text>
+                    <Text style={styles.passReq}>1 or more numbers</Text>
+                    <Text style={styles.passReq}>
+                      1 or more uppercase letters
+                    </Text>
+                    <Text style={styles.passReq}>
+                      1 or more lowercase letters
+                    </Text>
+                    <Text style={styles.passReq}>
+                      1 or more special characters (!@#$)
+                    </Text>
+                  </View>
+                  {/* Checkbox for ensuring user is over 18 */}
+                  <BouncyCheckbox
+                    size={22}
+                    style={styles.checkBox}
+                    fillColor={COLORS.lightGreen}
+                    unfillColor='white'
+                    text="I'm at least 18 years old and agree to the Privacy Policy"
+                    innerIconStyle={{borderWidth: 2}}
+                    onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                    textStyle={styles.tosText}
+                  />
 
-                <Pressable
-                  // Create account button - executes create account function defined above on press
-                  onPress={() => this.createAccount(navigation)}
-                  style={({pressed}) => [
-                    {
-                      backgroundColor: pressed
-                        ? COLORS.lightGreen
-                        : COLORS.darkGreen
-                    },
-                    styles.submitButton
-                  ]}>
-                  <Text style={styles.submitButtonText}>Join</Text>
-                </Pressable>
-              </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>
-          </Pressable>
-        </Modal>
-      </SafeAreaView>
+                  <Pressable
+                    // Create account button - executes create account function defined above on press
+                    onPress={() => this.createAccount(navigation)}
+                    style={({pressed}) => [
+                      {
+                        backgroundColor: pressed
+                          ? COLORS.lightGreen
+                          : COLORS.darkGreen
+                      },
+                      styles.submitButton
+                    ]}>
+                    <Text style={styles.submitButtonText}>Join</Text>
+                  </Pressable>
+                </KeyboardAvoidingView>
+              </TouchableWithoutFeedback>
+            </Pressable>
+          </Modal>
+        </SafeAreaView>
+      </LinearGradient>
     )
   }
 }
@@ -305,15 +311,32 @@ export default class LogoutPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGreen,
     alignItems: 'center',
-    paddingTop: '50%'
+    paddingTop: 90,
+    paddingHorizontal: 0,
+  },
+  image: {
+    flex: 0.12, // Set flex to 0.4 to make it take 40% of the screen
+    width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
+    aspectRatio: 694 / 238, // Set the aspect ratio based on your image dimensions
   },
   title: {
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: 'bold',
-    paddingTop: '5%',
-    color: COLORS.darkerGray
+    paddingTop: 20,
+    marginBottom: 0,
+    color: COLORS.darkGreen
+  },
+  subtitle:{
+    fontSize: 18,
+    color: COLORS.darkGreen,
+  },
+  signintext: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    paddingTop: 20,
+    marginBottom: 0,
+    color: COLORS.darkGreen
   },
   signin: {
     marginTop: '5%',
@@ -346,7 +369,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   createAccountText: {
-    color: 'white',
+    color: COLORS.darkGreen,
     fontWeight: '600',
     fontSize: 16
   },

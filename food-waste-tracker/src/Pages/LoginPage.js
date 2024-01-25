@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   KeyboardAvoidingView,
   View,
@@ -43,7 +44,7 @@ export default class Login extends Component {
         navigation.navigate('MainPage')
       } else {
         Alert.alert(
-          'Login failed, please enter the correct username and password.'
+          'Incorrect username or password'
         )
       }
     }

@@ -17,12 +17,8 @@ import GoalPopup from '../Popups/GoalPopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import {DATA} from '../Utils/TestData'
-import MeatReduciton from '../WasteReductionTips/MeatReduction'
-import FishReduciton from '../WasteReductionTips/FishReduction'
-import ProduceReduciton from '../WasteReductionTips/ProduceReduction'
-import GrainReduciton from '../WasteReductionTips/GrainReduction'
-import DairyReduciton from '../WasteReductionTips/DairyReduction'
-import GeneralReduciton from '../WasteReductionTips/GeneralReduction'
+import SubmitButton from '../TrackWaste/SubmitButton'
+
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -85,27 +81,32 @@ export default class HomePage extends Component {
       <View style={styles.container}>
         <View style={styles.welcomeContainer}>
           {/* Welcome Header */}
-          <Text style={styles.welcomeText}>Welcome {this.state.userName}</Text>
+          <Text style={styles.welcomeText}>Waste Watcher{this.state.userName}
+          </Text>
           {/* Buttons */}
-          <View style={styles.buttonContainer}>
-            {/* Track Waste */}
+          {/* Weekly Waste Progress Dial */}
+          <Pressable
+              onPress={() => this.openTrackWaste(true)}
+              style={styles.weeklyWasteProgressButton}>
+              <Text style={styles.buttonText}>Weekly Waste</Text>
+            </Pressable>
+
+            {/* Streak Progress Dial */}
             <Pressable
               onPress={() => this.openTrackWaste(true)}
-              style={styles.trackWasteButton}>
-              <Text style={styles.buttonText}>Track Waste</Text>
+              style={styles.streakProgressButton}>
+              <Text style={styles.buttonText}>Streak</Text>
             </Pressable>
 
-            {/* View Waste History */}
-            <ViewWaste data={DATA} />
-
-            {/* Set New Goal */}
+            {/* Goal Progress Dial */}
             <Pressable
               onPress={() => this.openGoal(true)}
-              style={styles.trackWasteButton}>
-              <Text style={styles.buttonText}>View Goals</Text>
+              style={styles.goalsProgressButton}>
+              <Text style={styles.buttonText}>Goals</Text>
             </Pressable>
-          </View>
+           
         </View>
+       
 
         {/* Household info Modal */}
         <Modal
@@ -218,14 +219,16 @@ export default class HomePage extends Component {
 
         {/* Waste Reduction Tips */}
         <View style={styles.tipsContainer}>
-          <Text style={styles.tipsHeader}>Waste Reduction Tips</Text>
+          <Text style={styles.tipsHeader}>Track Waste</Text>
           <View style={styles.linkContainer}>
-            <MeatReduciton />
-            <ProduceReduciton />
-            <GrainReduciton />
-            <FishReduciton />
-            <DairyReduciton />
-            <GeneralReduciton />
+            <form>
+              <select>
+                <option value="produce"></option>
+                <option value="meat"></option>
+                <option value="dairy"></option>
+              </select>
+            </form>
+            <SubmitButton />
           </View>
         </View>
       </View>
@@ -266,7 +269,6 @@ const styles = StyleSheet.create({
     height: '45%',
     borderRadius: 10,
     backgroundColor: COLORS.white,
-    alignItems: 'center',
     shadowOffset: {
       width: -3,
       height: 4
@@ -278,10 +280,10 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     marginTop: '6%',
-    marginBottom: '2%',
+    marginBottom: '0%',
     fontSize: 30,
     color: COLORS.darkGreen,
-    fontWeight: '700',
+    fontWeight: '800',
     textAlign: 'center'
   },
   buttonContainer: {
@@ -291,18 +293,40 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
-  trackWasteButton: {
-    width: '95%',
+  weeklyWasteProgressButton: {
+    width: '25%',
     height: '25%',
-    backgroundColor: COLORS.darkGreen,
-    borderRadius: 10,
+    backgroundColor: "#e2f0c9",
+    borderRadius: 100,
+    marginTop: "5%",
+    marginHorizontal: "40%",
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  streakProgressButton: {
+    width: '25%',
+    height: '25%',
+    backgroundColor: "#e2f0c9",
+    borderRadius: 100,
+    bottom: "0%",
+    left: "10%",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  goalsProgressButton: {
+    width: '25%',
+    height: '25%',
+    backgroundColor: "#e2f0c9",
+    borderRadius: 100,
+    bottom: "25%",
+    left: "65%",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     fontSize: 18,
-    color: COLORS.white,
-    fontWeight: '600'
+    color: COLORS.darkGreen,
+    fontWeight: '800'
   },
   householdInfoHeader: {
     marginTop: '5%',
@@ -359,7 +383,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: "#e2f0c9",
     shadowOffset: {
       width: -3,
       height: 4
@@ -371,14 +395,14 @@ const styles = StyleSheet.create({
   },
   tipsHeader: {
     fontSize: 30,
-    fontWeight: '700',
+    fontWeight: '800',
     color: COLORS.darkGreen,
-    marginTop: '5%'
+    marginTop: '3%'
   },
   linkContainer: {
     width: '85%',
     height: '75%',
-    marginBottom: '7%',
+    marginBottom: '-25%',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap'

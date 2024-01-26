@@ -15,8 +15,10 @@ import {
   Alert
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -32,6 +34,47 @@ export default class LogoutPage extends Component {
       passwordRenter: ''
     }
   }
+  //start of login stuff
+  //Login function: calls api for
+  login = async (navigation) => {
+    try {
+      await AsyncStorage.setItem('username', this.state.username)
+      const value = await AsyncStorage.getItem('username')
+      this.setState({token: value})
+    } catch (err) {
+      console.log(err)
+    } finally {
+      // const userAuthReturn = await this.userAuth()
+      const userAuthReturn = true
+      console.log(userAuthReturn)
+      if (userAuthReturn === true) {
+        navigation.navigate('MainPage')
+      } else {
+        Alert.alert(
+          'Login failed, please enter the correct username and password.'
+        )
+      }
+    }
+  }
+
+  // Method sends requests to lambda to verify user
+  userAuth = async () => {
+    let value
+    await axios({
+      method: 'get',
+      url: 'https://j5htipxzpi.execute-api.us-east-1.amazonaws.com/UserCredentials',
+      params: {
+        username: this.state.username,
+        password: this.state.password
+      }
+    }).then(function (response) {
+      // console.log(response.data)
+      value = response.data
+    })
+    return true
+  }
+
+  //end of login stuff
 
   // Function to set the create account modal state to true or false
   setModalVisible(visible) {
@@ -159,15 +202,78 @@ export default class LogoutPage extends Component {
     const {navigation} = this.props
     return (
       // Container view
-      <LinearGradient colors={[COLORS.white, COLORS.lightestGreen ]} style={styles.container}>
+      <LinearGradient colors={[COLORS.white, COLORS.darkGreen]} style={styles.container}>
         <SafeAreaView style={styles.container}>
           <Image
             source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
             style={styles.image}
           />
+          {/* title */}
           <Text style={styles.title}>Waste Watcher</Text>
           <Text style={styles.subtitle}>A Food Waste Tracking App</Text>
-          <Text style={styles.signintext}>Sign in</Text>
+
+
+            {/* username and password input*/}
+            <TextInput
+              cursorColor={'black'}
+              placeholder='Username'
+              style={styles.userpassinput}
+              onChangeText={(value) => {
+                this.setState({ username: value });
+              }}
+            ></TextInput>
+            <TextInput
+              secureTextEntry
+              cursorColor={'black'}
+              placeholder='Password'
+              style={styles.userpassinput}
+              onChangeText={(value) => {
+                this.setState({ password: value });
+              }}
+            ></TextInput>
+
+
+            {/* login button */}
+            <Pressable
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed
+                    ? COLORS.lightGreen
+                    : COLORS.transparent
+                },
+                styles.loginButton
+              ]}
+              onPress={() => this.login(navigation)}>
+              <Text style={styles.loginText}>Log In</Text>
+            </Pressable>
+
+
+            {/* forgot password button */}
+            <Pressable
+              onPress={() => navigation.navigate('ForgotPassword')}
+              style={styles.forgotPasswordContainer}>
+              <Text style={styles.createAccountText}>
+              Forgot your login details? <Text style={styles.boldtext}>Get help signing in.</Text>
+            </Text>
+            </Pressable>
+
+
+            {/* alt logins */}
+            <View style={styles.row}>
+              <Pressable style={styles.altloginButton}>
+                <MaterialCommunityIcons
+                  name='facebook'
+                  size={30}
+                  color='blue'
+                />
+              </Pressable>
+              <Pressable style={styles.altloginButton}>
+                <Ionicons name='logo-google' size={29} color='black' />
+              </Pressable>
+            </View>
+
+
+          {/* sign up button */}  
           <Pressable
             style={({pressed}) => [
               {
@@ -179,19 +285,16 @@ export default class LogoutPage extends Component {
               this.setModalVisible(true)
             }}>
             <Text style={styles.createAccountText}>
-              Dont have an account? <Text style={styles.signUpText}>Sign up</Text>
+              Dont have an account? <Text style={styles.boldtext}>Sign up</Text>
             </Text>
           </Pressable>
-          <Text style={styles.signin}>Already have an account?</Text>
 
-          {/* Pressable component for navigating to the login page if user already has an account */}
-          <Pressable
-            onPress={() => navigation.navigate('LoginPage')}
-            style={styles.signinContainer}>
-            <Text style={styles.link}>Sign-In</Text>
-          </Pressable>
 
-          {/* Create account modal */}
+
+
+
+
+          {/* Create account popup */}
           <Modal
             animationType='slide'
             transparent={true}
@@ -309,44 +412,88 @@ export default class LogoutPage extends Component {
 
 // Styles
 const styles = StyleSheet.create({
+
+  //container
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 90,
+    paddingTop: 0,
     paddingHorizontal: 0,
+    margin: 0,
+    width: '100%',
   },
+
+  //headings
   image: {
-    flex: 0.12, // Set flex to 0.4 to make it take 40% of the screen
+    flex: .26, // Set flex to 0.4 to make it take 40% of the screen
+    marginTop: 20,
     width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
+    marginBottom: 40,
     aspectRatio: 694 / 238, // Set the aspect ratio based on your image dimensions
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    paddingTop: 20,
+    fontSize: 32,
+    paddingTop: 0,
     marginBottom: 0,
-    color: COLORS.darkGreen
+    color: COLORS.darkGreen,
+    fontWeight: 'bold'
   },
   subtitle:{
-    fontSize: 18,
+    fontSize: 24,
     color: COLORS.darkGreen,
+    marginBottom: 20,
   },
-  signintext: {
-    fontSize: 28,
+
+  //log in
+  userpassinput: {
+    height: 50,
+    width: '85%',
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    margin: 8
+  },
+  loginButton: {
+    height: 50,
+    width: '85%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderColor: COLORS.whitetransparent,
+    borderWidth: 3,
+    borderRadius: 7,
+    margin: 8
+  },
+  loginText: {
+    color: 'white'
+  },
+
+  //forgot password
+  forgotPasswordContainer: {
+    backgroundColor: COLORS.transparent,
+  },
+  createAccountText: {
+    color: 'white',
+  },
+  boldtext:{
     fontWeight: 'bold',
-    paddingTop: 20,
-    marginBottom: 0,
-    color: COLORS.darkGreen
   },
-  signin: {
-    marginTop: '5%',
-    fontSize: 18
+
+  pressable: {
+    height: '100%',
+    width: '100%'
   },
-  link: {
-    textDecorationLine: 'underline',
-    color: 'blue',
-    fontSize: 18
+
+  row: {
+    flexDirection: 'row',
+    margin: 10
   },
+  
+  altloginButton: {
+    width: 50,
+    borderRadius: 5,
+    alignItems: 'center'
+  },
+
+  // create account modal popup
   modal: {
     height: '80%',
     marginTop: 'auto',
@@ -364,19 +511,8 @@ const styles = StyleSheet.create({
     width: '70%',
     height: '8%',
     borderRadius: 10,
-    marginTop: '5%',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  createAccountText: {
-    color: COLORS.darkGreen,
-    fontWeight: '600',
-    fontSize: 16
-  },
-  signUpText: {
-    color: COLORS.darkGreen,
-    fontWeight: '600',
-    fontSize: 16
   },
   input: {
     borderRadius: 10,
@@ -402,11 +538,6 @@ const styles = StyleSheet.create({
     width: '20%',
     justifyContent: 'center',
     alignSelf: 'center',
-    alignItems: 'center'
-  },
-  signinContainer: {
-    height: '7%',
-    width: '20%',
     alignItems: 'center'
   },
   submitButtonText: {

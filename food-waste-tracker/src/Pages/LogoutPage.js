@@ -197,6 +197,8 @@ export default class LogoutPage extends Component {
     }
   }
 
+
+  //html (data being displayed)
   render() {
     // Declare constant navigation as props from parent component - enables navigation between stack pages
     const {navigation} = this.props

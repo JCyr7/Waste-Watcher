@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import {
   StyleSheet,
@@ -14,8 +15,10 @@ import {
   Alert
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import {MaterialCommunityIcons} from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -31,6 +34,47 @@ export default class LogoutPage extends Component {
       passwordRenter: ''
     }
   }
+  //start of login stuff
+  //Login function: calls api for
+  login = async (navigation) => {
+    try {
+      await AsyncStorage.setItem('username', this.state.username)
+      const value = await AsyncStorage.getItem('username')
+      this.setState({token: value})
+    } catch (err) {
+      console.log(err)
+    } finally {
+      // const userAuthReturn = await this.userAuth()
+      const userAuthReturn = true
+      console.log(userAuthReturn)
+      if (userAuthReturn === true) {
+        navigation.navigate('MainPage')
+      } else {
+        Alert.alert(
+          'Login failed, please enter the correct username and password.'
+        )
+      }
+    }
+  }
+
+  // Method sends requests to lambda to verify user
+  userAuth = async () => {
+    let value
+    await axios({
+      method: 'get',
+      url: 'https://j5htipxzpi.execute-api.us-east-1.amazonaws.com/UserCredentials',
+      params: {
+        username: this.state.username,
+        password: this.state.password
+      }
+    }).then(function (response) {
+      // console.log(response.data)
+      value = response.data
+    })
+    return true
+  }
+
+  //end of login stuff
 
   // Function to set the create account modal state to true or false
   setModalVisible(visible) {
@@ -158,172 +202,319 @@ export default class LogoutPage extends Component {
     const {navigation} = this.props
     return (
       // Container view
-      <SafeAreaView style={styles.container}>
-        <Image
-          source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
-        />
-        <Text style={styles.title}>Waste Watcher</Text>
-        <Pressable
-          style={({pressed}) => [
-            {
-              backgroundColor: pressed ? COLORS.lightGreen : COLORS.darkGreen
-            },
-            styles.createAccountButton
-          ]}
-          onPress={() => {
-            this.setModalVisible(true)
-          }}>
-          <Text style={styles.createAccountText}>
-            I AM NEW TO WASTE WATCHER
-          </Text>
-        </Pressable>
-        <Text style={styles.signin}>Already have an account?</Text>
+      <LinearGradient 
+        colors={[COLORS.green, COLORS.blue]} style={styles.container}
+        start={{x: 0, y: 0.2}}
+        end={{x: 1, y: 1}}>
+        <SafeAreaView style={styles.container}>
+          <Image
+            source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
+            style={styles.image}
+          />
+          {/* title */}
+          <Text style={styles.title}>Waste</Text>
+          <Text style={styles.title}>Watcher</Text>
+          <Text style={styles.subtitle}>Food Waste Tracker</Text>
 
-        {/* Pressable component for navigating to the login page if user already has an account */}
-        <Pressable
-          onPress={() => navigation.navigate('LoginPage')}
-          style={styles.signinContainer}>
-          <Text style={styles.link}>Sign-In</Text>
-        </Pressable>
 
-        {/* Create account modal */}
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setModalVisible(false)
-            this.toggleCheckbox(false)
-          }}>
-          {/* Pressable component so that when the user taps outside the modal, it closes */}
+            {/* username and password input*/}
+            <TextInput
+              cursorColor={'black'}
+              placeholder='Username'
+              placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+              style={styles.userpassinput}
+              onChangeText={(value) => {
+                this.setState({ username: value });
+              }}
+            ></TextInput>
+            <TextInput
+              secureTextEntry
+              cursorColor={'black'}
+              placeholder='Password'
+              placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+              style={styles.userpassinput}
+              onChangeText={(value) => {
+                this.setState({ password: value });
+              }}
+            ></TextInput>
+
+
+            {/* login button */}
+            <Pressable
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed
+                    ? COLORS.lightGreen
+                    : COLORS.transparent
+                },
+                styles.loginButton
+              ]}
+              onPress={() => this.login(navigation)}>
+              <Text style={styles.loginText}>Log In</Text>
+            </Pressable>
+
+
+            {/* forgot password button */}
+            <Pressable
+              onPress={() => navigation.navigate('ForgotPassword')}
+              style={styles.forgotPasswordContainer}>
+              <Text style={styles.createAccountText}>
+              Forgot your login details? <Text style={styles.boldtext}>Get help signing in.</Text>
+            </Text>
+            </Pressable>
+
+            <Text style={styles.or}>OR</Text>
+
+
+            {/* alt logins */}
+            <Pressable style={styles.altLoginButton}>
+              <Ionicons name='logo-google' size={29} color='white' />
+              <Text style={styles.altLoginButtonText}>Log in with Google</Text>
+            </Pressable>
+
+
+          {/* sign up button */}  
           <Pressable
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+              },
+              styles.createAccountButton
+            ]}
             onPress={() => {
+              this.setModalVisible(true)
+            }}>
+              
+            <Text style={styles.createAccountText}>
+              Dont have an account? <Text style={styles.boldtext}>Sign up</Text>
+            </Text>
+          </Pressable>
+
+
+          {/* Create account popup */}
+          <Modal
+            animationType='slide'
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
               this.setModalVisible(false)
               this.toggleCheckbox(false)
-            }}
-            style={styles.pressable}>
-            {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
-            <TouchableWithoutFeedback>
-              <KeyboardAvoidingView behavior='padding' style={styles.modal}>
-                <Text style={styles.createAccount}>Create an Account</Text>
-                <View>
-                  {/* Text input for email */}
-                  <Text style={styles.inputTitle}>Email</Text>
-                  <TextInput
-                    defaultValue={this.state.email}
-                    onChangeText={(emailInput) =>
-                      this.setState({email: emailInput})
-                    }
-                    cursorColor={'black'}
-                    style={styles.input}></TextInput>
-                </View>
-                <View>
-                  {/* Text input for username */}
-                  <Text style={styles.inputTitle}>Username</Text>
-                  <TextInput
-                    defaultValue={this.state.username}
-                    onChangeText={(usernameInput) =>
-                      this.setState({username: usernameInput})
-                    }
-                    cursorColor={'black'}
-                    style={styles.input}></TextInput>
-                </View>
-                <View>
-                  {/* Text input for password */}
-                  <Text style={styles.inputTitle}>Password</Text>
-                  <TextInput
-                    onChangeText={(newText) =>
-                      this.setState({password: newText})
-                    }
-                    cursorColor={'black'}
-                    secureTextEntry
-                    style={styles.input}></TextInput>
-                </View>
-                <View>
-                  {/* Text input for password re-enter */}
-                  <Text style={styles.inputTitle}>Re-Enter Password</Text>
-                  <TextInput
-                    onChangeText={(newText) =>
-                      this.setState({passwordRenter: newText})
-                    }
-                    cursorColor={'black'}
-                    secureTextEntry
-                    style={styles.input}></TextInput>
-                </View>
-                {/* Password requirements */}
-                <View style={styles.passReqsContainer}>
-                  <Text style={styles.passReqLabel}>
-                    Password must contain the following:
-                  </Text>
-                  <Text style={styles.passReq}>8 or more characters</Text>
-                  <Text style={styles.passReq}>1 or more numbers</Text>
-                  <Text style={styles.passReq}>
-                    1 or more uppercase letters
-                  </Text>
-                  <Text style={styles.passReq}>
-                    1 or more lowercase letters
-                  </Text>
-                  <Text style={styles.passReq}>
-                    1 or more special characters (!@#$)
-                  </Text>
-                </View>
-                {/* Checkbox for ensuring user is over 18 */}
-                <BouncyCheckbox
-                  size={22}
-                  style={styles.checkBox}
-                  fillColor={COLORS.lightGreen}
-                  unfillColor='white'
-                  text="I'm at least 18 years old and agree to the Privacy Policy"
-                  innerIconStyle={{borderWidth: 2}}
-                  onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
-                  textStyle={styles.tosText}
-                />
+            }}>
+            {/* Pressable component so that when the user taps outside the modal, it closes */}
+            <Pressable
+              onPress={() => {
+                this.setModalVisible(false)
+                this.toggleCheckbox(false)
+              }}
+              style={styles.pressable}>
+              {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
+              <TouchableWithoutFeedback>
+                <KeyboardAvoidingView behavior='padding' style={styles.modal}>
+                  <Text style={styles.createAccount}>Create an Account</Text>
+                  <View>
+                    {/* Text input for email */}
+                    <Text style={styles.inputTitle}>Email</Text>
+                    <TextInput
+                      defaultValue={this.state.email}
+                      onChangeText={(emailInput) =>
+                        this.setState({email: emailInput})
+                      }
+                      cursorColor={'black'}
+                      style={styles.input}></TextInput>
+                  </View>
+                  <View>
+                    {/* Text input for username */}
+                    <Text style={styles.inputTitle}>Username</Text>
+                    <TextInput
+                      defaultValue={this.state.username}
+                      onChangeText={(usernameInput) =>
+                        this.setState({username: usernameInput})
+                      }
+                      cursorColor={'black'}
+                      style={styles.input}></TextInput>
+                  </View>
+                  <View>
+                    {/* Text input for password */}
+                    <Text style={styles.inputTitle}>Password</Text>
+                    <TextInput
+                      onChangeText={(newText) =>
+                        this.setState({password: newText})
+                      }
+                      cursorColor={'black'}
+                      secureTextEntry
+                      style={styles.input}></TextInput>
+                  </View>
+                  <View>
+                    {/* Text input for password re-enter */}
+                    <Text style={styles.inputTitle}>Re-Enter Password</Text>
+                    <TextInput
+                      onChangeText={(newText) =>
+                        this.setState({passwordRenter: newText})
+                      }
+                      cursorColor={'black'}
+                      secureTextEntry
+                      style={styles.input}></TextInput>
+                  </View>
+                  {/* Password requirements */}
+                  <View style={styles.passReqsContainer}>
+                    <Text style={styles.passReqLabel}>
+                      Password must contain the following:
+                    </Text>
+                    <Text style={styles.passReq}>8 or more characters</Text>
+                    <Text style={styles.passReq}>1 or more numbers</Text>
+                    <Text style={styles.passReq}>
+                      1 or more uppercase letters
+                    </Text>
+                    <Text style={styles.passReq}>
+                      1 or more lowercase letters
+                    </Text>
+                    <Text style={styles.passReq}>
+                      1 or more special characters (!@#$)
+                    </Text>
+                  </View>
+                  {/* Checkbox for ensuring user is over 18 */}
+                  <BouncyCheckbox
+                    size={22}
+                    style={styles.checkBox}
+                    fillColor={COLORS.lightGreen}
+                    unfillColor='white'
+                    text="I'm at least 18 years old and agree to the Privacy Policy"
+                    innerIconStyle={{borderWidth: 2}}
+                    onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                    textStyle={styles.tosText}
+                  />
 
-                <Pressable
-                  // Create account button - executes create account function defined above on press
-                  onPress={() => this.createAccount(navigation)}
-                  style={({pressed}) => [
-                    {
-                      backgroundColor: pressed
-                        ? COLORS.lightGreen
-                        : COLORS.darkGreen
-                    },
-                    styles.submitButton
-                  ]}>
-                  <Text style={styles.submitButtonText}>Join</Text>
-                </Pressable>
-              </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>
-          </Pressable>
-        </Modal>
-      </SafeAreaView>
+                  <Pressable
+                    // Create account button - executes create account function defined above on press
+                    onPress={() => this.createAccount(navigation)}
+                    style={({pressed}) => [
+                      {
+                        backgroundColor: pressed
+                          ? COLORS.lightGreen
+                          : COLORS.darkGreen
+                      },
+                      styles.submitButton
+                    ]}>
+                    <Text style={styles.submitButtonText}>Join</Text>
+                  </Pressable>
+                </KeyboardAvoidingView>
+              </TouchableWithoutFeedback>
+            </Pressable>
+          </Modal>
+        </SafeAreaView>
+      </LinearGradient>
     )
   }
 }
 
 // Styles
 const styles = StyleSheet.create({
+
+  //container
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGreen,
     alignItems: 'center',
-    paddingTop: '50%'
+    padding: 0,
+    margin: 0,
+    width: '100%',
+    height: '100%',
+  },
+
+  //headings
+  image: {
+    flex: .4, // Set flex to 0.4 to make it take 40% of the screen
+    marginTop: 40,
+    width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
+    marginBottom: 0,
+    aspectRatio: 205 / 234, // Set the aspect ratio based on your image dimensions
   },
   title: {
-    fontSize: 36,
+    backgroundColor: 'white',
+    fontSize: 32,
+    color: COLORS.darkGreen,
+  },
+  subtitle:{
+    fontSize: 24,
+    color: COLORS.darkGreen,
+    marginBottom: 70,
+  },
+
+  //log in
+  userpassinput: {
+    height: 50,
+    width: '85%',
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    margin: 8,
+    paddingLeft: 15,
+    fontSize: 15,
+
+  },
+  loginButton: {
+    height: 50,
+    width: '85%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderColor: COLORS.whitetransparent,
+    borderWidth: 3,
+    borderRadius: 7,
+    margin: 8
+  },
+  loginText: {
+    color: 'white'
+  },
+
+  //forgot password and sign up 
+  forgotPasswordContainer: {
+    backgroundColor: COLORS.transparent,
+    paddingTop: 10
+  },
+  createAccountText: {
+    color: 'white',
+  },
+  boldtext:{
     fontWeight: 'bold',
-    paddingTop: '5%',
-    color: COLORS.darkerGray
   },
-  signin: {
-    marginTop: '5%',
-    fontSize: 18
+
+  or:{
+    marginTop: 15,
+    marginBottom: 15,
+    color: COLORS.white,
+    fontSize: 16
   },
-  link: {
-    textDecorationLine: 'underline',
-    color: 'blue',
-    fontSize: 18
+
+  pressable: {
+    height: '100%',
+    width: '100%'
   },
+  
+  altLoginButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',  // Center content horizontally
+    height: 50,
+    width: '85%',
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    fontSize: 15,
+  },
+
+  altLoginButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingLeft: 8,  // Adjust the spacing between the icon and text
+  },
+
+  createAccountButton: {
+    paddingTop: 0,
+    width: '85%',
+    height: '8%',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  // create account modal popup
   modal: {
     height: '80%',
     marginTop: 'auto',
@@ -337,19 +528,7 @@ const styles = StyleSheet.create({
     color: 'grey',
     alignSelf: 'center'
   },
-  createAccountButton: {
-    width: '70%',
-    height: '8%',
-    borderRadius: 10,
-    marginTop: '5%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  createAccountText: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 16
-  },
+  
   input: {
     borderRadius: 10,
     borderWidth: 3,
@@ -374,11 +553,6 @@ const styles = StyleSheet.create({
     width: '20%',
     justifyContent: 'center',
     alignSelf: 'center',
-    alignItems: 'center'
-  },
-  signinContainer: {
-    height: '7%',
-    width: '20%',
     alignItems: 'center'
   },
   submitButtonText: {

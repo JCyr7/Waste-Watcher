@@ -14,9 +14,6 @@ LogBox.ignoreAllLogs()
 export default function App() {
   //Call create stack navigator function
   const Stack = createNativeStackNavigator()
-  // Is loggedd in constant: changes the inital route of the stack based on whether user is logged in or not
-  // const isLoggedin = AsyncStorage.getItem('loggedIn')
-  // const isLoggedin = AsyncStorage.getItem('username')
   const isLoggedin = false
 
   return (

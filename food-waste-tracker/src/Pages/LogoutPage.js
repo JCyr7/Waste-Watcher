@@ -20,6 +20,9 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 export default class LogoutPage extends Component {
   //Parent contstructo
   constructor(props) {
@@ -31,29 +34,43 @@ export default class LogoutPage extends Component {
       email: '',
       username: '',
       password: '',
-      passwordRenter: ''
+      passwordRenter: '',
+      userAuth: false
     }
   }
   //start of login stuff
   //Login function: calls api for
   login = async (navigation) => {
     try {
+
+        // Firebase email and pass authentication
+        await signInWithEmailAndPassword(FIREBASE_AUTH, this.state.username, this.state.password).then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          this.setState({userAuth: true})
+        }).catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage);
+        });
+
       await AsyncStorage.setItem('username', this.state.username)
       const value = await AsyncStorage.getItem('username')
       this.setState({token: value})
+
     } catch (err) {
       console.log(err)
     } finally {
       // const userAuthReturn = await this.userAuth()
-      const userAuthReturn = true
-      console.log(userAuthReturn)
-      if (userAuthReturn === true) {
+      
+      if (this.state.userAuth === true) {
         navigation.navigate('MainPage')
       } else {
         Alert.alert(
           'Login failed, please enter the correct username and password.'
         )
       }
+      
     }
   }
 

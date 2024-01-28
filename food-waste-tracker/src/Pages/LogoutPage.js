@@ -212,27 +212,26 @@ export default class LogoutPage extends Component {
             style={styles.image}
           />
           {/* title */}
-          <Text style={styles.title}>Waste</Text>
-          <Text style={styles.title}>Watcher</Text>
+          <Text style={styles.title}>Waste Watcher</Text>
           <Text style={styles.subtitle}>Food Waste Tracker</Text>
 
 
             {/* username and password input*/}
             <TextInput
-              cursorColor={'black'}
+              cursorColor={'white'}
               placeholder='Username'
               placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-              style={styles.userpassinput}
+              style={[styles.userpassinput, { color: COLORS.white }]}             
               onChangeText={(value) => {
                 this.setState({ username: value });
               }}
             ></TextInput>
             <TextInput
               secureTextEntry
-              cursorColor={'black'}
+              cursorColor={'white'}
               placeholder='Password'
               placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-              style={styles.userpassinput}
+              style={[styles.userpassinput, { color: COLORS.white }]}
               onChangeText={(value) => {
                 this.setState({ password: value });
               }}
@@ -244,7 +243,7 @@ export default class LogoutPage extends Component {
               style={({pressed}) => [
                 {
                   backgroundColor: pressed
-                    ? COLORS.lightGreen
+                    ? COLORS.whitetransparent
                     : COLORS.transparent
                 },
                 styles.loginButton
@@ -256,12 +255,20 @@ export default class LogoutPage extends Component {
 
             {/* forgot password button */}
             <Pressable
-              onPress={() => navigation.navigate('ForgotPassword')}
-              style={styles.forgotPasswordContainer}>
-              <Text style={styles.createAccountText}>
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+              },
+              styles.forgotAccountButton
+            ]}
+            onPress={() => navigation.navigate('ForgotPassword')}>
+              
+            <Text style={styles.createAccountText}>
               Forgot your login details? <Text style={styles.boldtext}>Get help signing in.</Text>
             </Text>
-            </Pressable>
+          </Pressable>
+
+            
 
             <Text style={styles.or}>OR</Text>
 
@@ -269,7 +276,7 @@ export default class LogoutPage extends Component {
             {/* alt logins */}
             <Pressable style={styles.altLoginButton}>
               <Ionicons name='logo-google' size={29} color='white' />
-              <Text style={styles.altLoginButtonText}>Log in with Google</Text>
+              <Text style={styles.altLoginButtonText}>Sign in with Google</Text>
             </Pressable>
 
 
@@ -310,6 +317,16 @@ export default class LogoutPage extends Component {
               {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
               <TouchableWithoutFeedback>
                 <KeyboardAvoidingView behavior='padding' style={styles.modal}>
+                    {/* Back button to exit the modal */}
+                    <Pressable
+                      onPress={() => {
+                        this.setModalVisible(false);
+                        this.toggleCheckbox(false);
+                      }}
+                      style={styles.backButton}
+                    >
+                    <Text style={styles.backButton}>«</Text>
+                  </Pressable>
                   <Text style={styles.createAccount}>Create an Account</Text>
                   <View>
                     {/* Text input for email */}
@@ -423,20 +440,20 @@ const styles = StyleSheet.create({
   //headings
   image: {
     flex: .4, // Set flex to 0.4 to make it take 40% of the screen
-    marginTop: 40,
+    marginTop: 80,
     width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
     marginBottom: 0,
-    aspectRatio: 205 / 234, // Set the aspect ratio based on your image dimensions
+    aspectRatio: 181 / 201, // Set the aspect ratio based on your image dimensions
   },
   title: {
-    backgroundColor: 'white',
+    fontWeight: 'bold',
     fontSize: 32,
-    color: COLORS.darkGreen,
+    color: 'white',
   },
   subtitle:{
     fontSize: 24,
-    color: COLORS.darkGreen,
-    marginBottom: 70,
+    color: 'white',
+    marginBottom: 20,
   },
 
   //log in
@@ -448,7 +465,6 @@ const styles = StyleSheet.create({
     margin: 8,
     paddingLeft: 15,
     fontSize: 15,
-
   },
   loginButton: {
     height: 50,
@@ -461,10 +477,20 @@ const styles = StyleSheet.create({
     margin: 8
   },
   loginText: {
-    color: 'white'
+    color: 'white',
+    fontWeight: 'bold',
   },
 
-  //forgot password and sign up 
+  //forgot password
+  forgotAccountButton: {
+    paddingTop: 0,
+    width: '85%',
+    marginTop: 3,
+    height: 30,
+    borderRadius: 7,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   forgotPasswordContainer: {
     backgroundColor: COLORS.transparent,
     paddingTop: 10
@@ -476,6 +502,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  //or
   or:{
     marginTop: 15,
     marginBottom: 15,
@@ -508,15 +535,21 @@ const styles = StyleSheet.create({
   createAccountButton: {
     paddingTop: 0,
     width: '85%',
-    height: '8%',
-    borderRadius: 10,
+    marginTop: 10,
+    height: 50,
+    borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center'
   },
 
   // create account modal popup
+
+  backButton: {
+    fontSize: 30,
+    color: COLORS.black
+  },
   modal: {
-    height: '80%',
+    height: '90%',
     marginTop: 'auto',
     backgroundColor: 'white',
     borderTopRightRadius: 20,

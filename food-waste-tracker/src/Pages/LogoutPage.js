@@ -28,6 +28,8 @@ export default class LogoutPage extends Component {
     this.state = {
       modalVisible: false,
       checkboxValue: false,
+      firstname: '',
+      lastname: '',
       email: '',
       username: '',
       password: '',
@@ -320,16 +322,50 @@ export default class LogoutPage extends Component {
               <TouchableWithoutFeedback>
                 <KeyboardAvoidingView behavior='padding' style={styles.modal}>
                     {/* Back button to exit the modal */}
-                    <Pressable
-                      onPress={() => {
-                        this.setModalVisible(false);
-                        this.toggleCheckbox(false);
-                      }}
-                      style={styles.backButton}
-                    >
-                    <Text style={styles.backButton}>«</Text>
+                  <Pressable
+                    // Create account button - executes create account function defined above on press
+                    onPress={() => {
+                      this.setModalVisible(false);
+                      this.toggleCheckbox(false);
+                    }}
+                    style={({pressed}) => [
+                      {
+                        backgroundColor: pressed
+                          ? COLORS.lightestGreen
+                          : COLORS.white
+                      },
+                      styles.backButton
+                    ]}>
+                  <Text style={styles.backButtontext}>^</Text>
                   </Pressable>
                   <Text style={styles.createAccount}>Create an Account</Text>
+                  <View style={styles.rowContainer}>
+                    {/* Text input for firstname */}
+                    <View style={styles.inputContainer}>
+                      <Text style={styles.nameinputTitle}>First Name</Text>
+                      <TextInput
+                        defaultValue={this.state.firstname}
+                        onChangeText={(firstnameInput) =>
+                          this.setState({firstname: firstnameInput})
+                        }
+                        cursorColor={'black'}
+                        style={styles.nameInput}
+                      />
+                    </View>
+
+                    {/* Text input for lastname */}
+                    <View style={styles.inputContainer}>
+                      <Text style={styles.nameinputTitle}>Last Name</Text>
+                      <TextInput
+                        defaultValue={this.state.lastname}
+                        onChangeText={(lastnameInput) =>
+                          this.setState({lastname: lastnameInput})
+                        }
+                        cursorColor={'black'}
+                        style={styles.nameInput}
+                      />
+                    </View>
+                  </View>
                   <View>
                     {/* Text input for email */}
                     <Text style={styles.inputTitle}>Email</Text>
@@ -374,7 +410,7 @@ export default class LogoutPage extends Component {
                       secureTextEntry
                       style={styles.input}></TextInput>
                   </View>
-                  {/* Password requirements */}
+                  {/* Password requirements
                   <View style={styles.passReqsContainer}>
                     <Text style={styles.passReqLabel}>
                       Password must contain the following:
@@ -391,13 +427,24 @@ export default class LogoutPage extends Component {
                       1 or more special characters (!@#$)
                     </Text>
                   </View>
+
                   {/* Checkbox for ensuring user is over 18 */}
                   <BouncyCheckbox
                     size={22}
                     style={styles.checkBox}
                     fillColor={COLORS.lightGreen}
                     unfillColor='white'
-                    text="I'm at least 18 years old and agree to the Privacy Policy"
+                    text="I am at least 18 years old"
+                    innerIconStyle={{borderWidth: 2}}
+                    onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                    textStyle={styles.tosText}
+                  />
+                  <BouncyCheckbox
+                    size={22}
+                    style={styles.checkBox}
+                    fillColor={COLORS.lightGreen}
+                    unfillColor='white'
+                    text="I agree to the Privacy Policy"
                     innerIconStyle={{borderWidth: 2}}
                     onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
                     textStyle={styles.tosText}
@@ -429,7 +476,8 @@ export default class LogoutPage extends Component {
 // Styles
 const styles = StyleSheet.create({
 
-  //container
+  //sign in
+
   container: {
     flex: 1,
     alignItems: 'center',
@@ -438,8 +486,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-
-  //headings
   image: {
     flex: .4, // Set flex to 0.4 to make it take 40% of the screen
     marginTop: 80,
@@ -457,8 +503,6 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 20,
   },
-
-  //log in
   userpassinput: {
     height: 50,
     width: '85%',
@@ -482,8 +526,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-
-  //forgot password
   forgotAccountButton: {
     paddingTop: 0,
     width: '85%',
@@ -503,20 +545,17 @@ const styles = StyleSheet.create({
   boldtext:{
     fontWeight: 'bold',
   },
-
-  //or
   or:{
     marginTop: 15,
     marginBottom: 15,
     color: COLORS.white,
     fontSize: 16
   },
-
   pressable: {
-    height: '100%',
-    width: '100%'
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  
   altLoginButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -527,13 +566,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.whitetransparent,
     fontSize: 15,
   },
-
   altLoginButtonText: {
     color: 'white',
     fontWeight: 'bold',
     paddingLeft: 8,  // Adjust the spacing between the icon and text
   },
-
   createAccountButton: {
     paddingTop: 0,
     width: '85%',
@@ -544,43 +581,88 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  // create account modal popup
 
-  backButton: {
-    fontSize: 30,
-    color: COLORS.black
-  },
+
+  // modal
+
+
   modal: {
-    height: '90%',
+    height: '100%',
     marginTop: 'auto',
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20
   },
+
+
+  backButton: {
+    position: 'absolute',
+    marginTop: 40,
+    marginLeft: 15,
+    paddingRight: 13,
+    borderRadius: 14,
+    transform: [{ rotate: '270deg' }] 
+  },
+  backButtontext: {
+    fontSize: 40,
+    color: COLORS.blue,
+    paddingLeft: 20,
+    paddingRight: 10,
+    paddingTop: 20,
+    paddingBottom: 5,
+  },
+
+
   createAccount: {
+    paddingTop: 100,
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'grey',
+    color: COLORS.blue,
     alignSelf: 'center'
   },
   
-  input: {
-    borderRadius: 10,
-    borderWidth: 3,
-    paddingTop: '1%',
-    padding: '1%',
-    paddingLeft: '3%',
-    width: '95%',
-    alignSelf: 'center',
-    borderColor: 'grey'
+
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    alignItems: 'center',
   },
-  inputTitle: {
-    paddingLeft: '3%',
+  inputContainer: {
+    flex: 1, 
+    paddingLeft: '7.5%',
+  },
+  nameinputTitle: {
     paddingTop: '1%',
-    paddingBottom: '1%',
+    paddingBottom: '4%',
     fontWeight: 'bold',
     color: 'grey'
   },
+  nameInput: {
+    borderBottomWidth: 3, 
+    paddingTop: '1%',
+    paddingBottom: '1%',
+    width: '100%',
+    alignSelf: 'center',
+    borderColor: 'grey'
+  },
+
+  inputTitle: {
+    paddingLeft: '7.5%',
+    paddingTop: '1%',
+    paddingBottom: '4%',
+    fontWeight: 'bold',
+    color: 'grey'
+  },
+  input: {
+    borderBottomWidth: 3, 
+    paddingTop: '1%',
+    paddingBottom: '1%', 
+    paddingLeft: '3%',
+    width: '85%',
+    alignSelf: 'center',
+    borderColor: 'grey'
+  },
+  
   submitButton: {
     padding: '1%',
     borderRadius: 5,
@@ -603,11 +685,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   checkBox: {
-    marginLeft: '3%',
-    marginBottom: '10%'
+    marginLeft: '7.5%',
+    marginTop: '5%'
   },
   passReqsContainer: {
-    // borderWidth: 1,
     margin: '3%'
   },
   passReqLabel: {
@@ -621,4 +702,4 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 'bold'
   }
-})
+});

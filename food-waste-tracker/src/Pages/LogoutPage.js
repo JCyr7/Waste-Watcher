@@ -312,7 +312,13 @@ export default class LogoutPage extends Component {
               this.toggleCheckbox(false)
             }}>
             {/* Pressable component so that when the user taps outside the modal, it closes */}
-            <Pressable
+            <LinearGradient
+              colors={[COLORS.green, COLORS.blue]}
+              style={{ flex: 1 }}
+              start={{ x: 0, y: 0.2 }}
+              end={{ x: 1, y: 1 }}>
+              {/* Pressable component so that when the user taps outside the modal, it closes */}
+              <Pressable
               onPress={() => {
                 this.setModalVisible(false)
                 this.toggleCheckbox(false)
@@ -331,85 +337,93 @@ export default class LogoutPage extends Component {
                     style={({pressed}) => [
                       {
                         backgroundColor: pressed
-                          ? COLORS.lightestGreen
-                          : COLORS.white
+                          ? COLORS.green
+                          : COLORS.green
                       },
                       styles.backButton
                     ]}>
                   <Text style={styles.backButtontext}>^</Text>
                   </Pressable>
-                  <Text style={styles.createAccount}>Create an Account</Text>
+                  <Text style={styles.createAccount}>Create Account</Text>
                   <View style={styles.rowContainer}>
-                    {/* Text input for firstname */}
-                    <View style={styles.inputContainer}>
-                      <Text style={styles.nameinputTitle}>First Name</Text>
-                      <TextInput
-                        defaultValue={this.state.firstname}
-                        onChangeText={(firstnameInput) =>
-                          this.setState({firstname: firstnameInput})
-                        }
-                        cursorColor={'black'}
-                        style={styles.nameInput}
-                      />
-                    </View>
+                  {/* Text inputs*/}
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      defaultValue={this.state.firstname}
+                      onChangeText={(firstnameInput) =>
+                        this.setState({ firstname: firstnameInput })
+                      }
+                      placeholder="First"
+                      placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                      cursorColor={'black'}
+                      style={styles.nameInput}
+                    />
+                  </View>
 
-                    {/* Text input for lastname */}
-                    <View style={styles.inputContainer}>
-                      <Text style={styles.nameinputTitle}>Last Name</Text>
-                      <TextInput
-                        defaultValue={this.state.lastname}
-                        onChangeText={(lastnameInput) =>
-                          this.setState({lastname: lastnameInput})
-                        }
-                        cursorColor={'black'}
-                        style={styles.nameInput}
-                      />
-                    </View>
-                  </View>
-                  <View>
-                    {/* Text input for email */}
-                    <Text style={styles.inputTitle}>Email</Text>
+                  {/* Text input for lastname */}
+                  <View style={styles.inputContainer}>
                     <TextInput
-                      defaultValue={this.state.email}
-                      onChangeText={(emailInput) =>
-                        this.setState({email: emailInput})
+                      defaultValue={this.state.lastname}
+                      onChangeText={(lastnameInput) =>
+                        this.setState({ lastname: lastnameInput })
                       }
+                      placeholder="Last"
+                      placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                       cursorColor={'black'}
-                      style={styles.input}></TextInput>
+                      style={styles.nameInput}
+                    />
                   </View>
-                  <View>
-                    {/* Text input for username */}
-                    <Text style={styles.inputTitle}>Username</Text>
-                    <TextInput
-                      defaultValue={this.state.username}
-                      onChangeText={(usernameInput) =>
-                        this.setState({username: usernameInput})
-                      }
-                      cursorColor={'black'}
-                      style={styles.input}></TextInput>
-                  </View>
-                  <View>
-                    {/* Text input for password */}
-                    <Text style={styles.inputTitle}>Password</Text>
-                    <TextInput
-                      onChangeText={(newText) =>
-                        this.setState({password: newText})
-                      }
-                      cursorColor={'black'}
-                      secureTextEntry
-                      style={styles.input}></TextInput>
-                  </View>
-                  <View>
-                    {/* Text input for password re-enter */}
-                    <Text style={styles.inputTitle}>Re-Enter Password</Text>
-                    <TextInput
-                      onChangeText={(newText) =>
-                        this.setState({passwordRenter: newText})
-                      }
-                      cursorColor={'black'}
-                      secureTextEntry
-                      style={styles.input}></TextInput>
-                  </View>
+                </View>
+
+                <View>
+                  {/* Text input for email */}
+                  <TextInput
+                    defaultValue={this.state.email}
+                    onChangeText={(emailInput) => this.setState({ email: emailInput })}
+                    placeholder="Email"
+                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    cursorColor={'white'}
+                    style={styles.input}
+                  />
+                </View>
+
+                <View>
+                  {/* Text input for username */}
+                  <TextInput
+                    defaultValue={this.state.username}
+                    onChangeText={(usernameInput) =>
+                      this.setState({ username: usernameInput })
+                    }
+                    placeholder="Username"
+                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    cursorColor={'white'}
+                    style={styles.input}
+                  />
+                </View>
+
+                <View>
+                  {/* Text input for password */}
+                  <TextInput
+                    onChangeText={(newText) => this.setState({ password: newText })}
+                    cursorColor={'white'}
+                    secureTextEntry
+                    placeholder="Password"
+                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    style={styles.input}
+                  />
+                </View>
+
+                <View>
+                  {/* Text input for password re-enter */}
+                  <TextInput
+                    onChangeText={(newText) => this.setState({ passwordRenter: newText })}
+                    cursorColor={'black'}
+                    secureTextEntry
+                    placeholder="Re-Enter Password"
+                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    style={styles.input}
+                  />
+                </View>
                   {/* Password requirements
                   <View style={styles.passReqsContainer}>
                     <Text style={styles.passReqLabel}>
@@ -432,7 +446,7 @@ export default class LogoutPage extends Component {
                   <BouncyCheckbox
                     size={22}
                     style={styles.checkBox}
-                    fillColor={COLORS.lightGreen}
+                    fillColor={COLORS.whitetransparent}
                     unfillColor='white'
                     text="I am at least 18 years old"
                     innerIconStyle={{borderWidth: 2}}
@@ -442,7 +456,7 @@ export default class LogoutPage extends Component {
                   <BouncyCheckbox
                     size={22}
                     style={styles.checkBox}
-                    fillColor={COLORS.lightGreen}
+                    fillColor={COLORS.whitetransparent}
                     unfillColor='white'
                     text="I agree to the Privacy Policy"
                     innerIconStyle={{borderWidth: 2}}
@@ -456,16 +470,17 @@ export default class LogoutPage extends Component {
                     style={({pressed}) => [
                       {
                         backgroundColor: pressed
-                          ? COLORS.lightGreen
-                          : COLORS.darkGreen
+                          ? COLORS.whitetransparent
+                          : COLORS.transparent
                       },
                       styles.submitButton
                     ]}>
-                    <Text style={styles.submitButtonText}>Join</Text>
+                    <Text style={styles.submitButtonText}>Sign Up</Text>
                   </Pressable>
                 </KeyboardAvoidingView>
               </TouchableWithoutFeedback>
             </Pressable>
+          </LinearGradient>
           </Modal>
         </SafeAreaView>
       </LinearGradient>
@@ -589,91 +604,84 @@ const styles = StyleSheet.create({
   modal: {
     height: '100%',
     marginTop: 'auto',
-    backgroundColor: COLORS.white,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20
   },
 
-
+  //backbutton
   backButton: {
     position: 'absolute',
     marginTop: 40,
-    marginLeft: 15,
+    marginLeft: 6,
     paddingRight: 13,
     borderRadius: 14,
     transform: [{ rotate: '270deg' }] 
   },
   backButtontext: {
     fontSize: 40,
-    color: COLORS.blue,
+    color: COLORS.white,
     paddingLeft: 20,
     paddingRight: 10,
     paddingTop: 20,
     paddingBottom: 5,
   },
 
-
+  //create account title text
   createAccount: {
-    paddingTop: 100,
+    paddingTop: 140,
     fontSize: 24,
-    color: COLORS.blue,
-    alignSelf: 'center'
+    color: COLORS.white,
+    alignSelf: 'center',
+    paddingBottom: 20,
   },
   
-
+  //first and last name boxs
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
     alignItems: 'center',
   },
   inputContainer: {
     flex: 1, 
     paddingLeft: '7.5%',
-  },
-  nameinputTitle: {
-    paddingTop: '1%',
-    paddingBottom: '4%',
-    fontWeight: 'bold',
-    color: 'grey'
+    paddingRight: '7.5%',
   },
   nameInput: {
-    borderBottomWidth: 3, 
+    borderBottomWidth: 2.5, 
     paddingTop: '1%',
-    paddingBottom: '1%',
+    marginBottom: 16,
     width: '100%',
     alignSelf: 'center',
-    borderColor: 'grey'
+    borderColor: COLORS.white
   },
 
-  inputTitle: {
-    paddingLeft: '7.5%',
-    paddingTop: '1%',
-    paddingBottom: '4%',
-    fontWeight: 'bold',
-    color: 'grey'
-  },
+  //all other inputs
   input: {
-    borderBottomWidth: 3, 
+    borderBottomWidth: 2.5, 
     paddingTop: '1%',
     paddingBottom: '1%', 
-    paddingLeft: '3%',
     width: '85%',
     alignSelf: 'center',
-    borderColor: 'grey'
+    borderColor: COLORS.white,
+    marginBottom: 16,
   },
   
+  //'sign up' button
   submitButton: {
-    padding: '1%',
+    padding: '2%',
     borderRadius: 5,
     height: '5%',
-    width: '20%',
+    width: '45%',  // Set width to 85%
     justifyContent: 'center',
+    marginTop: 25,
     alignSelf: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: COLORS.whitetransparent
   },
+  
   submitButtonText: {
-    color: 'white'
+    color: COLORS.white
   },
   pressable: {
     height: '100%',
@@ -682,23 +690,25 @@ const styles = StyleSheet.create({
   tosText: {
     textDecorationLine: 'none',
     fontSize: 13,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'white'
   },
   checkBox: {
     marginLeft: '7.5%',
-    marginTop: '5%'
+    marginTop: '5%',
+
   },
   passReqsContainer: {
     margin: '3%'
   },
   passReqLabel: {
-    color: COLORS.darkGray,
+    color: COLORS.white,
     fontSize: 15,
     fontWeight: 'bold'
   },
   passReq: {
     marginLeft: '3%',
-    color: COLORS.darkGray,
+    color: COLORS.white,
     fontSize: 13,
     fontWeight: 'bold'
   }

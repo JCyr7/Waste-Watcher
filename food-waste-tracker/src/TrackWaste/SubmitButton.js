@@ -3,6 +3,7 @@ import {StyleSheet, Pressable, Text, Linking} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import TrackWastePopup from '../Popups/TrackWastePopup'
 
 export default class GeneralReduciton extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ export default class GeneralReduciton extends Component {
       'https://www.mayoclinichealthsySstem.org/hometown-health/speaking-of-health/7-ways-to-reduce-food-waste-in-your-kitchen'
 
     return (
-      <Pressable style={styles.container}>
+      <Pressable 
+      style={styles.container}>
         <Text style={styles.label}>Submit</Text>
       </Pressable>
     )
@@ -23,17 +25,16 @@ export default class GeneralReduciton extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '20%',
+    width: '75%',
+    height: '13%',
+    padding: '2%',
     borderRadius: 20,
     backgroundColor: COLORS.darkGreen,
-    marginVertical: '1%',
-    marginHorizontal: '1%',
-    justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center'
   },
   label: {
-    fontSize: 25,
+    fontSize: 20,
     color: "#e2f0c9",
     marginTop: '1%'
   }

@@ -34,7 +34,7 @@
     "expo-dev-client": "~2.0.1",
     "expo-linear-gradient": "~12.0.1",
     "expo-status-bar": "~1.4.2",
-    "firebase": "^10.7.2",
+    "firebase": "10.7.1",
     "jest-expo": "^48.0.1",
     "react": "18.1.0",
     "react-native": "0.70.8",
@@ -52,7 +52,7 @@
     "react-native-splashscreen": "^1.0.0",
     "react-native-svg": "13.4.0",
     "react-navigation": "^4.4.4",
-    "react-test-renderer": "^18.1.0"
+    "react-test-renderer": "~18.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

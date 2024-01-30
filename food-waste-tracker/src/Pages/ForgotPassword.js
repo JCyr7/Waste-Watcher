@@ -1,11 +1,13 @@
 import * as React from 'react'
 import {Component} from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   KeyboardAvoidingView,
   StyleSheet,
   Image,
   TextInput,
   Text,
+  Pressable,
   TouchableOpacity
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
@@ -36,9 +38,24 @@ export default class ForgotPassword extends Component {
   }
 
   render() {
+    const {navigation} = this.props
     return (
       // Container for page
       <KeyboardAvoidingView style={styles.container}>
+         {/* back button */}
+        <Pressable
+                    // Create account button - executes create account function defined above on press
+                    onPress={() => navigation.navigate('LogoutPage')}
+                    style={({pressed}) => [
+                      {
+                        backgroundColor: pressed ? COLORS.transparent : COLORS.transparent
+                      },
+                      styles.backButton
+                    ]}>
+                  <Text style={styles.backButtontext}>^</Text>
+        </Pressable>
+
+
         <Image
           style={styles.image}
           source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
@@ -73,6 +90,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.lightGreen,
     alignItems: 'center'
+  },
+  //backbutton
+  backButton: {
+    position: 'absolute',
+    marginTop: 40,
+    marginLeft: 6,
+    paddingRight: 13,
+    borderRadius: 14,
+    transform: [{ rotate: '270deg' }] 
+  },
+  backButtontext: {
+    fontSize: 40,
+    color: COLORS.white,
+    paddingLeft: 20,
+    paddingRight: 10,
+    paddingTop: 20,
+    paddingBottom: 5,
   },
   image: {
     marginTop: '30%'

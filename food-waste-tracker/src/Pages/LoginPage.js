@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   KeyboardAvoidingView,
   View,
@@ -26,7 +27,45 @@ export default class Login extends Component {
       token: ''
     }
   }
-  
+
+  //Login function: calls api for
+  login = async (navigation) => {
+    try {
+      await AsyncStorage.setItem('username', this.state.username)
+      const value = await AsyncStorage.getItem('username')
+      this.setState({token: value})
+    } catch (err) {
+      console.log(err)
+    } finally {
+      // const userAuthReturn = await this.userAuth()
+      const userAuthReturn = true
+      console.log(userAuthReturn)
+      if (userAuthReturn === true) {
+        navigation.navigate('MainPage')
+      } else {
+        Alert.alert(
+          'Incorrect username or password'
+        )
+      }
+    }
+  }
+
+  // Method sends requests to lambda to verify user
+  userAuth = async () => {
+    let value
+    await axios({
+      method: 'get',
+      url: 'https://j5htipxzpi.execute-api.us-east-1.amazonaws.com/UserCredentials',
+      params: {
+        username: this.state.username,
+        password: this.state.password
+      }
+    }).then(function (response) {
+      // console.log(response.data)
+      value = response.data
+    })
+    return true
+  }
 
   render() {
     //Navigation constant declared

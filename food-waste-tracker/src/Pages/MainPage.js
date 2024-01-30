@@ -67,7 +67,7 @@ export default class MainPage extends Component {
             style={[
               {
                 borderBottomLeftRadius: 10,
-                borderTopLeftRadius: 10
+                borderTopLeftRadius: 10,
               },
               styles.navigationButton
             ]}>
@@ -79,7 +79,7 @@ export default class MainPage extends Component {
                 color:
                   this.state.pageState === 0
                     ? COLORS.darkGreen
-                    : COLORS.lightGreen
+                    : COLORS.black
               }}
             />
           </Pressable>
@@ -94,7 +94,7 @@ export default class MainPage extends Component {
                 color:
                   this.state.pageState === 1
                     ? COLORS.darkGreen
-                    : COLORS.lightGreen
+                    : COLORS.black
               }}
             />
           </Pressable>
@@ -109,7 +109,7 @@ export default class MainPage extends Component {
                 color:
                   this.state.pageState === 2
                     ? COLORS.darkGreen
-                    : COLORS.lightGreen
+                    : COLORS.black
               }}
             />
           </Pressable>
@@ -124,7 +124,7 @@ export default class MainPage extends Component {
                 color:
                   this.state.pageState === 3
                     ? COLORS.darkGreen
-                    : COLORS.lightGreen
+                    : COLORS.black
               }}
             />
           </Pressable>
@@ -142,7 +142,7 @@ export default class MainPage extends Component {
                 color:
                   this.state.pageState === 4
                     ? COLORS.darkGreen
-                    : COLORS.lightGreen
+                    : COLORS.black
               }}
             />
           </Pressable>
@@ -155,7 +155,7 @@ export default class MainPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGreen
+    backgroundColor: COLORS.white
   },
   pagerView: {
     flex: 1
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   navigationButton: {
     width: '20%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: "#e2f0c9",
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center'

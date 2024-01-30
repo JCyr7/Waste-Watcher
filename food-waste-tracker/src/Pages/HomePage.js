@@ -6,8 +6,18 @@ import {
   Pressable,
   Modal,
   TextInput,
-  Platform
+  Platform,
+  Dimensions,
+  FlatList
 } from 'react-native'
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from 'react-native-chart-kit'
 import {AntDesign} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
@@ -17,12 +27,42 @@ import GoalPopup from '../Popups/GoalPopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import {DATA} from '../Utils/TestData'
-import MeatReduciton from '../WasteReductionTips/MeatReduction'
-import FishReduciton from '../WasteReductionTips/FishReduction'
-import ProduceReduciton from '../WasteReductionTips/ProduceReduction'
-import GrainReduciton from '../WasteReductionTips/GrainReduction'
-import DairyReduciton from '../WasteReductionTips/DairyReduction'
-import GeneralReduciton from '../WasteReductionTips/GeneralReduction'
+import SubmitButton from '../TrackWaste/SubmitButton'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
+
+dialChartConfig = {
+  backgroundGradientFrom: "#1E2923",
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: "#08130D",
+  backgroundGradientToOpacity: 0,
+  color: (opacity = 1) => `rgba(0, 150, 0, ${opacity})`,
+  strokeWidth: 2, // optional, default 3
+  barPercentage: 0.5,
+}
+barChartConfig = {
+  backgroundGradientFrom: "#1E2923",
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: COLORS.darkGreen,
+  backgroundGradientToOpacity: 0,
+  color: (opacity = 1) => COLORS.darkGreen,
+  strokeWidth: 1, // optional, default 3
+  barPercentage: 1,
+  decimalPlaces: 0,
+}
+
+
+screenWidth = Dimensions.get('window').width;
+
+data = {data: [0.4]}
+data2 = {data: [0.7]}
+data3 = {
+  labels: ["You", "Friend"],
+  datasets: [
+    {
+      data: [25, 15]
+    }
+  ]
+}
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -35,11 +75,12 @@ export default class HomePage extends Component {
       householdName: '',
       zipcode: '',
       householdSize: 0,
-      userName: ''
+      userName: '',
     }
     this.getData()
   }
-
+ 
+  
   // Method retrieves data from async storage
   getData = async () => {
     let newUser = await AsyncStorage.getItem('newUser')
@@ -79,33 +120,60 @@ export default class HomePage extends Component {
     console.log(this.state.householdSize)
     this.setState({householdInfoModal: false})
   }
-
   render() {
     return (
+          
       <View style={styles.container}>
-        <View style={styles.welcomeContainer}>
-          {/* Welcome Header */}
-          <Text style={styles.welcomeText}>Welcome {this.state.userName}</Text>
-          {/* Buttons */}
-          <View style={styles.buttonContainer}>
-            {/* Track Waste */}
-            <Pressable
-              onPress={() => this.openTrackWaste(true)}
-              style={styles.trackWasteButton}>
-              <Text style={styles.buttonText}>Track Waste</Text>
-            </Pressable>
+      {/* Welcome Header */}
+        <Text style={styles.welcomeText}>Waste Watcher</Text>
+          {/* Progress Dials */}
+          <View style={styles.dialContainer}>
+            <View style={styles.weeklyWasteDial}>
+              <ProgressChart
+                data={data}
+                width={125}
+                height={125}
+                strokeWidth={24}
+                radius={45}
+                chartConfig={dialChartConfig}
+                hideLegend={true}
+              />
+              <Text style={styles.weeklyWasteDialText}>Weekly</Text>
+              <Text style={styles.weeklyWasteDialText}>Waste</Text>
+            </View>
+            <View style={styles.moneyWastedDial}>
+              <ProgressChart 
+                data={data2}
+                width={125}
+                height={125}
+                strokeWidth={24}
+                radius={45}
+                chartConfig={dialChartConfig}
+                hideLegend={true}
+              />
+              <Text style={styles.moneyWastedDialText}>Money</Text>
+              <Text style={styles.moneyWastedDialText}>Wasted</Text>
+            </View>
+          </View>
 
-            {/* View Waste History */}
-            <ViewWaste data={DATA} />
-
-            {/* Set New Goal */}
-            <Pressable
-              onPress={() => this.openGoal(true)}
-              style={styles.trackWasteButton}>
-              <Text style={styles.buttonText}>View Goals</Text>
-            </Pressable>
+        <View style={styles.friendQuestContainer}>
+          <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
+          <View style={styles.barGraphContainer}>
+          <BarChart
+            style={styles.barGraphStyle}
+            data={data3}
+            width={150}
+            height={250}
+            fromZero={true}
+            showBarTops={false}
+            withInnerLines={false}
+            withHorizontalLabels={false}
+            chartConfig={barChartConfig}
+            verticalLabelRotation={-90}>
+          </BarChart>
           </View>
         </View>
+      
 
         {/* Household info Modal */}
         <Modal
@@ -218,14 +286,36 @@ export default class HomePage extends Component {
 
         {/* Waste Reduction Tips */}
         <View style={styles.tipsContainer}>
-          <Text style={styles.tipsHeader}>Waste Reduction Tips</Text>
+          <Text style={styles.trackWasteHeader}>Track Waste</Text>        
           <View style={styles.linkContainer}>
-            <MeatReduciton />
-            <ProduceReduciton />
-            <GrainReduciton />
-            <FishReduciton />
-            <DairyReduciton />
-            <GeneralReduciton />
+            <View style={styles.trackWasteContainer}>
+              <TextInput
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.trackWasteInput}
+                onChangeText={(value) =>
+                this.setState({zipcode: value})}>
+                <Text style={styles.trackWasteInputText}>Date</Text>        
+              </TextInput>
+              <TextInput
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.trackWasteInput}
+                onChangeText={(value) =>
+                this.setState({zipcode: value})}>
+                <Text style={styles.trackWasteInputText}>Type</Text>
+              </TextInput>
+              <TextInput
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.trackWasteInput}
+                onChangeText={(value) =>
+                this.setState({zipcode: value})}>
+                <Text style={styles.trackWasteInputText}>Amount</Text>        
+              </TextInput>
+              
+            </View>
+            <SubmitButton/>
           </View>
         </View>
       </View>
@@ -234,6 +324,8 @@ export default class HomePage extends Component {
 }
 
 const styles = StyleSheet.create({
+  graphStyle: {
+  },
   goalPopupHeader: {
     flexDirection: 'row',
     height: '10%',
@@ -263,10 +355,10 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     width: '90%',
-    height: '45%',
+    height: '30%',
     borderRadius: 10,
-    backgroundColor: COLORS.white,
-    alignItems: 'center',
+    alignContent: "center",
+    backgroundColor: "#e2f0c9",
     shadowOffset: {
       width: -3,
       height: 4
@@ -276,13 +368,87 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowColor: COLORS.shadow
   },
+  barGraphContainer: {
+    width: '66%',
+    height: '100%',
+    alignSelf: 'right',
+    alignContent: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    backgroundColor: "#e2f0c9",
+  },
+  friendQuestContainer: {
+    width: '90%',
+    height: '20%',
+    flexDirection: 'row',
+    verticalAlign: 'middle',
+    borderRadius: 20,
+    backgroundColor: "#e2f0c9",
+  },
+  friendQuestText: {
+    height: "100%",
+    width: "30%",
+    marginLeft: '2%',
+    marginRight: '2%',
+    marginTop: '8%',
+    fontSize: 22,
+    color: COLORS.darkGreen,
+    fontWeight: '800',
+    textAlign: 'center',
+    verticalAlign: 'middle'
+  },
+  barGraphStyle: {
+    transform: [{rotate: '90 deg'}],
+    alignSelf: 'flex-start',
+    marginBottom: "30%",
+    marginLeft: '15%',
+    //justifyContent: 'center',
+  },
   welcomeText: {
     marginTop: '6%',
-    marginBottom: '2%',
-    fontSize: 30,
+    fontSize: 28,
     color: COLORS.darkGreen,
-    fontWeight: '700',
+    fontWeight: '800',
     textAlign: 'center'
+  },
+  dialContainer: {
+    width: '90%',
+    height: '25%',
+    marginTop: '3%',
+    marginBottom: '3%',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 20,
+    backgroundColor: COLORS.white,
+  },
+  weeklyWasteDial: {
+    width: '100',
+    height: '100',
+    marginLeft: '5%',
+    marginRight: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  weeklyWasteDialText: {
+    fontSize: 15,
+    color: COLORS.darkGreen,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  moneyWastedDial: {
+    width: '100',
+    height: '100',
+    marginLeft: '5%',
+    marginRight: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  moneyWastedDialText: {
+    fontSize: 15,
+    color: COLORS.darkGreen,
+    fontWeight: '800',
+    textAlign: 'center',
   },
   buttonContainer: {
     borderWidth: 0,
@@ -291,18 +457,31 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
-  trackWasteButton: {
-    width: '95%',
+  weeklyWasteProgressButton: {
+    width: '25%',
     height: '25%',
-    backgroundColor: COLORS.darkGreen,
-    borderRadius: 10,
+    backgroundColor: "#e2f0c9",
+    borderRadius: 100,
+    verticalAlign: "middle",
+    top: "25%",
+    left: "65%",
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  moneyWastedProgressButton: {
+    width: '25%',
+    height: '25%',
+    backgroundColor: "#e2f0c9",
+    borderRadius: 100,
+    verticalAlign: "middle",
+    left: "10%",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     fontSize: 18,
-    color: COLORS.white,
-    fontWeight: '600'
+    color: COLORS.darkGreen,
+    fontWeight: '800'
   },
   householdInfoHeader: {
     marginTop: '5%',
@@ -317,7 +496,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     paddingTop: '1%',
     padding: '1%',
-    paddingLeft: '3%',
     width: '95%',
     alignSelf: 'center',
     borderColor: 'grey'
@@ -353,34 +531,45 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     alignItems: 'flex-end'
   },
+  trackWasteInputText: {
+    fontSize: 18,
+    color: COLORS.darkGreen,
+    fontWeight: '800',
+    marginLeft: "15%",
+  },
+  trackWasteInput: {
+    borderRadius: 10,
+    borderWidth: 3,
+    padding: '2%',
+    width: '75%',
+    marginTop: "2%",
+    marginBottom: "5%",
+    alignSelf: 'center',
+    borderColor: COLORS.darkGreen,
+    backgroundColor: "#e2f0c9"
+  },
   tipsContainer: {
     width: '90%',
-    height: '52%',
+    height: '50%',
     borderRadius: 10,
-    justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: COLORS.white,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
   },
-  tipsHeader: {
-    fontSize: 30,
-    fontWeight: '700',
+  trackWasteHeader: {
+    fontSize: 24,
+    fontWeight: '800',
     color: COLORS.darkGreen,
-    marginTop: '5%'
+    marginTop: '2%',
+    marginBottom: "2%",
+    textAlign: 'center'
+  },
+  trackWasteContainer: {
+    width: '100%',
+    height: '60%',
+    justifyContent: 'center',
+    backgroundColor: COLORS.white
   },
   linkContainer: {
-    width: '85%',
-    height: '75%',
-    marginBottom: '7%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap'
+    width: '100%',
+    height: '100%',
   }
 })

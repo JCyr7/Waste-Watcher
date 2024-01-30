@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import {
   StyleSheet,

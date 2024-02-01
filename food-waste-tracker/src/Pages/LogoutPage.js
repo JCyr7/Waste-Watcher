@@ -629,10 +629,10 @@ const styles = StyleSheet.create({
   //create account title text
   createAccount: {
     paddingTop: 140,
-    fontSize: 24,
+    paddingBottom: 30,
+    fontSize: 28,
     color: COLORS.white,
     alignSelf: 'center',
-    paddingBottom: 20,
   },
   
   //first and last name boxs
@@ -648,22 +648,25 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     borderBottomWidth: 2.5, 
-    paddingTop: '1%',
+    paddingTop: '4%',
+    paddingBottom: '1%', 
     marginBottom: 16,
     width: '100%',
     alignSelf: 'center',
-    borderColor: COLORS.white
+    borderColor: COLORS.white,
+    fontSize: 16,
   },
 
   //all other inputs
   input: {
     borderBottomWidth: 2.5, 
-    paddingTop: '1%',
+    paddingTop: '4%',
     paddingBottom: '1%', 
     width: '85%',
     alignSelf: 'center',
     borderColor: COLORS.white,
     marginBottom: 16,
+    fontSize: 16,
   },
   
   //'sign up' button

@@ -65,7 +65,7 @@ npm start
 ```
 Next scan the qr code displayed in your terminal and open with Expo Go on a mobile device
 
-### Run with Xcode iOS simulator
+### Run with simulator
 1. Login to ExpoGo
 ```
 npx expo login
@@ -74,6 +74,8 @@ npx expo login
 ```
 npx expo start
 ```
+Next press "a" to open android simulator
+or
 Next press "i" to open iOS simulator
 
 ## Contact

@@ -83,12 +83,6 @@ export default class LogoutPage extends Component {
     this.setState({modalVisible: visible})
   }
 
-  // Function to set checkbox value state to true or false
-  toggleCheckbox(value) {
-    // console.log(this.state.checkboxValue)
-    this.setState({checkboxValue: value})
-  }
-
   // Create account function: Checks all inputs from the user, ensuring that the username is less than 12 characters, the email adheres to a regex,
   // and the password is complex and has enough characters
   // Axios method calls to send data to the backend
@@ -98,9 +92,10 @@ export default class LogoutPage extends Component {
     const emailCheck = this.checkEmail()
     const usernameCheck = this.checkUsername()
     const privacyCheck = this.privacyCheck()
+    const ageCheck = this.ageCheck()
 
     // if statement only executes if all user input checks pass
-    if (passwordCheck && emailCheck && usernameCheck && privacyCheck) {
+    if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck) {
       let value
 
       // axios request - sends email, username and password as post request
@@ -189,9 +184,25 @@ export default class LogoutPage extends Component {
     }
   }
 
+  // Function to set checkbox value state to true or false
+  toggleCheckbox(value) {
+    // console.log(this.state.checkboxValue)
+    this.setState({checkboxValue: value})
+  }
+
+  // Method returns true if the user has clicked age chekcbox
+  ageCheck() {
+    if (this.state.checkboxage === false) {
+      Alert.alert('You must be 18 years old to use Waste Watchers')
+      return false
+    } else {
+      return true
+    }
+  }
+  
   // Method returns true if the user has clicked the privacy policy checkbox
   privacyCheck() {
-    if (this.state.checkboxValue === false) {
+    if (this.state.checkboxprivacy === false) {
       Alert.alert('Please agree the privacy policy')
       return false
     } else {
@@ -450,7 +461,7 @@ export default class LogoutPage extends Component {
                     unfillColor='white'
                     text="I am at least 18 years old"
                     innerIconStyle={{borderWidth: 2}}
-                    onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                    onPress={() => this.toggleCheckbox(!this.state.checkboxage)}
                     textStyle={styles.tosText}
                   />
                   <BouncyCheckbox
@@ -460,7 +471,7 @@ export default class LogoutPage extends Component {
                     unfillColor='white'
                     text="I agree to the Privacy Policy"
                     innerIconStyle={{borderWidth: 2}}
-                    onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                    onPress={() => this.toggleCheckbox(!this.state.checkboxprivacy)}
                     textStyle={styles.tosText}
                   />
 
@@ -628,7 +639,7 @@ const styles = StyleSheet.create({
 
   //create account title text
   createAccount: {
-    paddingTop: 140,
+    paddingTop: '40%',
     paddingBottom: 30,
     fontSize: 28,
     color: COLORS.white,
@@ -654,7 +665,8 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     borderColor: COLORS.white,
-    fontSize: 16,
+    fontSize: 17,
+    color: 'white',
   },
 
   //all other inputs
@@ -666,7 +678,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: COLORS.white,
     marginBottom: 16,
-    fontSize: 16,
+    fontSize: 17,
+    color: 'white',
   },
   
   //'sign up' button
@@ -692,7 +705,7 @@ const styles = StyleSheet.create({
   },
   tosText: {
     textDecorationLine: 'none',
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
     color: 'white'
   },

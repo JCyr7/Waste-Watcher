@@ -20,6 +20,9 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
 export default class LogoutPage extends Component {
   //Parent contstructo
   constructor(props) {
@@ -33,23 +36,36 @@ export default class LogoutPage extends Component {
       email: '',
       username: '',
       password: '',
-      passwordRenter: ''
+      passwordRenter: '',
+      userAuth: false
     }
   }
+
   //start of login stuff
   //Login function: calls api for
   login = async (navigation) => {
+    let userAuthReturn = false;
     try {
-      await AsyncStorage.setItem('username', this.state.username)
+      await signInWithEmailAndPassword(FIREBASE_AUTH, this.state.username, this.state.password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        this.setState({userAuth: true});
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+
       const value = await AsyncStorage.getItem('username')
       this.setState({token: value})
     } catch (err) {
       console.log(err)
     } finally {
-      // const userAuthReturn = await this.userAuth()
-      const userAuthReturn = true
-      console.log(userAuthReturn)
-      if (userAuthReturn === true) {
+      
+      if (this.state.userAuth === true) {
         navigation.navigate('MainPage')
       } else {
         Alert.alert(
@@ -57,23 +73,6 @@ export default class LogoutPage extends Component {
         )
       }
     }
-  }
-
-  // Method sends requests to lambda to verify user
-  userAuth = async () => {
-    let value
-    await axios({
-      method: 'get',
-      url: 'https://j5htipxzpi.execute-api.us-east-1.amazonaws.com/UserCredentials',
-      params: {
-        username: this.state.username,
-        password: this.state.password
-      }
-    }).then(function (response) {
-      // console.log(response.data)
-      value = response.data
-    })
-    return true
   }
 
   //end of login stuff
@@ -98,20 +97,6 @@ export default class LogoutPage extends Component {
     if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck) {
       let value
 
-      // axios request - sends email, username and password as post request
-      // await axios({
-      //   method: 'post',
-      //   url: 'https://j5htipxzpi.execute-api.us-east-1.amazonaws.com/UserCredentials',
-      //   params: {
-      //     email: this.state.email,
-      //     username: this.state.username,
-      //     password: this.state.password
-      //   }
-      // }).then(function (response) {
-      //   console.log(response.data)
-      //   value = response.data
-      // })
-      // if statement evaluates return value - if SQL query successfully executes on backend, user has been added to db, navigates to the main page
       if (true) {
         this.setModalVisible(false)
         navigation.navigate('MainPage')
@@ -186,7 +171,6 @@ export default class LogoutPage extends Component {
 
   // Function to set checkbox value state to true or false
   toggleCheckbox(value) {
-    // console.log(this.state.checkboxValue)
     this.setState({checkboxValue: value})
   }
 

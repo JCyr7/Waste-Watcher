@@ -443,8 +443,9 @@ export default class LogoutPage extends Component {
                     text="I am at least 18 years old"
                     innerIconStyle={{borderWidth: 2}}
                     onPress={() => {
-                      this.setState({ checkboxage: true });
-                      this.toggleCheckbox(!this.state.checkboxprivacy);
+                      this.setState((prevState) => ({
+                        checkboxage: !prevState.checkboxage,
+                      }));
                     }}
                     textStyle={styles.tosText}
                   />
@@ -456,8 +457,9 @@ export default class LogoutPage extends Component {
                     text="I agree to the Privacy Policy"
                     innerIconStyle={{borderWidth: 2}}
                     onPress={() => {
-                      this.setState({ checkboxprivacy: true });
-                      this.toggleCheckbox(!this.state.checkboxprivacy);
+                      this.setState((prevState) => ({
+                        checkboxprivacy: !prevState.checkboxprivacy,
+                      }));
                     }}
                     textStyle={styles.tosText}
                   />

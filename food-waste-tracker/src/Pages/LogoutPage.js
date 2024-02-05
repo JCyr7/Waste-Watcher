@@ -219,26 +219,21 @@ export default class LogoutPage extends Component {
     const {navigation} = this.props
     return (
       // Container view
-      <LinearGradient 
-        colors={[COLORS.green, COLORS.blue]} style={styles.container}
-        start={{x: 0, y: 0.2}}
-        end={{x: 1, y: 1}}>
+      <LinearGradient colors={[COLORS.white, COLORS.darkGreen]} style={styles.container}>
         <SafeAreaView style={styles.container}>
           <Image
             source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
             style={styles.image}
           />
           {/* title */}
-          <Text style={styles.title}>Waste</Text>
-          <Text style={styles.title}>Watcher</Text>
-          <Text style={styles.subtitle}>Food Waste Tracker</Text>
+          <Text style={styles.title}>Waste Watcher</Text>
+          <Text style={styles.subtitle}>A Food Waste Tracking App</Text>
 
 
             {/* username and password input*/}
             <TextInput
               cursorColor={'black'}
               placeholder='Username'
-              placeholderTextColor={COLORS.white} // Set the color of the placeholder text
               style={styles.userpassinput}
               onChangeText={(value) => {
                 this.setState({ username: value });
@@ -248,7 +243,6 @@ export default class LogoutPage extends Component {
               secureTextEntry
               cursorColor={'black'}
               placeholder='Password'
-              placeholderTextColor={COLORS.white} // Set the color of the placeholder text
               style={styles.userpassinput}
               onChangeText={(value) => {
                 this.setState({ password: value });
@@ -280,32 +274,41 @@ export default class LogoutPage extends Component {
             </Text>
             </Pressable>
 
-            <Text style={styles.or}>OR</Text>
-
 
             {/* alt logins */}
-            <Pressable style={styles.altLoginButton}>
-              <Ionicons name='logo-google' size={29} color='white' />
-              <Text style={styles.altLoginButtonText}>Log in with Google</Text>
-            </Pressable>
+            <View style={styles.row}>
+              <Pressable style={styles.altloginButton}>
+                <MaterialCommunityIcons
+                  name='facebook'
+                  size={30}
+                  color='blue'
+                />
+              </Pressable>
+              <Pressable style={styles.altloginButton}>
+                <Ionicons name='logo-google' size={29} color='black' />
+              </Pressable>
+            </View>
 
 
           {/* sign up button */}  
           <Pressable
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+                backgroundColor: pressed ? COLORS.lightGreen : COLORS.transparent
               },
               styles.createAccountButton
             ]}
             onPress={() => {
               this.setModalVisible(true)
             }}>
-              
             <Text style={styles.createAccountText}>
               Dont have an account? <Text style={styles.boldtext}>Sign up</Text>
             </Text>
           </Pressable>
+
+
+
+
 
 
           {/* Create account popup */}
@@ -431,29 +434,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    padding: 0,
+    paddingTop: 0,
+    paddingHorizontal: 0,
     margin: 0,
     width: '100%',
-    height: '100%',
   },
 
   //headings
   image: {
-    flex: .4, // Set flex to 0.4 to make it take 40% of the screen
-    marginTop: 40,
+    flex: .26, // Set flex to 0.4 to make it take 40% of the screen
+    marginTop: 20,
     width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
-    marginBottom: 0,
-    aspectRatio: 205 / 234, // Set the aspect ratio based on your image dimensions
+    marginBottom: 40,
+    aspectRatio: 694 / 238, // Set the aspect ratio based on your image dimensions
   },
   title: {
-    backgroundColor: 'white',
     fontSize: 32,
+    paddingTop: 0,
+    marginBottom: 0,
     color: COLORS.darkGreen,
+    fontWeight: 'bold'
   },
   subtitle:{
     fontSize: 24,
     color: COLORS.darkGreen,
-    marginBottom: 70,
+    marginBottom: 20,
   },
 
   //log in
@@ -462,10 +467,7 @@ const styles = StyleSheet.create({
     width: '85%',
     borderRadius: 7,
     backgroundColor: COLORS.whitetransparent,
-    margin: 8,
-    paddingLeft: 15,
-    fontSize: 15,
-
+    margin: 8
   },
   loginButton: {
     height: 50,
@@ -481,10 +483,9 @@ const styles = StyleSheet.create({
     color: 'white'
   },
 
-  //forgot password and sign up 
+  //forgot password
   forgotPasswordContainer: {
     backgroundColor: COLORS.transparent,
-    paddingTop: 10
   },
   createAccountText: {
     color: 'white',
@@ -493,42 +494,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  or:{
-    marginTop: 15,
-    marginBottom: 15,
-    color: COLORS.white,
-    fontSize: 16
-  },
-
   pressable: {
     height: '100%',
     width: '100%'
   },
-  
-  altLoginButton: {
+
+  row: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',  // Center content horizontally
-    height: 50,
-    width: '85%',
-    borderRadius: 7,
-    backgroundColor: COLORS.whitetransparent,
-    fontSize: 15,
+    margin: 10
   },
-
-  altLoginButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    paddingLeft: 8,  // Adjust the spacing between the icon and text
-  },
-
-  createAccountButton: {
-    paddingTop: 0,
-    width: '85%',
-    height: '8%',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
+  
+  altloginButton: {
+    width: 50,
+    borderRadius: 5,
+    alignItems: 'center'
   },
 
   // create account modal popup
@@ -545,7 +524,13 @@ const styles = StyleSheet.create({
     color: 'grey',
     alignSelf: 'center'
   },
-  
+  createAccountButton: {
+    width: '70%',
+    height: '8%',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   input: {
     borderRadius: 10,
     borderWidth: 3,

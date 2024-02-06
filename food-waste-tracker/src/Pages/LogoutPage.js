@@ -31,6 +31,8 @@ export default class LogoutPage extends Component {
     this.state = {
       modalVisible: false,
       checkboxValue: false,
+      checkboxage: false,
+      checkboxprivacy: false,
       firstname: '',
       lastname: '',
       email: '',
@@ -69,7 +71,7 @@ export default class LogoutPage extends Component {
         navigation.navigate('MainPage')
       } else {
         Alert.alert(
-          'Login failed, please enter the correct username and password.'
+          'Incorrect username or password'
         )
       }
     }
@@ -202,7 +204,7 @@ export default class LogoutPage extends Component {
     return (
       // Container view
       <LinearGradient 
-        colors={[COLORS.green, COLORS.blue]} style={styles.container}
+        colors={[COLORS.blue, COLORS.green]} style={styles.container}
         start={{x: 0, y: 0.2}}
         end={{x: 1, y: 1}}>
         <SafeAreaView style={styles.container}>
@@ -268,18 +270,13 @@ export default class LogoutPage extends Component {
               Forgot your login details? <Text style={styles.boldtext}>Get help signing in.</Text>
             </Text>
           </Pressable>
-
-            
-
             <Text style={styles.or}>OR</Text>
-
 
             {/* alt logins */}
             <Pressable style={styles.altLoginButton}>
               <Ionicons name='logo-google' size={29} color='white' />
               <Text style={styles.altLoginButtonText}>Sign in with Google</Text>
             </Pressable>
-
 
           {/* sign up button */}  
           <Pressable
@@ -310,7 +307,7 @@ export default class LogoutPage extends Component {
             }}>
             {/* Pressable component so that when the user taps outside the modal, it closes */}
             <LinearGradient
-              colors={[COLORS.green, COLORS.blue]}
+              colors={[COLORS.blue, COLORS.green]}
               style={{ flex: 1 }}
               start={{ x: 0, y: 0.2 }}
               end={{ x: 1, y: 1 }}>
@@ -334,14 +331,14 @@ export default class LogoutPage extends Component {
                     style={({pressed}) => [
                       {
                         backgroundColor: pressed
-                          ? COLORS.green
-                          : COLORS.green
+                          ? COLORS.lesswhitetransparent
+                          : COLORS.blue
                       },
                       styles.backButton
                     ]}>
-                  <Text style={styles.backButtontext}>^</Text>
+                  <Text style={styles.backButtontext}>×</Text>
                   </Pressable>
-                  <Text style={styles.createAccount}>Create Account</Text>
+                  <Text style={styles.createAccount}>Sign Up</Text>
                   <View style={styles.rowContainer}>
                   {/* Text inputs*/}
                   <View style={styles.inputContainer}>
@@ -352,8 +349,7 @@ export default class LogoutPage extends Component {
                       }
                       placeholder="First"
                       placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                      cursorColor={'white'}
-                      selectionColor={'white'}
+                      cursorColor={'black'}
                       style={styles.nameInput}
                     />
                   </View>
@@ -367,8 +363,7 @@ export default class LogoutPage extends Component {
                       }
                       placeholder="Last"
                       placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                      cursorColor={'white'}
-                      selectionColor={'white'}
+                      cursorColor={'black'}
                       style={styles.nameInput}
                     />
                   </View>
@@ -380,7 +375,7 @@ export default class LogoutPage extends Component {
                     defaultValue={this.state.email}
                     onChangeText={(emailInput) => this.setState({ email: emailInput })}
                     placeholder="Email"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
                     cursorColor={'white'}
                     selectionColor={'white'}
                     style={styles.input}
@@ -395,7 +390,7 @@ export default class LogoutPage extends Component {
                       this.setState({ username: usernameInput })
                     }
                     placeholder="Username"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
                     cursorColor={'white'}
                     selectionColor={'white'}
                     style={styles.input}
@@ -410,7 +405,7 @@ export default class LogoutPage extends Component {
                     selectionColor={'white'}
                     secureTextEntry
                     placeholder="Password"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
                     style={styles.input}
                   />
                 </View>
@@ -423,7 +418,7 @@ export default class LogoutPage extends Component {
                     selectionColor={'white'}
                     secureTextEntry
                     placeholder="Re-Enter Password"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
                     style={styles.input}
                   />
                 </View>
@@ -453,7 +448,11 @@ export default class LogoutPage extends Component {
                     unfillColor='white'
                     text="I am at least 18 years old"
                     innerIconStyle={{borderWidth: 2}}
-                    onPress={() => this.toggleCheckbox(!this.state.checkboxage)}
+                    onPress={() => {
+                      this.setState((prevState) => ({
+                        checkboxage: !prevState.checkboxage,
+                      }));
+                    }}
                     textStyle={styles.tosText}
                   />
                   <BouncyCheckbox
@@ -463,7 +462,11 @@ export default class LogoutPage extends Component {
                     unfillColor='white'
                     text="I agree to the Privacy Policy"
                     innerIconStyle={{borderWidth: 2}}
-                    onPress={() => this.toggleCheckbox(!this.state.checkboxprivacy)}
+                    onPress={() => {
+                      this.setState((prevState) => ({
+                        checkboxprivacy: !prevState.checkboxprivacy,
+                      }));
+                    }}
                     textStyle={styles.tosText}
                   />
 
@@ -473,7 +476,7 @@ export default class LogoutPage extends Component {
                     style={({pressed}) => [
                       {
                         backgroundColor: pressed
-                          ? COLORS.morewhitetransparent
+                          ? COLORS.lesswhitetransparent
                           : COLORS.whitetransparent
                       },
                       styles.submitButton
@@ -614,25 +617,23 @@ const styles = StyleSheet.create({
   //backbutton
   backButton: {
     position: 'absolute',
+    margin: 10,
     marginTop: 40,
-    marginLeft: 6,
-    paddingRight: 13,
     borderRadius: 14,
-    transform: [{ rotate: '270deg' }] 
   },
   backButtontext: {
     fontSize: 40,
     color: COLORS.white,
-    paddingLeft: 20,
-    paddingRight: 10,
     paddingTop: 20,
-    paddingBottom: 5,
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25
   },
 
   //create account title text
   createAccount: {
-    paddingTop: '40%',
-    paddingBottom: 30,
+    paddingTop: '35%',
+    paddingBottom: 40,
     fontSize: 28,
     color: COLORS.white,
     alignSelf: 'center',
@@ -652,24 +653,26 @@ const styles = StyleSheet.create({
   nameInput: {
     borderBottomWidth: 2.5, 
     paddingTop: '4%',
-    paddingBottom: '1%', 
-    marginBottom: 16,
+    paddingBottom: '3%', 
+    paddingLeft: '2%',
+    marginBottom: 20,
     width: '100%',
     alignSelf: 'center',
     borderColor: COLORS.white,
     fontSize: 17,
     color: 'white',
-  },
+    },
 
   //all other inputs
   input: {
     borderBottomWidth: 2.5, 
     paddingTop: '4%',
-    paddingBottom: '1%', 
+    paddingBottom: '1.5%', 
+    paddingLeft: '1%',
     width: '85%',
     alignSelf: 'center',
     borderColor: COLORS.white,
-    marginBottom: 16,
+    marginBottom: 20,
     fontSize: 17,
     color: 'white',
   },
@@ -681,11 +684,9 @@ const styles = StyleSheet.create({
     height: '5%',
     width: '85%',  // Set width to 85%
     justifyContent: 'center',
-    marginTop: 25,
+    marginTop: 35,
     alignSelf: 'center',
-    alignItems: 'center',
-    borderWidth: 3,
-    borderColor: COLORS.whitetransparent
+    alignItems: 'center'
   },
   
   submitButtonText: {

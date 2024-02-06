@@ -276,7 +276,7 @@ export default class LogoutPage extends Component {
             <Pressable style={styles.altLoginButton}>
               <Ionicons name='logo-google' size={29} color='white' />
               <Text style={styles.altLoginButtonText}>Sign in with Google</Text>
-            </Pressable>
+          </Pressable>
 
           {/* sign up button */}  
           <Pressable
@@ -331,14 +331,14 @@ export default class LogoutPage extends Component {
                     style={({pressed}) => [
                       {
                         backgroundColor: pressed
-                          ? COLORS.lesswhitetransparent
-                          : COLORS.blue
+                          ? COLORS.transparent
+                          : COLORS.transparent
                       },
                       styles.backButton
                     ]}>
                   <Text style={styles.backButtontext}>×</Text>
                   </Pressable>
-                  <Text style={styles.createAccount}>Sign Up</Text>
+                  <Text style={styles.createAccount}>Create Account</Text>
                   <View style={styles.rowContainer}>
                   {/* Text inputs*/}
                   <View style={styles.inputContainer}>
@@ -477,7 +477,7 @@ export default class LogoutPage extends Component {
                       {
                         backgroundColor: pressed
                           ? COLORS.lesswhitetransparent
-                          : COLORS.whitetransparent
+                          : 'rgba(255, 255, 255, 0.45)'
                       },
                       styles.submitButton
                     ]}>
@@ -682,7 +682,7 @@ const styles = StyleSheet.create({
     padding: '2%',
     borderRadius: 5,
     height: '5%',
-    width: '85%',  // Set width to 85%
+    width: '55%',  // Set width to 85%
     justifyContent: 'center',
     marginTop: 35,
     alignSelf: 'center',
@@ -690,7 +690,8 @@ const styles = StyleSheet.create({
   },
   
   submitButtonText: {
-    color: COLORS.white
+    color: COLORS.white,
+    fontWeight: 'bold'
   },
   pressable: {
     height: '100%',

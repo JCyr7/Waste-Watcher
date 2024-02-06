@@ -38,113 +38,126 @@ export default class ForgotPassword extends Component {
   }
 
   render() {
-    const {navigation} = this.props
+    const { navigation } = this.props;
+
     return (
-      // Container for page
-      <KeyboardAvoidingView style={styles.container}>
-         {/* back button */}
-        <Pressable
-                    // Create account button - executes create account function defined above on press
-                    onPress={() => navigation.navigate('LogoutPage')}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed ? COLORS.transparent : COLORS.transparent
-                      },
-                      styles.backButton
-                    ]}>
-                  <Text style={styles.backButtontext}>^</Text>
-        </Pressable>
+      <LinearGradient
+        colors={[COLORS.blue, COLORS.green]}
+        style={styles.container}
+        start={{ x: 0, y: 0.2 }}
+        end={{ x: 1, y: 1 }}
+      >
+        {/* Container for page */}
+        <KeyboardAvoidingView behavior='padding' style={styles.container}>
+          <Pressable
+            onPress={() => navigation.navigate('LogoutPage')}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.transparent
+                  : COLORS.transparent,
+              },
+              styles.backButton,
+            ]}
+          >
+            <Text style={styles.backButtontext}>×</Text>
+          </Pressable>
 
+          <Image
+            style={styles.image}
+            source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
+          />
+          <Text style={styles.header}>Reset Password</Text>
+          <Text style={styles.subheader}>
+            Enter your email and we'll send you a link to reset your password.
+          </Text>
 
-        <Image
-          style={styles.image}
-          source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
-        />
-        <Text style={styles.header}>Reset Password</Text>
-        <Text style={styles.subheader}>
-          If you do not know your current password, you may change it.
-        </Text>
-        <Text style={styles.inputTitle}>Email</Text>
+          <TextInput
+            placeholder='example@noemail.com'
+            onEndEditing={() => this.validateText()}
+            onChangeText={(value) => this.setText(value)}
+            style={[
+              { borderColor: this.state.invalidEmail ? 'red' : COLORS.darkGreen },
+              styles.input,
+            ]}
+            placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+            cursorColor={'white'}
+            selectionColor={'white'}
+          ></TextInput>
 
-        {/*  */}
-        <TextInput
-          placeholder='example@noemail.com'
-          onEndEditing={() => this.validateText()}
-          onChangeText={(value) => this.setText(value)}
-          style={[
-            {borderColor: this.state.invalidEmail ? 'red' : COLORS.darkGreen},
-            styles.input
-          ]}
-          cursorColor={'black'}></TextInput>
-
-        <TouchableOpacity style={styles.submitButton}>
-          <Text style={styles.submitButtonTextColor}>Submit</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    )
+          <TouchableOpacity style={styles.submitButton}>
+            <Text style={styles.submitButtonTextColor}>Reset Password</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </LinearGradient>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGreen,
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 0,
+    margin: 0,
+    width: '100%',
+    height: '100%',
+  },
+  image: {
+    flex: .4, // Set flex to 0.4 to make it take 40% of the screen
+    marginTop: 80,
+    width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
+    marginBottom: 0,
+    aspectRatio: 181 / 201, // Set the aspect ratio based on your image dimensions
   },
   //backbutton
   backButton: {
-    position: 'absolute',
+    alignSelf: 'flex-start',
+    margin: 10,
     marginTop: 40,
-    marginLeft: 6,
-    paddingRight: 13,
     borderRadius: 14,
-    transform: [{ rotate: '270deg' }] 
   },
   backButtontext: {
     fontSize: 40,
     color: COLORS.white,
-    paddingLeft: 20,
-    paddingRight: 10,
     paddingTop: 20,
-    paddingBottom: 5,
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25
   },
-  image: {
-    marginTop: '30%'
-  },
+
   header: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: COLORS.darkGray
+    color: COLORS.white
   },
   subheader: {
-    color: COLORS.darkGray,
-    margin: '5%',
+    color: COLORS.white,
+    marginLeft: '.5%',
+    marginRight: '7.5%',
     fontSize: 12
   },
-  inputTitle: {
-    paddingLeft: '3%',
-    paddingTop: '1%',
-    paddingBottom: '1%',
-    fontWeight: 'bold',
-    alignSelf: 'flex-start'
-  },
   input: {
-    borderRadius: 10,
-    borderWidth: 2,
-    paddingTop: '1%',
-    padding: '1%',
-    paddingLeft: '3%',
-    width: '95%',
-    alignSelf: 'center'
+    borderBottomWidth: 2.5, 
+    paddingTop: '4%',
+    paddingBottom: '1.5%', 
+    paddingLeft: '1%',
+    width: '85%',
+    alignSelf: 'center',
+    borderColor: COLORS.white,
+    marginBottom: 20,
+    fontSize: 17,
+    color: 'white',
   },
   submitButton: {
-    margin: '4%',
-    paddingTop: '1%',
-    height: 30,
-    width: '15%',
-    borderRadius: 3,
+    height: 50,
+    width: '85%',
     alignItems: 'center',
-    backgroundColor: COLORS.darkGreen
+    justifyContent: 'space-evenly',
+    borderColor: COLORS.whitetransparent,
+    borderWidth: 3,
+    borderRadius: 7,
+    margin: 8
   },
   submitButtonTextColor: {
     color: 'white'

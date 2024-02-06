@@ -218,6 +218,7 @@ export default class LogoutPage extends Component {
             {/* username and password input*/}
             <TextInput
               cursorColor={'white'}
+              selectionColor={'white'}
               placeholder='Username'
               placeholderTextColor={COLORS.white} // Set the color of the placeholder text
               style={[styles.userpassinput, { color: COLORS.white }]}             
@@ -228,6 +229,7 @@ export default class LogoutPage extends Component {
             <TextInput
               secureTextEntry
               cursorColor={'white'}
+              selectionColor={'white'}
               placeholder='Password'
               placeholderTextColor={COLORS.white} // Set the color of the placeholder text
               style={[styles.userpassinput, { color: COLORS.white }]}
@@ -349,8 +351,9 @@ export default class LogoutPage extends Component {
                         this.setState({ firstname: firstnameInput })
                       }
                       placeholder="First"
-                      placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                      cursorColor={'black'}
+                      placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                      cursorColor={'white'}
+                      selectionColor={'white'}
                       style={styles.nameInput}
                     />
                   </View>
@@ -363,8 +366,9 @@ export default class LogoutPage extends Component {
                         this.setState({ lastname: lastnameInput })
                       }
                       placeholder="Last"
-                      placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                      cursorColor={'black'}
+                      placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                      cursorColor={'white'}
+                      selectionColor={'white'}
                       style={styles.nameInput}
                     />
                   </View>
@@ -378,6 +382,7 @@ export default class LogoutPage extends Component {
                     placeholder="Email"
                     placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                     cursorColor={'white'}
+                    selectionColor={'white'}
                     style={styles.input}
                   />
                 </View>
@@ -392,6 +397,7 @@ export default class LogoutPage extends Component {
                     placeholder="Username"
                     placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                     cursorColor={'white'}
+                    selectionColor={'white'}
                     style={styles.input}
                   />
                 </View>
@@ -401,6 +407,7 @@ export default class LogoutPage extends Component {
                   <TextInput
                     onChangeText={(newText) => this.setState({ password: newText })}
                     cursorColor={'white'}
+                    selectionColor={'white'}
                     secureTextEntry
                     placeholder="Password"
                     placeholderTextColor={COLORS.white} // Set the color of the placeholder text
@@ -412,7 +419,8 @@ export default class LogoutPage extends Component {
                   {/* Text input for password re-enter */}
                   <TextInput
                     onChangeText={(newText) => this.setState({ passwordRenter: newText })}
-                    cursorColor={'black'}
+                    cursorColor={'white'}
+                    selectionColor={'white'}
                     secureTextEntry
                     placeholder="Re-Enter Password"
                     placeholderTextColor={COLORS.white} // Set the color of the placeholder text
@@ -465,8 +473,8 @@ export default class LogoutPage extends Component {
                     style={({pressed}) => [
                       {
                         backgroundColor: pressed
-                          ? COLORS.whitetransparent
-                          : COLORS.transparent
+                          ? COLORS.morewhitetransparent
+                          : COLORS.whitetransparent
                       },
                       styles.submitButton
                     ]}>
@@ -671,7 +679,7 @@ const styles = StyleSheet.create({
     padding: '2%',
     borderRadius: 5,
     height: '5%',
-    width: '45%',  // Set width to 85%
+    width: '85%',  // Set width to 85%
     justifyContent: 'center',
     marginTop: 25,
     alignSelf: 'center',

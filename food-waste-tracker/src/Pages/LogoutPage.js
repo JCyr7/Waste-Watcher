@@ -508,11 +508,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   image: {
-    flex: .4, // Set flex to 0.4 to make it take 40% of the screen
-    marginTop: 80,
+    flex: .25, // Set flex to 0.4 to make it take 40% of the screen
+    marginTop: 20,
     width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
-    marginBottom: 0,
-    aspectRatio: 181 / 201, // Set the aspect ratio based on your image dimensions
+    marginBottom: '10%',
+    aspectRatio: 792 / 283, // Set the aspect ratio based on your image dimensions
   },
   title: {
     fontWeight: 'bold',
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
   subtitle:{
     fontSize: 24,
     color: 'white',
-    marginBottom: 20,
+    marginBottom: '10%',
   },
   userpassinput: {
     height: 50,

@@ -45,8 +45,8 @@ export default class ForgotPassword extends Component {
         colors={[COLORS.blue, COLORS.green]}
         style={styles.container}
         start={{ x: 0, y: 0.2 }}
-        end={{ x: 1, y: 1 }}
-      >
+        end={{ x: 1, y: 1 }}>
+
         {/* Container for page */}
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
           <Pressable
@@ -58,8 +58,7 @@ export default class ForgotPassword extends Component {
                   : COLORS.transparent,
               },
               styles.backButton,
-            ]}
-          >
+            ]}>
             <Text style={styles.backButtontext}>×</Text>
           </Pressable>
 
@@ -67,27 +66,30 @@ export default class ForgotPassword extends Component {
             style={styles.image}
             source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
           />
-          <Text style={styles.header}>Reset Password</Text>
-          <Text style={styles.subheader}>
-            Enter your email and we'll send you a link to reset your password.
-          </Text>
+          <Text style={styles.header}>Forgot Password?</Text>
+          <Text style={styles.subheader}>Please enter your email and we'll send you a link to reset your password.</Text>
+
 
           <TextInput
-            placeholder='example@noemail.com'
-            onEndEditing={() => this.validateText()}
-            onChangeText={(value) => this.setText(value)}
-            style={[
-              { borderColor: this.state.invalidEmail ? 'red' : COLORS.darkGreen },
-              styles.input,
-            ]}
-            placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
             cursorColor={'white'}
             selectionColor={'white'}
-          ></TextInput>
+            placeholder='example@gmail.com'
+            placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+            style={[styles.input, { color: COLORS.white }]}             
+            onChangeText={(value) => this.setText(value)}
+            onEndEditing={() => this.validateText()}>
+          </TextInput>
 
-          <TouchableOpacity style={styles.submitButton}>
+          <Pressable
+            //onPress={() => navigation.navigate('LogoutPage')}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+              },
+              styles.submitButton,
+            ]}>
             <Text style={styles.submitButtonTextColor}>Reset Password</Text>
-          </TouchableOpacity>
+          </Pressable>
         </KeyboardAvoidingView>
       </LinearGradient>
     );
@@ -104,13 +106,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   image: {
-    flex: .4, // Set flex to 0.4 to make it take 40% of the screen
-    marginTop: 80,
+    flex: .1, 
     width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
-    marginBottom: 0,
-    aspectRatio: 181 / 201, // Set the aspect ratio based on your image dimensions
+    marginBottom: '10%',
+    aspectRatio: 792 / 283, // Set the aspect ratio based on your image dimensions
   },
-  //backbutton
   backButton: {
     alignSelf: 'flex-start',
     margin: 10,
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25
   },
-
   header: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -138,16 +137,13 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   input: {
-    borderBottomWidth: 2.5, 
-    paddingTop: '4%',
-    paddingBottom: '1.5%', 
-    paddingLeft: '1%',
+    height: 50,
     width: '85%',
-    alignSelf: 'center',
-    borderColor: COLORS.white,
-    marginBottom: 20,
-    fontSize: 17,
-    color: 'white',
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    margin: 8,
+    paddingLeft: 15,
+    fontSize: 15,
   },
   submitButton: {
     height: 50,
@@ -160,6 +156,7 @@ const styles = StyleSheet.create({
     margin: 8
   },
   submitButtonTextColor: {
-    color: 'white'
+    color: 'white',
+    fontSize: 15,
   }
 })

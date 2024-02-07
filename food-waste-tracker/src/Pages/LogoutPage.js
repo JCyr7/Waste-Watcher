@@ -12,7 +12,8 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   SafeAreaView,
-  Alert
+  Alert,
+  Keyboard,
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 import axios from 'axios'
@@ -312,182 +313,37 @@ export default class LogoutPage extends Component {
               style={{ flex: 1 }}
               start={{ x: 0, y: 0.2 }}
               end={{ x: 1, y: 1 }}>
-              {/* Pressable component so that when the user taps outside the modal, it closes */}
-              <Pressable
-              onPress={() => {
-                this.setModalVisible(false)
-                this.toggleCheckbox(false)
-              }}
-              style={styles.pressable}>
-              {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
-              <TouchableWithoutFeedback>
-                <KeyboardAvoidingView behavior='padding' style={styles.modal}>
-                    {/* Back button to exit the modal */}
-                  <Pressable
-                    // Create account button - executes create account function defined above on press
-                    onPress={() => {
-                      this.setModalVisible(false);
-                      this.toggleCheckbox(false);
-                    }}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed
-                          ? COLORS.transparent
-                          : COLORS.transparent
-                      },
-                      styles.backButton
-                    ]}>
-                  <Text style={styles.backButtontext}>×</Text>
-                  </Pressable>
-                  <Text style={styles.createAccount}>Create Account</Text>
-                  <View style={styles.rowContainer}>
-                  {/* Text inputs*/}
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      defaultValue={this.state.firstname}
-                      onChangeText={(firstnameInput) =>
-                        this.setState({ firstname: firstnameInput })
-                      }
-                      placeholder="First"
-                      placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                      cursorColor={'black'}
-                      style={styles.nameInput}
-                    />
+              
+
+
+              <KeyboardAvoidingView behavior="padding" style={styles.modal}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                  <View style={styles.inner}>
+                    <Text style={styles.header}>Header</Text>
+                    <TextInput placeholder="Username" style={styles.textInput} />
+                    <View style={styles.btnContainer}>
+                      <TextInput placeholder="Username" style={styles.textInput} />
+                      <Pressable
+                        // Create account button - executes create account function defined above on press
+                        onPress={() => this.createAccount(navigation)}
+                        style={({pressed}) => [
+                          {
+                            backgroundColor: pressed
+                              ? COLORS.lesswhitetransparent
+                              : 'rgba(255, 255, 255, 0.45)'
+                          },
+                          styles.submitButton
+                        ]}>
+                        <Text style={styles.submitButtonText}>Sign Up</Text>
+                      </Pressable>
+                    </View>
                   </View>
+                </TouchableWithoutFeedback>
+              </KeyboardAvoidingView>
 
-                  {/* Text input for lastname */}
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      defaultValue={this.state.lastname}
-                      onChangeText={(lastnameInput) =>
-                        this.setState({ lastname: lastnameInput })
-                      }
-                      placeholder="Last"
-                      placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                      cursorColor={'black'}
-                      style={styles.nameInput}
-                    />
-                  </View>
-                </View>
 
-                <View>
-                  {/* Text input for email */}
-                  <TextInput
-                    defaultValue={this.state.email}
-                    onChangeText={(emailInput) => this.setState({ email: emailInput })}
-                    placeholder="Email"
-                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                    cursorColor={'white'}
-                    selectionColor={'white'}
-                    style={styles.input}
-                  />
-                </View>
 
-                <View>
-                  {/* Text input for newusername */}
-                  <TextInput
-                    defaultValue={this.state.newusername}
-                    onChangeText={(newusernameInput) =>
-                      this.setState({ newusername: newusernameInput })
-                    }
-                    placeholder="Username"
-                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                    cursorColor={'white'}
-                    selectionColor={'white'}
-                    style={styles.input}
-                  />
-                </View>
-
-                <View>
-                  {/* Text input for password */}
-                  <TextInput
-                    onChangeText={(newText) => this.setState({ password: newText })}
-                    cursorColor={'white'}
-                    selectionColor={'white'}
-                    secureTextEntry
-                    placeholder="Password"
-                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                    style={styles.input}
-                  />
-                </View>
-
-                <View>
-                  {/* Text input for password re-enter */}
-                  <TextInput
-                    onChangeText={(newText) => this.setState({ passwordRenter: newText })}
-                    cursorColor={'white'}
-                    selectionColor={'white'}
-                    secureTextEntry
-                    placeholder="Re-Enter Password"
-                    placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                    style={styles.input}
-                  />
-                </View>
-                  {/* Password requirements
-                  <View style={styles.passReqsContainer}>
-                    <Text style={styles.passReqLabel}>
-                      Password must contain the following:
-                    </Text>
-                    <Text style={styles.passReq}>8 or more characters</Text>
-                    <Text style={styles.passReq}>1 or more numbers</Text>
-                    <Text style={styles.passReq}>
-                      1 or more uppercase letters
-                    </Text>
-                    <Text style={styles.passReq}>
-                      1 or more lowercase letters
-                    </Text>
-                    <Text style={styles.passReq}>
-                      1 or more special characters (!@#$)
-                    </Text>
-                  </View>
-
-                  {/* Checkbox for ensuring user is over 18 */}
-                  <BouncyCheckbox
-                    size={22}
-                    style={styles.checkBox}
-                    fillColor={COLORS.whitetransparent}
-                    unfillColor='white'
-                    text="I am at least 18 years old"
-                    innerIconStyle={{borderWidth: 2}}
-                    onPress={() => {
-                      this.setState((prevState) => ({
-                        checkboxage: !prevState.checkboxage,
-                      }));
-                    }}
-                    textStyle={styles.tosText}
-                  />
-                  <BouncyCheckbox
-                    size={22}
-                    style={styles.checkBox}
-                    fillColor={COLORS.whitetransparent}
-                    unfillColor='white'
-                    text="I agree to the Privacy Policy"
-                    innerIconStyle={{borderWidth: 2}}
-                    onPress={() => {
-                      this.setState((prevState) => ({
-                        checkboxprivacy: !prevState.checkboxprivacy,
-                      }));
-                    }}
-                    textStyle={styles.tosText}
-                  />
-
-                  <Pressable
-                    // Create account button - executes create account function defined above on press
-                    onPress={() => this.createAccount(navigation)}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed
-                          ? COLORS.lesswhitetransparent
-                          : 'rgba(255, 255, 255, 0.45)'
-                      },
-                      styles.submitButton
-                    ]}>
-                    <Text style={styles.submitButtonText}>Sign Up</Text>
-                  </Pressable>
-                </KeyboardAvoidingView>
-              </TouchableWithoutFeedback>
-            </Pressable>
-          </LinearGradient>
+            </LinearGradient>
           </Modal>
         </SafeAreaView>
       </LinearGradient>
@@ -609,12 +465,13 @@ const styles = StyleSheet.create({
 
 
   modal: {
-    height: '100%',
-    marginTop: 'auto',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20
+    flex: 1,
   },
-
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
+  },
   //backbutton
   backButton: {
     position: 'absolute',
@@ -633,9 +490,9 @@ const styles = StyleSheet.create({
 
   //create account title text
   createAccount: {
-    paddingTop: '35%',
+    paddingTop: '25%',
     paddingBottom: 40,
-    fontSize: 28,
+    fontSize: 30,
     color: COLORS.white,
     alignSelf: 'center',
   },
@@ -653,7 +510,7 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     borderBottomWidth: 2.5, 
-    paddingTop: '4%',
+    paddingTop: '2%',
     paddingBottom: '3%', 
     paddingLeft: '2%',
     marginBottom: 20,
@@ -667,7 +524,7 @@ const styles = StyleSheet.create({
   //all other inputs
   input: {
     borderBottomWidth: 2.5, 
-    paddingTop: '4%',
+    paddingTop: '2%',
     paddingBottom: '1.5%', 
     paddingLeft: '1%',
     width: '85%',
@@ -724,3 +581,181 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 });
+
+
+
+// {/* Pressable component so that when the user taps outside the modal, it closes */}
+// <Pressable
+// onPress={() => {
+//   this.setModalVisible(false)
+//   this.toggleCheckbox(false)
+// }}
+// style={styles.pressable}>
+// {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
+// <TouchableWithoutFeedback>
+//   <KeyboardAvoidingView behavior='padding' style={styles.modal}>
+//       {/* Back button to exit the modal */}
+//     <Pressable
+//       // Create account button - executes create account function defined above on press
+//       onPress={() => {
+//         this.setModalVisible(false);
+//         this.toggleCheckbox(false);
+//       }}
+//       style={({pressed}) => [
+//         {
+//           backgroundColor: pressed
+//             ? COLORS.transparent
+//             : COLORS.transparent
+//         },
+//         styles.backButton
+//       ]}>
+//     <Text style={styles.backButtontext}>×</Text>
+//     </Pressable>
+//     <Text style={styles.createAccount}>Create Account</Text>
+//     <View style={styles.rowContainer}>
+//     {/* Text inputs*/}
+//     <View style={styles.inputContainer}>
+//       <TextInput
+//         defaultValue={this.state.firstname}
+//         onChangeText={(firstnameInput) =>
+//           this.setState({ firstname: firstnameInput })
+//         }
+//         placeholder="First"
+//         placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+//         cursorColor={'black'}
+//         style={styles.nameInput}
+//       />
+//     </View>
+
+//     {/* Text input for lastname */}
+//     <View style={styles.inputContainer}>
+//       <TextInput
+//         defaultValue={this.state.lastname}
+//         onChangeText={(lastnameInput) =>
+//           this.setState({ lastname: lastnameInput })
+//         }
+//         placeholder="Last"
+//         placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+//         cursorColor={'black'}
+//         style={styles.nameInput}
+//       />
+//     </View>
+//   </View>
+
+//   <View>
+//     {/* Text input for email */}
+//     <TextInput
+//       defaultValue={this.state.email}
+//       onChangeText={(emailInput) => this.setState({ email: emailInput })}
+//       placeholder="Email"
+//       placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+//       cursorColor={'white'}
+//       selectionColor={'white'}
+//       style={styles.input}
+//     />
+//   </View>
+
+//   <View>
+//     {/* Text input for newusername */}
+//     <TextInput
+//       defaultValue={this.state.newusername}
+//       onChangeText={(newusernameInput) =>
+//         this.setState({ newusername: newusernameInput })
+//       }
+//       placeholder="Username"
+//       placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+//       cursorColor={'white'}
+//       selectionColor={'white'}
+//       style={styles.input}
+//     />
+//   </View>
+
+//   <View>
+//     {/* Text input for password */}
+//     <TextInput
+//       onChangeText={(newText) => this.setState({ password: newText })}
+//       cursorColor={'white'}
+//       selectionColor={'white'}
+//       secureTextEntry
+//       placeholder="Password"
+//       placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+//       style={styles.input}
+//     />
+//   </View>
+
+//   <View>
+//     {/* Text input for password re-enter */}
+//     <TextInput
+//       onChangeText={(newText) => this.setState({ passwordRenter: newText })}
+//       cursorColor={'white'}
+//       selectionColor={'white'}
+//       secureTextEntry
+//       placeholder="Re-Enter Password"
+//       placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+//       style={styles.input}
+//     />
+//   </View>
+//     {/* Password requirements
+//     <View style={styles.passReqsContainer}>
+//       <Text style={styles.passReqLabel}>
+//         Password must contain the following:
+//       </Text>
+//       <Text style={styles.passReq}>8 or more characters</Text>
+//       <Text style={styles.passReq}>1 or more numbers</Text>
+//       <Text style={styles.passReq}>
+//         1 or more uppercase letters
+//       </Text>
+//       <Text style={styles.passReq}>
+//         1 or more lowercase letters
+//       </Text>
+//       <Text style={styles.passReq}>
+//         1 or more special characters (!@#$)
+//       </Text>
+//     </View>
+
+//     {/* Checkbox for ensuring user is over 18 */}
+//     <BouncyCheckbox
+//       size={22}
+//       style={styles.checkBox}
+//       fillColor={COLORS.whitetransparent}
+//       unfillColor='white'
+//       text="I am at least 18 years old"
+//       innerIconStyle={{borderWidth: 2}}
+//       onPress={() => {
+//         this.setState((prevState) => ({
+//           checkboxage: !prevState.checkboxage,
+//         }));
+//       }}
+//       textStyle={styles.tosText}
+//     />
+//     <BouncyCheckbox
+//       size={22}
+//       style={styles.checkBox}
+//       fillColor={COLORS.whitetransparent}
+//       unfillColor='white'
+//       text="I agree to the Privacy Policy"
+//       innerIconStyle={{borderWidth: 2}}
+//       onPress={() => {
+//         this.setState((prevState) => ({
+//           checkboxprivacy: !prevState.checkboxprivacy,
+//         }));
+//       }}
+//       textStyle={styles.tosText}
+//     />
+
+//     <Pressable
+//       // Create account button - executes create account function defined above on press
+//       onPress={() => this.createAccount(navigation)}
+//       style={({pressed}) => [
+//         {
+//           backgroundColor: pressed
+//             ? COLORS.lesswhitetransparent
+//             : 'rgba(255, 255, 255, 0.45)'
+//         },
+//         styles.submitButton
+//       ]}>
+//       <Text style={styles.submitButtonText}>Sign Up</Text>
+//     </Pressable>
+//   </KeyboardAvoidingView>
+// </TouchableWithoutFeedback>
+// </Pressable>

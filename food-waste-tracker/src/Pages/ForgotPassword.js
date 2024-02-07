@@ -7,7 +7,9 @@ import {
   TextInput,
   Text,
   Pressable,
-  Platform
+  TouchableWithoutFeedback,
+  Keyboard,
+  View
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 
@@ -45,42 +47,43 @@ export default class ForgotPassword extends Component {
         style={styles.container}
         start={{ x: 0, y: 0.2 }}
         end={{ x: 1, y: 1 }}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Use 'padding' behavior for iOS and 'height' behavior for Android
-          style={styles.container}
-        >
-          <Pressable
-            onPress={() => navigation.navigate('LogoutPage')}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? COLORS.transparent
-                  : COLORS.transparent,
-              },
-              styles.backButton,
-            ]}>
-            <Text style={styles.backButtontext}>×</Text>
-          </Pressable>
-          <Text style={styles.header}>Forgot Password?</Text>
-          <Text style={styles.subheader}>Please enter your email and we'll send you an email with a link to reset your password.</Text>
-          <TextInput
-            cursorColor={'white'}
-            selectionColor={'white'}
-            placeholder='example@gmail.com'
-            placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-            style={[styles.input, { color: COLORS.white }]}             
-            onChangeText={(value) => this.setText(value)}
-            onEndEditing={() => this.validateText()}>
-          </TextInput>
-          <Pressable
-            //onPress={() => navigation.navigate('LogoutPage')}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
-              },
-              styles.submitButton,]}>
-            <Text style={styles.submitButtonTextColor}>Reset Password</Text>
-          </Pressable>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.inner}>
+              <Pressable
+                onPress={() => navigation.navigate('LogoutPage')}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed
+                      ? COLORS.transparent
+                      : COLORS.transparent,
+                  },
+                  styles.backButton,
+                ]}>
+                <Text style={styles.backButtontext}>×</Text>
+              </Pressable>
+              <Text style={styles.header}>Forgot Password?</Text>
+              <Text style={styles.subheader}>Please enter your email and we'll send you an email with a link to reset your password.</Text>
+              <TextInput
+                cursorColor={'white'}
+                selectionColor={'white'}
+                placeholder='example@gmail.com'
+                placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                style={[styles.input, { color: COLORS.white }]}             
+                onChangeText={(value) => this.setText(value)}
+                onEndEditing={() => this.validateText()}>
+              </TextInput>
+              <Pressable
+                //onPress={() => navigation.navigate('LogoutPage')}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+                  },
+                  styles.submitButton,]}>
+                <Text style={styles.submitButtonTextColor}>Reset Password</Text>
+              </Pressable>
+            </View>
+          </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </LinearGradient>
     );
@@ -89,11 +92,12 @@ export default class ForgotPassword extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  inner: {
+    flex: 1,
     alignItems: 'center',
-    padding: 0,
-    margin: 0,
-    width: '100%',
-    height: '100%',
+
   },
   backButton: {
     alignSelf: 'flex-start',
@@ -111,12 +115,14 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 35,
-    color: COLORS.white
+    color: 'white',
+    justifyContent: 'center', // Vertical centering
+    alignItems: 'center', // Horizontal centering
   },
   subheader: {
     color: COLORS.white,
-    width: '85%',
-    marginBottom: 8,
+    width: '80%',
+    marginBottom: 15,
     marginTop: 80,
     fontSize: 15
   },

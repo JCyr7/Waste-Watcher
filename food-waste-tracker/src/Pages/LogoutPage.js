@@ -20,8 +20,9 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection } from "firebase/firestore";
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -37,7 +38,26 @@ export default class LogoutPage extends Component {
       username: '',
       password: '',
       passwordRenter: '',
+      userID: '',
       userAuth: false
+    }
+  }
+
+  createUserDataInFirebase = async () => {
+
+    try {
+      const docRef = await addDoc(collection(FIREBASE_DB, "users"), {
+        first: this.state.firstname,
+        last: this.state.lastname,
+        username: this.state.username,
+        email: this.state.email,
+        userID: this.state.userID,
+        foodWaste: {}
+      });
+    
+      //console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
   }
 
@@ -86,14 +106,14 @@ export default class LogoutPage extends Component {
   // and the password is complex and has enough characters
   // Axios method calls to send data to the backend
   createAccount = async (navigation) => {
+
+
     // checks the validity of inputs
     const passwordCheck = this.checkPasswordComplexity()
     const emailCheck = this.checkEmail()
     const usernameCheck = this.checkUsername()
     const privacyCheck = this.privacyCheck()
     const ageCheck = this.ageCheck()
-
-    console.log("test: ", this.state.email, this.state.password);
 
     // if statement only executes if all user input checks pass
     if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck) {
@@ -106,8 +126,10 @@ export default class LogoutPage extends Component {
       .then((userCredential) => {
           // Signed up 
         const user = userCredential.user;
-        this.setModalVisible(false)
-        navigation.navigate('MainPage')
+        this.setState({userID: user.uid});
+        this.setState({userAuth: true});
+        this.setModalVisible(false);
+        navigation.navigate('MainPage');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -115,6 +137,12 @@ export default class LogoutPage extends Component {
         console.log(errorMessage);
       });
     }
+
+    if (this.state.userAuth) {
+      await this.createUserDataInFirebase()
+    }
+    
+
   }
 
   // Method checks if the email entered by the user is in the correct format
@@ -396,9 +424,7 @@ export default class LogoutPage extends Component {
                   {/* Text input for username */}
                   <TextInput
                     defaultValue={this.state.username}
-                    onChangeText={(usernameInput) =>
-                      this.setState({ username: usernameInput })
-                    }
+                    onChangeText={(usernameInput) => this.setState( { username: usernameInput })}
                     placeholder="Username"
                     placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                     cursorColor={'white'}
@@ -429,23 +455,6 @@ export default class LogoutPage extends Component {
                     style={styles.input}
                   />
                 </View>
-                  {/* Password requirements
-                  <View style={styles.passReqsContainer}>
-                    <Text style={styles.passReqLabel}>
-                      Password must contain the following:
-                    </Text>
-                    <Text style={styles.passReq}>8 or more characters</Text>
-                    <Text style={styles.passReq}>1 or more numbers</Text>
-                    <Text style={styles.passReq}>
-                      1 or more uppercase letters
-                    </Text>
-                    <Text style={styles.passReq}>
-                      1 or more lowercase letters
-                    </Text>
-                    <Text style={styles.passReq}>
-                      1 or more special characters (!@#$)
-                    </Text>
-                  </View>
 
                   {/* Checkbox for ensuring user is over 18 */}
                   <BouncyCheckbox

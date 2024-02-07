@@ -21,7 +21,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -93,18 +93,28 @@ export default class LogoutPage extends Component {
     const privacyCheck = this.privacyCheck()
     const ageCheck = this.ageCheck()
 
+    console.log("test: ", this.state.email, this.state.password);
+
     // if statement only executes if all user input checks pass
     if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck) {
-      let value
 
-      if (true) {
-        this.setModalVisible(false)
-        navigation.navigate('MainPage')
-      }
-    }
     // sets two async storage items - username and bool value for the household information modal
     await AsyncStorage.setItem('newUser', JSON.stringify(true))
     await AsyncStorage.setItem('username', this.state.username)
+
+    await createUserWithEmailAndPassword(FIREBASE_AUTH, this.state.email, this.state.password)
+      .then((userCredential) => {
+          // Signed up 
+        const user = userCredential.user;
+        this.setModalVisible(false)
+        navigation.navigate('MainPage')
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+    }
   }
 
   // Method checks if the email entered by the user is in the correct format

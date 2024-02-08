@@ -93,6 +93,7 @@ export default class ForgotPassword extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',  // Assuming you want a column layout
   },
   inner: {
     flex: 1,

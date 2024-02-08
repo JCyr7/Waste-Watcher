@@ -16,9 +16,7 @@ import {
   Keyboard
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
-import axios from 'axios'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import {MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
@@ -37,7 +35,6 @@ export default class LogoutPage extends Component {
       lastname: '',
       email: '',
       username: '',
-      newusername: '',
       password: '',
       passwordRenter: '',
       userAuth: false
@@ -106,7 +103,7 @@ export default class LogoutPage extends Component {
     }
     // sets two async storage items - username and bool value for the household information modal
     await AsyncStorage.setItem('newUser', JSON.stringify(true))
-    await AsyncStorage.setItem('newusername', this.state.newusername)
+    await AsyncStorage.setItem('username', this.state.username)
   }
 
   // Method checks if the email entered by the user is in the correct format
@@ -121,7 +118,7 @@ export default class LogoutPage extends Component {
   // Method checks if the username is greater than 12 characters and returns true if
   // it isnt
   checkUsername() {
-    if (this.state.newusername.length > 12) {
+    if (this.state.username.length > 12) {
       Alert.alert('Username cannot be more than 12 characters long')
       return false
     } else {
@@ -371,11 +368,11 @@ export default class LogoutPage extends Component {
                     </View>
 
                     <View>
-                      {/* Text input for newusername */}
+                      {/* Text input for username */}
                       <TextInput
-                        defaultValue={this.state.newusername}
-                        onChangeText={(newusernameInput) =>
-                          this.setState({ newusername: newusernameInput })
+                        defaultValue={this.state.username}
+                        onChangeText={(usernameInput) =>
+                          this.setState({ username: usernameInput })
                         }
                         placeholder="Username"
                         placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text

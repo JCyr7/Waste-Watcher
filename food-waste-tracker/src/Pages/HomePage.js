@@ -8,15 +8,10 @@ import {
   TextInput,
   Platform,
   Dimensions,
-  FlatList
 } from 'react-native'
 import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
+    BarChart,
+    ProgressChart,
 } from 'react-native-chart-kit'
 import {AntDesign} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -70,7 +65,6 @@ export default class HomePage extends Component {
     this.state = {
       householdInfoModal: true,
       trackWasteModal: false,
-      goalModal: false,
       checkboxValue: false,
       householdName: '',
       zipcode: '',
@@ -79,8 +73,7 @@ export default class HomePage extends Component {
     }
     this.getData()
   }
- 
-  
+
   // Method retrieves data from async storage
   getData = async () => {
     let newUser = await AsyncStorage.getItem('newUser')
@@ -120,16 +113,17 @@ export default class HomePage extends Component {
     console.log(this.state.householdSize)
     this.setState({householdInfoModal: false})
   }
+
   render() {
     return (
           
-      <View style={styles.container}>
-      {/* Welcome Header */}
+        <View style={styles.container}>
+        {/* Welcome Header */}
         <Text style={styles.welcomeText}>Waste Watcher</Text>
-          {/* Progress Dials */}
-          <View style={styles.dialContainer}>
+            {/* Progress Dials */}
+            <View style={styles.dialContainer}>
             <View style={styles.weeklyWasteDial}>
-              <ProgressChart
+                <ProgressChart
                 data={data}
                 width={125}
                 height={125}
@@ -137,12 +131,12 @@ export default class HomePage extends Component {
                 radius={45}
                 chartConfig={dialChartConfig}
                 hideLegend={true}
-              />
-              <Text style={styles.weeklyWasteDialText}>Weekly</Text>
-              <Text style={styles.weeklyWasteDialText}>Waste</Text>
+                />
+                <Text style={styles.weeklyWasteDialText}>Weekly</Text>
+                <Text style={styles.weeklyWasteDialText}>Waste</Text>
             </View>
             <View style={styles.moneyWastedDial}>
-              <ProgressChart 
+                <ProgressChart 
                 data={data2}
                 width={125}
                 height={125}
@@ -150,16 +144,16 @@ export default class HomePage extends Component {
                 radius={45}
                 chartConfig={dialChartConfig}
                 hideLegend={true}
-              />
-              <Text style={styles.moneyWastedDialText}>Money</Text>
-              <Text style={styles.moneyWastedDialText}>Wasted</Text>
+                />
+                <Text style={styles.moneyWastedDialText}>Money</Text>
+                <Text style={styles.moneyWastedDialText}>Wasted</Text>
             </View>
-          </View>
+            </View>
 
         <View style={styles.friendQuestContainer}>
-          <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
-          <View style={styles.barGraphContainer}>
-          <BarChart
+            <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
+            <View style={styles.barGraphContainer}>
+            <BarChart
             style={styles.barGraphStyle}
             data={data3}
             width={150}
@@ -170,121 +164,96 @@ export default class HomePage extends Component {
             withHorizontalLabels={false}
             chartConfig={barChartConfig}
             verticalLabelRotation={-90}>
-          </BarChart>
-          </View>
+            </BarChart>
+            </View>
         </View>
-      
+        
 
         {/* Household info Modal */}
         <Modal
-          animationType='fade'
-          transparent={true}
-          statusBarTranslucent={true}
-          visible={this.state.householdInfoModal}
-          onRequestClose={() => this.openHouseHoldInfo(false)}>
-          <Popup>
+            animationType='fade'
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={this.state.householdInfoModal}
+            onRequestClose={() => this.openHouseHoldInfo(false)}>
+            <Popup>
             <Pressable
-              onPress={() => this.openHouseHoldInfo(false)}
-              style={styles.closePopupButton}>
-              <AntDesign name='close' size={24} color='black' />
+                onPress={() => this.openHouseHoldInfo(false)}
+                style={styles.closePopupButton}>
+                <AntDesign name='close' size={24} color='black' />
             </Pressable>
             <Text style={styles.householdInfoHeader}>Household Info</Text>
             <Text style={styles.householdInfoInputTitle}>Household Name</Text>
             <TextInput
-              cursorColor={'black'}
-              style={styles.householdInfoInput}
-              onChangeText={(value) =>
+                cursorColor={'black'}
+                style={styles.householdInfoInput}
+                onChangeText={(value) =>
                 this.setState({householdName: value})
-              }></TextInput>
+                }></TextInput>
             <Text style={styles.householdInfoInputTitle}>Zip Code</Text>
             <TextInput
-              cursorColor={'black'}
-              keyboardType='numeric'
-              style={styles.householdInfoInput}
-              onChangeText={(value) =>
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.householdInfoInput}
+                onChangeText={(value) =>
                 this.setState({zipcode: value})
-              }></TextInput>
+                }></TextInput>
             <Text style={styles.householdInfoInputTitle}>Household Size</Text>
             <TextInput
-              cursorColor={'black'}
-              keyboardType='numeric'
-              style={styles.householdInfoInput}
-              onChangeText={(value) =>
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.householdInfoInput}
+                onChangeText={(value) =>
                 this.setState({householdSize: value})
-              }></TextInput>
+                }></TextInput>
             <Text style={styles.householdInfoPrivacyMessage}>
-              Entering some info about your household helps us at the Mitchell
-              Center get a better idea about how food is being wasted in the
-              state of Maine, but is not essential to the functionality of the
-              app. By checking the box below, you agree to associate the above
-              information with your account.
+                Entering some info about your household helps us at the Mitchell
+                Center get a better idea about how food is being wasted in the
+                state of Maine, but is not essential to the functionality of the
+                app. By checking the box below, you agree to associate the above
+                information with your account.
             </Text>
             <BouncyCheckbox
-              size={22}
-              style={styles.checkBox}
-              fillColor={COLORS.lightGreen}
-              unfillColor='white'
-              text='I agree'
-              innerIconStyle={{borderWidth: 2}}
-              onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
-              textStyle={{textDecorationLine: 'none'}}
+                size={22}
+                style={styles.checkBox}
+                fillColor={COLORS.lightGreen}
+                unfillColor='white'
+                text='I agree'
+                innerIconStyle={{borderWidth: 2}}
+                onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                textStyle={{textDecorationLine: 'none'}}
             />
             <Pressable
-              onPress={() => this.submitHouseholdInfo()}
-              style={({pressed}) => [
+                onPress={() => this.submitHouseholdInfo()}
+                style={({pressed}) => [
                 {
-                  backgroundColor: pressed
+                    backgroundColor: pressed
                     ? COLORS.lightGreen
                     : COLORS.darkGreen
                 },
                 styles.householdInfoSubmitButton
-              ]}>
-              <Text style={[styles.buttonText, {color: 'white'}]}>Submit</Text>
+                ]}>
+                <Text style={[styles.buttonText, {color: 'white'}]}>Submit</Text>
             </Pressable>
-          </Popup>
+            </Popup>
         </Modal>
 
         {/* Track waste modal */}
         <Modal
-          animationType='fade'
-          transparent={true}
-          statusBarTranslucent={true}
-          visible={this.state.trackWasteModal}
-          onRequestClose={() => this.openTrackWaste(false)}>
-          <Popup>
+            animationType='fade'
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={this.state.trackWasteModal}
+            onRequestClose={() => this.openTrackWaste(false)}>
+            <Popup>
             <Pressable
-              onPress={() => this.openTrackWaste(false)}
-              style={styles.closePopupButton}>
-              <AntDesign name='close' size={24} color='black' />
+                onPress={() => this.openTrackWaste(false)}
+                style={styles.closePopupButton}>
+                <AntDesign name='close' size={24} color='black' />
             </Pressable>
             <TrackWastePopup />
-          </Popup>
+            </Popup>
         </Modal>
-
-        {/* Goal Modal */}
-        <Modal
-          animationType='fade'
-          transparent={true}
-          statusBarTranslucent={true}
-          visible={this.state.goalModal}
-          onRequestClose={() => this.openGoal(false)}>
-          <Popup>
-            <View style={styles.goalPopupHeader}>
-              <View style={{width: '10%'}} />
-              <Text style={styles.goalPopupHeaderText}>Goals</Text>
-              <Pressable
-                style={styles.goalCloseButton}
-                onPress={() => this.openGoal(false)}>
-                <AntDesign name='close' size={24} color='black' />
-              </Pressable>
-            </View>
-            <View style={styles.goalPopupContent}>
-              <GoalPopup />
-            </View>
-          </Popup>
-        </Modal>
-
-        {/* Waste Reduction Tips */}
         <View style={styles.tipsContainer}>
           <Text style={styles.trackWasteHeader}>Track Waste</Text>        
           <View style={styles.linkContainer}>
@@ -292,6 +261,7 @@ export default class HomePage extends Component {
               <TextInput
                 cursorColor={'black'}
                 keyboardType='numeric'
+                returnKeyType='done'
                 style={styles.trackWasteInput}
                 onChangeText={(value) =>
                 this.setState({zipcode: value})}>
@@ -318,258 +288,259 @@ export default class HomePage extends Component {
             <SubmitButton/>
           </View>
         </View>
-      </View>
+    </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  graphStyle: {
-  },
-  goalPopupHeader: {
-    flexDirection: 'row',
-    height: '10%',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  goalPopupHeaderText: {
-    fontSize: 24,
-    fontWeight: '800'
-  },
-  goalCloseButton: {
-    marginTop: '2%',
-    paddingRight: '0%',
-    alignItems: 'flex-end',
-    width: '10%'
-  },
-  goalPopupContent: {
-    width: '100%',
-    height: '90%'
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? '10%' : '2%',
-    marginBottom: '5%'
-  },
-  welcomeContainer: {
-    width: '90%',
-    height: '30%',
-    borderRadius: 10,
-    alignContent: "center",
-    backgroundColor: "#e2f0c9",
-    shadowOffset: {
-      width: -3,
-      height: 4
+    graphStyle: {
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
-  },
-  barGraphContainer: {
-    width: '66%',
-    height: '100%',
-    alignSelf: 'right',
-    alignContent: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    backgroundColor: "#e2f0c9",
-  },
-  friendQuestContainer: {
-    width: '90%',
-    height: '20%',
-    flexDirection: 'row',
-    verticalAlign: 'middle',
-    borderRadius: 20,
-    backgroundColor: "#e2f0c9",
-  },
-  friendQuestText: {
-    height: "100%",
-    width: "30%",
-    marginLeft: '2%',
-    marginRight: '2%',
-    marginTop: '8%',
-    fontSize: 22,
-    color: COLORS.darkGreen,
-    fontWeight: '800',
-    textAlign: 'center',
-    verticalAlign: 'middle'
-  },
-  barGraphStyle: {
-    transform: [{rotate: '90 deg'}],
-    alignSelf: 'flex-start',
-    marginBottom: "30%",
-    marginLeft: '15%',
-    //justifyContent: 'center',
-  },
-  welcomeText: {
-    marginTop: '6%',
-    fontSize: 28,
-    color: COLORS.darkGreen,
-    fontWeight: '800',
-    textAlign: 'center'
-  },
-  dialContainer: {
-    width: '90%',
-    height: '25%',
-    marginTop: '3%',
-    marginBottom: '3%',
-    alignSelf: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    borderRadius: 20,
-    backgroundColor: COLORS.white,
-  },
-  weeklyWasteDial: {
-    width: '100',
-    height: '100',
-    marginLeft: '5%',
-    marginRight: '5%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  weeklyWasteDialText: {
-    fontSize: 15,
-    color: COLORS.darkGreen,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-  moneyWastedDial: {
-    width: '100',
-    height: '100',
-    marginLeft: '5%',
-    marginRight: '5%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  moneyWastedDialText: {
-    fontSize: 15,
-    color: COLORS.darkGreen,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    borderWidth: 0,
-    width: '95%',
-    height: '77%',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  weeklyWasteProgressButton: {
-    width: '25%',
-    height: '25%',
-    backgroundColor: "#e2f0c9",
-    borderRadius: 100,
-    verticalAlign: "middle",
-    top: "25%",
-    left: "65%",
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  moneyWastedProgressButton: {
-    width: '25%',
-    height: '25%',
-    backgroundColor: "#e2f0c9",
-    borderRadius: 100,
-    verticalAlign: "middle",
-    left: "10%",
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 18,
-    color: COLORS.darkGreen,
-    fontWeight: '800'
-  },
-  householdInfoHeader: {
-    marginTop: '5%',
-    color: COLORS.darkerGray,
-    fontSize: 22,
-    fontWeight: '500',
-    alignSelf: 'center',
-    marginBottom: '5%'
-  },
-  householdInfoInput: {
-    borderRadius: 10,
-    borderWidth: 3,
-    paddingTop: '1%',
-    padding: '1%',
-    width: '95%',
-    alignSelf: 'center',
-    borderColor: 'grey'
-  },
-  householdInfoInputTitle: {
-    paddingLeft: '3%',
-    paddingTop: '1%',
-    paddingBottom: '1%',
-    fontWeight: 'bold',
-    color: 'grey'
-  },
-  householdInfoPrivacyMessage: {
-    paddingLeft: '3%',
-    paddingTop: '1%',
-    paddingBottom: '1%',
-    fontWeight: 'bold',
-    color: 'grey'
-  },
-  householdInfoSubmitButton: {
-    width: 90,
-    height: 40,
-    alignItems: 'center',
-    alignSelf: 'center',
-    borderRadius: 10,
-    justifyContent: 'center',
-    marginTop: '50%'
-  },
-  checkBox: {
-    marginLeft: '3%'
-  },
-  closePopupButton: {
-    padding: '2%',
-    alignSelf: 'flex-end',
-    alignItems: 'flex-end'
-  },
-  trackWasteInputText: {
-    fontSize: 18,
-    color: COLORS.darkGreen,
-    fontWeight: '800',
-    marginLeft: "15%",
-  },
-  trackWasteInput: {
-    borderRadius: 10,
-    borderWidth: 3,
-    padding: '2%',
-    width: '75%',
-    marginTop: "2%",
-    marginBottom: "5%",
-    alignSelf: 'center',
-    borderColor: COLORS.darkGreen,
-    backgroundColor: "#e2f0c9"
-  },
-  tipsContainer: {
-    width: '90%',
-    height: '50%',
-    borderRadius: 10,
-    backgroundColor: COLORS.white,
-  },
-  trackWasteHeader: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: COLORS.darkGreen,
-    marginTop: '2%',
-    marginBottom: "2%",
-    textAlign: 'center'
-  },
-  trackWasteContainer: {
-    width: '100%',
-    height: '60%',
-    justifyContent: 'center',
-    backgroundColor: COLORS.white
-  },
-  linkContainer: {
-    width: '100%',
-    height: '100%',
-  }
-})
+    goalPopupHeader: {
+      flexDirection: 'row',
+      height: '10%',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    },
+    goalPopupHeaderText: {
+      fontSize: 24,
+      fontWeight: '800'
+    },
+    goalCloseButton: {
+      marginTop: '2%',
+      paddingRight: '0%',
+      alignItems: 'flex-end',
+      width: '10%'
+    },
+    goalPopupContent: {
+      width: '100%',
+      height: '90%'
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: Platform.OS === 'android' ? '10%' : '2%',
+      marginBottom: '5%'
+    },
+    welcomeContainer: {
+      width: '90%',
+      height: '30%',
+      borderRadius: 10,
+      alignContent: "center",
+      backgroundColor: "#e2f0c9",
+      shadowOffset: {
+        width: -3,
+        height: 4
+      },
+      shadowOpacity: 0.2,
+      shadowRadius: 6,
+      elevation: 10,
+      shadowColor: COLORS.shadow
+    },
+    barGraphContainer: {
+      width: '66%',
+      height: '100%',
+      alignSelf: 'right',
+      alignContent: 'center',
+      justifyContent: 'center',
+      borderRadius: 20,
+      backgroundColor: "#e2f0c9",
+    },
+    friendQuestContainer: {
+      width: '90%',
+      height: '20%',
+      flexDirection: 'row',
+      verticalAlign: 'middle',
+      borderRadius: 20,
+      backgroundColor: "#e2f0c9",
+    },
+    friendQuestText: {
+      height: "100%",
+      width: "30%",
+      marginLeft: '2%',
+      marginRight: '2%',
+      marginTop: '8%',
+      fontSize: 22,
+      color: COLORS.darkGreen,
+      fontWeight: '800',
+      textAlign: 'center',
+      verticalAlign: 'middle'
+    },
+    barGraphStyle: {
+      transform: [{rotate: '90 deg'}],
+      alignSelf: 'flex-start',
+      marginBottom: "30%",
+      marginLeft: '15%',
+      //justifyContent: 'center',
+    },
+    welcomeText: {
+      marginTop: '6%',
+      fontSize: 28,
+      color: COLORS.darkGreen,
+      fontWeight: '800',
+      textAlign: 'center'
+    },
+    dialContainer: {
+      width: '90%',
+      height: '25%',
+      marginTop: '3%',
+      marginBottom: '3%',
+      alignSelf: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      borderRadius: 20,
+      backgroundColor: COLORS.white,
+    },
+    weeklyWasteDial: {
+      width: '100',
+      height: '100',
+      marginLeft: '5%',
+      marginRight: '5%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    weeklyWasteDialText: {
+      fontSize: 15,
+      color: COLORS.darkGreen,
+      fontWeight: '800',
+      textAlign: 'center',
+    },
+    moneyWastedDial: {
+      width: '100',
+      height: '100',
+      marginLeft: '5%',
+      marginRight: '5%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    moneyWastedDialText: {
+      fontSize: 15,
+      color: COLORS.darkGreen,
+      fontWeight: '800',
+      textAlign: 'center',
+    },
+    buttonContainer: {
+      borderWidth: 0,
+      width: '95%',
+      height: '77%',
+      justifyContent: 'space-evenly',
+      alignItems: 'center'
+    },
+    weeklyWasteProgressButton: {
+      width: '25%',
+      height: '25%',
+      backgroundColor: "#e2f0c9",
+      borderRadius: 100,
+      verticalAlign: "middle",
+      top: "25%",
+      left: "65%",
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    moneyWastedProgressButton: {
+      width: '25%',
+      height: '25%',
+      backgroundColor: "#e2f0c9",
+      borderRadius: 100,
+      verticalAlign: "middle",
+      left: "10%",
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonText: {
+      fontSize: 18,
+      color: COLORS.darkGreen,
+      fontWeight: '800'
+    },
+    householdInfoHeader: {
+      marginTop: '5%',
+      color: COLORS.darkerGray,
+      fontSize: 22,
+      fontWeight: '500',
+      alignSelf: 'center',
+      marginBottom: '5%'
+    },
+    householdInfoInput: {
+      borderRadius: 10,
+      borderWidth: 3,
+      paddingTop: '1%',
+      padding: '1%',
+      width: '95%',
+      alignSelf: 'center',
+      borderColor: 'grey'
+    },
+    householdInfoInputTitle: {
+      paddingLeft: '3%',
+      paddingTop: '1%',
+      paddingBottom: '1%',
+      fontWeight: 'bold',
+      color: 'grey'
+    },
+    householdInfoPrivacyMessage: {
+      paddingLeft: '3%',
+      paddingTop: '1%',
+      paddingBottom: '1%',
+      fontWeight: 'bold',
+      color: 'grey'
+    },
+    householdInfoSubmitButton: {
+      width: 90,
+      height: 40,
+      alignItems: 'center',
+      alignSelf: 'center',
+      borderRadius: 10,
+      justifyContent: 'center',
+      marginTop: '50%'
+    },
+    checkBox: {
+      marginLeft: '3%'
+    },
+    closePopupButton: {
+      padding: '2%',
+      alignSelf: 'flex-end',
+      alignItems: 'flex-end'
+    },
+    trackWasteInputText: {
+      fontSize: 18,
+      color: COLORS.darkGreen,
+      fontWeight: '800',
+      marginLeft: "15%",
+    },
+    trackWasteInput: {
+      borderRadius: 10,
+      borderWidth: 3,
+      padding: '2%',
+      width: '75%',
+      marginTop: "2%",
+      marginBottom: "5%",
+      alignSelf: 'center',
+      borderColor: COLORS.darkGreen,
+      backgroundColor: "#e2f0c9"
+    },
+    tipsContainer: {
+      width: '90%',
+      height: '50%',
+      borderRadius: 10,
+      backgroundColor: COLORS.white,
+    },
+    trackWasteHeader: {
+      fontSize: 24,
+      fontWeight: '800',
+      color: COLORS.darkGreen,
+      marginTop: '2%',
+      marginBottom: "2%",
+      textAlign: 'center'
+    },
+    trackWasteContainer: {
+      width: '100%',
+      height: '60%',
+      justifyContent: 'center',
+      backgroundColor: COLORS.white
+    },
+    linkContainer: {
+      width: '100%',
+      height: '100%',
+    }
+  })
+  

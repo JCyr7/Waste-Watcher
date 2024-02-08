@@ -188,9 +188,6 @@ export default class LogoutPage extends Component {
       return true
     }
   }
-
-
-  //html (data being displayed)
   render() {
     // Declare constant navigation as props from parent component - enables navigation between stack pages
     const {navigation} = this.props
@@ -461,13 +458,12 @@ export default class LogoutPage extends Component {
                         <Text style={styles.submitButtonText}>Sign Up</Text>
                       </Pressable>
                       
-                  </KeyboardAvoidingView> 
-          {/* </Pressable> */}
+                </KeyboardAvoidingView> 
+            {/* </Pressable> */}
               </LinearGradient>
             </Modal>
-            </SafeAreaView>
-
-            </TouchableWithoutFeedback>
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
       </LinearGradient>
     )
   }

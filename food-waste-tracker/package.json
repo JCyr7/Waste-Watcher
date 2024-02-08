@@ -37,6 +37,7 @@
     "firebase": "^10.8.0",
     "jest-expo": "~50.0.1",
     "react": "18.2.0",
+    "react-calendar": "^4.8.0",
     "react-native": "0.73.2",
     "react-native-arcgis-mapview": "^1.0.11",
     "react-native-bouncy-checkbox": "^3.0.6",
@@ -49,6 +50,7 @@
     "react-native-pager-view": "6.2.3",
     "react-native-splashscreen": "^1.0.0",
     "react-native-svg": "^14.1.0",
+    "react-native-wheel-pick": "^1.2.2",
     "react-navigation": "^4.4.4",
     "react-test-renderer": "^18.1.0"
   },

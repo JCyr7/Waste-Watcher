@@ -12,12 +12,11 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   SafeAreaView,
-  Alert
+  Alert,
+  Keyboard
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
-import axios from 'axios'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import {MaterialCommunityIcons} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
@@ -32,6 +31,7 @@ export default class LogoutPage extends Component {
     this.state = {
       modalVisible: false,
       checkboxValue: false,
+      checkboxprivacy: false,
       firstname: '',
       lastname: '',
       email: '',
@@ -89,7 +89,7 @@ export default class LogoutPage extends Component {
         navigation.navigate('MainPage')
       } else {
         Alert.alert(
-          'Login failed, please enter the correct username and password.'
+          'Incorrect username or password'
         )
       }
     }
@@ -117,7 +117,7 @@ export default class LogoutPage extends Component {
     const nameCheck = this.nameCheck();
 
     // if statement only executes if all user input checks pass
-    if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck && nameCheck) {
+    if (passwordCheck && emailCheck && usernameCheck && privacyCheck && nameCheck) {
 
     // sets two async storage items - username and bool value for the household information modal
     await AsyncStorage.setItem('newUser', JSON.stringify(true));
@@ -235,22 +235,12 @@ export default class LogoutPage extends Component {
   toggleCheckbox(value) {
     this.setState({checkboxValue: value});
   }
-
-  // Method returns true if the user has clicked age chekcbox
-  ageCheck() {
-    if (this.state.checkboxage === false) {
-      Alert.alert('You must be 18 years old to use Waste Watchers');
-      return false;
-    } else {
-      return true;
-    }
-  }
   
   // Method returns true if the user has clicked the privacy policy checkbox
   privacyCheck() {
     if (this.state.checkboxprivacy === false) {
-      Alert.alert('Please agree the privacy policy');
-      return false;
+      Alert.alert('Please agree the Terms of Service & Privacy Policy')
+      return false
     } else {
       return true;
     }
@@ -265,272 +255,283 @@ export default class LogoutPage extends Component {
       return true;
     }
   }
-
-
-  //html (data being displayed)
   render() {
     // Declare constant navigation as props from parent component - enables navigation between stack pages
     const {navigation} = this.props
     return (
       // Container view
       <LinearGradient 
-        colors={[COLORS.green, COLORS.blue]} style={styles.container}
+        colors={[COLORS.blue, COLORS.green]} style={styles.container}
         start={{x: 0, y: 0.2}}
         end={{x: 1, y: 1}}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView style={styles.container}>
-          <Image
-            source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
-            style={styles.image}
-          />
-          {/* title */}
-          <Text style={styles.title}>Waste Watcher</Text>
-          <Text style={styles.subtitle}>Food Waste Tracker</Text>
+          
+            <Image source={require('../../images/FoodRescueMaine_Logo_Final-01.png')} style={styles.image}/>
+            {/* title */}
+            <Text style={styles.title}>Waste Watcher</Text>
+            <Text style={styles.subtitle}>Food Waste Tracker</Text>
 
 
-            {/* username and password input*/}
-            <TextInput
-              cursorColor={'white'}
-              placeholder='Username'
-              placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-              style={[styles.userpassinput, { color: COLORS.white }]}             
-              onChangeText={(value) => {
-                this.setState({ username: value });
-              }}
-            ></TextInput>
-            <TextInput
-              secureTextEntry
-              cursorColor={'white'}
-              placeholder='Password'
-              placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-              style={[styles.userpassinput, { color: COLORS.white }]}
-              onChangeText={(value) => {
-                this.setState({ password: value });
-              }}
-            ></TextInput>
+              {/* username and password input*/}
+              <TextInput
+                cursorColor={'white'}
+                selectionColor={'white'}
+                placeholder='Username'
+                placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                style={[styles.userpassinput, { color: COLORS.white }]}             
+                onChangeText={(value) => {
+                  this.setState({ username: value });
+                }}
+              ></TextInput>
+              <TextInput
+                secureTextEntry
+                cursorColor={'white'}
+                selectionColor={'white'}
+                placeholder='Password'
+                placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                style={[styles.userpassinput, { color: COLORS.white }]}
+                onChangeText={(value) => {
+                  this.setState({ password: value });
+                }}
+              ></TextInput>
 
 
-            {/* login button */}
+              {/* login button */}
+              <Pressable
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed
+                      ? COLORS.whitetransparent
+                      : COLORS.transparent
+                  },
+                  styles.loginButton
+                ]}
+                onPress={() => this.login(navigation)}>
+                <Text style={styles.loginText}>Log In</Text>
+              </Pressable>
+
+
+              {/* forgot password button */}
+              <Pressable
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+                },
+                styles.forgotAccountButton
+              ]}
+              onPress={() => navigation.navigate('ForgotPassword')}>
+                
+              <Text style={styles.createAccountText}>
+                Forgot your login details? <Text style={styles.boldtext}>Get help signing in.</Text>
+              </Text>
+            </Pressable>
+              <Text style={styles.or}>OR</Text>
+
+              {/* alt logins */}
+              <Pressable style={styles.altLoginButton}>
+                <Ionicons name='logo-google' size={29} color='white' />
+                <Text style={styles.altLoginButtonText}>Sign in with Google</Text>
+            </Pressable>
+
+            {/* sign up button */}  
             <Pressable
               style={({pressed}) => [
                 {
-                  backgroundColor: pressed
-                    ? COLORS.whitetransparent
-                    : COLORS.transparent
+                  backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
                 },
-                styles.loginButton
+                styles.createAccountButton
               ]}
-              onPress={() => this.login(navigation)}>
-              <Text style={styles.loginText}>Log In</Text>
-            </Pressable>
-
-
-            {/* forgot password button */}
-            <Pressable
-            style={({pressed}) => [
-              {
-                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
-              },
-              styles.forgotAccountButton
-            ]}
-            onPress={() => navigation.navigate('ForgotPassword')}>
-              
-            <Text style={styles.createAccountText}>
-              Forgot your login details? <Text style={styles.boldtext}>Get help signing in.</Text>
-            </Text>
-          </Pressable>
-
-            
-
-            <Text style={styles.or}>OR</Text>
-
-
-            {/* alt logins */}
-            <Pressable style={styles.altLoginButton}>
-              <Ionicons name='logo-google' size={29} color='white' />
-              <Text style={styles.altLoginButtonText}>Sign in with Google</Text>
-            </Pressable>
-
-
-          {/* sign up button */}  
-          <Pressable
-            style={({pressed}) => [
-              {
-                backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
-              },
-              styles.createAccountButton
-            ]}
-            onPress={() => {
-              this.setModalVisible(true)
-            }}>
-              
-            <Text style={styles.createAccountText}>
-              Dont have an account? <Text style={styles.boldtext}>Sign up</Text>
-            </Text>
-          </Pressable>
-
-
-          {/* Create account popup */}
-          <Modal
-            animationType='slide'
-            transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {
-              this.setModalVisible(false)
-              this.toggleCheckbox(false)
-            }}>
-            {/* Pressable component so that when the user taps outside the modal, it closes */}
-            <LinearGradient
-              colors={[COLORS.green, COLORS.blue]}
-              style={{ flex: 1 }}
-              start={{ x: 0, y: 0.2 }}
-              end={{ x: 1, y: 1 }}>
-              {/* Pressable component so that when the user taps outside the modal, it closes */}
-              <Pressable
               onPress={() => {
+                this.setModalVisible(true)
+              }}>
+                
+              <Text style={styles.createAccountText}>
+                Dont have an account? <Text style={styles.boldtext}>Sign up</Text>
+              </Text>
+            </Pressable>
+
+
+            {/* Create account popup */}
+            <Modal
+              animationType='slide'
+              transparent={true}
+              visible={this.state.modalVisible}
+              onRequestClose={() => {
                 this.setModalVisible(false)
                 this.toggleCheckbox(false)
-              }}
-              style={styles.pressable}>
-              {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
-              <TouchableWithoutFeedback>
-                <KeyboardAvoidingView behavior='padding' style={styles.modal}>
-                    {/* Back button to exit the modal */}
-                  <Pressable
-                    // Create account button - executes create account function defined above on press
-                    onPress={() => {
-                      this.setModalVisible(false);
-                      this.toggleCheckbox(false);
-                    }}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed
-                          ? COLORS.green
-                          : COLORS.green
-                      },
-                      styles.backButton
-                    ]}>
-                  <Text style={styles.backButtontext}>^</Text>
-                  </Pressable>
-                  <Text style={styles.createAccount}>Create Account</Text>
-                  <View style={styles.rowContainer}>
-                  {/* Text inputs*/}
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      defaultValue={this.state.firstname}
-                      onChangeText={(firstnameInput) =>
-                        this.setState({ firstname: firstnameInput })
-                      }
-                      placeholder="First"
-                      placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                      cursorColor={'black'}
-                      style={styles.nameInput}
-                    />
-                  </View>
+              }}>
+              {/* Pressable component so that when the user taps outside the modal, it closes */}
+              <LinearGradient
+                colors={[COLORS.blue, COLORS.green]}
+                style={{ flex: 1 }}
+                start={{ x: 0, y: 0.2 }}
+                end={{ x: 1, y: 1 }}>
+                {/* Pressable component so that when the user taps outside the modal, it closes */}
+                {/* <Pressable
+                onPress={() => {
+                  this.setModalVisible(false)
+                  this.toggleCheckbox(false)
+                }}
+                style={styles.pressable}> */}
+                {/* Modal content enclosed with touchable without feedback component so it does *not* close if a user taps inside the modal content area */}
+                  <KeyboardAvoidingView behavior='padding' style={styles.modal}>
+                      {/* Back button to exit the modal */}
+                    <Pressable
+                      // Create account button - executes create account function defined above on press
+                      onPress={() => {
+                        this.setModalVisible(false);
+                        this.toggleCheckbox(false);
+                      }}
+                      style={({pressed}) => [
+                        {
+                          backgroundColor: pressed
+                            ? COLORS.transparent
+                            : COLORS.transparent
+                        },
+                        styles.backButton
+                      ]}>
+                    <Text style={styles.backButtontext}>×</Text>
+                    </Pressable>
+                    <Text style={styles.createAccount}>Create Account</Text>
+                    <View style={styles.rowContainer}>
+                    {/* Text inputs*/}
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        defaultValue={this.state.firstname}
+                        onChangeText={(firstnameInput) =>
+                          this.setState({ firstname: firstnameInput })
+                        }
+                        placeholder="First"
+                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        cursorColor={'black'}
+                        style={styles.nameInput}
+                      />
+                    </View>
 
-                  {/* Text input for lastname */}
-                  <View style={styles.inputContainer}>
-                    <TextInput
-                      defaultValue={this.state.lastname}
-                      onChangeText={(lastnameInput) =>
-                        this.setState({ lastname: lastnameInput })
-                      }
-                      placeholder="Last"
-                      placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                      cursorColor={'black'}
-                      style={styles.nameInput}
-                    />
-                  </View>
-                </View>
+                    {/* Text input for lastname */}
+                      <View style={styles.inputContainer}>
+                        <TextInput
+                          defaultValue={this.state.lastname}
+                          onChangeText={(lastnameInput) =>
+                            this.setState({ lastname: lastnameInput })
+                          }
+                          placeholder="Last"
+                          placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                          cursorColor={'black'}
+                          style={styles.nameInput}
+                        />
+                      </View>
+                    </View>
 
-                <View>
-                  {/* Text input for email */}
-                  <TextInput
-                    defaultValue={this.state.email}
-                    onChangeText={(emailInput) => this.setState({ email: emailInput })}
-                    placeholder="Email"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                    cursorColor={'white'}
-                    style={styles.input}
-                  />
-                </View>
+                    <View>
+                      {/* Text input for email */}
+                      <TextInput
+                        defaultValue={this.state.email}
+                        onChangeText={(emailInput) => this.setState({ email: emailInput })}
+                        placeholder="Email"
+                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        cursorColor={'white'}
+                        selectionColor={'white'}
+                        style={styles.input}
+                      />
+                    </View>
 
-                <View>
-                  {/* Text input for username */}
-                  <TextInput
-                    defaultValue={this.state.username}
-                    onChangeText={(usernameInput) => this.setState( { username: usernameInput })}
-                    placeholder="Username"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                    cursorColor={'white'}
-                    style={styles.input}
-                  />
-                </View>
+                    <View>
+                      {/* Text input for username */}
+                      <TextInput
+                        defaultValue={this.state.username}
+                        onChangeText={(usernameInput) =>
+                          this.setState({ username: usernameInput })
+                        }
+                        placeholder="Username"
+                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        cursorColor={'white'}
+                        selectionColor={'white'}
+                        style={styles.input}
+                      />
+                    </View>
 
-                <View>
-                  {/* Text input for password */}
-                  <TextInput
-                    onChangeText={(newText) => this.setState({ password: newText })}
-                    cursorColor={'white'}
-                    secureTextEntry
-                    placeholder="Password"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                    style={styles.input}
-                  />
-                </View>
+                    <View>
+                      {/* Text input for password */}
+                      <TextInput
+                        onChangeText={(newText) => this.setState({ password: newText })}
+                        cursorColor={'white'}
+                        selectionColor={'white'}
+                        secureTextEntry
+                        placeholder="Password"
+                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        style={styles.input}
+                      />
+                    </View>
 
-                <View>
-                  {/* Text input for password re-enter */}
-                  <TextInput
-                    onChangeText={(newText) => this.setState({ passwordRenter: newText })}
-                    cursorColor={'black'}
-                    secureTextEntry
-                    placeholder="Re-Enter Password"
-                    placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                    style={styles.input}
-                  />
-                </View>
+                    <View>
+                      {/* Text input for password re-enter */}
+                      <TextInput
+                        onChangeText={(newText) => this.setState({ passwordRenter: newText })}
+                        cursorColor={'white'}
+                        selectionColor={'white'}
+                        secureTextEntry
+                        placeholder="Re-Enter Password"
+                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        style={styles.input}
+                      />
+                    </View>
+                      {/* Password requirements
+                      <View style={styles.passReqsContainer}>
+                        <Text style={styles.passReqLabel}>
+                          Password must contain the following:
+                        </Text>
+                        <Text style={styles.passReq}>8 or more characters</Text>
+                        <Text style={styles.passReq}>1 or more numbers</Text>
+                        <Text style={styles.passReq}>
+                          1 or more uppercase letters
+                        </Text>
+                        <Text style={styles.passReq}>
+                          1 or more lowercase letters
+                        </Text>
+                        <Text style={styles.passReq}>
+                          1 or more special characters (!@#$)
+                        </Text>
+                      </View>
 
-                  {/* Checkbox for ensuring user is over 18 */}
-                  <BouncyCheckbox
-                    size={22}
-                    style={styles.checkBox}
-                    fillColor={COLORS.whitetransparent}
-                    unfillColor='white'
-                    text="I am at least 18 years old"
-                    innerIconStyle={{borderWidth: 2}}
-                    onPress={() => this.toggleCheckbox(!this.state.checkboxage)}
-                    textStyle={styles.tosText}
-                  />
-                  <BouncyCheckbox
-                    size={22}
-                    style={styles.checkBox}
-                    fillColor={COLORS.whitetransparent}
-                    unfillColor='white'
-                    text="I agree to the Privacy Policy"
-                    innerIconStyle={{borderWidth: 2}}
-                    onPress={() => this.toggleCheckbox(!this.state.checkboxprivacy)}
-                    textStyle={styles.tosText}
-                  />
+                      {/* Checkbox for ensuring user is over 18 */}
+                      <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.whitetransparent}
+                        unfillColor='white'
+                        text="I agree to the Terms of Service & Privacy Policy"
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            checkboxprivacy: !prevState.checkboxprivacy,
+                          }));
+                        }}
+                        textStyle={styles.tosText}
+                      />
 
-                  <Pressable
-                    // Create account button - executes create account function defined above on press
-                    onPress={() => this.createAccount(navigation)}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed
-                          ? COLORS.whitetransparent
-                          : COLORS.transparent
-                      },
-                      styles.submitButton
-                    ]}>
-                    <Text style={styles.submitButtonText}>Sign Up</Text>
-                  </Pressable>
-                </KeyboardAvoidingView>
-              </TouchableWithoutFeedback>
-            </Pressable>
-          </LinearGradient>
-          </Modal>
-        </SafeAreaView>
+                      <Pressable
+                        // Create account button - executes create account function defined above on press
+                        onPress={() => this.createAccount(navigation)}
+                        style={({pressed}) => [
+                          {
+                            backgroundColor: pressed
+                              ? COLORS.lesswhitetransparent
+                              : COLORS.transparent
+                          },
+                          styles.signupButton
+                        ]}>
+                        <Text style={styles.submitButtonText}>Sign Up</Text>
+                      </Pressable>
+                      
+                </KeyboardAvoidingView> 
+            {/* </Pressable> */}
+              </LinearGradient>
+            </Modal>
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
+
       </LinearGradient>
     )
   }
@@ -539,8 +540,7 @@ export default class LogoutPage extends Component {
 // Styles
 const styles = StyleSheet.create({
 
-  //sign in
-
+  //sign in page
   container: {
     flex: 1,
     alignItems: 'center',
@@ -550,11 +550,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   image: {
-    flex: .4, // Set flex to 0.4 to make it take 40% of the screen
-    marginTop: 80,
-    width: '100%', // Use 100% width to ensure it doesn't exceed the screen width
-    marginBottom: 0,
-    aspectRatio: 181 / 201, // Set the aspect ratio based on your image dimensions
+    flex: .25,
+    marginTop: 20,
+    width: '100%',
+    marginBottom: '10%',
+    aspectRatio: 792 / 283,
   },
   title: {
     fontWeight: 'bold',
@@ -564,7 +564,7 @@ const styles = StyleSheet.create({
   subtitle:{
     fontSize: 24,
     color: 'white',
-    marginBottom: 20,
+    marginBottom: '10%',
   },
   userpassinput: {
     height: 50,
@@ -622,7 +622,7 @@ const styles = StyleSheet.create({
   altLoginButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',  // Center content horizontally
+    justifyContent: 'center',
     height: 50,
     width: '85%',
     borderRadius: 7,
@@ -632,7 +632,7 @@ const styles = StyleSheet.create({
   altLoginButtonText: {
     color: 'white',
     fontWeight: 'bold',
-    paddingLeft: 8,  // Adjust the spacing between the icon and text
+    paddingLeft: 8,
   },
   createAccountButton: {
     paddingTop: 0,
@@ -644,125 +644,105 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-
-
   // modal
-
-
   modal: {
+    flex: 1,
+    width: '100%',
     height: '100%',
-    marginTop: 'auto',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20
   },
-
-  //backbutton
   backButton: {
     position: 'absolute',
+    margin: 10,
     marginTop: 40,
-    marginLeft: 6,
-    paddingRight: 13,
     borderRadius: 14,
-    transform: [{ rotate: '270deg' }] 
   },
   backButtontext: {
     fontSize: 40,
     color: COLORS.white,
-    paddingLeft: 20,
-    paddingRight: 10,
     paddingTop: 20,
-    paddingBottom: 5,
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25
   },
-
-  //create account title text
   createAccount: {
-    paddingTop: '40%',
-    paddingBottom: 30,
+    paddingTop: '27.5%',
+    paddingBottom: '7.5%',
     fontSize: 28,
     color: COLORS.white,
     alignSelf: 'center',
   },
-  
-  //first and last name boxs
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingLeft: '5.7%',
+    paddingRight: '5.7%',
   },
   inputContainer: {
+    paddingLeft: '2%',
+    paddingRight: '2%',
     flex: 1, 
-    paddingLeft: '7.5%',
-    paddingRight: '7.5%',
   },
   nameInput: {
-    borderBottomWidth: 2.5, 
-    paddingTop: '4%',
-    paddingBottom: '1%', 
-    marginBottom: 16,
+    height: 50,
     width: '100%',
-    alignSelf: 'center',
-    borderColor: COLORS.white,
-    fontSize: 17,
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    paddingLeft: 15,
+    fontSize: 15,
     color: 'white',
-  },
-
-  //all other inputs
-  input: {
-    borderBottomWidth: 2.5, 
-    paddingTop: '4%',
-    paddingBottom: '1%', 
+    },
+  input:{
+    height: 50,
     width: '85%',
-    alignSelf: 'center',
-    borderColor: COLORS.white,
-    marginBottom: 16,
-    fontSize: 17,
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    paddingLeft: 15,
+    marginTop: '4%',
+    fontSize: 15,
     color: 'white',
-  },
-  
-  //'sign up' button
-  submitButton: {
-    padding: '2%',
-    borderRadius: 5,
-    height: '5%',
-    width: '45%',  // Set width to 85%
-    justifyContent: 'center',
-    marginTop: 25,
     alignSelf: 'center',
-    alignItems: 'center',
-    borderWidth: 3,
-    borderColor: COLORS.whitetransparent
-  },
-  
-  submitButtonText: {
-    color: COLORS.white
-  },
-  pressable: {
-    height: '100%',
-    width: '100%'
+    alignItems: 'center'
   },
   tosText: {
     textDecorationLine: 'none',
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: 'white'
+    fontSize: 13.7,
+    color: 'white',
   },
   checkBox: {
-    marginLeft: '7.5%',
-    marginTop: '5%',
-
+    alignSelf: 'center',
+    paddingVertical: '5%',
   },
-  passReqsContainer: {
-    margin: '3%'
-  },
-  passReqLabel: {
+  submitButtonText: {
     color: COLORS.white,
     fontSize: 15,
-    fontWeight: 'bold'
   },
-  passReq: {
-    marginLeft: '3%',
-    color: COLORS.white,
-    fontSize: 13,
-    fontWeight: 'bold'
-  }
+  signupButton: {
+    height: 50,
+    width: '85%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderColor: COLORS.whitetransparent,
+    borderWidth: 3,
+    borderRadius: 7,
+  },
+  // pressable: {
+  //   height: '100%',
+  //   width: '100%'
+  // },
+  // passReqsContainer: {
+  //   margin: '3%'
+  // },
+  // passReqLabel: {
+  //   color: COLORS.white,
+  //   fontSize: 15,
+  //   fontWeight: 'bold'
+  // },
+  // passReq: {
+  //   marginLeft: '3%',
+  //   color: COLORS.white,
+  //   fontSize: 13,
+  //   fontWeight: 'bold'
+  // }
 });

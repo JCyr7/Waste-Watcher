@@ -113,7 +113,6 @@ export default class LogoutPage extends Component {
     const emailCheck = this.checkEmail();
     const usernameCheck = this.checkUsername();
     const privacyCheck = this.privacyCheck();
-    const ageCheck = this.ageCheck();
     const nameCheck = this.nameCheck();
 
     // if statement only executes if all user input checks pass
@@ -404,7 +403,8 @@ export default class LogoutPage extends Component {
                         }
                         placeholder="First"
                         placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                        cursorColor={'black'}
+                        cursorColor={'white'}
+                        selectionColor={'white'}
                         style={styles.nameInput}
                       />
                     </View>
@@ -418,7 +418,8 @@ export default class LogoutPage extends Component {
                           }
                           placeholder="Last"
                           placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
-                          cursorColor={'black'}
+                          cursorColor={'white'}
+                          selectionColor={'white'}
                           style={styles.nameInput}
                         />
                       </View>

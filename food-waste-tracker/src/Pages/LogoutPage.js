@@ -22,7 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -109,18 +109,19 @@ export default class LogoutPage extends Component {
 
 
     // checks the validity of inputs
-    const passwordCheck = this.checkPasswordComplexity()
-    const emailCheck = this.checkEmail()
-    const usernameCheck = this.checkUsername()
-    const privacyCheck = this.privacyCheck()
-    const ageCheck = this.ageCheck()
+    const passwordCheck = this.checkPasswordComplexity();
+    const emailCheck = this.checkEmail();
+    const usernameCheck = this.checkUsername();
+    const privacyCheck = this.privacyCheck();
+    const ageCheck = this.ageCheck();
+    const nameCheck = this.nameCheck();
 
     // if statement only executes if all user input checks pass
-    if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck) {
+    if (passwordCheck && emailCheck && usernameCheck && privacyCheck && ageCheck && nameCheck) {
 
     // sets two async storage items - username and bool value for the household information modal
-    await AsyncStorage.setItem('newUser', JSON.stringify(true))
-    await AsyncStorage.setItem('username', this.state.username)
+    await AsyncStorage.setItem('newUser', JSON.stringify(true));
+    await AsyncStorage.setItem('username', this.state.username);
 
     await createUserWithEmailAndPassword(FIREBASE_AUTH, this.state.email, this.state.password)
       .then((userCredential) => {
@@ -139,7 +140,7 @@ export default class LogoutPage extends Component {
     }
 
     if (this.state.userAuth) {
-      await this.createUserDataInFirebase()
+      await this.createUserDataInFirebase();
     }
     
 
@@ -156,24 +157,37 @@ export default class LogoutPage extends Component {
   }
   // Method checks if the username is greater than 12 characters and returns true if
   // it isnt
-  checkUsername() {
-    if (this.state.username.length > 12) {
-      Alert.alert('Username cannot be more than 12 characters long')
-      return false
+  async checkUsername() {
+
+    // Checks to see if the username the user has entered already exists in the firestore database
+    const usersRef = collection(FIREBASE_DB, "users");
+    const nameQuery = query(usersRef, where("username", "==", this.state.username));
+    const nameQuerySnapshot = await getDocs(nameQuery);
+
+    nameQuerySnapshot.forEach((doc) => {
+      Alert.alert('Username already taken by another user');
+      return false;
+    });
+
+    // Checks for username length requirement
+    if (this.state.username.length > 16) {
+      Alert.alert('Username cannot be more than 16 characters long');
+      return false;
     } else {
-      return true
+      return true;
     }
   }
+
   // Method checks password length, complexity and if the two passwords entered match
   // Get rid of alerts and switch to text under the box to alert user of requirements
   checkPasswordComplexity() {
     // if logic checks password complexity and length
     if (this.state.password === '') {
-      Alert.alert('Password cannot be empty', 'Please enter a valid password')
-      return false
+      Alert.alert('Password cannot be empty', 'Please enter a valid password');
+      return false;
     } else if (this.state.password.length < 8) {
-      Alert.alert('Password must be at least 8 characters')
-      return false
+      Alert.alert('Password must be at least 8 characters');
+      return false;
     } else if (
       !(
         this.state.password.includes('!') ||
@@ -188,47 +202,57 @@ export default class LogoutPage extends Component {
         '!, @, #, $'
       )
     } else if (!this.state.password.match(/[A-Z]/)) {
-      Alert.alert('Password must contain at least 1 uppercase letter')
-      return false
+      Alert.alert('Password must contain at least 1 uppercase letter');
+      return false;
     } else if (!this.state.password.match(/[a-z]/)) {
-      Alert.alert('Password must contain at least 1 lowercase letter')
-      return false
+      Alert.alert('Password must contain at least 1 lowercase letter');
+      return false;
     } else if (!this.state.password.match(/[0-9]/)) {
-      Alert.alert('Password must contain at least one digit')
-      return false
+      Alert.alert('Password must contain at least one digit');
+      return false;
     } else if (this.state.password !== this.state.passwordRenter) {
       Alert.alert(
         'Passwords do not match',
         'Please re-enter password and try again'
-      )
-      return false
+      );
+      return false;
     } else {
-      return true
+      return true;
     }
   }
 
   // Function to set checkbox value state to true or false
   toggleCheckbox(value) {
-    this.setState({checkboxValue: value})
+    this.setState({checkboxValue: value});
   }
 
   // Method returns true if the user has clicked age chekcbox
   ageCheck() {
     if (this.state.checkboxage === false) {
-      Alert.alert('You must be 18 years old to use Waste Watchers')
-      return false
+      Alert.alert('You must be 18 years old to use Waste Watchers');
+      return false;
     } else {
-      return true
+      return true;
     }
   }
   
   // Method returns true if the user has clicked the privacy policy checkbox
   privacyCheck() {
     if (this.state.checkboxprivacy === false) {
-      Alert.alert('Please agree the privacy policy')
-      return false
+      Alert.alert('Please agree the privacy policy');
+      return false;
     } else {
-      return true
+      return true;
+    }
+  }
+
+  // Method ensures the user has provided a first and last name
+  nameCheck() {
+    if (this.state.firstname == null || this.state.lastname == null) {
+      Alert.alert("Please provide your first and last name");
+      return false;
+    } else {
+      return true;
     }
   }
 

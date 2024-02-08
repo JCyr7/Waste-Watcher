@@ -14,7 +14,7 @@ export const COLORS = {
   opaqueGray: 'rgba(23,67,88,0.7)',
   transparent: 'rgba(0,0,0,0)',
   lesswhitetransparent: 'rgba(255, 255, 255, 0.15)',
-  whitetransparent: 'rgba(255, 255, 255, 0.35)',
+  whitetransparent: 'rgba(255, 255, 255, 0.25)',
   morewhitetransparent: 'rgba(255, 255, 255, 0.75)',
   red: '#f00'
 }

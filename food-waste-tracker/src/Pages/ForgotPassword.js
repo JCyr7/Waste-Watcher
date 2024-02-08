@@ -4,11 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   KeyboardAvoidingView,
   StyleSheet,
-  Image,
   TextInput,
   Text,
   Pressable,
-  TouchableOpacity
+  TouchableWithoutFeedback,
+  Keyboard,
+  View
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 
@@ -38,115 +39,115 @@ export default class ForgotPassword extends Component {
   }
 
   render() {
-    const {navigation} = this.props
+    const { navigation } = this.props;
+
     return (
-      // Container for page
-      <KeyboardAvoidingView style={styles.container}>
-         {/* back button */}
-        <Pressable
-                    // Create account button - executes create account function defined above on press
-                    onPress={() => navigation.navigate('LogoutPage')}
-                    style={({pressed}) => [
-                      {
-                        backgroundColor: pressed ? COLORS.transparent : COLORS.transparent
-                      },
-                      styles.backButton
-                    ]}>
-                  <Text style={styles.backButtontext}>^</Text>
-        </Pressable>
-
-
-        <Image
-          style={styles.image}
-          source={require('../../images/FoodRescueMaine_Logo_Final-01.png')}
-        />
-        <Text style={styles.header}>Reset Password</Text>
-        <Text style={styles.subheader}>
-          If you do not know your current password, you may change it.
-        </Text>
-        <Text style={styles.inputTitle}>Email</Text>
-
-        {/*  */}
-        <TextInput
-          placeholder='example@noemail.com'
-          onEndEditing={() => this.validateText()}
-          onChangeText={(value) => this.setText(value)}
-          style={[
-            {borderColor: this.state.invalidEmail ? 'red' : COLORS.darkGreen},
-            styles.input
-          ]}
-          cursorColor={'black'}></TextInput>
-
-        <TouchableOpacity style={styles.submitButton}>
-          <Text style={styles.submitButtonTextColor}>Submit</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    )
+      <LinearGradient
+        colors={[COLORS.blue, COLORS.green]}
+        style={styles.container}
+        start={{ x: 0, y: 0.2 }}
+        end={{ x: 1, y: 1 }}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.inner}>
+              <Pressable
+                onPress={() => navigation.navigate('LogoutPage')}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed
+                      ? COLORS.transparent
+                      : COLORS.transparent,
+                  },
+                  styles.backButton,
+                ]}>
+                <Text style={styles.backButtontext}>×</Text>
+              </Pressable>
+              <Text style={styles.header}>Forgot Password?</Text>
+              <Text style={styles.subheader}>Please enter your email and we'll send you an email with a link to reset your password.</Text>
+              <TextInput
+                cursorColor={'white'}
+                selectionColor={'white'}
+                placeholder='example@gmail.com'
+                placeholderTextColor={COLORS.white} // Set the color of the placeholder text
+                style={[styles.input, { color: COLORS.white }]}             
+                onChangeText={(value) => this.setText(value)}
+                onEndEditing={() => this.validateText()}>
+              </TextInput>
+              <Pressable
+                //onPress={() => navigation.navigate('LogoutPage')}
+                style={({ pressed }) => [
+                  {
+                    backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
+                  },
+                  styles.submitButton,]}>
+                <Text style={styles.submitButtonTextColor}>Reset Password</Text>
+              </Pressable>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </LinearGradient>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGreen,
-    alignItems: 'center'
+    flexDirection: 'column',  // Assuming you want a column layout
   },
-  //backbutton
+  inner: {
+    flex: 1,
+    alignItems: 'center',
+
+  },
   backButton: {
-    position: 'absolute',
+    alignSelf: 'flex-start',
+    margin: 10,
     marginTop: 40,
-    marginLeft: 6,
-    paddingRight: 13,
     borderRadius: 14,
-    transform: [{ rotate: '270deg' }] 
   },
   backButtontext: {
     fontSize: 40,
     color: COLORS.white,
-    paddingLeft: 20,
-    paddingRight: 10,
     paddingTop: 20,
-    paddingBottom: 5,
-  },
-  image: {
-    marginTop: '30%'
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25
   },
   header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: COLORS.darkGray
+    fontSize: 35,
+    color: 'white',
+    justifyContent: 'center', // Vertical centering
+    alignItems: 'center', // Horizontal centering
   },
   subheader: {
-    color: COLORS.darkGray,
-    margin: '5%',
-    fontSize: 12
-  },
-  inputTitle: {
-    paddingLeft: '3%',
-    paddingTop: '1%',
-    paddingBottom: '1%',
-    fontWeight: 'bold',
-    alignSelf: 'flex-start'
+    color: COLORS.white,
+    width: '80%',
+    marginBottom: 15,
+    marginTop: 80,
+    fontSize: 15
   },
   input: {
-    borderRadius: 10,
-    borderWidth: 2,
-    paddingTop: '1%',
-    padding: '1%',
-    paddingLeft: '3%',
-    width: '95%',
-    alignSelf: 'center'
+    height: 50,
+    width: '85%',
+    borderRadius: 7,
+    backgroundColor: COLORS.whitetransparent,
+    marginBottom: 8,
+    paddingLeft: 15,
+    fontSize: 15,
   },
   submitButton: {
-    margin: '4%',
-    paddingTop: '1%',
-    height: 30,
-    width: '15%',
-    borderRadius: 3,
+    height: 50,
+    width: '85%',
     alignItems: 'center',
-    backgroundColor: COLORS.darkGreen
+    justifyContent: 'space-evenly',
+    borderColor: COLORS.whitetransparent,
+    borderWidth: 3,
+    borderRadius: 7,
+    margin: 8
   },
   submitButtonTextColor: {
-    color: 'white'
+    color: 'white',
+    fontSize: 15,
   }
 })

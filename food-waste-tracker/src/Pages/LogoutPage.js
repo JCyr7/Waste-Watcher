@@ -162,7 +162,14 @@ export default class LogoutPage extends Component {
     // Checks to see if the username the user has entered already exists in the firestore database
     const usersRef = collection(FIREBASE_DB, "users");
     const nameQuery = query(usersRef, where("username", "==", this.state.username));
-    const nameQuerySnapshot = await getDocs(nameQuery);
+
+    try {
+      const nameQuerySnapshot = await getDocs(nameQuery);
+    } catch (e) {
+      Alert.alert("We're sorry!", "We are encountering network difficulties at the moment, please try again later.");
+      return false;
+    }
+    
 
     nameQuerySnapshot.forEach((doc) => {
       Alert.alert('Username already taken by another user');

@@ -182,7 +182,7 @@ export default class MainPage extends Component {
           </Pressable> */}
         </View>
         {/* Profile icon in the top right */}
-        <Pressable
+        {/* <Pressable
           style={styles.profileIcon}
           onPress={() => {
             // Add logic to navigate to the profile page
@@ -191,7 +191,7 @@ export default class MainPage extends Component {
             source={require('../../images/profile.png')} // Provide the correct path to your profile image
             style={{ width: 30, height: 30, tintColor: COLORS.black }}/>
           <Text style={styles.profileText}>Profile</Text>
-        </Pressable>
+        </Pressable> */}
       </SafeAreaView>
     )
   }
@@ -234,16 +234,5 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 1.5,
   },
-  profileIcon: {
-    position: 'absolute',
-    top: 70,
-    right: 40,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  profileText: {
-    color: COLORS.black,
-    marginTop: 3,
-    fontSize: 12,
-  },
+  
 })

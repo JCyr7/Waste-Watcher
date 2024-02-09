@@ -276,7 +276,8 @@ export default class LogoutPage extends Component {
               <TextInput
                 cursorColor={'white'}
                 selectionColor={'white'}
-                placeholder='Username'
+                keyboardType="email-address"  // Set keyboardType to "email-address"
+                placeholder='Email'
                 placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                 style={[styles.userpassinput, { color: COLORS.white }]}             
                 onChangeText={(value) => {
@@ -589,6 +590,7 @@ const styles = StyleSheet.create({
   loginText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 15,
   },
   forgotAccountButton: {
     paddingTop: 0,
@@ -716,6 +718,7 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: COLORS.white,
+    fontWeight: 'bold',
     fontSize: 15,
   },
   signupButton: {

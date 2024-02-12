@@ -20,6 +20,7 @@ import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
 import SettingsPopup from '../Popups/SettingsPopup'
 import NotificationsPopup from '../Popups/NotificationsPopup'
+import AddFriendsPopup from '../Popups/AddFriendsPopup'
 import StreakPopup from '../Popups/StreakPopup'
 import BadgesPopup from '../Popups/BadgesPopup'
 import ReferralPopup from '../Popups/ReferralPopup'
@@ -34,6 +35,7 @@ export default class ProfilePage extends Component {
       zipCode: '04473',
       settingsModal: false,
       notificationsModal: false,
+      addfriendsModal: false,
       streakModal: false,
       badgesModal: false
     }
@@ -51,6 +53,10 @@ export default class ProfilePage extends Component {
 
   notificaitonsVisibility(value) {
     this.setState({notificationsModal: value})
+  }
+
+  addfriendsVisibility(value) {
+    this.setState({addfriendsModal: value})
   }
 
   streakVisibility(value) {
@@ -129,6 +135,8 @@ export default class ProfilePage extends Component {
           </View>
         </View>
 
+
+
         {/* Account Actions Container */}
         <View style={styles.actionsContainer}>
           {/* Notifications Button*/}
@@ -147,7 +155,6 @@ export default class ProfilePage extends Component {
               <Text style={styles.actionDescription}>No new messages</Text>
             </View>
           </Pressable>
-
           {/* Notifications Modal */}
           <Modal
             animationType='fade'
@@ -166,6 +173,45 @@ export default class ProfilePage extends Component {
                 </Pressable>
               </View>
               <NotificationsPopup />
+            </Popup>
+          </Modal>
+
+
+
+          {/* add friends Button*/}
+          <Pressable
+            style={styles.action}
+            onPress={() => this.addfriendsVisibility(true)}>
+            <View style={styles.actionIcon}>
+              <MaterialCommunityIcons
+                name='bell-badge-outline'
+                size={50}
+                color='black'
+              />
+            </View>
+            <View style={styles.actionInfoContainer}>
+              <Text style={styles.actionName}>add friends</Text>
+              <Text style={styles.actionDescription}>click to add friends</Text>
+            </View>
+          </Pressable>
+          {/* Notifications Modal */}
+          <Modal
+            animationType='fade'
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={this.state.addfriendsModal}
+            onRequestClose={() => this.addfriendsVisibility(false)}>
+            <Popup>
+              <View style={styles.popupHeader}>
+                <View style={{width: '10%'}} />
+                <Text style={styles.popupHeaderText}>Add friends</Text>
+                <Pressable
+                  style={styles.closePopupButton}
+                  onPress={() => this.addfriendsVisibility(false)}>
+                  <AntDesign name='close' size={24} color='black' />
+                </Pressable>
+              </View>
+              <AddFriendsPopup />
             </Popup>
           </Modal>
 

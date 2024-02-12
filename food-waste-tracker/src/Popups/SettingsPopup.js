@@ -183,7 +183,7 @@ export default class SettingsPopup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
+    width: '100%',
     height: '87%',
     marginLeft: '5%',
     justifyContent: 'space-between',

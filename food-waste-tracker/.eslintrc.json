@@ -1,6 +1,5 @@
 {
     "parserOptions": {
-        "ignorePatterns": ["/**/coverage/*",".html"],
         "parser": "eslint-parser",
         "sourceType": "module",
         "ecmaVersion": 2023,

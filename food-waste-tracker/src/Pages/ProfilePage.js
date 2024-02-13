@@ -6,7 +6,8 @@ import {
   Text,
   Pressable,
   Modal,
-  Linking
+  Linking,
+  Image
 } from 'react-native'
 import {
   SimpleLineIcons,
@@ -30,8 +31,8 @@ export default class ProfilePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName: 'John Doe',
-      email: 'jdoe99@email.com',
+      userName: 'Frank Pug',
+      email: 'frankdapug',
       zipCode: '04473',
       settingsModal: false,
       notificationsModal: false,
@@ -76,79 +77,42 @@ export default class ProfilePage extends Component {
   }
 
   render() {
+    const {navigation} = this.props
     return (
       <View style={styles.container}>
         {/* Account Card Container */}
         <View style={styles.accountContainer}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.headerGap} />
-            <Text style={styles.headerText}>My Profile</Text>
-
-            {/* Settings Button */}
-            <Pressable
-              style={styles.headerButton}
-              onPress={() => this.settingsVisibility(true)}>
-              <SimpleLineIcons name='settings' size={30} color='black' />
-            </Pressable>
-
-            {/* Settings Modal */}
-            <Modal
-              animationType='fade'
-              transparent={true}
-              statusBarTranslucent={true}
-              visible={this.state.settingsModal}
-              onRequestClose={() => this.settingsVisibility(false)}>
-              <Popup>
-                <View style={styles.popupHeader}>
-                  <View style={{width: '10%'}} />
-                  <Text style={styles.popupHeaderText}>Settings</Text>
-                  <Pressable
-                    style={styles.closePopupButton}
-                    onPress={() => this.settingsVisibility(false)}>
-                    <AntDesign name='close' size={24} color='black' />
-                  </Pressable>
-                </View>
-                <SettingsPopup
-                  callBack={this.handleCallBack}
-                  userName={this.state.userName}
-                  email={this.state.email}
-                  zipCode={this.state.zipCode}
-                />
-              </Popup>
-            </Modal>
+          <View style={styles.profilePicture}>
+          <Image 
+              source={require('../../images/profile.png')}
+              style={{
+                width: 50,
+                height: 50,
+              }}/>
           </View>
-
-          {/* Account Card Profile Container */}
-          <View style={styles.profileContainer}>
-            <View style={styles.profilePicture}>
-              <MaterialCommunityIcons
-                name='account-box'
-                size={175}
-                color='black'
-              />
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.name}>{this.state.userName}</Text>
-              <Text style={styles.info}>{this.state.email}</Text>
-              <Text style={styles.info}>{this.state.zipCode}</Text>
-            </View>
-          </View>
+          <Text style={styles.name}>{this.state.userName}</Text>
+          <Text style={styles.info}>{this.state.email}</Text>
         </View>
-
 
 
         {/* Account Actions Container */}
         <View style={styles.actionsContainer}>
           {/* Notifications Button*/}
           <Pressable
-            style={styles.action}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
             onPress={() => this.notificaitonsVisibility(true)}>
             <View style={styles.actionIcon}>
-              <MaterialCommunityIcons
-                name='bell-badge-outline'
-                size={50}
-                color='black'
-              />
+              <Image 
+              source={require('../../images/bell.png')}
+              style={{
+                width: 35,
+                height: 35,
+              }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Notifications</Text>
@@ -177,20 +141,25 @@ export default class ProfilePage extends Component {
           </Modal>
 
 
-
           {/* add friends Button*/}
           <Pressable
-            style={styles.action}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
             onPress={() => this.addfriendsVisibility(true)}>
             <View style={styles.actionIcon}>
-              <MaterialCommunityIcons
-                name='bell-badge-outline'
-                size={50}
-                color='black'
-              />
+              <Image 
+              source={require('../../images/friends.png')}
+              style={{
+                width: 35,
+                height: 35,
+              }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>add friends</Text>
+              <Text style={styles.actionName}>Friends</Text>
               <Text style={styles.actionDescription}>click to add friends</Text>
             </View>
           </Pressable>
@@ -215,25 +184,31 @@ export default class ProfilePage extends Component {
             </Popup>
           </Modal>
 
+
           {/* Streak Button */}
           <Pressable
-            style={styles.action}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
             onPress={() => this.streakVisibility(true)}>
             <View style={styles.actionIcon}>
-              <MaterialIcons
-                name='local-fire-department'
-                size={50}
-                color='black'
-              />
+            <Image 
+              source={require('../../images/streak.png')}
+              style={{
+                width: 35,
+                height: 35,
+              }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Streak</Text>
               <Text style={styles.actionDescription}>
-                Track waste daily to keep the streak alive
+                Track daily, earn rewards
               </Text>
             </View>
           </Pressable>
-
           {/* Streak Modal */}
           <Modal
             style={styles.modal}
@@ -258,26 +233,31 @@ export default class ProfilePage extends Component {
             </Popup>
           </Modal>
 
+
           {/* Badges Button */}
           <Pressable
-            style={styles.action}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
             onPress={() => this.badgesVisibility(true)}>
             <View style={styles.actionIcon}>
-              <Octicons
-                name='file-badge'
-                size={47}
-                color='black'
-                style={{marginHorizontal: 3}}
-              />
+            <Image 
+              source={require('../../images/ribbon.png')}
+              style={{
+                width: 35,
+                height: 35,
+              }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>My Badges</Text>
               <Text style={styles.actionDescription}>
-                Earn badges by completing tasks
+                Earn badges, complete goals
               </Text>
             </View>
           </Pressable>
-
           {/* Badges Modal */}
           <Modal
             style={styles.modal}
@@ -302,23 +282,105 @@ export default class ProfilePage extends Component {
             </Popup>
           </Modal>
 
+
+          {/* settings Button */}
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
+            onPress={() => this.settingsVisibility(true)}>
+            <View style={styles.actionIcon}>
+            <Image 
+              source={require('../../images/settings.png')}
+              style={{
+                width: 35,
+                height: 35,
+              }}/>
+            </View>
+            <View style={styles.actionInfoContainer}>
+              <Text style={styles.actionName}>Settings</Text>
+              <Text style={styles.actionDescription}>
+                Edit your account info
+              </Text>
+            </View>
+          </Pressable>
+          {/* Settings Modal */}
+          <Modal
+            animationType='fade'
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={this.state.settingsModal}
+            onRequestClose={() => this.settingsVisibility(false)}>
+            <Popup>
+              <View style={styles.popupHeader}>
+                <View style={{width: '10%'}} />
+                  <Text style={styles.popupHeaderText}>Settings</Text>
+                  <Pressable
+                    style={styles.closePopupButton}
+                    onPress={() => this.settingsVisibility(false)}>
+                    <AntDesign name='close' size={24} color='black' />
+                  </Pressable>
+                </View>
+                <SettingsPopup
+                  callBack={this.handleCallBack}
+                  userName={this.state.userName}
+                  email={this.state.email}
+                  zipCode={this.state.zipCode}
+                />
+              </Popup>
+            </Modal>
+
+
           {/* Referral Button */}
           <Pressable
-            style={styles.action}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
             onPress={() => this.referralOnPress()}>
             <View style={styles.actionIcon}>
-              <FontAwesome
-                name='mail-forward'
-                size={40}
-                color='black'
-                style={{marginHorizontal: 5}}
-              />
+              <Image 
+                source={require('../../images/refer.png')}
+                style={{
+                  width: 35,
+                  height: 35,
+                  tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
+                }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Refer a Friend</Text>
               <Text style={styles.actionDescription}>
-                Invite friends to track their own waste
+                Connect and track together
               </Text>
+            </View>
+          </Pressable>
+
+          {/* Log out button */}
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+              },
+              styles.action,
+            ]}
+            onPress={() => navigation.navigate('LogoutPage')}>
+            <View style={styles.actionIcon}>
+              <Image 
+                source={require('../../images/logout.png')}
+                style={{
+                  width: 35,
+                  height: 35,
+                  tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
+                }}/>
+            </View>
+            <View style={styles.actionInfoContainer}>
+              <Text style={styles.actionName}>Sign out</Text>
+
             </View>
           </Pressable>
         </View>
@@ -328,11 +390,83 @@ export default class ProfilePage extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
+  },
   modal: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  accountContainer: {
+    backgroundColor: COLORS.white,
+    width: '50%',
+    height: '17.5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: Platform.OS === 'android' ? '5%' : '15%',
+    borderRadius: 7,
+    shadowOffset: {
+      width: 4,
+      height: 4
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
+    shadowColor: COLORS.blue
+  },
+  profilePicture: {
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  action: {
+    width: '100%',
+    height: '11%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.morewhitetransparent
+  },
+  actionIcon: {
+    marginLeft: '7.5%',
+    marginRight: '2%'
+  },
+  info: {
+    fontSize: 16,
+    color: COLORS.darkGray
+  },
+  infoContainer: {
+    justifyContent: 'center'
+  },
+  actionsContainer: {
+    flex: 1,
+    width: '100%',
+    height: '5%',
+    marginTop: '2%',
+  },
+
+  actionInfoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginLeft: '3%'
+  },
+  actionName: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    marginBottom: 1,
+  },
+  actionDescription: {
+    color: COLORS.darkGray,
+    fontSize: '13',
+    marginRight: '10%'
   },
   popupHeader: {
     flexDirection: 'row',
@@ -354,100 +488,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '90%',
     alignItems: 'center'
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  accountContainer: {
-    backgroundColor: COLORS.white,
-    width: '90%',
-    height: '40%',
-    marginTop: Platform.OS === 'android' ? '10%' : '2%',
-    borderRadius: 10,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
-  },
-  headerContainer: {
-    height: '23%',
-    marginTop: '7%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingHorizontal: '5%'
-  },
-  headerGap: {
-    flex: 2
-  },
-  headerText: {
-    flex: 3,
-    textAlign: 'center',
-    fontSize: 28,
-    fontWeight: '800'
-  },
-  headerButton: {
-    flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  profileContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-  profilePicture: {
-    width: '50%',
-    marginLeft: '3%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  infoContainer: {
-    justifyContent: 'center'
-  },
-  name: {
-    fontWeight: '700',
-    fontSize: 20
-  },
-  info: {
-    fontSize: 16,
-    color: COLORS.darkGray
-  },
-  actionsContainer: {
-    flex: 1,
-    width: '90%',
-    marginVertical: '2.6%',
-    justifyContent: 'space-around'
-  },
-  action: {
-    width: '100%',
-    height: '20%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 10
-  },
-  actionIcon: {
-    marginLeft: '6%',
-    marginRight: '1%'
-  },
-  actionInfoContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    marginLeft: '3%'
-  },
-  actionName: {
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: '1%'
-  },
-  actionDescription: {
-    color: COLORS.darkGray,
-    marginRight: '10%'
   }
 })

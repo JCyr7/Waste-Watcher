@@ -24,9 +24,7 @@ export default class NotificationsPopup extends Component {
                 selectionColor={'white'}
                 placeholder='friend username'
                 placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                style={[styles.input, { color: COLORS.white }]}>            
-                {/* onChangeText={(value) => this.setText(value)}
-                 onEndEditing={() => this.validateText()} */}
+                style={[styles.input, { color: COLORS.white }]}>       
               </TextInput>
               <Pressable
                 //onPress={() => navigation.navigate('LogoutPage')}
@@ -34,7 +32,7 @@ export default class NotificationsPopup extends Component {
                   {
                     backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
                   },
-                  styles.submitButton,]}>
+                  styles.submitButton]}>
                 <Text style={styles.submitButtonTextColor}>Reset Password</Text>
               </Pressable>
         </ScrollView>

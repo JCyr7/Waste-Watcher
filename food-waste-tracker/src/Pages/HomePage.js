@@ -141,7 +141,7 @@ export default class HomePage extends Component {
                 data={data}
                 width={125}
                 height={125}
-                strokeWidth={24}
+                strokeWidth={16}
                 radius={45}
                 chartConfig={dialChartConfig}
                 hideLegend={true}
@@ -154,7 +154,7 @@ export default class HomePage extends Component {
                 data={data2}
                 width={125}
                 height={125}
-                strokeWidth={24}
+                strokeWidth={16}
                 radius={45}
                 chartConfig={dialChartConfig}
                 hideLegend={true}

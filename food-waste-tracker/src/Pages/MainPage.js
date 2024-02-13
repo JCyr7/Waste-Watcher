@@ -8,11 +8,6 @@ import {
   Image,
   Text,
 } from 'react-native'
-import {
-  Ionicons,
-  Foundation,
-  FontAwesome
-} from '@expo/vector-icons'
 import {COLORS} from '../Utils/colors'
 import PagerView from 'react-native-pager-view'
 import HomePage from '../Pages/HomePage'
@@ -108,7 +103,7 @@ export default class MainPage extends Component {
             <Text style={[
               styles.iconText,
               {color: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black}
-            ]}>Insights</Text>
+            ]}>Trends</Text>
           </Pressable>
           <Pressable
             onPress={() => this.viewPager.setPage(1)}
@@ -160,7 +155,7 @@ export default class MainPage extends Component {
             <Text style={[
               styles.iconText,
               {color: this.state.pageState === 2 ? COLORS.darkGreen : COLORS.black}
-            ]}>Explore</Text>
+            ]}>Solutions</Text>
           </Pressable>
           {/* <Pressable
             onPress={() => this.viewPager.setPage(4)}

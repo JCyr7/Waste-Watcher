@@ -25,7 +25,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={isLoggedin ? 'MainPage' : 'LogoutPage'}
-        screenOptions={{headerShown: false}}>
+        screenOptions={{ headerShown: false, gestureEnabled: false }}>
         <Stack.Screen name='LogoutPage' component={LogoutPage}></Stack.Screen>
         <Stack.Screen name='LoginPage' component={LoginPage}></Stack.Screen>
         <Stack.Screen name='ProfilePage' component={ProfilePage}></Stack.Screen>

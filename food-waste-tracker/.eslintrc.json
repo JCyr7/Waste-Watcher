@@ -1,6 +1,6 @@
 {
     "parserOptions": {
-        "ignorePatterns": ["**/coverage/*.js"],
+        "ignorePatterns": ["/**/coverage/*"],
         "parser": "eslint-parser",
         "sourceType": "module",
         "ecmaVersion": 2023,

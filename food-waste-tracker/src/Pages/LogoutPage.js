@@ -137,7 +137,7 @@ export default class LogoutPage extends Component {
         if (errorCode == "auth/email-already-in-use") {
           Alert.alert("Email already in use");
         }
-        //console.log(errorMessage);
+        console.log(errorMessage);
       });
     }
 

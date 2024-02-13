@@ -20,7 +20,7 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth';
 import { setDoc, collection, query, where, getDocs, doc } from "firebase/firestore";
 
 export default class LogoutPage extends Component {
@@ -140,7 +140,15 @@ export default class LogoutPage extends Component {
     }
 
     if (this.state.userAuth) {
-      await this.createUserDataInFirebase();
+      try {
+        await this.createUserDataInFirebase();
+      } catch (e) {
+        this.state.userAuth = false;
+        await deleteUser(user);
+        Alert.alert("Unable to create account at this time", "Please try again later.");
+        console.log(e.message);
+      }
+      
     }
     
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Component } from 'react';
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs, or, and } from "firebase/firestore";
 
-import { FIREBASE_DB } from '../../FirebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import { Alert } from 'react-native';
 
 // Takes in a users username and returns their userID, if the user is not found returns null
 export const getUserID = async (username) => {
@@ -19,17 +20,130 @@ export const getUserID = async (username) => {
             retval = nameQuerySnapshot.docs[0].id;
         }
     } catch (e) {
+        return null;
         console.log(e.message);
-    } finally {
-        return retval;
     }
     
+    return retval;
 }
 
-export const checkRequestExists = async (user1, user2) => {
+const sortStringsAlphabetically = (s1, s2) => {
+    let u1 = "";
+    let u2 = "";
+
+    // sorts the strings alphabetically
+    if (s1.localeCompare(s2) < 0) {
+        u1 = s1;
+        u2 = s2;
+    } else {
+        u1 = s2;
+        u2 = s1;
+    }
+
+    return [u1, u2];
+}
+
+export const checkFriendRequestStatus = async (user1, user2) => {    
+
+    if (!user1 || !user2) {
+        return null;
+    }
+
+    const userTuple = sortStringsAlphabetically(user1, user2);
+
+    user1 = userTuple[0];
+    user2 = userTuple[1];
+
+    const requestRef = collection(FIREBASE_DB, "friendship-matrix");
+    const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+
+    const requestQuerySnapshot = await getDocs(requestQuery);
+
+    if (requestQuerySnapshot != null && requestQuerySnapshot.docs.length > 0) {
+        return requestQuerySnapshot.docs[0].data().status;
+    }
+
+    return null;
+}
+
+export const sendFriendRequest = async (sender, reciever) => {
+
+    if (!sender || !reciever) {
+        return null;
+    }
+
+    const userTuple = sortStringsAlphabetically(sender, reciever);
+
+    const user1 = userTuple[0];
+    const user2 = userTuple[1];
+
+    if (await checkFriendRequestStatus(user1, user2)) {
+        return false;
+    }
+
+    try {
+
+        await addDoc(collection(FIREBASE_DB, "friendship-matrix"), {
+          friend1_ID: user1,
+          friend2_ID: user2,
+          status: "pending",
+          initiated: sender
+        });
+      
+        return true;
+
+    } catch (e) {
+        Alert.alert("Unable to send request at this time", "Please try again later");
+        console.error("Error adding document: ", e);
+        return null;
+    }
 
 }
 
-export const sendFriendRequest = async (user1, user2) => {
+export const getPendingFriendRequestsRecieved = async () => {
+
+    user = FIREBASE_AUTH.currentUser.uid.toString();
+
+    const usersRef = collection(FIREBASE_DB, "friendship-matrix");
+    const requestQuery = query(usersRef, and(
+        where("status", "==", "pending"),
+        where("initiated", "!=", user),
+        or(
+            where("friend1_ID", "==", user),
+            where("friend2_ID", "==", user)
+        ))
+    );
+    
+    const requestQuerySnapshot = await getDocs(requestQuery);
+
+    return requestQuerySnapshot.docs;
+        
+}
+
+export const getFriends = async () => {
+
+    user = FIREBASE_AUTH.currentUser.uid.toString();
+
+    const usersRef = collection(FIREBASE_DB, "friendship-matrix");
+    const requestQuery = query(usersRef, and(
+        where("status", "==", "accepted"),
+        or(
+            where("friend1_ID", "==", user),
+            where("friend2_ID", "==", user)
+        ))
+    );
+    
+    const requestQuerySnapshot = await getDocs(requestQuery);
+
+    return requestQuerySnapshot.docs;
+        
+}
+
+export const getNameFromID = async (ID) => {
+
+    const docRef = doc(FIREBASE_DB, "users", ID);
+
+    const docSnapshot = await getDocs(docQuery);
+
 
 }

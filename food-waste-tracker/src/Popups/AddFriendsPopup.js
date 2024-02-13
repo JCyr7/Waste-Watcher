@@ -4,7 +4,8 @@ import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import Notification from '../ProfileComponents/Notification'
 
-import { getUserID } from '../ProfileComponents/FriendHandler'
+import { getUserID, checkFriendRequestStatus, sendFriendRequest, getPendingFriendRequests } from '../ProfileComponents/FriendHandler'
+import { FIREBASE_AUTH } from '../../FirebaseConfig'
 
 export default class NotificationsPopup extends Component {
   constructor(props) {
@@ -16,7 +17,9 @@ export default class NotificationsPopup extends Component {
 
   async submitOnPress() {
     const id = await getUserID(this.state.friendRequestText);
-    console.log(id);
+    const id2 = FIREBASE_AUTH.currentUser.uid;
+    const requestresults = await sendFriendRequest(id, id2);
+    console.log(requestresults);
   }
 
   render() {

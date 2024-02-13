@@ -21,7 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { setDoc, collection, query, where, getDocs, doc } from "firebase/firestore";
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -46,16 +46,14 @@ export default class LogoutPage extends Component {
   createUserDataInFirebase = async () => {
 
     try {
-      const docRef = await addDoc(collection(FIREBASE_DB, "users"), {
+
+      await setDoc(doc(FIREBASE_DB, "users", this.state.userID), {
         first: this.state.firstname,
         last: this.state.lastname,
         username: this.state.username,
-        email: this.state.email,
-        userID: this.state.userID,
-        foodWaste: {}
+        email: this.state.email
       });
     
-      //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

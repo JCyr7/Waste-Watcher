@@ -4,9 +4,19 @@ import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import Notification from '../ProfileComponents/Notification'
 
+import { getUserID } from '../ProfileComponents/FriendHandler'
+
 export default class NotificationsPopup extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      friendRequestText: ''
+    }
+  }
+
+  async submitOnPress() {
+    const id = await getUserID(this.state.friendRequestText);
+    console.log(id);
   }
 
   render() {
@@ -19,23 +29,25 @@ export default class NotificationsPopup extends Component {
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}>
    
-          <TextInput
+              <TextInput
                 cursorColor={'white'}
                 selectionColor={'white'}
-                placeholder='friend username'
+                keyboardType="email-address"  // Set keyboardType to "email-address"
+                placeholder='Email'
                 placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                style={[styles.input, { color: COLORS.white }]}>            
-                {/* onChangeText={(value) => this.setText(value)}
-                 onEndEditing={() => this.validateText()} */}
-              </TextInput>
+                style={[styles.userpassinput, { color: COLORS.white }]}             
+                onChangeText={(value) => {
+                  this.setState({ friendRequestText: value });
+                }}
+              ></TextInput>
               <Pressable
-                //onPress={() => navigation.navigate('LogoutPage')}
+                onPress={() => this.submitOnPress()}
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
                   },
                   styles.submitButton,]}>
-                <Text style={styles.submitButtonTextColor}>Reset Password</Text>
+                <Text style={styles.submitButtonTextColor}>Submit</Text>
               </Pressable>
         </ScrollView>
       </View>

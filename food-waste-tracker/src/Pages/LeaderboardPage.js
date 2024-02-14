@@ -52,15 +52,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '7.5%',
     marginTop: Platform.OS === 'android' ? '5%' : '0%',
-    // borderRadius: 0,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 4
-    // },
-    // shadowOpacity: 0.3,
-    // shadowRadius: 8,
-    // elevation: 10,
-    // shadowColor: COLORS.blue,
     marginBottom: '4%',
   },
   titleText: {

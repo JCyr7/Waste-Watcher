@@ -35,7 +35,7 @@ export default class LeaderboardPage extends Component {
           <Text style={styles.heirarchyText}>Heirarchy feature coming soon</Text>
         </View>
         <View style={styles.tipsContainer}>
-          <Text style={styles.tipsText}>Tips feature coming soon</Text>
+          <ProduceWasteTip />
         </View>
       </View>
     )

@@ -22,8 +22,8 @@ export default class ArcGISMap extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           initialRegion={{
-            latitude: 45.2538,
-            longitude: -69.2455,
+            latitude: 39.2538,
+            longitude: -68.4455,
             latitudeDelta: 5,
             longitudeDelta: 5
           }}>
@@ -38,7 +38,9 @@ export default class ArcGISMap extends Component {
 const styles = StyleSheet.create({
   mapContainer: {
     borderRadius: 10,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    width: '100%', // Added width to ensure it takes up the full width of its container
+    aspectRatio: 1.5, // Adjust the aspect ratio as needed
   },
   map: {
     overflow: 'hidden',

@@ -20,9 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
 import TrackWastePopup from '../Popups/TrackWastePopup'
-import GoalPopup from '../Popups/GoalPopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
-import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import {DATA} from '../Utils/TestData'
 import ProfilePage from '../Pages/ProfilePage'
 import SubmitButton from '../TrackWaste/SubmitButton'
@@ -123,14 +121,14 @@ export default class HomePage extends Component {
     return (
           
         <View style={styles.container}>
-          <Pressable
+          {/* <Pressable
           style={styles.profileIcon}
           onPress={() => navigation.navigate('ProfilePage')}>
           <Image
             source={require('../../images/profile.png')} // Provide the correct path to your profile image
             style={{ width: 30, height: 30, tintColor: COLORS.black }}/>
-          <Text style={styles.profileText}>Profile</Text>
-        </Pressable>
+          {/* <Text style={styles.profileText}>Profile</Text>
+         </Pressable> */}
         {/* Welcome Header */}
         <Text style={styles.welcomeText}>Waste Watcher</Text>
             {/* Progress Dials */}

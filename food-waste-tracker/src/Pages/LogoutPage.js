@@ -403,7 +403,7 @@ export default class LogoutPage extends Component {
                           this.setState({ firstname: firstnameInput })
                         }
                         placeholder="First"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         cursorColor={'white'}
                         selectionColor={'white'}
                         style={styles.nameInput}
@@ -418,7 +418,7 @@ export default class LogoutPage extends Component {
                             this.setState({ lastname: lastnameInput })
                           }
                           placeholder="Last"
-                          placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                          placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                           cursorColor={'white'}
                           selectionColor={'white'}
                           style={styles.nameInput}
@@ -432,7 +432,7 @@ export default class LogoutPage extends Component {
                         defaultValue={this.state.email}
                         onChangeText={(emailInput) => this.setState({ email: emailInput })}
                         placeholder="Email"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         cursorColor={'white'}
                         selectionColor={'white'}
                         style={styles.input}
@@ -447,7 +447,7 @@ export default class LogoutPage extends Component {
                           this.setState({ username: usernameInput })
                         }
                         placeholder="Username"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         cursorColor={'white'}
                         selectionColor={'white'}
                         style={styles.input}
@@ -462,7 +462,7 @@ export default class LogoutPage extends Component {
                         selectionColor={'white'}
                         secureTextEntry
                         placeholder="Password"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         style={styles.input}
                       />
                     </View>
@@ -475,7 +475,7 @@ export default class LogoutPage extends Component {
                         selectionColor={'white'}
                         secureTextEntry
                         placeholder="Re-Enter Password"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         style={styles.input}
                       />
                     </View>

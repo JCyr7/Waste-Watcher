@@ -1,5 +1,11 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Pressable, Platform} from 'react-native'
+import {StyleSheet,
+  View,
+  Text, 
+  Pressable, 
+  Image,
+  Platform,
+} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Leaderboard from '../LeaderboardComponents/Leaderboard'
 import {LOCAL, GLOBAL} from '../Utils/TestData'
@@ -8,70 +14,26 @@ export default class LeaderboardPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      visibility: 0
     }
   }
 
-  // Toggle visibility of local and all time leaderboard
-  // 0 = Local, 1 = All Time
-  setVisibility(value) {
-    this.setState({visibility: value})
-  }
 
-  // Sort ranks in descending order depending on score
-  sortDescendingScore(array) {
-    array.sort(function (a, b) {
-      return b.score - a.score
-    })
-    return array
-  }
 
   render() {
-    const localData = this.sortDescendingScore(LOCAL)
-    const globalData = this.sortDescendingScore(GLOBAL)
 
     return (
       <View style={styles.container}>
-        {/* Header Container*/}
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Leaderboard</Text>
-          <View style={styles.headerButtons}>
-            {/* Local Button */}
-            <Pressable
-              style={[
-                styles.button,
-                {
-                  backgroundColor:
-                    this.state.visibility === 0
-                      ? COLORS.darkGreen
-                      : COLORS.lightGreen
-                }
-              ]}
-              onPress={() => this.setVisibility(0)}>
-              <Text style={styles.buttonText}>Local</Text>
-            </Pressable>
-
-            {/* All Time Button */}
-            <Pressable
-              style={[
-                styles.button,
-                {
-                  backgroundColor:
-                    this.state.visibility === 1
-                      ? COLORS.darkGreen
-                      : COLORS.lightGreen
-                }
-              ]}
-              onPress={() => this.setVisibility(1)}>
-              <Text style={styles.buttonText}>Global</Text>
-            </Pressable>
-          </View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.titleText}>My Food Waste Solutions</Text>
         </View>
-
-        {/* Leaderboard Container */}
-        <View style={styles.content}>
-          {this.state.visibility === 0 && <Leaderboard data={localData} />}
-          {this.state.visibility === 1 && <Leaderboard data={globalData} />}
+        <View style={styles.mapContainer}>
+          <Text style={styles.mapText}>Map feature coming soon</Text>
+        </View>
+        <View style={styles.heirarchyContainer}>
+          <Text style={styles.heirarchyText}>Heirarchy feature coming soon</Text>
+        </View>
+        <View style={styles.tipsContainer}>
+          <Text style={styles.tipsText}>Tips feature coming soon</Text>
         </View>
       </View>
     )
@@ -81,214 +43,64 @@ export default class LeaderboardPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? '10%' : '2%',
-    marginBottom: '5%'
   },
-  header: {
-    width: '90%',
-    height: '25%',
-    justifyContent: 'space-evenly',
+  headerContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: COLORS.white,
-    borderRadius: 10,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
+    width: '100%',
+    height: '7.5%',
+    marginTop: Platform.OS === 'android' ? '5%' : '0%',
+    // borderRadius: 0,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4
+    // },
+    // shadowOpacity: 0.3,
+    // shadowRadius: 8,
+    // elevation: 10,
+    // shadowColor: COLORS.blue,
+    marginBottom: '4%',
   },
-  headerText: {
-    fontSize: 30,
-    fontWeight: '700',
-    color: COLORS.darkGreen
+  titleText: {
+    color: COLORS.blue,
+    fontWeight: '500',
+    fontSize: 24,
   },
-  headerButtons: {
-    width: '90%',
-    height: '25%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  button: {
-    width: '25%',
-    height: '100%',
+  mapContainer:{
+    width: '85%',
+    height: '30%',
+    marginBottom: '4%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30,
-    backgroundColor: COLORS.darkGreen
+    borderRadius: 10,
+    backgroundColor: COLORS.lightBlue,
   },
-  buttonText: {
-    color: COLORS.white
+  mapText: {
+    color: COLORS.blue,
   },
-  content: {
-    width: '90%',
-    height: '72%',
+  heirarchyContainer:{
+    height: '20%',
+    width: '85%',
+    marginBottom: '4%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
     borderRadius: 10,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
-  }
+    backgroundColor: COLORS.lightBlue,
+  },
+  heirarchyText: {
+    color: COLORS.blue,
+  },
+  tipsContainer:{
+    height: '30%',
+    width: '85%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: COLORS.lightBlue,
+  },
+  tipsText: {
+    color: COLORS.blue,
+  },
 })
-
-// Data for testing
-// const friends = [
-//   {
-//     name: 'Finn',
-//     score: '1234'
-//   },
-//   {
-//     name: 'Levi',
-//     score: '1143'
-//   },
-//   {
-//     name: 'Gavin',
-//     score: '985'
-//   },
-//   {
-//     name: 'Chase',
-//     score: '837'
-//   },
-//   {
-//     name: 'Declan',
-//     score: '836'
-//   }
-// ]
-
-// const local = [
-//   {
-//     name: 'Finn',
-//     score: '1234'
-//   },
-//   {
-//     name: 'Levi',
-//     score: '1143'
-//   },
-//   {
-//     name: 'Gavin',
-//     score: '985'
-//   },
-//   {
-//     name: 'Chase',
-//     score: '837'
-//   },
-//   {
-//     name: 'Declan',
-//     score: '836'
-//   },
-//   {
-//     name: 'Local Noob',
-//     score: '13'
-//   }
-// ]
-
-// const allTime = [
-//   {
-//     name: 'Finn',
-//     score: '1234'
-//   },
-//   {
-//     name: 'Levi',
-//     score: '1143'
-//   },
-//   {
-//     name: 'Gavin',
-//     score: '985'
-//   },
-//   {
-//     name: 'Chase',
-//     score: '837'
-//   },
-//   {
-//     name: 'Declan',
-//     score: '836'
-//   },
-//   {
-//     name: 'Local Noob',
-//     score: '13'
-//   },
-//   {
-//     name: 'All Time Noob',
-//     score: '-1'
-//   },
-//   {
-//     name: 'Gavin',
-//     score: '985'
-//   },
-//   {
-//     name: 'Chase',
-//     score: '837'
-//   },
-//   {
-//     name: 'Declan',
-//     score: '836'
-//   },
-//   {
-//     name: 'Local Noob',
-//     score: '13'
-//   },
-//   {
-//     name: 'All Time Noob',
-//     score: '-1'
-//   },
-//   {
-//     name: 'Finn',
-//     score: '1234'
-//   },
-//   {
-//     name: 'Levi',
-//     score: '1143'
-//   },
-//   {
-//     name: 'Gavin',
-//     score: '985'
-//   },
-//   {
-//     name: 'Chase',
-//     score: '837'
-//   },
-//   {
-//     name: 'Declan',
-//     score: '836'
-//   },
-//   {
-//     name: 'Local Noob',
-//     score: '13'
-//   },
-//   {
-//     name: 'All Time Noob',
-//     score: '-1'
-//   },
-//   {
-//     name: 'Gavin',
-//     score: '985'
-//   },
-//   {
-//     name: 'Chase',
-//     score: '837'
-//   },
-//   {
-//     name: 'Declan',
-//     score: '836'
-//   },
-//   {
-//     name: 'Local Noob',
-//     score: '13'
-//   },
-//   {
-//     name: 'All Time Noob',
-//     score: '-1'
-//   }
-// ]

@@ -83,7 +83,7 @@ export default class ProfilePage extends Component {
         {/* Account Card Container */}
         <View style={styles.accountContainer}>
           <View style={styles.profilePicture}>
-          <Image 
+            <Image 
               source={require('../../images/profile.png')}
               style={{
                 width: 50,
@@ -93,6 +93,29 @@ export default class ProfilePage extends Component {
           <Text style={styles.name}>{this.state.userName}</Text>
           <Text style={styles.info}>{this.state.email}</Text>
         </View>
+          {/* Back Button Container */}
+          {/* <View style={styles.backButtonContainer}>
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                },
+                styles.backbutton,
+              ]}
+              onPress={() => this.badgesVisibility(true)}>
+              <Image 
+                source={require('../../images/backarrow.png')}
+                style={{
+                  width: 35,
+                  height: 35,
+                }}
+              />
+              <Text style={styles.backbuttontext}>Back</Text>
+            </Pressable>
+          </View> */}
+
+          {/* Profile Information Container */}
+
 
 
         {/* Account Actions Container */}
@@ -393,7 +416,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: COLORS.white,
   },
   modal: {
     width: '100%',
@@ -401,35 +423,47 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+
+
   accountContainer: {
-    backgroundColor: COLORS.white,
-    width: '50%',
-    height: '17.5%',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? '5%' : '15%',
-    borderRadius: 7,
+    justifyContent: 'center',
+    backgroundColor: COLORS.white,
+    width: '100%',
+    height: '20%',
+    marginTop: Platform.OS === 'android' ? '5%' : '%',
+    borderRadius: 0,
     shadowOffset: {
-      width: 4,
+      width: 0,
       height: 4
     },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 10,
-    shadowColor: COLORS.blue
+    shadowColor: COLORS.blue,
+    marginBottom: 20,
   },
   profilePicture: {
-    width: '50%',
+    marginTop: '2.5%',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   name: {
+    marginVertical: '1%',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
   },
+  info: {
+    fontSize: 16,
+    color: COLORS.darkGray,
+    marginBottom: '5%'
+  },
+  
+
+
   action: {
     width: '100%',
-    height: '11%',
+    height: '13%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
@@ -439,18 +473,14 @@ const styles = StyleSheet.create({
     marginLeft: '7.5%',
     marginRight: '2%'
   },
-  info: {
-    fontSize: 16,
-    color: COLORS.darkGray
-  },
   infoContainer: {
     justifyContent: 'center'
   },
   actionsContainer: {
     flex: 1,
     width: '100%',
-    height: '5%',
-    marginTop: '2%',
+    height: '100%',
+    marginTop: '5%',
   },
 
   actionInfoContainer: {

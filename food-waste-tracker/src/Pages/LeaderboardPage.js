@@ -8,7 +8,9 @@ import {StyleSheet,
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Leaderboard from '../LeaderboardComponents/Leaderboard'
+import ProduceWasteTip from '../WasteReductionTips/ReduceProduceWaste'
 import {LOCAL, GLOBAL} from '../Utils/TestData'
+import ArcGISMap from '../Pages/ArcGISMap.js'
 
 export default class LeaderboardPage extends Component {
   constructor(props) {
@@ -27,7 +29,7 @@ export default class LeaderboardPage extends Component {
           <Text style={styles.titleText}>My Food Waste Solutions</Text>
         </View>
         <View style={styles.mapContainer}>
-          <Text style={styles.mapText}>Map feature coming soon</Text>
+          <ArcGISMap/>
         </View>
         <View style={styles.heirarchyContainer}>
           <Text style={styles.heirarchyText}>Heirarchy feature coming soon</Text>

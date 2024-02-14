@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
   },
   actionDescription: {
     color: COLORS.darkGray,
-    fontSize: '13',
+    fontSize: 13,
     marginRight: '10%'
   },
   popupHeader: {

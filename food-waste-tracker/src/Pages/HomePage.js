@@ -82,7 +82,6 @@ export default class HomePage extends Component {
 
     let userName = await AsyncStorage.getItem('username')
     this.setState({userName: userName})
-    console.log(this.state.householdInfoModal)
   }
 
   // Sets the state for the household info modal

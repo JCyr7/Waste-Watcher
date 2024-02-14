@@ -27,8 +27,8 @@ export default function App() {
         initialRouteName={isLoggedin ? 'MainPage' : 'LogoutPage'}
         screenOptions={{ headerShown: false, gestureEnabled: false }}>
         <Stack.Screen name='LogoutPage' component={LogoutPage}></Stack.Screen>
-        {/* <Stack.Screen name='LoginPage' component={LoginPage}></Stack.Screen>
-        <Stack.Screen name='ProfilePage' component={ProfilePage}></Stack.Screen> */}
+        {/* <Stack.Screen name='LoginPage' component={LoginPage}></Stack.Screen>*/}
+        <Stack.Screen name='ProfilePage' component={ProfilePage}></Stack.Screen> 
         <Stack.Screen name='ForgotPassword' component={ForgotPassword}></Stack.Screen>
         <Stack.Screen name='MainPage' component={MainPage}></Stack.Screen>
       </Stack.Navigator>

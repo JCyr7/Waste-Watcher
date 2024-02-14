@@ -1,19 +1,24 @@
-import React, {Component} from 'react'
-import {Dimensions, StyleSheet, View} from 'react-native'
-import MapView, {Geojson, PROVIDER_GOOGLE} from 'react-native-maps'
-import mapStyle from '../GeoJSON/mapStyle.json'
-import geojson from '../GeoJSON/example.json'
+import React, { Component } from 'react';
+import { Dimensions, StyleSheet, View, Alert } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import mapStyle from '../GeoJSON/mapStyle.json';
+import geojson from '../GeoJSON/example.json';
 
-//Component displays a map view of Maine
 export default class ArcGISMap extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
+    // Extracting points from GeoJSON
+    const points = geojson.features.map(feature => ({
+      latitude: feature.geometry.coordinates[1],
+      longitude: feature.geometry.coordinates[0],
+      properties: feature.properties
+    }));
+
     return (
-      // Map container view
-      <View style={styles.mapContainer}>
+      <View style={styles.container}>
         <MapView
           style={styles.map}
           width={Dimensions.get('window').width}
@@ -22,29 +27,33 @@ export default class ArcGISMap extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           initialRegion={{
-            latitude: 39.2538,
+            latitude: 45.2538,
             longitude: -68.4455,
             latitudeDelta: 5,
             longitudeDelta: 5
           }}>
-          {/* GeoJSON object displays simple line for testing */}
-          <Geojson geojson={geojson} />
+          {/* Displaying markers for each point */}
+          {points.map((point, index) => (
+            <Marker
+              key={index}
+              coordinate={{ latitude: point.latitude, longitude: point.longitude }}
+              onPress={() => Alert.alert(
+                'Marker Properties',
+                `Latitude: ${point.latitude}\nLongitude: ${point.longitude}\nProperties: ${JSON.stringify(point.properties)}`
+              )}
+            />
+          ))}
         </MapView>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
-  mapContainer: {
-    borderRadius: 10,
-    //overflow: 'hidden',
-    width: '100%', // Added width to ensure it takes up the full width of its container
-    aspectRatio: 1.5, // Adjust the aspect ratio as needed
+  container: {
+    flex: 1,
   },
   map: {
-    overflow: 'hidden',
-    height: '100%',
-    width: '100%'
+    flex: 1,
   }
-})
+});

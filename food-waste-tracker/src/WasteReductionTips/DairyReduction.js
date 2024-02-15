@@ -20,14 +20,13 @@ export default class DairyReduciton extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '48%',
-    height: '31%',
+    width: '31%', // Adjust the width for three items in a row
+    height: '45%', // Adjust the height as needed
     borderRadius: 10,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: COLORS.white,
     marginVertical: '1%',
-    marginHorizontal: '1%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   label: {
     fontSize: 15,

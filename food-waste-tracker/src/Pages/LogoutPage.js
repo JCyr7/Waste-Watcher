@@ -269,7 +269,7 @@ export default class LogoutPage extends Component {
             <Image source={require('../../images/FoodRescueMaine_Logo_Final-01.png')} style={styles.image}/>
             {/* title */}
             <Text style={styles.title}>Waste Watcher</Text>
-            <Text style={styles.subtitle}>Food Waste Tracker</Text>
+            <Text style={styles.subtitle}>Track n' Reduce Food Waste</Text>
 
 
               {/* username and password input*/}

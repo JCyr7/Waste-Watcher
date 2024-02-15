@@ -183,7 +183,7 @@ export default class ProfilePage extends Component {
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Friends</Text>
-              <Text style={styles.actionDescription}>click to add friends</Text>
+              <Text style={styles.actionDescription}>View and invite friends</Text>
             </View>
           </Pressable>
           {/* Notifications Modal */}
@@ -372,7 +372,6 @@ export default class ProfilePage extends Component {
                 style={{
                   width: 35,
                   height: 35,
-                  tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -384,7 +383,7 @@ export default class ProfilePage extends Component {
           </Pressable>
 
           {/* Log out button */}
-          <Pressable
+          {/* <Pressable
             style={({ pressed }) => [
               {
                 backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
@@ -398,14 +397,13 @@ export default class ProfilePage extends Component {
                 style={{
                   width: 35,
                   height: 35,
-                  tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Sign out</Text>
 
             </View>
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
     )
@@ -431,7 +429,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     width: '100%',
     height: '20%',
-    marginTop: Platform.OS === 'android' ? '5%' : '%',
+    marginTop: Platform.OS === 'android' ? '5%' : '0%',
     borderRadius: 0,
     shadowOffset: {
       width: 0,

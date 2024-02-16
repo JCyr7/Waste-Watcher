@@ -49,6 +49,10 @@ export const LOCAL = [
 
 export const GLOBAL = [
   {
+    name: 'Declan',
+    score: '936'
+  },
+  {
     name: 'Finn',
     score: '695'
   },
@@ -61,87 +65,7 @@ export const GLOBAL = [
     score: '885'
   },
   {
-    name: 'Chase',
+    name: 'Callen',
     score: '737'
-  },
-  {
-    name: 'Declan',
-    score: '936'
-  },
-  {
-    name: 'John',
-    score: '547'
-  },
-  {
-    name: 'Jane',
-    score: '520'
-  },
-  {
-    name: 'Dave',
-    score: '654'
-  },
-  {
-    name: 'Mary',
-    score: '397'
-  },
-  {
-    name: 'Elon',
-    score: '485'
-  },
-  {
-    name: 'Jack',
-    score: '785'
-  },
-  {
-    name: 'Cait',
-    score: '120'
-  },
-  {
-    name: 'Seth',
-    score: '264'
-  },
-  {
-    name: 'Emma',
-    score: '780'
-  },
-  {
-    name: 'Chris',
-    score: '962'
-  },
-  {
-    name: 'Owen',
-    score: '432'
-  },
-  {
-    name: 'Ben',
-    score: '745'
-  },
-  {
-    name: 'Charlotte',
-    score: '703'
-  },
-  {
-    name: 'Anna',
-    score: '690'
-  },
-  {
-    name: 'Nate',
-    score: '354'
-  },
-  {
-    name: 'Brandon',
-    score: '490'
-  },
-  {
-    name: 'Sarah',
-    score: '563'
-  },
-  {
-    name: 'Steve',
-    score: '642'
-  },
-  {
-    name: 'Bill',
-    score: '185'
   }
 ]

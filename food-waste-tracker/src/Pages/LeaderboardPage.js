@@ -5,7 +5,6 @@ import {StyleSheet,
   Pressable, 
   Image,
   Platform,
-  Dimensions
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 import MapView, {Geojson, PROVIDER_GOOGLE} from 'react-native-maps'
@@ -109,11 +108,11 @@ const styles = StyleSheet.create({
     width: '60%',
     height: 'auto',
     marginBottom: Platform.OS === 'android' ? '5%' : '1%',
-    tintColor: COLORS.black, // Use tintColor instead of color
+    tintColor: COLORS.blue, // Use tintColor instead of color
     aspectRatio: 1290 / 193,
   },
   titleText: {
-    color: COLORS.black,
+    color: COLORS.blue,
     fontWeight: '500',
     fontSize: 28,
   },
@@ -205,8 +204,8 @@ const styles = StyleSheet.create({
     color: COLORS.blue,
   },
   tipsContainer: {
-    height: '30%',
-    width: '90%',
+    height: '28%',
+    width: '95%',
     borderRadius: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -224,14 +223,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     color: COLORS.blue,
-    marginTop: '3%'
+    marginTop: '4%'
   },
   linkContainer: {
     flexDirection: 'row', // Set flexDirection to 'row'
     flexWrap: 'wrap', // Allow items to wrap to the next line
     justifyContent: 'space-between',
-    width: '95%', // Adjust the width as needed
-    height: '85%',
-    paddingBottom: '2%', // Add horizontal padding for spacing between items
+    width: '92%', // Adjust the width as needed
+    height: '80%',
+    paddingBottom: '5%', // Add horizontal padding for spacing between items
   },
 })

@@ -172,7 +172,7 @@ export default class MainPage extends Component {
                     : COLORS.black
               }}
             /> */}
-            <Image 
+            <Image
             source={require('../../images/profile.png')}
             style={{
               width: 30,

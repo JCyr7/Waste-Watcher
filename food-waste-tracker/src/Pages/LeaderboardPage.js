@@ -25,6 +25,12 @@ export default class LeaderboardPage extends Component {
 
     }
   }
+ 
+ 
+  navmap(navigation) {
+    navigation.navigate('ArcGISMap');
+  }
+
 
 
 
@@ -43,7 +49,7 @@ export default class LeaderboardPage extends Component {
         <View style={styles.mapContainer}>
           <Pressable 
             style={styles.maptitlecontainer} 
-            onPress={() => navigation.navigate('ArcGISMap')}>
+            onPress={this.navmap}>
             <Text style={styles.mapText}>Map of Food Waste Solutions</Text>
             <Image source={require('../../images/expand.png')} style={styles.expandImage} />
           </Pressable>
@@ -154,8 +160,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: '20%',
     width: '90%',
-    marginTop: '4%',
-    marginBottom: '4%',
+    marginTop: '3%',
+    marginBottom: '3%',
     borderRadius: 10,
     backgroundColor: COLORS.lightBlue,
   },

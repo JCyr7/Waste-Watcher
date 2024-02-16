@@ -64,8 +64,16 @@ export default class SettingsPopup extends Component {
   //   return true
   // }
 
+  editProfileOnPress() {
+    console.warn('Edit Profile')
+  }
+
   changePasswordOnPress() {
     console.warn('Change Password')
+  }
+
+  darkModeOnPress() {
+    console.warn('Dark Mode')
   }
 
   signOutOnPress() {
@@ -129,7 +137,7 @@ export default class SettingsPopup extends Component {
 
           {/* Edit account information */}
           <Pressable
-            //onPress={() => }
+            onPress={this.editProfileOnPress}
             style={({pressed}) => [
               {
                 backgroundColor: pressed
@@ -167,7 +175,7 @@ export default class SettingsPopup extends Component {
 
           {/* Light/Dark Mode */}
           <Pressable
-            //onPress={() => }
+            onPress={this.darkModeOnPress}
             style={({pressed}) => [
               {
                 backgroundColor: pressed

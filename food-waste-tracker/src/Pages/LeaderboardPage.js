@@ -102,17 +102,20 @@ export default class LeaderboardPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-evenly',
     alignItems: 'center',
+    marginTop: Platform.OS === 'android' ? '3%' : '0%',
+    marginBottom: '5%'
   },
-  image: {
-    width: '60%',
-    height: 'auto',
-    tintColor: COLORS.blue, // Use tintColor instead of color
-    aspectRatio: 1290 / 193,
-  },
+  // image: {
+  //   width: '60%',
+  //   height: 'auto',
+  //   tintColor: COLORS.blue, // Use tintColor instead of color
+  //   aspectRatio: 1290 / 193,
+  // },
   titleText: {
     color: COLORS.blue,
-    fontWeight: '400',
+    fontWeight: '500',
     fontSize: 28,
   },
   mapContainer:{
@@ -204,7 +207,7 @@ const styles = StyleSheet.create({
   },
   tipsContainer: {
     height: '28%',
-    width: '95%',
+    width: '90%',
     borderRadius: 10,
     justifyContent: 'space-between',
     alignItems: 'center',

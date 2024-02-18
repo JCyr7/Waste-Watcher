@@ -21,7 +21,6 @@ export default class Leaderboard extends Component {
           <Text style={styles.nameLabel}>Name</Text>
           <Text style={styles.scoreLabel}>Score</Text>
         </View>
-        <Divider />
         {/* Render top 5 ranks from data */}
         <View style={styles.ranks}>
           {data.map((item, index) => (
@@ -35,8 +34,9 @@ export default class Leaderboard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
-    height: '100%',
+    width: '100%',
+    height: '75%',
+    backgroundColor: COLORS.lightBlue,
     alignItems: 'center',
   },
   labels: {
@@ -45,25 +45,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '1%',
+    backgroundColor: COLORS.blue,
+    borderRadius: 5,
+    marginBottom: 2,
+
   },
   rankLabel: {
     flex: 1,
     textAlign: 'center',
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: '500',
+    marginLeft: 5, 
+    color: COLORS.white
   },
   nameLabel: {
     flex: 5,
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '500',
+    color: COLORS.white
   },
   scoreLabel: {
     flex: 1,
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '500',
+    marginRight: 5, 
+    color: COLORS.white
   },
   ranks: {
     width: '100%',

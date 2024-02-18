@@ -82,7 +82,13 @@ export default class StatisticsPage extends Component {
         {/* Header */}
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Trends</Text>
-        {/* Waste Summary */}
+
+        {/* Line Graph */}
+        <View style={styles.graphContainer}>
+          <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
+          <Graph data={lastSevenDays} />
+        </View>
+
         <View style={styles.fulllbContainer}>
           {/* Average Daily Waste */}
           <View style={styles.lbcontainer}>
@@ -95,29 +101,30 @@ export default class StatisticsPage extends Component {
                   style={[
                     styles.lbbutton,
                     {
-                      backgroundColor:
-                        this.state.visibility === 0
-                          ? COLORS.blue
-                          : COLORS.white
+                      backgroundColor: COLORS.transparent,
+                      borderBottomColor:
+                        this.state.visibility === 0 ? COLORS.blue : COLORS.transparent
                     }
                   ]}
                   onPress={() => this.setVisibility(0)}>
-                  <Text style={styles.lbbuttonText}>Local</Text>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.blue : COLORS.blue }]}>
+                    Friends
+                  </Text>
                 </Pressable>
 
-                {/* All Time Button */}
                 <Pressable
                   style={[
                     styles.lbbutton,
                     {
-                      backgroundColor:
-                        this.state.visibility === 1
-                          ? COLORS.blue
-                          : COLORS.white
+                      backgroundColor: COLORS.transparent,
+                      borderBottomColor:
+                        this.state.visibility === 1 ? COLORS.blue : COLORS.transparent
                     }
                   ]}
                   onPress={() => this.setVisibility(1)}>
-                  <Text style={styles.lbbuttonText}>Global</Text>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.blue : COLORS.blue }]}>
+                    Global
+                  </Text>
                 </Pressable>
               </View>
             </View>
@@ -150,12 +157,6 @@ export default class StatisticsPage extends Component {
           </View>
         </View> */}
 
-        {/* Line Graph */}
-        <View style={styles.graphContainer}>
-          <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
-          <Graph data={lastSevenDays} />
-        </View>
-
 
         <View style={styles.bottomButtonsContainer}>
           <Pressable style={styles.bottomButton}>
@@ -175,24 +176,56 @@ export default class StatisticsPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
     marginBottom: '5%'
   },
 
 
-  image: {
-    width: '60%',
-    height: 'auto',
-    tintColor: COLORS.blue,
-    aspectRatio: 1290 / 193,
-  },
+  // image: {
+  //   width: '60%',
+  //   height: 'auto',
+  //   tintColor: COLORS.blue,
+  //   aspectRatio: 1290 / 193,
+  // },
   titleText: {
     color: COLORS.blue,
-    fontWeight: '400',
+    fontWeight: '500',
     fontSize: 28,
   },
+
+
+
+
+
+  graphContainer: {
+    width: '90%',
+    height: '40%',
+    padding: '3%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10,
+    // shadowOffset: {
+    //   width: -3,
+    //   height: 4
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 6,
+    // elevation: 10,
+    // shadowColor: COLORS.shadow
+  },
+
+  graphHeader: {
+    fontSize: 20,
+    fontWeight: '400',
+    color: COLORS.blue
+  },
+
+
+
+
 
 
   fulllbContainer: {
@@ -206,47 +239,46 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '80%',
     alignItems: 'center',
-    marginTop: '2%',
   },
   lbheader: {
-    width: '100%',
-    height: '20%',
+    width: '80%',
+    height: '25%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: COLORS.transparent,
   },
   lbheaderText: {
     fontSize: 20,
-    fontWeight: '700',
-    paddingBottom: '2%',
+    fontWeight: '400',
     color: COLORS.blue
   },
   lbheaderButtons: {
-    width: '90%',
-    height: '45%',
+    width: '100%',
+    height: '40%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-
   },
   lbbutton: {
-    width: '35%',
+    width: '20%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 30,
-    backgroundColor: COLORS.blue
+    marginVertical: 15,
+    backgroundColor: COLORS.transparent,
+    borderBottomWidth: 3,  // Add a bottom border
+    borderBottomColor: COLORS.transparent  // Set initial border color
   },
   lbbuttonText: {
-    color: COLORS.white
+    color: COLORS.white //initial text color
   },
   lbcontent: {
-    width: '90%',
+    width: '91%',
     height: 'auto',
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightBlue,
     borderRadius: 10,
+    marginBottom: '5%',
   },
 
 
@@ -270,34 +302,6 @@ const styles = StyleSheet.create({
   //   color: COLORS.blue,
   // },
   
-
-
-
-  graphContainer: {
-    width: '90%',
-    height: '40%',
-    padding: '3%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: COLORS.lightBlue,
-    borderRadius: 10,
-    // shadowOffset: {
-    //   width: -3,
-    //   height: 4
-    // },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 6,
-    // elevation: 10,
-    // shadowColor: COLORS.shadow
-  },
-
-  graphHeader: {
-    marginBottom: '-3%',
-    fontSize: 20,
-    fontWeight: '600',
-    color: COLORS.blue
-  },
-
 
 
 

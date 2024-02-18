@@ -311,6 +311,20 @@ export default class LogoutPage extends Component {
                 <Text style={styles.loginText}>Log In</Text>
               </Pressable>
 
+                {/* temp bypass login button - just this button needs to be deleted when final product is deployed*/}
+                <Pressable
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed
+                      ? COLORS.whitetransparent
+                      : COLORS.transparent
+                  },
+                  styles.loginButton
+                ]}
+                onPress={() => navigation.navigate('MainPage')}>
+                <Text style={styles.loginText}>Bypass Log In</Text>
+              </Pressable>
+
 
               {/* forgot password button */}
               <Pressable

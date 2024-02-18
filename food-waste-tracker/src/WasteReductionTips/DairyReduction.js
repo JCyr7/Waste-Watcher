@@ -11,7 +11,7 @@ export default class DairyReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='cow' size={35} color='black' />
+        <MaterialCommunityIcons name='cow' size={30} color='black' />
         <Text style={styles.label}>Dairy</Text>
       </Pressable>
     )

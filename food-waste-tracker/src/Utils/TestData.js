@@ -13,7 +13,7 @@ function getTestData() {
   const categories = ['Produce', 'Dairy', 'Grain', 'Meat', 'Fish']
   const data = []
   for (let i = 1; i <= 25; i++) {
-    const date = `04/${i < 10 ? '0' + i : i}`
+    const date = `2/${i < 10 ? '0' + i : i}`
     const category = categories[Math.floor(Math.random() * categories.length)]
     const amount = Math.random() * 5
     data.push({date, category, amount})

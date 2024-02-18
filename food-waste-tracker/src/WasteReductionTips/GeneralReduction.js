@@ -16,7 +16,7 @@ export default class GeneralReduciton extends Component {
       <Pressable style={styles.container} onPress={() => Linking.openURL(URL)}>
         <MaterialCommunityIcons
           name='food-fork-drink'
-          size={35}
+          size={30}
           color='black'
         />
         <Text style={styles.label}>General</Text>

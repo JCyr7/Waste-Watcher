@@ -37,8 +37,8 @@ export default class LeaderboardPage extends Component {
     const {navigation} = this.props
     return (
       <View style={styles.container}>
-        <Image source={require('../../images/logo.png')} style={styles.image}/>
-        <Text style={styles.titleText}>My Food Waste Solutions</Text>
+        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
+        <Text style={styles.titleText}>Solutions</Text>
         {/* Map of Food Waste Solutions:
         Reduce Waste (see tips below) 
         Feeding People (food pantries/donation sites)
@@ -107,13 +107,12 @@ const styles = StyleSheet.create({
   image: {
     width: '60%',
     height: 'auto',
-    marginBottom: Platform.OS === 'android' ? '5%' : '1%',
     tintColor: COLORS.blue, // Use tintColor instead of color
     aspectRatio: 1290 / 193,
   },
   titleText: {
     color: COLORS.blue,
-    fontWeight: '500',
+    fontWeight: '400',
     fontSize: 28,
   },
   mapContainer:{
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
   newContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: '20%',
+    height: '25%',
     width: '90%',
     marginTop: '3%',
     marginBottom: '3%',
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
   heirarchyContainer:{
     height: '100%',
     width: '60%',
-    paddingLeft: '5%',
+    paddingLeft: '10%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

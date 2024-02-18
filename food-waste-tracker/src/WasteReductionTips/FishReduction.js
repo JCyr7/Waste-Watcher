@@ -11,7 +11,7 @@ export default class FishReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='fish' size={35} color='black' />
+        <MaterialCommunityIcons name='fish' size={30} color='black' />
         <Text style={styles.label}>Fish</Text>
       </Pressable>
     )

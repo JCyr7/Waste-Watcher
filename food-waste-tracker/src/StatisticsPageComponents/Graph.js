@@ -18,6 +18,22 @@ export default class Graph extends Component {
     return this.props.data.map((item) => item.amount)
   }
 
+  renderCustomDots() {
+    const { data } = this.props;
+
+    return data.map((item, index) => {
+      // Calculate x and y positions
+      const x = parseFloat((index / (data.length - 1) * (Dimensions.get('window').width * 0.92)).toFixed(1));
+      const y = parseFloat(((1 - item.amount / Math.max(...this.getAmountArray())) * (Dimensions.get('window').height * 0.28)).toFixed(1));
+
+      return (
+        <View style={[styles.customDot, { left: x-10, top: y }]} key={index}>
+          <Text style={styles.customDotText}>{item.amount.toFixed(1)} lbs</Text>
+        </View>
+      );
+    });
+  }
+
   render() {
     // Store dates and amounts for graph data
     const dateArray = this.getDateArray()
@@ -31,19 +47,20 @@ export default class Graph extends Component {
             labels: dateArray,
             datasets: [
               {
-                data: amountArray
-              }
-            ]
+                data: amountArray,
+              },
+            ],
           }}
-          width={Dimensions.get('window').width * 0.89}
+          width={Dimensions.get('window').width * 0.99}
           height={Dimensions.get('window').height * 0.28}
           chartConfig={chartConfig}
           fromZero={true}
           segments={4}
           bezier
-          yAxisSuffix=' lbs'
+          withHorizontalLabels={false}  // Set withVerticalLabels to false
           yLabelsOffset={15}
         />
+        {this.renderCustomDots()}
       </View>
     )
   }
@@ -56,15 +73,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     overflow: 'hidden',
-    borderRadius: 10
   },
   chart: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    marginTop: '4%',
-    marginRight: 15
-  }
+    alignItems: 'center',
+  },
+  customDot: {
+    position: 'absolute',
+    height: 20, // Adjust the height as needed
+    backgroundColor: COLORS.green,
+  },
+  customDotText: {
+    color: COLORS.blue,
+  },
 })
 
 const chartConfig = {
@@ -75,11 +98,18 @@ const chartConfig = {
   fillShadowGradientTo: COLORS.lightBlue,
   fillShadowGradientFromOpacity: 0.5,
   fillShadowGradientToOpacity: 0.5,
-  strokeWidth: 2,
+  strokeWidth: 3,
   propsForBackgroundLines: {
-    stroke: COLORS.black
+    stroke: COLORS.lightBlue,
+    strokeWidth: 1,  // Set the desired width for the lines
+    strokeDasharray: [],  // Set an empty array to make the lines continuous
   },
-  color: () => COLORS.darkGreen,
+    propsForDots: {
+    r: "1",  // Set the radius of the dots
+    strokeWidth: "1",  // Set the stroke width of the dots
+    stroke: COLORS.blue,  // Set the stroke color of the dots
+  },
+  color: () => COLORS.blue,
   labelColor: () => COLORS.black,
-  decimalPlaces: 1
+  decimalPlaces: 0,
 }

@@ -8,7 +8,6 @@ export default class Rank extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      img: <MaterialIcons name='face' size={24} color='black' />
     }
   }
 
@@ -19,9 +18,7 @@ export default class Rank extends Component {
           <View style={styles.rank}>
             <Text>{this.props.rank}</Text>
           </View>
-          <View style={styles.img}>
-            <Text>{this.state.img}</Text>
-          </View>
+          
           <View style={styles.name}>
             <Text>{this.props.name}</Text>
           </View>

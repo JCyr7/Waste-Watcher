@@ -11,7 +11,7 @@ export default class ProduceReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <FontAwesome5 name='carrot' size={35} color='black' />
+        <FontAwesome5 name='carrot' size={30} color='black' />
         <Text style={styles.label}>Produce</Text>
       </Pressable>
     )
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 15,
-    marginTop: '2%'
+    marginTop: '2%',
   }
 })

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Platform, Pressable} from 'react-native'
+import {StyleSheet, View, Text, Platform, Pressable, Image, ScrollView} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import ViewWaste from '../StatisticsPageComponents/ViewWaste'
@@ -80,33 +80,13 @@ export default class StatisticsPage extends Component {
     return (
       <View style={styles.container}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.headerText}>My Food Waste Trends</Text>
-        </View>
-
+        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
+        <Text style={styles.titleText}>Trends</Text>
         {/* Waste Summary */}
-        <View style={styles.summaryContainer}>
+        <View style={styles.fulllbContainer}>
           {/* Average Daily Waste */}
-          {/* <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>Average Daily Waste:</Text>
-            <Text style={styles.sectionText}>{averageWaste} lbs</Text>
-          </View>
-          <Divider /> */}
-
-          {/* Total Waste */}
-          {/* <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>Total Waste:</Text>
-            <Text style={styles.sectionText}>{totalWaste} lbs</Text>
-          </View>
-          <Divider /> */}
-
-          {/* Waste Category */}
-          {/* <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>Most Wasted Category:</Text>
-            <Text style={styles.sectionText}>{mostFrequentCategory}</Text>
-          </View> */}
           <View style={styles.lbcontainer}>
-            {/* Header Container*/}
+            {/* Header Container */}
             <View style={styles.lbheader}>
               <Text style={styles.lbheaderText}>Leaderboard</Text>
               <View style={styles.lbheaderButtons}>
@@ -117,8 +97,8 @@ export default class StatisticsPage extends Component {
                     {
                       backgroundColor:
                         this.state.visibility === 0
-                          ? COLORS.darkGreen
-                          : COLORS.lightGreen
+                          ? COLORS.blue
+                          : COLORS.white
                     }
                   ]}
                   onPress={() => this.setVisibility(0)}>
@@ -132,8 +112,8 @@ export default class StatisticsPage extends Component {
                     {
                       backgroundColor:
                         this.state.visibility === 1
-                          ? COLORS.darkGreen
-                          : COLORS.lightBlue
+                          ? COLORS.blue
+                          : COLORS.white
                     }
                   ]}
                   onPress={() => this.setVisibility(1)}>
@@ -150,11 +130,43 @@ export default class StatisticsPage extends Component {
           </View>
         </View>
 
+
+        {/* <View style={styles.statsContainer}>
+          <View style={styles.statsContent}>
+            <Text style={styles.statsText}>Average Daily Waste:</Text>
+            <Text style={styles.statsText}>{averageWaste} lbs</Text>
+          </View>
+          <Divider /> 
+
+          <View style={styles.statsContent}>
+            <Text style={styles.statsText}>Total Waste:</Text>
+            <Text style={styles.statsText}>{totalWaste} lbs</Text>
+          </View>
+          <Divider />
+
+          <View style={styles.statsContent}>
+            <Text style={styles.statsText}>Most Wasted Category:</Text>
+            <Text style={styles.statsText}>{mostFrequentCategory}</Text>
+          </View>
+        </View> */}
+
         {/* Line Graph */}
         <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
           <Graph data={lastSevenDays} />
         </View>
+
+
+        <View style={styles.bottomButtonsContainer}>
+          <Pressable style={styles.bottomButton}>
+            <Text style={styles.bottomButtonText}>History</Text>
+          </Pressable>
+          <Pressable style={styles.bottomButton}>
+            <Text style={styles.bottomButtonText}>Goals</Text>
+          </Pressable>
+        </View>
+
+
       </View>
     )
   }
@@ -165,47 +177,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? '10%' : '2%',
+    marginTop: Platform.OS === 'android' ? '3%' : '0%',
     marginBottom: '5%'
   },
 
 
-
-
-  header: {
-    width: '90%',
-    height: '7%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    backgroundColor: COLORS.color1,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
+  image: {
+    width: '60%',
+    height: 'auto',
+    tintColor: COLORS.blue,
+    aspectRatio: 1290 / 193,
   },
-  headerText: {
-    fontSize: 30,
-    fontWeight: '700',
-    color: COLORS.color5
+  titleText: {
+    color: COLORS.blue,
+    fontWeight: '400',
+    fontSize: 28,
   },
 
 
-
-
-  summaryContainer: {
+  fulllbContainer: {
     width: '90%',
-    height: '44%',
-    backgroundColor: COLORS.blue,
+    height: '40%',
+    backgroundColor: COLORS.lightBlue,
     borderRadius: 10,
   },
   lbcontainer: {
     flex: 1,
     width: '100%',
+    height: '80%',
     alignItems: 'center',
     marginTop: '2%',
   },
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     paddingBottom: '2%',
-    color: COLORS.color4
+    color: COLORS.blue
   },
   lbheaderButtons: {
     width: '90%',
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
 
   },
   lbbutton: {
-    width: '40%',
+    width: '35%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -243,7 +242,7 @@ const styles = StyleSheet.create({
   },
   lbcontent: {
     width: '90%',
-    height: '70%',
+    height: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.white,
@@ -253,33 +252,72 @@ const styles = StyleSheet.create({
 
 
 
-
-
+  // statsContainer: {
+  //   width: '90%',
+  //   height: '10%',
+  //   backgroundColor: COLORS.lightBlue,
+  //   borderRadius: 10,
+  // },  
+  // statsContent: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   width: '100%',
+  //   marginBottom: '2%',
+  // },
+  // statsText: {
+  //   fontSize: 15,
+  //   color: COLORS.blue,
+  // },
+  
 
 
 
   graphContainer: {
     width: '90%',
-    height: '44%',
+    height: '40%',
     padding: '3%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightBlue,
     borderRadius: 10,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
+    // shadowOffset: {
+    //   width: -3,
+    //   height: 4
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 6,
+    // elevation: 10,
+    // shadowColor: COLORS.shadow
   },
+
   graphHeader: {
-    marginTop: '3%',
-    marginBottom: '-5%',
+    marginBottom: '-3%',
     fontSize: 20,
     fontWeight: '600',
-    color: COLORS.darkGreen
-  }
+    color: COLORS.blue
+  },
+
+
+
+
+  bottomButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  bottomButton: {
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10,
+    width: '40%',
+    padding: 10,
+    alignItems: 'center',
+  },
+  bottomButtonText: {
+    color: COLORS.blue,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
+
 })

@@ -11,7 +11,7 @@ export default class MeatReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='food-steak' size={35} color='black' />
+        <MaterialCommunityIcons name='food-steak' size={30} color='black' />
         <Text style={styles.label}>Meat</Text>
       </Pressable>
     )

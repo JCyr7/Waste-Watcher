@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import { addDoc, collection, query, where, getDocs, or, and } from "firebase/firestore";
+import { addDoc, collection, query, where, getDoc, getDocs, or, and, doc } from "firebase/firestore";
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { Alert } from 'react-native';
@@ -12,16 +12,16 @@ export const getUserID = async (username) => {
     try {
         const usersRef = collection(FIREBASE_DB, "users");
         const nameQuery = query(usersRef, where("username", "==", username));
-    
-        const nameQuerySnapshot = await getDocs(nameQuery);
 
+        const nameQuerySnapshot = await getDocs(nameQuery);
 
         if (nameQuerySnapshot.docs.length == 1) {
             retval = nameQuerySnapshot.docs[0].id;
         }
+
     } catch (e) {
-        return null;
         console.log(e.message);
+        return null;
     }
     
     return retval;
@@ -141,9 +141,13 @@ export const getFriends = async () => {
 
 export const getNameFromID = async (ID) => {
 
-    const docRef = doc(FIREBASE_DB, "users", ID);
-
-    const docSnapshot = await getDocs(docQuery);
-
+    try {
+        const docRef = doc(FIREBASE_DB, "users", ID);
+        const docSnap = await getDoc(docRef);
+        return docSnap.data().username;
+    } catch (e) {
+        console.log(e.message);
+        return null;
+    }
 
 }

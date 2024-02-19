@@ -1,4 +1,3 @@
-import React, {useState, Component} from 'react'
 import {React, useState, Component} from 'react'
 import {
   View,
@@ -9,7 +8,6 @@ import {
   TextInput,
   Platform,
   Dimensions,
-  Image,
 } from 'react-native'
 import {
     BarChart,
@@ -70,7 +68,7 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      householdInfoModal: true,
+      householdInfoModal: false,
       trackWasteModal: false,
       weightdropdown: '',
       checkboxValue: false,

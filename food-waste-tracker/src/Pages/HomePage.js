@@ -1,4 +1,5 @@
 import React, {useState, Component} from 'react'
+import {React, useState, Component} from 'react'
 import {
   View,
   StyleSheet,
@@ -22,7 +23,7 @@ import Popup from '../Popups/Popup'
 import TrackWastePopup from '../Popups/TrackWastePopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import {DATA} from '../Utils/TestData'
-import ProfilePage from '../Pages/ProfilePage'
+import { SelectList } from 'react-native-dropdown-select-list'
 import SubmitButton from '../TrackWaste/SubmitButton'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
@@ -47,20 +48,23 @@ barChartConfig = {
 }
 
 //calendar functions
-
-
 screenWidth = Dimensions.get('window').width;
 
-data = {data: [0.4]}
-data2 = {data: [0.7]}
-data3 = {
-  labels: ["You", "Friend"],
-  datasets: [
-    {
-      data: [25, 15]
-    }
-  ]
-}
+data = [
+  {key:'1', value:'Dairy'},
+  {key:'2', value:'Produce'},
+  {key:'3', value:'Meat'},
+  {key:'4', value:'Drinks'},
+]
+data2 = [
+  {key:'1', value:'lbs'},
+  {key:'2', value:'oz'},
+  {key:'3', value:'g'},
+]
+data3 = [
+  20
+]
+
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -68,11 +72,19 @@ export default class HomePage extends Component {
     this.state = {
       householdInfoModal: true,
       trackWasteModal: false,
+      weightdropdown: '',
       checkboxValue: false,
+      edibleCheckbox: false,
+      inHomeCheckbox: false,
       householdName: '',
       zipcode: '',
       householdSize: 0,
       userName: '',
+      selectedMonth: '',
+      selectedDay: 0,
+      weightUnit: '',
+      weightValue: 0,
+      convertedWeight: 0
     }
     this.getData()
   }
@@ -116,10 +128,37 @@ export default class HomePage extends Component {
     this.setState({householdInfoModal: false})
   }
 
+   // method to conditionally display different numbers of days for each month
+   dayOption(month) {
+    if (month === 'February') {
+      return dayDropdown.slice(0, 28)
+    } else if (
+      month === 'April' ||
+      month === 'June' ||
+      month === 'September' ||
+      month === 'November'
+    ) {
+      return dayDropdown.slice(0, 30)
+    } else {
+      return dayDropdown
+    }
+  }
+
+  // Method converts weight from one unit to oz
+  // convertWeight(weight, unit) {
+  //   if (unit === "g")
+  // }
+
+
+  /*calendar  
+  openCalendar(nextValue) {
+    this.setState({calendar: nextValue})
+  }
+  */
+
   render() {
     const {navigation} = this.props
     return (
-          
         <View style={styles.container}>
           {/* <Pressable
           style={styles.profileIcon}
@@ -135,7 +174,7 @@ export default class HomePage extends Component {
             <View style={styles.dialContainer}>
             <View style={styles.weeklyWasteDial}>
                 <ProgressChart
-                data={data}
+                data={data3}
                 width={125}
                 height={125}
                 strokeWidth={16}
@@ -146,9 +185,9 @@ export default class HomePage extends Component {
                 <Text style={styles.weeklyWasteDialText}>Weekly</Text>
                 <Text style={styles.weeklyWasteDialText}>Waste</Text>
             </View>
-            <View style={styles.moneyWastedDial}>
+            <View style={styles.streakDial}>
                 <ProgressChart 
-                data={data2}
+                data={data3}
                 width={125}
                 height={125}
                 strokeWidth={16}
@@ -156,12 +195,12 @@ export default class HomePage extends Component {
                 chartConfig={dialChartConfig}
                 hideLegend={true}
                 />
-                <Text style={styles.moneyWastedDialText}>Money</Text>
-                <Text style={styles.moneyWastedDialText}>Wasted</Text>
+                <Text style={styles.streakDialText}>Money</Text>
+                <Text style={styles.streakDialText}>Wasted</Text>
             </View>
             </View>
 
-        <View style={styles.friendQuestContainer}>
+        {/* <View style={styles.friendQuestContainer}>
             <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
             <View style={styles.barGraphContainer}>
             <BarChart
@@ -177,7 +216,7 @@ export default class HomePage extends Component {
             verticalLabelRotation={-90}>
             </BarChart>
             </View>
-        </View>
+        </View> */}
         
 
         {/* Household info Modal */}
@@ -269,32 +308,100 @@ export default class HomePage extends Component {
           <Text style={styles.trackWasteHeader}>Track Waste</Text>        
           <View style={styles.linkContainer}>
             <View style={styles.trackWasteContainer}>
-              <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                returnKeyType='done'
-                style={styles.trackWasteInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.trackWasteInputText}>Date</Text>        
-              </TextInput>
-              <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                style={styles.trackWasteInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.trackWasteInputText}>Type</Text>
-              </TextInput>
-              <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                style={styles.trackWasteInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.trackWasteInputText}>Amount</Text>        
-              </TextInput>
-              
+              <View style={styles.dateContainer}>
+                <TextInput
+                  textAlign={'center'}
+                  cursorColor={COLORS.darkGreen}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  placeholder='02'
+                  placeholderTextColor={COLORS.darkGreen}
+                  style={styles.dateInput}
+                  onChangeText={(value) =>
+                  this.setState({zipcode: value})}>
+                  <Text style={styles.dateInputText}></Text>        
+                </TextInput>
+                <Text style={styles.dateInputText}>/</Text>
+                <TextInput
+                  textAlign={'center'}
+                  cursorColor={COLORS.darkGreen}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  placeholder='18'
+                  placeholderTextColor={COLORS.darkGreen}
+                  style={styles.dateInput}
+                  onChangeText={(value) =>
+                  this.setState({zipcode: value})}>
+                  <Text style={styles.dateInputText}></Text>        
+                </TextInput>
+              </View>
+              <View style={styles.weightContainer}>
+                <TextInput
+                  textAlign={'center'}
+                  cursorColor={COLORS.darkGreen}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  placeholder='8.2'
+                  placeholderTextColor={COLORS.darkGreen}
+                  style={styles.weightInput}
+                  onChangeText={(value) =>
+                  this.setState({zipcode: value})}>
+                  <Text style={styles.weightInputText}></Text>        
+                </TextInput>
+                <SelectList 
+                  textAlign={'center'}
+                  boxStyles={styles.weightDropdown}
+                  inputStyles={styles.weightInputText}
+                  dropdownStyles={styles.weightDropdown}
+                  dropdownTextStyles={styles.weightInputText}
+                  search = 'false'
+                  defaultOption={data2[0]}
+                  setSelected={(value) => {this.setState({weightdropdown: value})}} 
+                  data={data2} 
+                  save="value"
+                />
+              </View>
+              <SelectList 
+                  textAlign={'center'}
+                  boxStyles={styles.categoryDropdown}
+                  inputStyles={styles.weightInputText}
+                  dropdownStyles={styles.categoryDropdown}
+                  dropdownTextStyles={styles.weightInputText}
+                  search = 'false'
+                  defaultOption={data[1]}
+                  setSelected={(value) => {this.setState({weightdropdown: value})}} 
+                  data={data} 
+                  save="value"
+                />
+              <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.darkGreen}
+                        unfillColor='white'
+                        text="In-Home"
+
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            inHomeCheckbox: !prevState.inHomeCheckbox,
+                          }));
+                        }}
+                        textStyle={styles.trackWasteInputText}
+                      />
+              <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.darkGreen}
+                        unfillColor='white'
+                        text=" Edible"
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            edibleCheckbox: !prevState.edibleCheckbox,
+                          }));
+                        }}
+                        textStyle={styles.trackWasteInputText}
+                      />        
             </View>
             <SubmitButton/>
           </View>
@@ -330,7 +437,7 @@ const styles = StyleSheet.create({
     },
     container: {
       flex: 1,
-      justifyContent: 'space-between',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       marginTop: Platform.OS === 'android' ? '10%' : '2%',
       marginBottom: '5%'
@@ -397,8 +504,7 @@ const styles = StyleSheet.create({
       width: '90%',
       height: '25%',
       marginTop: '3%',
-      marginBottom: '3%',
-      alignSelf: 'center',
+      marginBottom: '6%',
       flexDirection: 'row',
       justifyContent: 'center',
       borderRadius: 20,
@@ -413,12 +519,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     weeklyWasteDialText: {
-      fontSize: 15,
+      fontSize: 20,
       color: COLORS.darkGreen,
       fontWeight: '800',
       textAlign: 'center',
     },
-    moneyWastedDial: {
+    streakDial: {
       width: '100',
       height: '100',
       marginLeft: '5%',
@@ -426,8 +532,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    moneyWastedDialText: {
-      fontSize: 15,
+    streakDialText: {
+      fontSize: 20,
       color: COLORS.darkGreen,
       fontWeight: '800',
       textAlign: 'center',
@@ -506,7 +612,8 @@ const styles = StyleSheet.create({
       marginTop: '50%'
     },
     checkBox: {
-      marginLeft: '3%'
+      marginBottom: "5%",
+      marginLeft: '30%'
     },
     closePopupButton: {
       padding: '2%',
@@ -514,7 +621,7 @@ const styles = StyleSheet.create({
       alignItems: 'flex-end'
     },
     trackWasteInputText: {
-      fontSize: 18,
+      fontSize: 22,
       color: COLORS.darkGreen,
       fontWeight: '800',
       marginLeft: "15%",
@@ -524,30 +631,114 @@ const styles = StyleSheet.create({
       borderWidth: 3,
       padding: '2%',
       width: '75%',
-      marginTop: "2%",
+      //marginTop: "2%",
       marginBottom: "5%",
       alignSelf: 'center',
+      alignText: 'center',
       borderColor: COLORS.darkGreen,
+      backgroundColor: "#e2f0c9"
+    },
+    dateContainer: {
+      borderRadius: 10,
+      borderWidth: 3,
+      flexDirection: 'row',
+      width: '60%',
+      paddingVertical: '1%',
+      marginBottom: "7%",
+      alignSelf: 'center',
+      alignText: 'center',
+      justifyContent: 'space-evenly',
+      borderColor: COLORS.darkGreen,
+      backgroundColor: "#e2f0c9"
+    },
+    dateInput: {
+      fontSize: 22,
+      fontWeight: 'bold', 
+      backgroundColor: "#e2f0c9"
+    },
+    dateInputText: {
+      fontWeight: 'bold', 
+      fontSize: 30,
+      color: COLORS.darkGreen,
+    },
+    weightContainer: {
+      borderRadius: 10,
+      //borderWidth: 3,
+      flexDirection: 'row',
+      width: '75%',
+      //padding: '2%',
+      marginBottom: "7%",
+      alignSelf: 'center',
+      alignText: 'center',
+      justifyContent: 'flex-end',
+      borderColor: COLORS.darkGreen,
+      //backgroundColor: "#e2f0c9"
+    },
+    weightInput: {
+      borderColor: COLORS.darkGreen,
+      borderWidth: 3,
+      borderRadius: 10,
+      fontSize: 20,
+      fontWeight: 'bold', 
+      paddingVertical: "3%",
+      width: '65%',
+      alignSelf: 'flex-start',
+      backgroundColor: "#e2f0c9"
+    },
+    weightInputText: {
+      color: COLORS.darkGreen,
+      fontSize: 20,
+      alignText: 'center',
+      alignSelf: 'center',
+      fontWeight: 'bold', 
+    },
+    weightDropdown: {
+      borderColor: COLORS.darkGreen,
+      borderWidth: 3,
+      borderRadius: 10,
+      paddingVertical: "3%",
+      alignSelf: 'flex-end',
+      backgroundColor: "#e2f0c9"
+    },
+    categoryContainer: {
+      borderRadius: 10,
+      width: '75%',
+      marginBottom: "7%",
+      alignSelf: 'center',
+      alignText: 'center',
+      justifyContent: 'flex-end',
+      borderColor: COLORS.darkGreen,
+    },
+    categoryDropdown: {
+      borderColor: COLORS.darkGreen,
+      borderWidth: 3,
+      borderRadius: 10,
+      width: '75%',
+      marginBottom: '7%',
+      paddingVertical: "3%",
+      alignText: 'center',
+      alignSelf: 'center',
       backgroundColor: "#e2f0c9"
     },
     tipsContainer: {
       width: '90%',
       height: '50%',
+      justifyContent: 'space-between',
       borderRadius: 10,
       backgroundColor: COLORS.white,
     },
     trackWasteHeader: {
-      fontSize: 24,
+      fontSize: 28,
       fontWeight: '800',
       color: COLORS.darkGreen,
       marginTop: '2%',
-      marginBottom: "2%",
+      marginBottom: "6%",
       textAlign: 'center'
     },
     trackWasteContainer: {
-      width: '100%',
-      height: '60%',
-      justifyContent: 'center',
+      //width: '100%',
+      //height: '100%',
+      justifyContent: 'space-evenly',
       backgroundColor: COLORS.white
     },
     linkContainer: {

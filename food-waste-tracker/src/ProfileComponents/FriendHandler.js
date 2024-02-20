@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import { addDoc, collection, query, where, getDoc, getDocs, or, and, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, query, where, getDoc, getDocs, or, and, doc, setDoc, deleteDoc } from "firebase/firestore";
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { Alert } from 'react-native';
@@ -188,6 +188,100 @@ export const acceptFriendRequest = async (username1, username2) => {
             setDoc(docRef, {
                 status: "accepted"
             }, {merge: true});
+
+            return true;
+        }
+
+    } catch (e) {
+        console.log("failed");
+        console.log(e.message);
+        return null;
+    }   
+
+    return null;
+
+}
+
+export const blockFriendRequest = async (username1, username2) => {
+
+    if (!username1 || !username2) {
+        return null;
+    }
+
+    username1 = await getUserID(username1);
+    username2 = await getUserID(username2);
+
+    console.log(username1, username2);
+
+    const userTuple = sortStringsAlphabetically(username1, username2);
+
+    const user1 = userTuple[0];
+    const user2 = userTuple[1];
+
+    try {
+
+        const requestRef = collection(FIREBASE_DB, "friendship-matrix");
+        const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+
+        const requestQuerySnapshot = await getDocs(requestQuery);
+
+        const friendRequestStatus = requestQuerySnapshot.docs[0].data().status;
+    
+        if (!friendRequestStatus) {
+            return false;
+        } else if (friendRequestStatus == "pending") {
+
+            const docRef = doc(FIREBASE_DB, "friendship-matrix", requestQuerySnapshot.docs[0].id);
+
+            setDoc(docRef, {
+                status: "blocked"
+            }, {merge: true});
+
+            return true;
+        }
+
+    } catch (e) {
+        console.log("failed");
+        console.log(e.message);
+        return null;
+    }   
+
+    return null;
+
+}
+
+export const refuseFriendRequest = async (username1, username2) => {
+
+    if (!username1 || !username2) {
+        return null;
+    }
+
+    username1 = await getUserID(username1);
+    username2 = await getUserID(username2);
+
+    console.log(username1, username2);
+
+    const userTuple = sortStringsAlphabetically(username1, username2);
+
+    const user1 = userTuple[0];
+    const user2 = userTuple[1];
+
+    try {
+
+        const requestRef = collection(FIREBASE_DB, "friendship-matrix");
+        const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+
+        const requestQuerySnapshot = await getDocs(requestQuery);
+
+        const friendRequestStatus = requestQuerySnapshot.docs[0].data().status;
+    
+        if (!friendRequestStatus || friendRequestStatus == "blocked") {
+            return false;
+        } else if (friendRequestStatus == "pending" || friendRequestStatus == "accepted") {
+
+            const docRef = doc(FIREBASE_DB, "friendship-matrix", requestQuerySnapshot.docs[0].id);
+
+            deleteDoc(docRef);
 
             return true;
         }

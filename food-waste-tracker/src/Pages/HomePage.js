@@ -1,4 +1,4 @@
-import {React, useState, Component} from 'react'
+import {React, Component} from 'react'
 import {
   View,
   StyleSheet,
@@ -168,8 +168,8 @@ export default class HomePage extends Component {
          </Pressable> */}
         {/* Welcome Header */}
         <Text style={styles.welcomeText}>Waste Watcher</Text>
-            {/* Progress Dials */}
-            <View style={styles.dialContainer}>
+          {/* Progress Dials */}
+          <View style={styles.dialContainer}>
             <View style={styles.weeklyWasteDial}>
                 <ProgressChart
                 data={data3}
@@ -623,6 +623,7 @@ const styles = StyleSheet.create({
       color: COLORS.darkGreen,
       fontWeight: '800',
       marginLeft: "15%",
+      textDecorationLine: 'none',
     },
     trackWasteInput: {
       borderRadius: 10,

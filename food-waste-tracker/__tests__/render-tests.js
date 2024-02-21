@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react'
 import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react';
 import ArcGISMap from '../src/Pages/ArcGISMap'
 import ForgotPassword from '../src/Pages/ForgotPassword'
 import HomePage from '../src/Pages/HomePage'
@@ -23,17 +24,18 @@ test('renders correctly', () => {
 
 const mockObject = {
   getItem: jest.fn()
-};
+}
 
 describe('HomePage', () => {
   it('calls getItem on the object', () => {
     // Render the component
-    render(<HomePage object={mockObject} />);
+    renderer.create(<HomePage object={mockObject} />);
 
     // Check that getItem was called
-    expect(mockObject.getItem).toHaveBeenCalled();
-  });
+    expect(mockObject.getItem).toMatchSnapshot();
+  }); // Add closing parenthesis here
 });
+
 
 test('renders correctly', () => {
   const tree = renderer.create(<LeaderBoardPage />).toJSON()

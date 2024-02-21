@@ -27,6 +27,10 @@ test('renders correctly', () => {
   expect(tree).toMatchSnapshot()
 })*/
 
+/*test('renders correctly', () => {
+  const tree = renderer.create(<LeaderBoardPage />).toJSON()
+  expect(tree).toMatchSnapshot()
+})*/
 
 /*
 describe('HomePage', () => {
@@ -40,10 +44,7 @@ describe('HomePage', () => {
 });/*
 
 
-/*test('renders correctly', () => {
-  const tree = renderer.create(<LeaderBoardPage />).toJSON()
-  expect(tree).toMatchSnapshot()
-})*/
+
 
 /*test('renders correctly', () => {
   const tree = renderer.create(<Login />).toJSON()

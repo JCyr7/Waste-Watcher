@@ -107,7 +107,7 @@ const chartConfig = {
   propsForBackgroundLines: {
     stroke: COLORS.lightBlue,
     strokeWidth: 1,  // Set the desired width for the lines
-    strokeDasharray: [],  // Set an empty array to make the lines continuous
+    //strokeDasharray: [],  // Set an empty array to make the lines continuous
   },
     propsForDots: {
     r: "2",  // Set the radius of the dots

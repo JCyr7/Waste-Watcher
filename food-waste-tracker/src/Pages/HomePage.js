@@ -180,106 +180,106 @@ export default class HomePage extends Component {
       </View>
       <View style={styles.trackWasteContainer}>
         <Text style={styles.trackWasteHeader}>Track Waste</Text>        
-            <View style={styles.dateContainer}>
-              <TextInput
-                textAlign={'center'}
-                cursorColor={COLORS.darkGreen}
-                keyboardType='numeric'
-                returnKeyType='done'
-                placeholder='02'
-                placeholderTextColor={COLORS.darkGreen}
-                style={styles.dateInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.dateInputText}></Text>        
-              </TextInput>
-              <Text style={styles.dateInputText}>/</Text>
-              <TextInput
-                textAlign={'center'}
-                cursorColor={COLORS.darkGreen}
-                keyboardType='numeric'
-                returnKeyType='done'
-                placeholder='18'
-                placeholderTextColor={COLORS.darkGreen}
-                style={styles.dateInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.dateInputText}></Text>        
-              </TextInput>
-            </View>
-            <View style={styles.weightContainer}>
-              <TextInput
-                textAlign={'center'}
-                cursorColor={COLORS.darkGreen}
-                keyboardType='numeric'
-                returnKeyType='done'
-                placeholder='8.2'
-                placeholderTextColor={COLORS.darkGreen}
-                style={styles.weightInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.weightInputText}></Text>        
-              </TextInput>
-              <SelectList 
-                textAlign={'center'}
-                boxStyles={styles.weightDropdown}
-                inputStyles={styles.weightInputText}
-                dropdownStyles={styles.weightDropdown}
-                dropdownTextStyles={styles.weightInputText}
-                search = 'false'
-                defaultOption={data2[0]}
-                setSelected={(value) => {this.setState({weightdropdown: value})}} 
-                data={data2} 
-                save="value"
-              />
-            </View>
+        <View style={styles.dateContainer}>
+          <TextInput
+            textAlign={'center'}
+            cursorColor={COLORS.darkGreen}
+            keyboardType='numeric'
+            returnKeyType='done'
+            placeholder='02'
+            placeholderTextColor={COLORS.darkGreen}
+            style={styles.dateInput}
+            onChangeText={(value) =>
+            this.setState({zipcode: value})}>
+            <Text style={styles.dateInputText}></Text>        
+          </TextInput>
+          <Text style={styles.dateInputText}>/</Text>
+          <TextInput
+            textAlign={'center'}
+            cursorColor={COLORS.darkGreen}
+            keyboardType='numeric'
+            returnKeyType='done'
+            placeholder='18'
+            placeholderTextColor={COLORS.darkGreen}
+            style={styles.dateInput}
+            onChangeText={(value) =>
+            this.setState({zipcode: value})}>
+            <Text style={styles.dateInputText}></Text>        
+          </TextInput>
+        </View>
+        <View style={styles.weightContainer}>
+          <TextInput
+            textAlign={'center'}
+            cursorColor={COLORS.darkGreen}
+            keyboardType='numeric'
+            returnKeyType='done'
+            placeholder='8.2'
+            placeholderTextColor={COLORS.darkGreen}
+            style={styles.weightInput}
+            onChangeText={(value) =>
+            this.setState({zipcode: value})}>
+            <Text style={styles.weightInputText}></Text>        
+          </TextInput>
           <SelectList 
-              textAlign={'center'}
-              boxStyles={styles.categoryDropdown}
-              inputStyles={styles.weightInputText}
-              dropdownStyles={styles.categoryDropdown}
-              dropdownTextStyles={styles.weightInputText}
-              search = 'false'
-              defaultOption={data[1]}
-              setSelected={(value) => {this.setState({weightdropdown: value})}} 
-              data={data} 
-              save="value"
-            />
-          <BouncyCheckbox
-                    size={22}
-                    style={styles.checkBox}
-                    fillColor={COLORS.darkGreen}
-                    unfillColor='white'
-                    text="In-Home"
+            textAlign={'center'}
+            boxStyles={styles.weightDropdown}
+            inputStyles={styles.weightInputText}
+            dropdownStyles={styles.weightDropdown}
+            dropdownTextStyles={styles.weightInputText}
+            search = 'false'
+            defaultOption={data2[0]}
+            setSelected={(value) => {this.setState({weightdropdown: value})}} 
+            data={data2} 
+            save="value"
+          />
+        </View>
+        <SelectList 
+            textAlign={'center'}
+            boxStyles={styles.categoryDropdown}
+            inputStyles={styles.weightInputText}
+            dropdownStyles={styles.categoryDropdown}
+            dropdownTextStyles={styles.weightInputText}
+            search = 'false'
+            defaultOption={data[1]}
+            setSelected={(value) => {this.setState({weightdropdown: value})}} 
+            data={data} 
+            save="value"
+          />
+        <BouncyCheckbox
+                  size={22}
+                  style={styles.checkBox}
+                  fillColor={COLORS.darkGreen}
+                  unfillColor='white'
+                  text="In-Home"
 
-                    innerIconStyle={{borderWidth: 2}}
-                    onPress={() => {
-                      this.setState((prevState) => ({
-                        inHomeCheckbox: !prevState.inHomeCheckbox,
-                      }));
-                    }}
-                    textStyle={styles.trackWasteInputText}
-                  />
-          <BouncyCheckbox
-                    size={22}
-                    style={styles.checkBox}
-                    fillColor={COLORS.darkGreen}
-                    unfillColor='white'
-                    text=" Edible"
-                    innerIconStyle={{borderWidth: 2}}
-                    onPress={() => {
-                      this.setState((prevState) => ({
-                        edibleCheckbox: !prevState.edibleCheckbox,
-                      }));
-                    }}
-                    textStyle={styles.trackWasteInputText}
-                  />
-          <Pressable style={styles.bottomButton}>
-            <Text style={styles.bottomButtonText}>Submit</Text>
-          </Pressable>    
+                  innerIconStyle={{borderWidth: 2}}
+                  onPress={() => {
+                    this.setState((prevState) => ({
+                      inHomeCheckbox: !prevState.inHomeCheckbox,
+                    }));
+                  }}
+                  textStyle={styles.trackWasteInputText}
+                />
+        <BouncyCheckbox
+                  size={22}
+                  style={styles.checkBox}
+                  fillColor={COLORS.darkGreen}
+                  unfillColor='white'
+                  text=" Edible"
+                  innerIconStyle={{borderWidth: 2}}
+                  onPress={() => {
+                    this.setState((prevState) => ({
+                      edibleCheckbox: !prevState.edibleCheckbox,
+                    }));
+                  }}
+                  textStyle={styles.trackWasteInputText}
+                />
+        <Pressable style={styles.bottomButton}>
+          <Text style={styles.bottomButtonText}>Submit</Text>
+        </Pressable>    
 
         </View>
-    </View>
+      </View>
     )
   }
 }

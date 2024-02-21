@@ -17,7 +17,7 @@
       "^.+\\.(js|jsx)?$": "<rootDir>/node_modules/babel-jest"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation)/(?!(firebase)/)"
+      "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation)/(?!(firebase)/)/(?!(coverage)/)"
     ]
   },
   "lint-staged": {

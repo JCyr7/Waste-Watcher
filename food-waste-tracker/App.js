@@ -30,6 +30,10 @@ export default function App() {
         <Stack.Screen name='LogoutPage' component={LogoutPage}></Stack.Screen>
         <Stack.Screen name='ForgotPassword' component={ForgotPassword}></Stack.Screen>
         <Stack.Screen name='MainPage' component={MainPage}></Stack.Screen>
+        <Stack.Screen name='ProfilePage' component={ProfilePage}></Stack.Screen>
+        <Stack.Screen name='ArcGISMap' component={ArcGISMap}></Stack.Screen>
+        <Stack.Screen name='LeaderboardPage' component={LeaderboardPage}></Stack.Screen>
+
       </Stack.Navigator>
     </NavigationContainer>
   )

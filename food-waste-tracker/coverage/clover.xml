@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1707689238194" clover="3.2.0">
-  <project timestamp="1707689238194" name="All files">
-    <metrics statements="438" coveredstatements="109" conditionals="126" coveredconditionals="17" methods="216" coveredmethods="26" elements="780" coveredelements="152" complexity="0" loc="438" ncloc="438" packages="9" files="32" classes="32"/>
+<coverage generated="1708558527325" clover="3.2.0">
+  <project timestamp="1708558527325" name="All files">
+    <metrics statements="395" coveredstatements="94" conditionals="142" coveredconditionals="18" methods="196" coveredmethods="19" elements="733" coveredelements="131" complexity="0" loc="395" ncloc="395" packages="8" files="38" classes="38"/>
     <package name="food-waste-tracker">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="FirebaseConfig.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\FirebaseConfig.js">
+      <file name="FirebaseConfig.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/FirebaseConfig.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="11" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
@@ -13,39 +13,49 @@
       </file>
     </package>
     <package name="food-waste-tracker.images">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="FoodRescueMaine_Logo_Final-01.png" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\images\FoodRescueMaine_Logo_Final-01.png">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="FoodRescueMaine_Logo_Final-01.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/FoodRescueMaine_Logo_Final-01.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="bell.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/bell.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="friends.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/friends.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="profile.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/profile.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="refer.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/refer.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="ribbon.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/ribbon.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="settings.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/settings.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+      <file name="streak.png" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/images/streak.png">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="food-waste-tracker.src.LeaderboardComponents">
-      <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
-      <file name="Leaderboard.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\LeaderboardComponents\Leaderboard.js">
-        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="33" count="5" type="stmt"/>
-        <line num="49" count="1" type="stmt"/>
-      </file>
-      <file name="Rank.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\LeaderboardComponents\Rank.js">
-        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="9" count="5" type="stmt"/>
-        <line num="10" count="5" type="stmt"/>
-        <line num="16" count="5" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-      </file>
-    </package>
     <package name="food-waste-tracker.src.Pages">
-      <metrics statements="241" coveredstatements="48" conditionals="82" coveredconditionals="14" methods="110" coveredmethods="18"/>
-      <file name="ArcGISMap.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\ArcGISMap.js">
+      <metrics statements="233" coveredstatements="40" conditionals="92" coveredconditionals="15" methods="115" coveredmethods="18"/>
+      <file name="ArcGISMap.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Pages/ArcGISMap.js">
         <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
       </file>
-      <file name="ForgotPassword.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\ForgotPassword.js">
+      <file name="ForgotPassword.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Pages/ForgotPassword.js">
         <metrics statements="15" coveredstatements="7" conditionals="6" coveredconditionals="2" methods="9" coveredmethods="4"/>
         <line num="18" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
@@ -63,97 +73,73 @@
         <line num="78" count="1" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
       </file>
-      <file name="HomePage.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\HomePage.js">
-        <metrics statements="43" coveredstatements="7" conditionals="6" coveredconditionals="1" methods="23" coveredmethods="0"/>
+      <file name="HomePage.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Pages/HomePage.js">
+        <metrics statements="53" coveredstatements="7" conditionals="14" coveredconditionals="1" methods="30" coveredmethods="0"/>
         <line num="28" count="1" type="stmt"/>
         <line num="33" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="37" count="1" type="stmt"/>
         <line num="42" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="49" count="1" type="stmt"/>
         <line num="51" count="1" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
-        <line num="78" count="0" type="stmt"/>
-        <line num="79" count="0" type="stmt"/>
-        <line num="80" count="0" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="100" count="0" type="stmt"/>
-        <line num="106" count="0" type="stmt"/>
-        <line num="111" count="0" type="stmt"/>
-        <line num="112" count="0" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="118" count="0" type="stmt"/>
-        <line num="178" count="0" type="stmt"/>
-        <line num="181" count="0" type="stmt"/>
-        <line num="191" count="0" type="stmt"/>
-        <line num="199" count="0" type="stmt"/>
-        <line num="207" count="0" type="stmt"/>
-        <line num="223" count="0" type="stmt"/>
-        <line num="227" count="0" type="stmt"/>
-        <line num="228" count="0" type="stmt"/>
-        <line num="247" count="0" type="stmt"/>
-        <line num="250" count="0" type="stmt"/>
-        <line num="267" count="0" type="stmt"/>
-        <line num="275" count="0" type="stmt"/>
-        <line num="283" count="0" type="stmt"/>
-        <line num="296" count="1" type="stmt"/>
-      </file>
-      <file name="LeaderboardPage.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\LeaderboardPage.js">
-        <metrics statements="12" coveredstatements="9" conditionals="10" coveredconditionals="6" methods="7" coveredmethods="4"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="23" count="2" type="stmt"/>
-        <line num="24" count="86" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="81" count="1" type="stmt"/>
-      </file>
-      <file name="LoginPage.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\LoginPage.js">
-        <metrics statements="25" coveredstatements="8" conditionals="4" coveredconditionals="1" methods="10" coveredmethods="3"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="72" count="1" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
-        <line num="103" count="1" type="stmt"/>
-        <line num="111" count="0" type="stmt"/>
-        <line num="134" count="1" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="122" count="0" type="stmt"/>
+        <line num="127" count="0" type="stmt"/>
+        <line num="128" count="0" type="stmt"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="130" count="0" type="stmt"/>
+        <line num="135" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="136" count="0" type="stmt"/>
+        <line num="137" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="143" count="0" type="stmt"/>
+        <line num="145" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="230" count="0" type="stmt"/>
+        <line num="233" count="0" type="stmt"/>
+        <line num="243" count="0" type="stmt"/>
+        <line num="251" count="0" type="stmt"/>
+        <line num="259" count="0" type="stmt"/>
+        <line num="275" count="0" type="stmt"/>
+        <line num="279" count="0" type="stmt"/>
+        <line num="280" count="0" type="stmt"/>
+        <line num="299" count="0" type="stmt"/>
+        <line num="302" count="0" type="stmt"/>
+        <line num="323" count="0" type="stmt"/>
+        <line num="336" count="0" type="stmt"/>
+        <line num="350" count="0" type="stmt"/>
+        <line num="361" count="0" type="stmt"/>
+        <line num="374" count="0" type="stmt"/>
+        <line num="387" count="0" type="stmt"/>
+        <line num="401" count="0" type="stmt"/>
+        <line num="416" count="1" type="stmt"/>
       </file>
-      <file name="LogoutPage.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\LogoutPage.js">
-        <metrics statements="117" coveredstatements="11" conditionals="52" coveredconditionals="3" methods="38" coveredmethods="5"/>
+      <file name="LeaderboardPage.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Pages/LeaderboardPage.js">
+        <metrics statements="6" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="0"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
+      </file>
+      <file name="LogoutPage.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Pages/LogoutPage.js">
+        <metrics statements="119" coveredstatements="12" conditionals="54" coveredconditionals="4" methods="40" coveredmethods="6"/>
         <line num="29" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
         <line num="46" count="1" type="stmt"/>
@@ -248,155 +234,127 @@
         <line num="256" count="0" type="stmt"/>
         <line num="261" count="1" type="stmt"/>
         <line num="262" count="1" type="stmt"/>
-        <line num="285" count="0" type="stmt"/>
-        <line num="296" count="0" type="stmt"/>
-        <line num="303" count="1" type="stmt"/>
-        <line num="311" count="0" type="stmt"/>
+        <line num="286" count="0" type="stmt"/>
+        <line num="297" count="0" type="stmt"/>
+        <line num="304" count="1" type="stmt"/>
+        <line num="312" count="0" type="stmt"/>
         <line num="318" count="1" type="stmt"/>
-        <line num="324" count="0" type="stmt"/>
-        <line num="340" count="1" type="stmt"/>
-        <line num="347" count="0" type="stmt"/>
+        <line num="326" count="0" type="stmt"/>
+        <line num="333" count="1" type="stmt"/>
+        <line num="339" count="0" type="stmt"/>
+        <line num="355" count="1" type="stmt"/>
         <line num="362" count="0" type="stmt"/>
-        <line num="363" count="0" type="stmt"/>
-        <line num="384" count="0" type="stmt"/>
-        <line num="385" count="0" type="stmt"/>
-        <line num="387" count="0" type="stmt"/>
-        <line num="404" count="0" type="stmt"/>
+        <line num="377" count="0" type="stmt"/>
+        <line num="378" count="0" type="stmt"/>
+        <line num="399" count="0" type="stmt"/>
+        <line num="400" count="0" type="stmt"/>
+        <line num="402" count="0" type="stmt"/>
         <line num="419" count="0" type="stmt"/>
         <line num="434" count="0" type="stmt"/>
-        <line num="448" count="0" type="stmt"/>
-        <line num="461" count="0" type="stmt"/>
-        <line num="474" count="0" type="stmt"/>
-        <line num="510" count="0" type="stmt"/>
-        <line num="519" count="0" type="stmt"/>
-        <line num="520" count="0" type="stmt"/>
-        <line num="544" count="1" type="stmt"/>
+        <line num="449" count="0" type="stmt"/>
+        <line num="463" count="0" type="stmt"/>
+        <line num="476" count="0" type="stmt"/>
+        <line num="489" count="0" type="stmt"/>
+        <line num="525" count="0" type="stmt"/>
+        <line num="534" count="0" type="stmt"/>
+        <line num="535" count="0" type="stmt"/>
+        <line num="559" count="1" type="stmt"/>
       </file>
-      <file name="ProfilePage.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Pages\ProfilePage.js">
-        <metrics statements="26" coveredstatements="5" conditionals="4" coveredconditionals="1" methods="21" coveredmethods="2"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="67" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="73" count="1" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="137" count="0" type="stmt"/>
-        <line num="157" count="0" type="stmt"/>
-        <line num="164" count="0" type="stmt"/>
+      <file name="ProfilePage.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Pages/ProfilePage.js">
+        <metrics statements="37" coveredstatements="12" conditionals="16" coveredconditionals="7" methods="31" coveredmethods="8"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="151" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="169" count="1" type="stmt"/>
         <line num="175" count="0" type="stmt"/>
-        <line num="198" count="0" type="stmt"/>
-        <line num="205" count="0" type="stmt"/>
-        <line num="218" count="0" type="stmt"/>
+        <line num="195" count="0" type="stmt"/>
+        <line num="202" count="0" type="stmt"/>
+        <line num="213" count="1" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
         <line num="242" count="0" type="stmt"/>
         <line num="249" count="0" type="stmt"/>
-        <line num="262" count="0" type="stmt"/>
-        <line num="284" count="1" type="stmt"/>
+        <line num="262" count="1" type="stmt"/>
+        <line num="268" count="0" type="stmt"/>
+        <line num="291" count="0" type="stmt"/>
+        <line num="298" count="0" type="stmt"/>
+        <line num="311" count="1" type="stmt"/>
+        <line num="317" count="0" type="stmt"/>
+        <line num="339" count="0" type="stmt"/>
+        <line num="346" count="0" type="stmt"/>
+        <line num="362" count="1" type="stmt"/>
+        <line num="368" count="0" type="stmt"/>
+        <line num="413" count="1" type="stmt"/>
       </file>
     </package>
     <package name="food-waste-tracker.src.Popups">
-      <metrics statements="146" coveredstatements="27" conditionals="42" coveredconditionals="1" methods="84" coveredmethods="0"/>
-      <file name="BadgesPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\BadgesPopup.js">
+      <metrics statements="104" coveredstatements="20" conditionals="48" coveredconditionals="1" methods="59" coveredmethods="0"/>
+      <file name="AddFriendsPopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/AddFriendsPopup.js">
+        <metrics statements="4" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+      </file>
+      <file name="BadgesPopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/BadgesPopup.js">
         <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
       </file>
-      <file name="Goal.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\Goal.js">
-        <metrics statements="6" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-      </file>
-      <file name="GoalPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\GoalPopup.js">
-        <metrics statements="21" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="0"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
-        <line num="98" count="0" type="stmt"/>
-        <line num="106" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="139" count="0" type="stmt"/>
-        <line num="140" count="0" type="stmt"/>
-        <line num="163" count="1" type="stmt"/>
-        <line num="285" count="1" type="stmt"/>
-        <line num="300" count="1" type="stmt"/>
-      </file>
-      <file name="NotificationsPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\NotificationsPopup.js">
+      <file name="NotificationsPopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/NotificationsPopup.js">
         <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
       </file>
-      <file name="Popup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\Popup.js">
+      <file name="Popup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/Popup.js">
         <metrics statements="3" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
       </file>
-      <file name="ReferralPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\ReferralPopup.js">
+      <file name="ReferralPopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/ReferralPopup.js">
         <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
       </file>
-      <file name="SettingsPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\SettingsPopup.js">
-        <metrics statements="26" coveredstatements="1" conditionals="8" coveredconditionals="0" methods="16" coveredmethods="0"/>
-        <line num="18" count="0" type="stmt"/>
+      <file name="SettingsPopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/SettingsPopup.js">
+        <metrics statements="11" coveredstatements="1" conditionals="12" coveredconditionals="0" methods="9" coveredmethods="0"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="59" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="126" count="0" type="stmt"/>
-        <line num="127" count="0" type="stmt"/>
-        <line num="164" count="1" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="141" count="0" type="stmt"/>
+        <line num="179" count="0" type="stmt"/>
+        <line num="229" count="1" type="stmt"/>
       </file>
-      <file name="StreakPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\StreakPopup.js">
+      <file name="StreakPopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/StreakPopup.js">
         <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
       </file>
-      <file name="TrackMeal.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\TrackMeal.js">
+      <file name="TrackMeal.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/TrackMeal.js">
         <metrics statements="38" coveredstatements="7" conditionals="16" coveredconditionals="0" methods="15" coveredmethods="0"/>
         <line num="19" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
@@ -437,7 +395,7 @@
         <line num="310" count="1" type="stmt"/>
         <line num="336" count="1" type="stmt"/>
       </file>
-      <file name="TrackWaste.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\TrackWaste.js">
+      <file name="TrackWaste.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/TrackWaste.js">
         <metrics statements="11" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="8" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
@@ -451,7 +409,7 @@
         <line num="44" count="0" type="stmt"/>
         <line num="58" count="1" type="stmt"/>
       </file>
-      <file name="TrackWastePopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\TrackWastePopup.js">
+      <file name="TrackWastePopup.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/TrackWastePopup.js">
         <metrics statements="9" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
@@ -463,7 +421,7 @@
         <line num="69" count="0" type="stmt"/>
         <line num="83" count="1" type="stmt"/>
       </file>
-      <file name="WasteEntry.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\WasteEntry.js">
+      <file name="WasteEntry.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Popups/WasteEntry.js">
         <metrics statements="16" coveredstatements="4" conditionals="8" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -482,53 +440,26 @@
         <line num="145" count="1" type="stmt"/>
         <line num="152" count="1" type="stmt"/>
       </file>
-      <file name="WasteHistoryPopup.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Popups\WasteHistoryPopup.js">
-        <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="47" count="1" type="stmt"/>
-      </file>
     </package>
     <package name="food-waste-tracker.src.ProfileComponents">
       <metrics statements="7" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
-      <file name="Badge.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\ProfileComponents\Badge.js">
+      <file name="Badge.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/ProfileComponents/Badge.js">
         <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
       </file>
-      <file name="Notification.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\ProfileComponents\Notification.js">
+      <file name="Notification.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/ProfileComponents/Notification.js">
         <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="food-waste-tracker.src.StatisticsPageComponents">
-      <metrics statements="11" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
-      <file name="ViewWaste.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\StatisticsPageComponents\ViewWaste.js">
-        <metrics statements="8" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="60" count="1" type="stmt"/>
-      </file>
-      <file name="WasteLog.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\StatisticsPageComponents\WasteLog.js">
-        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-      </file>
-    </package>
     <package name="food-waste-tracker.src.TrackWaste">
       <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="SubmitButton.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\TrackWaste\SubmitButton.js">
+      <file name="SubmitButton.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/TrackWaste/SubmitButton.js">
         <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
@@ -537,14 +468,14 @@
       </file>
     </package>
     <package name="food-waste-tracker.src.Utils">
-      <metrics statements="15" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-      <file name="Divider.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Utils\Divider.js">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="7" count="6" type="stmt"/>
-        <line num="11" count="6" type="stmt"/>
+      <metrics statements="15" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="1"/>
+      <file name="Divider.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Utils/Divider.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
       </file>
-      <file name="TestData.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Utils\TestData.js">
+      <file name="TestData.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Utils/TestData.js">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="13" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
@@ -558,9 +489,50 @@
         <line num="27" count="1" type="stmt"/>
         <line num="50" count="1" type="stmt"/>
       </file>
-      <file name="colors.js" path="C:\Users\jacks\OneDrive\Documents\GitHub\Waste-Watcher\food-waste-tracker\src\Utils\colors.js">
+      <file name="colors.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/Utils/colors.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="food-waste-tracker.src.WasteReductionTips">
+      <metrics statements="20" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="0"/>
+      <file name="DairyReduction.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/WasteReductionTips/DairyReduction.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+      <file name="FishReduction.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/WasteReductionTips/FishReduction.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+      <file name="GeneralReduction.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/WasteReductionTips/GeneralReduction.js">
+        <metrics statements="5" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+      </file>
+      <file name="GrainReduction.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/WasteReductionTips/GrainReduction.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+      <file name="MeatReduction.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/WasteReductionTips/MeatReduction.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+      <file name="ProduceReduction.js" path="/home/jackson/Documents/GitHub/Waste-Watcher/food-waste-tracker/src/WasteReductionTips/ProduceReduction.js">
+        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
       </file>
     </package>
   </project>

@@ -9,13 +9,9 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
-  View,
-  Alert
+  View
 } from 'react-native'
-import {COLORS} from '../Utils/colors';
-
-import { sendPasswordResetEmail } from "firebase/auth";
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import {COLORS} from '../Utils/colors'
 
 export default class ForgotPassword extends Component {
   constructor(props) {
@@ -24,17 +20,6 @@ export default class ForgotPassword extends Component {
       invalidEmail: true,
       email: ''
     }
-  }
-
-  // Sends an email to a user allowing them to reset their password via firebase
-  sendResetEmail = () => {
-    sendPasswordResetEmail(FIREBASE_AUTH, this.state.email)
-      .then(() => {
-        Alert.alert("If an account is associated with this email, the email has been sent!");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
   }
 
   // Validate text method ensure that email field is not empty --> try and immplement valid email checking --> query database for valid email
@@ -48,6 +33,7 @@ export default class ForgotPassword extends Component {
 
   // Sets the value of the email state, and calls the validate text method
   setText(value) {
+    // console.log(this.state.email);
     this.validateText()
     this.setState({email: value})
   }
@@ -88,7 +74,7 @@ export default class ForgotPassword extends Component {
                 onEndEditing={() => this.validateText()}>
               </TextInput>
               <Pressable
-                onPress={this.sendResetEmail()}
+                //onPress={() => navigation.navigate('LogoutPage')}
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent

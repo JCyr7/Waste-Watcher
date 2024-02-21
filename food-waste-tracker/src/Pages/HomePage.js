@@ -15,7 +15,7 @@ import {
 } from 'react-native-chart-kit'
 import Calendar from 'react-calendar'
 import {AntDesign} from '@expo/vector-icons'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
 import TrackWastePopup from '../Popups/TrackWastePopup'
@@ -80,12 +80,16 @@ export default class HomePage extends Component {
 
   // Method retrieves data from async storage
   getData = async () => {
-    let newUser = await AsyncStorage.getItem('newUser')
-    newUser = JSON.parse(newUser)
-    this.setState({householdInfoModal: newUser})
+    try {
+      let newUser = await AsyncStorage.getItem('newUser')
+      newUser = JSON.parse(newUser)
+      this.setState({householdInfoModal: newUser})
 
-    let userName = await AsyncStorage.getItem('username')
-    this.setState({userName: userName})
+      let userName = await AsyncStorage.getItem('username')
+      this.setState({userName: userName})
+    } catch(e) {
+      //
+    }
   }
 
   // Sets state of checkbox

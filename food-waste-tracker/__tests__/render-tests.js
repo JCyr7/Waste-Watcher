@@ -22,9 +22,11 @@ test('renders correctly', () => {
   expect(tree).toMatchSnapshot()
 })
 
-const mockObject = {
-  getItem: jest.fn()
-}
+/*test('renders correctly', () => {
+  const tree = renderer.create(<HomePage />).toJSON()
+  expect(tree).toMatchSnapshot()
+})*/
+
 
 /*
 describe('HomePage', () => {
@@ -48,7 +50,7 @@ describe('HomePage', () => {
   expect(tree).toMatchSnapshot()
 })
 
-test('renders correctly', () => {
+/*test('renders correctly', () => {
   const tree = renderer.create(<ArcGISMap />).toJSON()
   expect(tree).toMatchSnapshot()
 })*/

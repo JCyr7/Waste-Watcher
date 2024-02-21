@@ -34,16 +34,16 @@ dialChartConfig = {
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
 }
-barChartConfig = {
-  backgroundGradientFrom: "#1E2923",
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: COLORS.darkGreen,
-  backgroundGradientToOpacity: 0,
-  color: (opacity = 1) => COLORS.darkGreen,
-  strokeWidth: 1, // optional, default 3
-  barPercentage: 1,
-  decimalPlaces: 0,
-}
+// barChartConfig = {
+//   backgroundGradientFrom: "#1E2923",
+//   backgroundGradientFromOpacity: 0,
+//   backgroundGradientTo: COLORS.darkGreen,
+//   backgroundGradientToOpacity: 0,
+//   color: (opacity = 1) => COLORS.darkGreen,
+//   strokeWidth: 1, // optional, default 3
+//   barPercentage: 1,
+//   decimalPlaces: 0,
+// }
 
 //calendar functions
 screenWidth = Dimensions.get('window').width;
@@ -68,16 +68,16 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      householdInfoModal: false,
-      trackWasteModal: false,
+      // householdInfoModal: false,
+      // trackWasteModal: false,
       weightdropdown: '',
       checkboxValue: false,
       edibleCheckbox: false,
-      inHomeCheckbox: false,
+      // inHomeCheckbox: false,
       householdName: '',
       zipcode: '',
-      householdSize: 0,
-      userName: '',
+      // householdSize: 0,
+      // userName: '',
       selectedMonth: '',
       selectedDay: 0,
       weightUnit: '',
@@ -97,20 +97,20 @@ export default class HomePage extends Component {
     this.setState({userName: userName})
   }
 
-  // Sets the state for the household info modal
-  openHouseHoldInfo = async (value) => {
-    await AsyncStorage.setItem('newUser', 'false')
-    this.setState({householdInfoModal: value})
-  }
+  // // Sets the state for the household info modal
+  // openHouseHoldInfo = async (value) => {
+  //   await AsyncStorage.setItem('newUser', 'false')
+  //   this.setState({householdInfoModal: value})
+  // }
 
-  // Sets state for trackWaste popup
-  openTrackWaste(value) {
-    this.setState({trackWasteModal: value})
-  }
+  // // Sets state for trackWaste popup
+  // openTrackWaste(value) {
+  //   this.setState({trackWasteModal: value})
+  // }
 
-  openGoal(value) {
-    this.setState({goalModal: value})
-  }
+  // openGoal(value) {
+  //   this.setState({goalModal: value})
+  // }
 
   // Sets state of checkbox
   toggleCheckbox(value) {
@@ -119,12 +119,12 @@ export default class HomePage extends Component {
   }
 
   // Method to send household info to backend
-  submitHouseholdInfo() {
-    console.log(this.state.householdName)
-    console.log(this.state.zipcode)
-    console.log(this.state.householdSize)
-    this.setState({householdInfoModal: false})
-  }
+  // submitHouseholdInfo() {
+  //   console.log(this.state.householdName)
+  //   console.log(this.state.zipcode)
+  //   console.log(this.state.householdSize)
+  //   this.setState({householdInfoModal: false})
+  // }
 
    // method to conditionally display different numbers of days for each month
    dayOption(month) {
@@ -197,111 +197,6 @@ export default class HomePage extends Component {
                 <Text style={styles.streakDialText}>Wasted</Text>
             </View>
             </View>
-
-        {/* <View style={styles.friendQuestContainer}>
-            <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
-            <View style={styles.barGraphContainer}>
-            <BarChart
-            style={styles.barGraphStyle}
-            data={data3}
-            width={150}
-            height={250}
-            fromZero={true}
-            showBarTops={false}
-            withInnerLines={false}
-            withHorizontalLabels={false}
-            chartConfig={barChartConfig}
-            verticalLabelRotation={-90}>
-            </BarChart>
-            </View>
-        </View> */}
-        
-
-        {/* Household info Modal */}
-        <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.householdInfoModal}
-            onRequestClose={() => this.openHouseHoldInfo(false)}>
-            <Popup>
-            <Pressable
-                onPress={() => this.openHouseHoldInfo(false)}
-                style={styles.closePopupButton}>
-                <AntDesign name='close' size={24} color='black' />
-            </Pressable>
-            <Text style={styles.householdInfoHeader}>Household Info</Text>
-            <Text style={styles.householdInfoInputTitle}>Household Name</Text>
-            <TextInput
-                cursorColor={'black'}
-                style={styles.householdInfoInput}
-                onChangeText={(value) =>
-                this.setState({householdName: value})
-                }></TextInput>
-            <Text style={styles.householdInfoInputTitle}>Zip Code</Text>
-            <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                style={styles.householdInfoInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})
-                }></TextInput>
-            <Text style={styles.householdInfoInputTitle}>Household Size</Text>
-            <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                style={styles.householdInfoInput}
-                onChangeText={(value) =>
-                this.setState({householdSize: value})
-                }></TextInput>
-            <Text style={styles.householdInfoPrivacyMessage}>
-                Entering some info about your household helps us at the Mitchell
-                Center get a better idea about how food is being wasted in the
-                state of Maine, but is not essential to the functionality of the
-                app. By checking the box below, you agree to associate the above
-                information with your account.
-            </Text>
-            <BouncyCheckbox
-                size={22}
-                style={styles.checkBox}
-                fillColor={COLORS.lightGreen}
-                unfillColor='white'
-                text='I agree'
-                innerIconStyle={{borderWidth: 2}}
-                onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
-                textStyle={{textDecorationLine: 'none'}}
-            />
-            <Pressable
-                onPress={() => this.submitHouseholdInfo()}
-                style={({pressed}) => [
-                {
-                    backgroundColor: pressed
-                    ? COLORS.lightGreen
-                    : COLORS.darkGreen
-                },
-                styles.householdInfoSubmitButton
-                ]}>
-                <Text style={[styles.buttonText, {color: 'white'}]}>Submit</Text>
-            </Pressable>
-            </Popup>
-        </Modal>
-
-        {/* Track waste modal */}
-        <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.trackWasteModal}
-            onRequestClose={() => this.openTrackWaste(false)}>
-            <Popup>
-            <Pressable
-                onPress={() => this.openTrackWaste(false)}
-                style={styles.closePopupButton}>
-                <AntDesign name='close' size={24} color='black' />
-            </Pressable>
-            <TrackWastePopup />
-            </Popup>
-        </Modal>
         <View style={styles.tipsContainer}>
           <Text style={styles.trackWasteHeader}>Track Waste</Text>        
           <View style={styles.linkContainer}>
@@ -758,3 +653,109 @@ const styles = StyleSheet.create({
     },
   })
   
+
+
+        {/* <View style={styles.friendQuestContainer}>
+            <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
+            <View style={styles.barGraphContainer}>
+            <BarChart
+            style={styles.barGraphStyle}
+            data={data3}
+            width={150}
+            height={250}
+            fromZero={true}
+            showBarTops={false}
+            withInnerLines={false}
+            withHorizontalLabels={false}
+            chartConfig={barChartConfig}
+            verticalLabelRotation={-90}>
+            </BarChart>
+            </View>
+        </View> */}
+        
+
+        {/* Household info Modal */}
+        {/* <Modal
+            animationType='fade'
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={this.state.householdInfoModal}
+            onRequestClose={() => this.openHouseHoldInfo(false)}>
+            <Popup>
+            <Pressable
+                onPress={() => this.openHouseHoldInfo(false)}
+                style={styles.closePopupButton}>
+                <AntDesign name='close' size={24} color='black' />
+            </Pressable>
+            <Text style={styles.householdInfoHeader}>Household Info</Text>
+            <Text style={styles.householdInfoInputTitle}>Household Name</Text>
+            <TextInput
+                cursorColor={'black'}
+                style={styles.householdInfoInput}
+                onChangeText={(value) =>
+                this.setState({householdName: value})
+                }></TextInput>
+            <Text style={styles.householdInfoInputTitle}>Zip Code</Text>
+            <TextInput
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.householdInfoInput}
+                onChangeText={(value) =>
+                this.setState({zipcode: value})
+                }></TextInput>
+            <Text style={styles.householdInfoInputTitle}>Household Size</Text>
+            <TextInput
+                cursorColor={'black'}
+                keyboardType='numeric'
+                style={styles.householdInfoInput}
+                onChangeText={(value) =>
+                this.setState({householdSize: value})
+                }></TextInput>
+            <Text style={styles.householdInfoPrivacyMessage}>
+                Entering some info about your household helps us at the Mitchell
+                Center get a better idea about how food is being wasted in the
+                state of Maine, but is not essential to the functionality of the
+                app. By checking the box below, you agree to associate the above
+                information with your account.
+            </Text>
+            <BouncyCheckbox
+                size={22}
+                style={styles.checkBox}
+                fillColor={COLORS.lightGreen}
+                unfillColor='white'
+                text='I agree'
+                innerIconStyle={{borderWidth: 2}}
+                onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
+                textStyle={{textDecorationLine: 'none'}}
+            />
+            <Pressable
+                onPress={() => this.submitHouseholdInfo()}
+                style={({pressed}) => [
+                {
+                    backgroundColor: pressed
+                    ? COLORS.lightGreen
+                    : COLORS.darkGreen
+                },
+                styles.householdInfoSubmitButton
+                ]}>
+                <Text style={[styles.buttonText, {color: 'white'}]}>Submit</Text>
+            </Pressable>
+            </Popup>
+        </Modal>
+
+        {/* Track waste modal */}
+        {/* <Modal
+            animationType='fade'
+            transparent={true}
+            statusBarTranslucent={true}
+            visible={this.state.trackWasteModal}
+            onRequestClose={() => this.openTrackWaste(false)}>
+            <Popup>
+            <Pressable
+                onPress={() => this.openTrackWaste(false)}
+                style={styles.closePopupButton}>
+                <AntDesign name='close' size={24} color='black' />
+            </Pressable>
+            <TrackWastePopup />
+            </Popup>
+        </Modal> */}

@@ -26,9 +26,9 @@ import SubmitButton from '../TrackWaste/SubmitButton'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 dialChartConfig = {
-  backgroundGradientFrom: "#1E2923",
+  backgroundGradientFrom: COLORS.transparent,
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#08130D",
+  backgroundGradientTo: COLORS.transparent,
   backgroundGradientToOpacity: 0,
   color: (opacity = 1) => `rgba(0, 150, 0, ${opacity})`,
   strokeWidth: 2, // optional, default 3
@@ -138,148 +138,144 @@ export default class HomePage extends Component {
         <Text style={styles.titleText}>Home</Text>
           {/* Progress Dials */}
         <View style={styles.dialContainer}>
-          <View style={styles.weeklyWasteDial}>
+          <View style={styles.smallDial}>
+              <ProgressChart 
+              data={data3}
+              width={125}
+              height={125}
+              strokeWidth={16}
+              radius={30}
+              chartConfig={dialChartConfig}
+              hideLegend={true}/>
+              <Text style={styles.smallDialText}>Money</Text>
+              <Text style={styles.smallDialText}>Wasted</Text>
+          </View>
+          <View style={styles.largeDial}>
             <ProgressChart
-            data={data3}
-            width={125}
-            height={125}
-            strokeWidth={16}
-            radius={25}
-            chartConfig={dialChartConfig}
-            hideLegend={true}
-            />
-            <Text style={styles.weeklyWasteDialText}>Weekly</Text>
-            <Text style={styles.weeklyWasteDialText}>Waste</Text>
-        </View>
-        <View style={styles.streakDial}>
-            <ProgressChart 
             data={data3}
             width={125}
             height={125}
             strokeWidth={16}
             radius={45}
             chartConfig={dialChartConfig}
-            hideLegend={true}
+            hideLegend={true}/>
+            <Text style={styles.largeDialText}>Weekly</Text>
+            <Text style={styles.largeDialText}>Waste</Text>
+          </View>
+          <View style={styles.smallDial}>
+              <ProgressChart 
+              data={data3}
+              width={125}
+              height={125}
+              strokeWidth={16}
+              radius={30}
+              chartConfig={dialChartConfig}
+              hideLegend={true}/>
+              <Text style={styles.smallDialText}>Money</Text>
+              <Text style={styles.smallDialText}>Wasted</Text>
+          </View>
+        </View>
+        <View style={styles.trackWasteContainer}>
+          <Text style={styles.trackWasteHeader}>Track My Food Waste</Text>        
+          <View style={styles.dateContainer}>
+            <TextInput
+              textAlign={'center'}
+              cursorColor={COLORS.blue}
+              keyboardType='numeric'
+              returnKeyType='done'
+              placeholder='02'
+              placeholderTextColor={COLORS.blue}
+              style={styles.dateInput}
+              onChangeText={(value) => this.setState({zipcode: value})}>
+              <Text style={styles.dateInputText}></Text>        
+            </TextInput>
+            <Text style={styles.dateInputText}>/</Text>
+            <TextInput
+              textAlign={'center'}
+              cursorColor={COLORS.blue}
+              keyboardType='numeric'
+              returnKeyType='done'
+              placeholder='18'
+              placeholderTextColor={COLORS.blue}
+              style={styles.dateInput}
+              onChangeText={(value) =>
+              this.setState({zipcode: value})}>
+              <Text style={styles.dateInputText}></Text>        
+            </TextInput>
+          </View>
+          <View style={styles.weightContainer}>
+            <TextInput
+              textAlign={'center'}
+              cursorColor={COLORS.blue}
+              keyboardType='numeric'
+              returnKeyType='done'
+              placeholder='8.2'
+              placeholderTextColor={COLORS.blue}
+              style={styles.weightInput}
+              onChangeText={(value) =>
+              this.setState({zipcode: value})}>
+              <Text style={styles.weightInputText}></Text>        
+            </TextInput>
+            <SelectList 
+              textAlign={'center'}
+              boxStyles={styles.weightDropdown}
+              inputStyles={styles.weightInputText}
+              dropdownStyles={styles.weightDropdown}
+              dropdownTextStyles={styles.weightInputText}
+              search = 'false'
+              defaultOption={data2[0]}
+              setSelected={(value) => {this.setState({weightdropdown: value})}} 
+              data={data2} 
+              save="value"
             />
-            <Text style={styles.streakDialText}>Money</Text>
-            <Text style={styles.streakDialText}>Wasted</Text>
-        </View>
-        <View style={styles.streakDial}>
-            <ProgressChart 
-            data={data3}
-            width={125}
-            height={125}
-            strokeWidth={16}
-            radius={25}
-            chartConfig={dialChartConfig}
-            hideLegend={true}
-            />
-            <Text style={styles.streakDialText}>Money</Text>
-            <Text style={styles.streakDialText}>Wasted</Text>
-        </View>
-      </View>
-      <View style={styles.trackWasteContainer}>
-        <Text style={styles.trackWasteHeader}>Track Waste</Text>        
-        <View style={styles.dateContainer}>
-          <TextInput
-            textAlign={'center'}
-            cursorColor={COLORS.darkGreen}
-            keyboardType='numeric'
-            returnKeyType='done'
-            placeholder='02'
-            placeholderTextColor={COLORS.darkGreen}
-            style={styles.dateInput}
-            onChangeText={(value) =>
-            this.setState({zipcode: value})}>
-            <Text style={styles.dateInputText}></Text>        
-          </TextInput>
-          <Text style={styles.dateInputText}>/</Text>
-          <TextInput
-            textAlign={'center'}
-            cursorColor={COLORS.darkGreen}
-            keyboardType='numeric'
-            returnKeyType='done'
-            placeholder='18'
-            placeholderTextColor={COLORS.darkGreen}
-            style={styles.dateInput}
-            onChangeText={(value) =>
-            this.setState({zipcode: value})}>
-            <Text style={styles.dateInputText}></Text>        
-          </TextInput>
-        </View>
-        <View style={styles.weightContainer}>
-          <TextInput
-            textAlign={'center'}
-            cursorColor={COLORS.darkGreen}
-            keyboardType='numeric'
-            returnKeyType='done'
-            placeholder='8.2'
-            placeholderTextColor={COLORS.darkGreen}
-            style={styles.weightInput}
-            onChangeText={(value) =>
-            this.setState({zipcode: value})}>
-            <Text style={styles.weightInputText}></Text>        
-          </TextInput>
+          </View>
           <SelectList 
-            textAlign={'center'}
-            boxStyles={styles.weightDropdown}
-            inputStyles={styles.weightInputText}
-            dropdownStyles={styles.weightDropdown}
-            dropdownTextStyles={styles.weightInputText}
-            search = 'false'
-            defaultOption={data2[0]}
-            setSelected={(value) => {this.setState({weightdropdown: value})}} 
-            data={data2} 
-            save="value"
-          />
-        </View>
-        <SelectList 
-            textAlign={'center'}
-            boxStyles={styles.categoryDropdown}
-            inputStyles={styles.weightInputText}
-            dropdownStyles={styles.categoryDropdown}
-            dropdownTextStyles={styles.weightInputText}
-            search = 'false'
-            defaultOption={data[1]}
-            setSelected={(value) => {this.setState({weightdropdown: value})}} 
-            data={data} 
-            save="value"
-          />
-        <BouncyCheckbox
-                  size={22}
-                  style={styles.checkBox}
-                  fillColor={COLORS.darkGreen}
-                  unfillColor='white'
-                  text="In-Home"
+              textAlign={'center'}
+              boxStyles={styles.categoryDropdown}
+              inputStyles={styles.weightInputText}
+              dropdownStyles={styles.categoryDropdown}
+              dropdownTextStyles={styles.weightInputText}
+              search = 'false'
+              defaultOption={data[1]}
+              setSelected={(value) => {this.setState({weightdropdown: value})}} 
+              data={data} 
+              save="value"
+            />
+          <BouncyCheckbox
+                    size={22}
+                    style={styles.checkBox}
+                    fillColor={COLORS.blue}
+                    unfillColor='white'
+                    text="In-Home"
 
-                  innerIconStyle={{borderWidth: 2}}
-                  onPress={() => {
-                    this.setState((prevState) => ({
-                      inHomeCheckbox: !prevState.inHomeCheckbox,
-                    }));
-                  }}
-                  textStyle={styles.trackWasteInputText}
-                />
-        <BouncyCheckbox
-                  size={22}
-                  style={styles.checkBox}
-                  fillColor={COLORS.darkGreen}
-                  unfillColor='white'
-                  text=" Edible"
-                  innerIconStyle={{borderWidth: 2}}
-                  onPress={() => {
-                    this.setState((prevState) => ({
-                      edibleCheckbox: !prevState.edibleCheckbox,
-                    }));
-                  }}
-                  textStyle={styles.trackWasteInputText}
-                />
-        <Pressable style={styles.bottomButton}>
-          <Text style={styles.bottomButtonText}>Submit</Text>
-        </Pressable>    
+                    innerIconStyle={{borderWidth: 2}}
+                    onPress={() => {
+                      this.setState((prevState) => ({
+                        inHomeCheckbox: !prevState.inHomeCheckbox,
+                      }));
+                    }}
+                    textStyle={styles.trackWasteInputText}
+                  />
+          <BouncyCheckbox
+                    size={22}
+                    style={styles.checkBox}
+                    fillColor={COLORS.blue}
+                    unfillColor='white'
+                    text=" Edible"
+                    innerIconStyle={{borderWidth: 2}}
+                    onPress={() => {
+                      this.setState((prevState) => ({
+                        edibleCheckbox: !prevState.edibleCheckbox,
+                      }));
+                    }}
+                    textStyle={styles.trackWasteInputText}
+                  />
+          <Pressable style={styles.bottomButton}>
+            <Text style={styles.bottomButtonText}>Submit</Text>
+          </Pressable>    
 
+          </View>
         </View>
-      </View>
     )
   }
 }
@@ -306,38 +302,33 @@ const styles = StyleSheet.create({
     dialContainer: {
       width: '90%',
       height: '25%',
-      marginTop: '3%',
-      marginBottom: '6%',
       flexDirection: 'row',
       justifyContent: 'center',
-      borderRadius: 20,
-      backgroundColor: COLORS.white,
+      borderRadius: 10,
+      backgroundColor: COLORS.lightBlue,
     },
-    weeklyWasteDial: {
+    largeWasteDial: {
       width: '100',
       height: '100',
-      marginLeft: '5%',
-      marginRight: '5%',
       justifyContent: 'center',
       alignItems: 'center',
     },
-    weeklyWasteDialText: {
+    largeDialText: {
       fontSize: 20,
-      color: COLORS.darkGreen,
+      color: COLORS.blue,
       fontWeight: '800',
       textAlign: 'center',
     },
-    streakDial: {
+    smallDial: {
       width: '100',
       height: '100',
-      marginLeft: '5%',
-      marginRight: '5%',
+
       justifyContent: 'center',
       alignItems: 'center',
     },
-    streakDialText: {
+    smallDialText: {
       fontSize: 20,
-      color: COLORS.darkGreen,
+      color: COLORS.blue,
       fontWeight: '800',
       textAlign: 'center',
     },
@@ -353,7 +344,7 @@ const styles = StyleSheet.create({
     trackWasteHeader: {
       fontSize: 28,
       fontWeight: '800',
-      color: COLORS.darkGreen,
+      color: COLORS.blue,
       marginTop: '2%',
       marginBottom: "6%",
       textAlign: 'center'
@@ -379,7 +370,7 @@ const styles = StyleSheet.create({
 
     trackWasteInputText: {
       fontSize: 22,
-      color: COLORS.darkGreen,
+      color: COLORS.blue,
       fontWeight: '800',
       marginLeft: "15%",
       textDecorationLine: 'none',
@@ -393,8 +384,8 @@ const styles = StyleSheet.create({
       marginBottom: "5%",
       alignSelf: 'center',
       alignText: 'center',
-      borderColor: COLORS.darkGreen,
-      backgroundColor: "#e2f0c9"
+      borderColor: COLORS.blue,
+      backgroundColor: COLORS.lightBlue
     },
     dateContainer: {
       borderRadius: 10,
@@ -406,18 +397,18 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       alignText: 'center',
       justifyContent: 'space-evenly',
-      borderColor: COLORS.darkGreen,
-      backgroundColor: "#e2f0c9"
+      borderColor: COLORS.blue,
+      backgroundColor: COLORS.lightBlue
     },
     dateInput: {
       fontSize: 22,
       fontWeight: 'bold', 
-      backgroundColor: "#e2f0c9"
+      backgroundColor: COLORS.lightBlue
     },
     dateInputText: {
       fontWeight: 'bold', 
       fontSize: 30,
-      color: COLORS.darkGreen,
+      color: COLORS.blue,
     },
     weightContainer: {
       borderRadius: 10,
@@ -429,11 +420,11 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       alignText: 'center',
       justifyContent: 'flex-end',
-      borderColor: COLORS.darkGreen,
-      //backgroundColor: "#e2f0c9"
+      borderColor: COLORS.blue,
+      //backgroundColor: COLORS.lightBlue
     },
     weightInput: {
-      borderColor: COLORS.darkGreen,
+      borderColor: COLORS.blue,
       borderWidth: 3,
       borderRadius: 10,
       fontSize: 20,
@@ -441,22 +432,22 @@ const styles = StyleSheet.create({
       paddingVertical: "3%",
       width: '65%',
       alignSelf: 'flex-start',
-      backgroundColor: "#e2f0c9"
+      backgroundColor: COLORS.lightBlue
     },
     weightInputText: {
-      color: COLORS.darkGreen,
+      color: COLORS.blue,
       fontSize: 20,
       alignText: 'center',
       alignSelf: 'center',
       fontWeight: 'bold', 
     },
     weightDropdown: {
-      borderColor: COLORS.darkGreen,
+      borderColor: COLORS.blue,
       borderWidth: 3,
       borderRadius: 10,
       paddingVertical: "3%",
       alignSelf: 'flex-end',
-      backgroundColor: "#e2f0c9"
+      backgroundColor: COLORS.lightBlue
     },
     categoryContainer: {
       borderRadius: 10,
@@ -465,10 +456,10 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       alignText: 'center',
       justifyContent: 'flex-end',
-      borderColor: COLORS.darkGreen,
+      borderColor: COLORS.blue,
     },
     categoryDropdown: {
-      borderColor: COLORS.darkGreen,
+      borderColor: COLORS.blue,
       borderWidth: 3,
       borderRadius: 10,
       width: '75%',
@@ -476,7 +467,7 @@ const styles = StyleSheet.create({
       paddingVertical: "3%",
       alignText: 'center',
       alignSelf: 'center',
-      backgroundColor: "#e2f0c9"
+      backgroundColor: COLORS.lightBlue
     },
 
 
@@ -498,7 +489,7 @@ const styles = StyleSheet.create({
   //   alignContent: 'center',
   //   justifyContent: 'center',
   //   borderRadius: 20,
-  //   backgroundColor: "#e2f0c9",
+  //   backgroundColor: COLORS.lightBlue,
   // },
   // friendQuestContainer: {
   //   width: '90%',
@@ -506,7 +497,7 @@ const styles = StyleSheet.create({
   //   flexDirection: 'row',
   //   verticalAlign: 'middle',
   //   borderRadius: 20,
-  //   backgroundColor: "#e2f0c9",
+  //   backgroundColor: COLORS.lightBlue,
   // },
   // friendQuestText: {
   //   height: "100%",
@@ -515,7 +506,7 @@ const styles = StyleSheet.create({
   //   marginRight: '2%',
   //   marginTop: '8%',
   //   fontSize: 22,
-  //   color: COLORS.darkGreen,
+  //   color: COLORS.blue,
   //   fontWeight: '800',
   //   textAlign: 'center',
   //   verticalAlign: 'middle'
@@ -532,7 +523,7 @@ const styles = StyleSheet.create({
   //   height: '30%',
   //   borderRadius: 10,
   //   alignContent: "center",
-  //   backgroundColor: "#e2f0c9",
+  //   backgroundColor: COLORS.lightBlue,
   //   shadowOffset: {
   //     width: -3,
   //     height: 4
@@ -642,7 +633,7 @@ const styles = StyleSheet.create({
                 {
                     backgroundColor: pressed
                     ? COLORS.lightGreen
-                    : COLORS.darkGreen
+                    : COLORS.blue
                 },
                 styles.householdInfoSubmitButton
                 ]}>
@@ -686,9 +677,9 @@ const styles = StyleSheet.create({
 // barChartConfig = {
 //   backgroundGradientFrom: "#1E2923",
 //   backgroundGradientFromOpacity: 0,
-//   backgroundGradientTo: COLORS.darkGreen,
+//   backgroundGradientTo: COLORS.blue,
 //   backgroundGradientToOpacity: 0,
-//   color: (opacity = 1) => COLORS.darkGreen,
+//   color: (opacity = 1) => COLORS.blue,
 //   strokeWidth: 1, // optional, default 3
 //   barPercentage: 1,
 //   decimalPlaces: 0,
@@ -707,7 +698,7 @@ const styles = StyleSheet.create({
         // welcomeText: {
         //   marginTop: '6%',
         //   fontSize: 28,
-        //   color: COLORS.darkGreen,
+        //   color: COLORS.blue,
         //   fontWeight: '800',
         //   textAlign: 'center'
         // },
@@ -725,7 +716,7 @@ const styles = StyleSheet.create({
     // weeklyWasteProgressButton: {
     //   width: '25%',
     //   height: '25%',
-    //   backgroundColor: "#e2f0c9",
+    //   backgroundColor: COLORS.lightBlue,
     //   borderRadius: 100,
     //   verticalAlign: "middle",
     //   top: "25%",
@@ -736,7 +727,7 @@ const styles = StyleSheet.create({
     // moneyWastedProgressButton: {
     //   width: '25%',
     //   height: '25%',
-    //   backgroundColor: "#e2f0c9",
+    //   backgroundColor: COLORS.lightBlue,
     //   borderRadius: 100,
     //   verticalAlign: "middle",
     //   left: "10%",
@@ -745,7 +736,7 @@ const styles = StyleSheet.create({
     // },
     // buttonText: {
     //   fontSize: 18,
-    //   color: COLORS.darkGreen,
+    //   color: COLORS.blue,
     //   fontWeight: '800'
     // },
     // householdInfoHeader: {

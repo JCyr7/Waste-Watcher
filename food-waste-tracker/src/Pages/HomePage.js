@@ -4,27 +4,19 @@ import {
   StyleSheet,
   Text,
   Pressable,
-  Modal,
   TextInput,
   Platform,
   Dimensions,
-  Image
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  Keyboard,
 } from 'react-native'
 import {
-    BarChart,
     ProgressChart,
 } from 'react-native-chart-kit'
-import Calendar from 'react-calendar'
-import {AntDesign} from '@expo/vector-icons'
-import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
-import Popup from '../Popups/Popup'
-import TrackWastePopup from '../Popups/TrackWastePopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
-import {DATA} from '../Utils/TestData'
 import { SelectList } from 'react-native-dropdown-select-list'
-import SubmitButton from '../TrackWaste/SubmitButton'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -37,13 +29,16 @@ dialChartConfig = {
 }
 
 //calendar functions
-screenWidth = Dimensions.get('window').width;
+//screenWidth = Dimensions.get('window').width;
 
 data = [
   {key:'1', value:'Dairy'},
   {key:'2', value:'Produce'},
   {key:'3', value:'Meat'},
-  {key:'4', value:'Beverage'},
+  {key:'4', value:'Grains'},
+  {key:'5', value:'Fish'},
+  {key:'6', value:'Beverage'},
+  {key:'7', value:'Combination'},
 ]
 data2 = [
   {key:'1', value:'lbs'},
@@ -60,13 +55,11 @@ export default class HomePage extends Component {
     super(props)
     this.state = {
       weightdropdown: '',
-      householdName: '',
-      zipcode: '',
       selectedMonth: '',
-      selectedDay: 0,
+      selectedDay: '',
       weightUnit: '',
-      weightValue: 0,
-      convertedWeight: 0,
+      weightValue: '',
+      convertedWeight: '',
 
       //user streak
       //total number of user logins
@@ -77,7 +70,8 @@ export default class HomePage extends Component {
 
 
 
-
+      // householdName: '',
+      // zipcode: '',
       // householdSize: 0,
       // userName: '',
       // inHomeCheckbox: false,
@@ -106,152 +100,168 @@ export default class HomePage extends Component {
   render() {
     const {navigation} = this.props
     return (
-      <View style={styles.container}>
-        {/* Welcome Header */}
-        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
-        <Text style={styles.titleText}>Home</Text>
-          {/* Progress Dials */}
-        <View style={styles.dialContainer}>
-          <View style={styles.smallDial}>
-              <ProgressChart 
-              data={data3}
-              width={82}
-              height={82}
-              strokeWidth={10}
-              radius={30}
-              chartConfig={dialChartConfig}
-              hideLegend={true}/>
-              <Text style={styles.smallDialText}>Daily</Text>
-              <Text style={styles.smallDialText}>Streak</Text>
-          </View>
-          <View style={styles.largeDial}>
-            <ProgressChart
-            data={data3}
-            width={125}
-            height={125}
-            strokeWidth={13}
-            radius={45}
-            chartConfig={dialChartConfig}
-            hideLegend={true}/>
-            <Text style={styles.largeDialText}>Weekly</Text>
-            <Text style={styles.largeDialText}>Waste</Text>
-          </View>
-          <View style={styles.smallDial}>
-              <ProgressChart 
-              data={data3}
-              width={82}
-              height={82}
-              strokeWidth={10}
-              radius={30}
-              chartConfig={dialChartConfig}
-              hideLegend={true}/>
-              <Text style={styles.smallDialText}>Money</Text>
-              <Text style={styles.smallDialText}>Saved</Text>
-          </View>
-        </View>
-        <View style={styles.trackWasteContainer}>
-          <Text style={styles.trackWasteHeader}>Track Food Waste</Text>        
-          <View style={styles.dateContainer}>
-            <TextInput
-              textAlign={'center'}
-              cursorColor={COLORS.blue}
-              keyboardType='numeric'
-              returnKeyType='done'
-              placeholder='02' //get the date
-              placeholderTextColor={COLORS.blue}
-              style={styles.dateInput}
-              onChangeText={(value) => this.setState({zipcode: value})}>
-              <Text style={styles.dateInputText}></Text>        
-            </TextInput>
-            <Text style={styles.dateInputText}>/</Text>
-            <TextInput
-              textAlign={'center'}
-              cursorColor={COLORS.blue}
-              keyboardType='numeric'
-              returnKeyType='done'
-              placeholder='18'
-              placeholderTextColor={COLORS.blue}
-              style={styles.dateInput}
-              onChangeText={(value) =>
-              this.setState({zipcode: value})}>
-              <Text style={styles.dateInputText}></Text>        
-            </TextInput>
-          </View>
-          <View style={styles.weightContainer}>
-            <TextInput
-              textAlign={'center'}
-              cursorColor={COLORS.blue}
-              keyboardType='numeric'
-              returnKeyType='done'
-              placeholder='8.2'
-              placeholderTextColor={COLORS.blue}
-              style={styles.weightInput}
-              onChangeText={(value) =>
-              this.setState({zipcode: value})}>
-              <Text style={styles.weightInputText}></Text>        
-            </TextInput>
-            <SelectList 
-              textAlign={'center'}
-              boxStyles={styles.weightDropdown}
-              inputStyles={styles.weightInputText}
-              dropdownStyles={styles.weightDropdown}
-              dropdownTextStyles={styles.weightInputText}
-              search = 'false'
-              defaultOption={data2[0]}
-              setSelected={(value) => {this.setState({weightdropdown: value})}} 
-              data={data2} 
-              save="value"
-            />
-          </View>
-          <SelectList 
-              textAlign={'center'}
-              boxStyles={styles.categoryDropdown}
-              inputStyles={styles.weightInputText}
-              dropdownStyles={styles.categoryDropdown}
-              dropdownTextStyles={styles.weightInputText}
-              search = 'false'
-              defaultOption={data[1]}
-              setSelected={(value) => {this.setState({weightdropdown: value})}} 
-              data={data} 
-              save="value"
-            />
-          <View style={styles.checkBoxContainer}>
-            <BouncyCheckbox
-                      size={22}
-                      style={styles.checkBox}
-                      fillColor={COLORS.blue}
-                      unfillColor='white'
-                      text="In-Home"
-
-                      innerIconStyle={{borderWidth: 2}}
-                      onPress={() => {
-                        this.setState((prevState) => ({
-                          inHomeCheckbox: !prevState.inHomeCheckbox,
-                        }));
-                      }}
-                      textStyle={styles.checkboxText}
-                    />
-            <BouncyCheckbox
-                      size={22}
-                      style={styles.checkBox}
-                      fillColor={COLORS.blue}
-                      unfillColor='white'
-                      text="Edible"
-                      innerIconStyle={{borderWidth: 2}}
-                      onPress={() => {
-                        this.setState((prevState) => ({
-                          edibleCheckbox: !prevState.edibleCheckbox,
-                        }));
-                      }}
-                      textStyle={styles.checkboxText}
-                    />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView style={styles.container}>
+          {/* Welcome Header */}
+          {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
+          <Text style={styles.titleText}>Home</Text>
+            {/* Progress Dials */}
+          <View style={styles.dialContainer}>
+            
+            <View style={styles.smallDial}>
+                <ProgressChart 
+                data={data3}
+                width={82}
+                height={82}
+                strokeWidth={10}
+                radius={30}
+                chartConfig={dialChartConfig}
+                hideLegend={true}/>
+                <Text style={styles.smallDialText}>Daily</Text>
+                <Text style={styles.smallDialText}>Streak</Text>
             </View>
-          <Pressable style={styles.bottomButton}>
-            <Text style={styles.bottomButtonText}>Submit</Text>
-          </Pressable>    
-
+            <View style={styles.largeDial}>
+              <ProgressChart
+              data={data3}
+              width={125}
+              height={125}
+              strokeWidth={13}
+              radius={45}
+              chartConfig={dialChartConfig}
+              hideLegend={true}/>
+              <Text style={styles.largeDialText}>Weekly</Text>
+              <Text style={styles.largeDialText}>Waste</Text>
+            </View>
+            <View style={styles.smallDial}>
+                <ProgressChart 
+                data={data3}
+                width={82}
+                height={82}
+                strokeWidth={10}
+                radius={30}
+                chartConfig={dialChartConfig}
+                hideLegend={true}/>
+                <Text style={styles.smallDialText}>Money</Text>
+                <Text style={styles.smallDialText}>Saved</Text>
+            </View>
           </View>
-        </View>
+          <View style={styles.trackWasteContainer}>
+            <Text style={styles.trackWasteHeader}>Track Food Waste</Text>        
+            <View style={styles.dateContainer}>
+              <View style={styles.dateTitleInputTextContainer}>
+              <Text style={styles.dateTitleInputText}>Date</Text>
+              </View>
+
+
+
+
+
+
+              <View style={styles.dateInputContainer}>
+                <TextInput
+                  onChangeText={(value) => this.setState({selectedDay: value})}
+                  cursorColor={COLORS.blue}
+                  selectionColor={'white'}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  placeholder="2" //get the date
+                  placeholderTextColor={COLORS.blue}
+                  style={[styles.dateInput, { color: COLORS.blue }]}>             
+                </TextInput>
+
+
+
+
+
+                <Text style={styles.dateInputText}>-</Text>
+                <TextInput
+                  cursorColor={COLORS.blue}
+                  selectionColor={'white'}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  placeholder='22' //get the date
+                  placeholderTextColor={COLORS.blue}
+                  style={[styles.dateInput, { color: COLORS.blue }]}             
+                  onChangeText={(value) => this.setState({selectedMonth: value})}>
+                </TextInput>
+              </View>
+            </View>
+            <View style={styles.weightContainer}>
+              <TextInput
+                textAlign={'center'}
+                cursorColor={COLORS.blue}
+                keyboardType='numeric'
+                returnKeyType='done'
+                placeholder='8.2'
+                placeholderTextColor={COLORS.blue}
+                style={styles.weightInput}
+                onChangeText={(value) =>
+                this.setState({zipcode: value})}>
+                <Text style={styles.weightInputText}></Text>        
+              </TextInput>
+              <SelectList 
+                textAlign={'center'}
+                boxStyles={styles.weightDropdown}
+                inputStyles={styles.weightInputText}
+                dropdownStyles={styles.weightDropdown}
+                dropdownTextStyles={styles.weightInputText}
+                search = 'false'
+                defaultOption={data2[0]}
+                setSelected={(value) => {this.setState({weightdropdown: value})}} 
+                data={data2} 
+                save="value"
+              />
+            </View>
+            <SelectList 
+                textAlign={'center'}
+                boxStyles={styles.categoryDropdown}
+                inputStyles={styles.weightInputText}
+                dropdownStyles={styles.categoryDropdown}
+                dropdownTextStyles={styles.weightInputText}
+                search = 'false'
+                defaultOption={data[1]}
+                setSelected={(value) => {this.setState({weightdropdown: value})}} 
+                data={data} 
+                save="value"
+              />
+            <View style={styles.checkBoxContainer}>
+              <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.blue}
+                        unfillColor='white'
+                        text="In-Home"
+
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            inHomeCheckbox: !prevState.inHomeCheckbox,
+                          }));
+                        }}
+                        textStyle={styles.checkboxText}
+                      />
+              <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.blue}
+                        unfillColor='white'
+                        text="Edible"
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            edibleCheckbox: !prevState.edibleCheckbox,
+                          }));
+                        }}
+                        textStyle={styles.checkboxText}
+                      />
+              </View>
+            <Pressable style={styles.bottomButton}>
+              <Text style={styles.bottomButtonText}>Submit</Text>
+            </Pressable>    
+
+            </View>
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
   }
 }
@@ -333,59 +343,56 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: COLORS.blue
   },
-  checkBoxContainer: {
-    flexDirection: 'row',
-  },
-  checkBox: {
-    backgroundColor: 'white',
-  },
-  checkboxText: {
-    fontSize: 15,
-    color: COLORS.blue,
-    fontWeight: '500',
-    textDecorationLine: 'none',
-  },
-  bottomButton: {
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    width: '40%',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomButtonText: {
-    color: COLORS.blue,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+
 
 
 
 
   dateContainer: {
-    borderRadius: 10,
-    borderWidth: 3,
     flexDirection: 'row',
-    width: '60%',
-    paddingVertical: '1%',
-    marginBottom: "7%",
+    width: '40%',
+    height: '10%',
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.blue,
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'space-evenly',
     borderColor: COLORS.blue,
     backgroundColor: COLORS.lightBlue
   },
-
-  dateInput: {
-    fontSize: 22,
+  dateTitleInputTextContainer:{
+    backgroundColor: COLORS.blue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+  },
+  dateTitleInputText:{
     fontWeight: '500', 
-    backgroundColor: COLORS.lightBlue
+    fontSize: 15,
+    color: COLORS.white,
+  },
+  dateInputContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    width: '60%', // Adjusted width to make it take 50% of dateContainer
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dateInput: {
+    fontSize: 15,
+    fontWeight: '500', 
+    backgroundColor: COLORS.transparent,
   },
   dateInputText: {
     fontWeight: '500', 
-    fontSize: 30,
+    fontSize: 15,
     color: COLORS.blue,
   },
+
+
+
+
+
   weightContainer: {
     borderRadius: 10,
     flexDirection: 'row',
@@ -422,6 +429,9 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     backgroundColor: COLORS.lightBlue
   },
+
+
+
   categoryContainer: {
     borderRadius: 10,
     width: '75%',
@@ -446,12 +456,32 @@ const styles = StyleSheet.create({
 
 
 
-
-
-
-
-    
-  })
+  checkBoxContainer: {
+    flexDirection: 'row',
+  },
+  checkBox: {
+    backgroundColor: 'white',
+  },
+  checkboxText: {
+    fontSize: 15,
+    color: COLORS.blue,
+    fontWeight: '500',
+    textDecorationLine: 'none',
+  },
+  bottomButton: {
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
+    width: '40%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomButtonText: {
+    color: COLORS.blue,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+})
   
 
   // barGraphContainer: {

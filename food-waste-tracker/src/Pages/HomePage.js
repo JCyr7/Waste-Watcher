@@ -25,6 +25,9 @@ import {DATA} from '../Utils/TestData'
 import { SelectList } from 'react-native-dropdown-select-list'
 import SubmitButton from '../TrackWaste/SubmitButton'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -60,13 +63,13 @@ export default class HomePage extends Component {
     super(props)
     this.state = {
       weightdropdown: '',
-      householdName: '',
-      zipcode: '',
+      //householdName: '',
+      //zipcode: '',
       selectedMonth: '',
       selectedDay: 0,
       weightUnit: '',
       weightValue: 0,
-      convertedWeight: 0,
+      //convertedWeight: 0,
 
       //user streak
       //total number of user logins
@@ -100,6 +103,23 @@ export default class HomePage extends Component {
       this.setState({userName: userName})
     } catch(e) {
       //
+    }
+  }
+
+  createFoodWasteFirestore = async () => {
+
+    try {
+      const docRef = await addDoc(collection(FIREBASE_DB, "users/Wnb19yz5mWWdqvrfm02MxapOYeW2/Wasted Food"), {
+        foodType: this.state.weightDropdown,
+        selectedDay: this.state.selectedDay,
+        selectedMonth: this.state.selectedMonth,
+        weightUnit: this.state.weightUnit,
+        weightValue: this.state.weightValue
+      });
+    
+      //console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
   }
 
@@ -157,10 +177,10 @@ export default class HomePage extends Component {
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder='02' //get the date
+              placeholder='00' //get the date
               placeholderTextColor={COLORS.blue}
               style={styles.dateInput}
-              onChangeText={(value) => this.setState({zipcode: value})}>
+              onChangeText={(value) => this.setState({selectedDay: value})}>
               <Text style={styles.dateInputText}></Text>        
             </TextInput>
             <Text style={styles.dateInputText}>/</Text>
@@ -169,11 +189,11 @@ export default class HomePage extends Component {
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder='18'
+              placeholder='0'
               placeholderTextColor={COLORS.blue}
               style={styles.dateInput}
               onChangeText={(value) =>
-              this.setState({zipcode: value})}>
+              this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
             </TextInput>
           </View>
@@ -183,11 +203,11 @@ export default class HomePage extends Component {
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder='8.2'
+              placeholder='0'
               placeholderTextColor={COLORS.blue}
               style={styles.weightInput}
               onChangeText={(value) =>
-              this.setState({zipcode: value})}>
+              this.setState({weightValue: value})}>
               <Text style={styles.weightInputText}></Text>        
             </TextInput>
             <SelectList 
@@ -198,7 +218,7 @@ export default class HomePage extends Component {
               dropdownTextStyles={styles.weightInputText}
               search = 'false'
               defaultOption={data2[0]}
-              setSelected={(value) => {this.setState({weightdropdown: value})}} 
+              setSelected={(value) => {this.setState({weightUnit: value})}} 
               data={data2} 
               save="value"
             />
@@ -211,7 +231,7 @@ export default class HomePage extends Component {
               dropdownTextStyles={styles.weightInputText}
               search = 'false'
               defaultOption={data[1]}
-              setSelected={(value) => {this.setState({weightdropdown: value})}} 
+              setSelected={(value) => {this.setState({weightDropdown: value})}} 
               data={data} 
               save="value"
             />
@@ -246,10 +266,9 @@ export default class HomePage extends Component {
                       textStyle={styles.checkboxText}
                     />
             </View>
-          <Pressable style={styles.bottomButton}>
+          <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
             <Text style={styles.bottomButtonText}>Submit</Text>
           </Pressable>    
-
           </View>
         </View>
     )

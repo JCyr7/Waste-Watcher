@@ -26,6 +26,7 @@ test('renders correctly', () => {
   expect(tree).toMatchSnapshot()
 })
 
+
 test('renders correctly', () => {
   const tree = renderer.create(<LeaderBoardPage />).toJSON()
   expect(tree).toMatchSnapshot()
@@ -39,7 +40,7 @@ describe('HomePage', () => {
   it('calls getItem on the object', () => {
     // Render the component
     renderer.create(<HomePage object={mockObject} />);
-    
+
     expect(mockObject.getItem).toMatchSnapshot();
   }); 
 });
@@ -48,4 +49,3 @@ test('renders correctly', () => {
   const tree = renderer.create(<ProfilePage />).toJSON()
   expect(tree).toMatchSnapshot()
 })
-

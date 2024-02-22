@@ -7,6 +7,7 @@ import {
   BackHandler,
   Image,
   Text,
+  Platform
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 import PagerView from 'react-native-pager-view'
@@ -234,6 +235,7 @@ const styles = StyleSheet.create({
     height: '6.5%',
     alignSelf: 'center',
     justifyContent: 'center',
+    marginBottom: Platform.OS === 'android' ? '3%' : '0%',
   },
   navigationButton: {
     width: '25%',

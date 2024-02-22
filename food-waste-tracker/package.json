@@ -15,7 +15,10 @@
     "preset": "jest-expo",
     "transform": {
       "^.+\\.(js|jsx)?$": "<rootDir>/node_modules/babel-jest"
-    }
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation)/(?!(firebase)/)/(?!(coverage)/)"
+    ]
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -26,7 +29,7 @@
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
-    "@types/react": "~18.2.45",
+    "@types/react": "~18.0.10",
     "@types/react-dom": "^18.0.10",
     "axios": "^1.3.3",
     "babel-jest": "^29.4.3",
@@ -56,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@testing-library/react": "^14.2.1",
     "eslint": "^8.33.0",
     "eslint-plugin-no-inline-styles": "^1.0.5",
     "eslint-plugin-react": "^7.32.2",

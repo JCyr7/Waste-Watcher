@@ -122,6 +122,8 @@ export default class LogoutPage extends Component {
     await AsyncStorage.setItem('newUser', JSON.stringify(true));
     await AsyncStorage.setItem('username', this.state.username);
 
+    console.log("test");
+
     await createUserWithEmailAndPassword(FIREBASE_AUTH, this.state.email, this.state.password)
       .then((userCredential) => {
           // Signed up 

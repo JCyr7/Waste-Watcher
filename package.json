@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "expo": "^50.0.3"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.23.3"
   }
 }

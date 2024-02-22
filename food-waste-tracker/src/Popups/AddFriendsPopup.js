@@ -1,4 +1,4 @@
-import {React, Component} from 'react'
+import React, {Component} from 'react'
 import {View, StyleSheet, Text, ScrollView, TextInput, Pressable} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'

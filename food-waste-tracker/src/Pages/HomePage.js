@@ -69,6 +69,8 @@ export default class HomePage extends Component {
       selectedDay: 0,
       weightUnit: '',
       weightValue: 0,
+      inHomeCheckbox: false,
+      edibleCheckbox: false
       //convertedWeight: 0,
 
       //user streak
@@ -114,7 +116,10 @@ export default class HomePage extends Component {
         selectedDay: this.state.selectedDay,
         selectedMonth: this.state.selectedMonth,
         weightUnit: this.state.weightUnit,
-        weightValue: this.state.weightValue
+        weightValue: this.state.weightValue,
+        inHome: this.state.inHomeCheckbox,
+        edible: this.state.edibleCheckbox
+
       });
     
       //console.log("Document written with ID: ", docRef.id);

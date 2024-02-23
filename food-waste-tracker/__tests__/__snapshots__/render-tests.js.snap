@@ -903,7 +903,7 @@ exports[`renders correctly 3`] = `
                 }
               >
                 <RNSVGPath
-                  d="M 0 -30 A 30 30 0 1 1 -0 -30 L -0 -30 A 30 30 0 1 0 0 -30 Z "
+                  d="M 0 -30 A 30 30 0 0 1 0 -30 L 0 -30 A 30 30 0 0 0 0 -30 Z "
                   fill={
                     {
                       "payload": 4278190080,
@@ -1109,7 +1109,7 @@ exports[`renders correctly 3`] = `
                 }
               >
                 <RNSVGPath
-                  d="M 0 -45 A 45 45 0 1 1 -0 -45 L -0 -45 A 45 45 0 1 0 0 -45 Z "
+                  d="M 0 -45 A 45 45 0 0 1 0 -45 L 0 -45 A 45 45 0 0 0 0 -45 Z "
                   fill={
                     {
                       "payload": 4278190080,
@@ -1324,7 +1324,7 @@ exports[`renders correctly 3`] = `
                 }
               >
                 <RNSVGPath
-                  d="M 0 -30 A 30 30 0 1 1 -0 -30 L -0 -30 A 30 30 0 1 0 0 -30 Z "
+                  d="M 0 -30 A 30 30 0 0 1 0 -30 L 0 -30 A 30 30 0 0 0 0 -30 Z "
                   fill={
                     {
                       "payload": 4278190080,
@@ -1424,7 +1424,7 @@ exports[`renders correctly 3`] = `
         cursorColor="#0066ff"
         keyboardType="numeric"
         onChangeText={[Function]}
-        placeholder="00"
+        placeholder="02"
         placeholderTextColor="#0066ff"
         returnKeyType="done"
         style={
@@ -1461,7 +1461,7 @@ exports[`renders correctly 3`] = `
         cursorColor="#0066ff"
         keyboardType="numeric"
         onChangeText={[Function]}
-        placeholder="0"
+        placeholder="23"
         placeholderTextColor="#0066ff"
         returnKeyType="done"
         style={

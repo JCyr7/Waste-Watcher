@@ -8,7 +8,6 @@ export default class Rank extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      img: <MaterialIcons name='face' size={24} color='black' />
     }
   }
 
@@ -19,9 +18,7 @@ export default class Rank extends Component {
           <View style={styles.rank}>
             <Text>{this.props.rank}</Text>
           </View>
-          <View style={styles.img}>
-            <Text>{this.state.img}</Text>
-          </View>
+          
           <View style={styles.name}>
             <Text>{this.props.name}</Text>
           </View>
@@ -29,7 +26,6 @@ export default class Rank extends Component {
             <Text>{this.props.score}</Text>
           </View>
         </View>
-        <Divider />
       </View>
     )
   }
@@ -38,25 +34,22 @@ export default class Rank extends Component {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '10%',
-    alignItems: 'center'
+    height: '25%',
+    marginVertical: 2,
+    alignItems: 'center',
   },
   rankContainer: {
     width: '100%',
     height: '100%',
-    flexDirection: 'row'
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    borderRadius: 5,
   },
   rank: {
     flex: 1,
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  img: {
-    flex: 1,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   name: {
     flex: 5,

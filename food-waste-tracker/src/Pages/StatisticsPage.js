@@ -1,16 +1,34 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Platform} from 'react-native'
+import {StyleSheet, View, Text, Platform, Pressable, Image, ScrollView} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import Graph from '../StatisticsPageComponents/Graph'
 import {DATA} from '../Utils/TestData'
+import Leaderboard from '../LeaderboardComponents/Leaderboard'
+import {LOCAL, GLOBAL} from '../Utils/TestData'
 
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      visibility: 0
+    }
   }
 
+  // Toggle visibility of local and all time leaderboard
+  // 0 = Local, 1 = All Time
+  setVisibility(value) {
+    this.setState({visibility: value})
+  }
+
+  // Sort ranks in descending order depending on score
+  sortDescendingScore(array) {
+    array.sort(function (a, b) {
+      return b.score - a.score
+    })
+    return array
+  }
   // Returns array of entries from last 7 days
   getLastSevenDays(data) {
     if (data.length <= 7) return data
@@ -56,45 +74,100 @@ export default class StatisticsPage extends Component {
     const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2)
     const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2)
     const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays)
+    const localData = this.sortDescendingScore(LOCAL)
+    const globalData = this.sortDescendingScore(GLOBAL)
 
     return (
       <View style={styles.container}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Waste Statistics</Text>
-          <Text style={styles.headerSubtext}>
-            View statistics based on your waste from the past 7 days
-          </Text>
-        </View>
-
-        {/* Waste Summary */}
-        <View style={styles.summaryContainer}>
-          {/* Average Daily Waste */}
-          <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>Average Daily Waste:</Text>
-            <Text style={styles.sectionText}>{averageWaste} lbs</Text>
-          </View>
-          <Divider />
-
-          {/* Total Waste */}
-          <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>Total Waste:</Text>
-            <Text style={styles.sectionText}>{totalWaste} lbs</Text>
-          </View>
-          <Divider />
-
-          {/* Waste Category */}
-          <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>Most Wasted Category:</Text>
-            <Text style={styles.sectionText}>{mostFrequentCategory}</Text>
-          </View>
-        </View>
+        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
+        <Text style={styles.titleText}>Trends</Text>
 
         {/* Line Graph */}
         <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
           <Graph data={lastSevenDays} />
         </View>
+
+        <View style={styles.fulllbContainer}>
+          {/* Average Daily Waste */}
+          <View style={styles.lbcontainer}>
+            {/* Header Container */}
+            <View style={styles.lbheader}>
+              <Text style={styles.lbheaderText}>Leaderboard</Text>
+              <View style={styles.lbheaderButtons}>
+                {/* Local Button */}
+                <Pressable
+                  style={[
+                    styles.lbbutton,
+                    {
+                      backgroundColor: COLORS.transparent,
+                      borderBottomColor:
+                        this.state.visibility === 0 ? COLORS.blue : COLORS.transparent
+                    }
+                  ]}
+                  onPress={() => this.setVisibility(0)}>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.blue : COLORS.blue }]}>
+                    Friends
+                  </Text>
+                </Pressable>
+
+                <Pressable
+                  style={[
+                    styles.lbbutton,
+                    {
+                      backgroundColor: COLORS.transparent,
+                      borderBottomColor:
+                        this.state.visibility === 1 ? COLORS.blue : COLORS.transparent
+                    }
+                  ]}
+                  onPress={() => this.setVisibility(1)}>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.blue : COLORS.blue }]}>
+                    Global
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+
+            {/* Leaderboard Container */}
+            <View style={styles.lbcontent}>
+              {this.state.visibility === 0 && <Leaderboard data={localData} />}
+              {this.state.visibility === 1 && <Leaderboard data={globalData} />}
+            </View>
+          </View>
+        </View>
+
+
+        {/* <View style={styles.statsContainer}>
+          <View style={styles.statsContent}>
+            <Text style={styles.statsText}>Average Daily Waste:</Text>
+            <Text style={styles.statsText}>{averageWaste} lbs</Text>
+          </View>
+          <Divider /> 
+
+          <View style={styles.statsContent}>
+            <Text style={styles.statsText}>Total Waste:</Text>
+            <Text style={styles.statsText}>{totalWaste} lbs</Text>
+          </View>
+          <Divider />
+
+          <View style={styles.statsContent}>
+            <Text style={styles.statsText}>Most Wasted Category:</Text>
+            <Text style={styles.statsText}>{mostFrequentCategory}</Text>
+          </View>
+        </View> */}
+
+
+        <View style={styles.bottomButtonsContainer}>
+          <Pressable style={styles.bottomButton}>
+            <Text style={styles.bottomButtonText}>History</Text>
+          </Pressable>
+          <Pressable style={styles.bottomButton}>
+            <Text style={styles.bottomButtonText}>Goals</Text>
+          </Pressable>
+        </View>
+
+
       </View>
     )
   }
@@ -103,93 +176,152 @@ export default class StatisticsPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: Platform.OS === 'android' ? '10%' : '2%',
-    marginBottom: '5%'
-  },
-  header: {
-    width: '90%',
-    height: '20%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: COLORS.white,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
+    marginTop: Platform.OS === 'android' ? '3%' : '0%',
+    marginBottom: '5%'
   },
-  headerText: {
-    marginTop: '3%',
-    fontSize: 30,
-    fontWeight: '700',
-    color: COLORS.darkGreen
-  },
-  headerSubtext: {
-    width: '70%',
-    marginBottom: '3%',
-    textAlign: 'center',
-    fontSize: 15,
+
+
+  // image: {
+  //   width: '60%',
+  //   height: 'auto',
+  //   tintColor: COLORS.blue,
+  //   aspectRatio: 1290 / 193,
+  // },
+  titleText: {
+    color: COLORS.blue,
     fontWeight: '500',
-    color: COLORS.darkGray
+    fontSize: 28,
   },
-  summaryContainer: {
-    width: '90%',
-    height: '30%',
-    padding: '3%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
-  },
-  sectionContent: {
-    width: '100%',
-    height: '30%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: '5%'
-  },
-  sectionText: {
-    fontWeight: '500',
-    fontSize: 18,
-    color: COLORS.black
-  },
+
+
+
+
+
   graphContainer: {
     width: '90%',
-    height: '44%',
+    height: '40%',
     padding: '3%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightBlue,
     borderRadius: 10,
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
+    // shadowOffset: {
+    //   width: -3,
+    //   height: 4
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 6,
+    // elevation: 10,
+    // shadowColor: COLORS.shadow
   },
+
   graphHeader: {
-    marginTop: '3%',
-    marginBottom: '-5%',
     fontSize: 20,
+    fontWeight: '400',
+    color: COLORS.blue
+  },
+
+
+
+
+
+
+  fulllbContainer: {
+    width: '90%',
+    height: '40%',
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10,
+  },
+  lbcontainer: {
+    flex: 1,
+    width: '100%',
+    height: '80%',
+    alignItems: 'center',
+  },
+  lbheader: {
+    width: '80%',
+    height: '25%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: COLORS.transparent,
+  },
+  lbheaderText: {
+    fontSize: 20,
+    fontWeight: '400',
+    color: COLORS.blue
+  },
+  lbheaderButtons: {
+    width: '100%',
+    height: '40%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  lbbutton: {
+    width: '20%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 15,
+    backgroundColor: COLORS.transparent,
+    borderBottomWidth: 3,  // Add a bottom border
+    borderBottomColor: COLORS.transparent  // Set initial border color
+  },
+  lbbuttonText: {
+    color: COLORS.white //initial text color
+  },
+  lbcontent: {
+    width: '91%',
+    height: 'auto',
+    alignItems: 'center',
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10,
+    marginBottom: '5%',
+  },
+
+
+
+
+  // statsContainer: {
+  //   width: '90%',
+  //   height: '10%',
+  //   backgroundColor: COLORS.lightBlue,
+  //   borderRadius: 10,
+  // },  
+  // statsContent: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   width: '100%',
+  //   marginBottom: '2%',
+  // },
+  // statsText: {
+  //   fontSize: 15,
+  //   color: COLORS.blue,
+  // },
+  
+
+
+
+  bottomButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  bottomButton: {
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10,
+    width: '40%',
+    padding: 10,
+    alignItems: 'center',
+  },
+  bottomButtonText: {
+    color: COLORS.blue,
+    fontSize: 16,
     fontWeight: '600',
-    color: COLORS.darkGreen
-  }
+  },
+
+
 })

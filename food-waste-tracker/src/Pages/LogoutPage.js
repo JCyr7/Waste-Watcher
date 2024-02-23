@@ -51,7 +51,9 @@ export default class LogoutPage extends Component {
         first: this.state.firstname,
         last: this.state.lastname,
         username: this.state.username,
-        email: this.state.email
+        email: this.state.email,
+        userID: this.state.userID,
+        streak: 0
       });
     
     } catch (e) {
@@ -119,6 +121,8 @@ export default class LogoutPage extends Component {
     // sets two async storage items - username and bool value for the household information modal
     await AsyncStorage.setItem('newUser', JSON.stringify(true));
     await AsyncStorage.setItem('username', this.state.username);
+
+    console.log("test");
 
     await createUserWithEmailAndPassword(FIREBASE_AUTH, this.state.email, this.state.password)
       .then((userCredential) => {
@@ -275,7 +279,7 @@ export default class LogoutPage extends Component {
             <Image source={require('../../images/FoodRescueMaine_Logo_Final-01.png')} style={styles.image}/>
             {/* title */}
             <Text style={styles.title}>Waste Watcher</Text>
-            <Text style={styles.subtitle}>Food Waste Tracker</Text>
+            <Text style={styles.subtitle}>Track n' Reduce Food Waste</Text>
 
 
               {/* username and password input*/}
@@ -315,6 +319,20 @@ export default class LogoutPage extends Component {
                 ]}
                 onPress={() => this.login(navigation)}>
                 <Text style={styles.loginText}>Log In</Text>
+              </Pressable>
+
+                {/* temp bypass login button - just this button needs to be deleted when final product is deployed*/}
+                <Pressable
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed
+                      ? COLORS.whitetransparent
+                      : COLORS.transparent
+                  },
+                  styles.loginButton
+                ]}
+                onPress={() => navigation.navigate('MainPage')}>
+                <Text style={styles.loginText}>Bypass Log In</Text>
               </Pressable>
 
 
@@ -409,7 +427,7 @@ export default class LogoutPage extends Component {
                           this.setState({ firstname: firstnameInput })
                         }
                         placeholder="First"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         cursorColor={'white'}
                         selectionColor={'white'}
                         style={styles.nameInput}
@@ -424,7 +442,7 @@ export default class LogoutPage extends Component {
                             this.setState({ lastname: lastnameInput })
                           }
                           placeholder="Last"
-                          placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                          placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                           cursorColor={'white'}
                           selectionColor={'white'}
                           style={styles.nameInput}
@@ -438,7 +456,7 @@ export default class LogoutPage extends Component {
                         defaultValue={this.state.email}
                         onChangeText={(emailInput) => this.setState({ email: emailInput })}
                         placeholder="Email"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         cursorColor={'white'}
                         selectionColor={'white'}
                         style={styles.input}
@@ -453,7 +471,7 @@ export default class LogoutPage extends Component {
                           this.setState({ username: usernameInput })
                         }
                         placeholder="Username"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         cursorColor={'white'}
                         selectionColor={'white'}
                         style={styles.input}
@@ -468,7 +486,7 @@ export default class LogoutPage extends Component {
                         selectionColor={'white'}
                         secureTextEntry
                         placeholder="Password"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         style={styles.input}
                       />
                     </View>
@@ -481,7 +499,7 @@ export default class LogoutPage extends Component {
                         selectionColor={'white'}
                         secureTextEntry
                         placeholder="Re-Enter Password"
-                        placeholderTextColor={COLORS.morewhitetransparent} // Set the color of the placeholder text
+                        placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                         style={styles.input}
                       />
                     </View>

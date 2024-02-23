@@ -1,4 +1,4 @@
-import {React, Component} from 'react'
+import React,{Component} from 'react'
 import {
   StyleSheet,
   View,
@@ -22,55 +22,67 @@ export default class SettingsPopup extends Component {
       email: this.props.email,
       zipCode: this.props.zipCode
     }
-    this.handlePress = this.handlePress.bind(this)
+    // this.handlePress = this.handlePress.bind(this)
   }
 
   // Callback function passes state values to parent component
-  handlePress() {
-    Alert.alert('Changes Saved')
-    this.props.callBack(
-      this.state.username,
-      this.state.email,
-      this.state.zipCode
-    )
-  }
+  // handlePress() {
+  //   Alert.alert('Changes Saved')
+  //   this.props.callBack(
+  //     this.state.username,
+  //     this.state.email,
+  //     this.state.zipCode
+  //   )
+  // }
 
   // Functions called when respective button is pressed
-  usernameSubmit(value) {
-    this.setState({username: value})
-  }
+  // usernameSubmit(value) {
+  //   this.setState({username: value})
+  // }
 
-  emailSubmit(value) {
-    if (this.checkEmail(value)) this.setState({email: value})
-  }
+  // emailSubmit(value) {
+  //   if (this.checkEmail(value)) this.setState({email: value})
+  // }
 
-  checkEmail(value) {
-    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-      Alert.alert('Please Enter a Valid Email address')
-      return false
-    }
-    return true
-  }
+  // checkEmail(value) {
+  //   if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+  //     Alert.alert('Please Enter a Valid Email address')
+  //     return false
+  //   }
+  //   return true
+  // }
 
-  zipCodeSubmit(value) {
-    if (this.checkZipCode) this.setState({zipCode: value})
-  }
+  // zipCodeSubmit(value) {
+  //   if (this.checkZipCode) this.setState({zipCode: value})
+  // }
 
-  checkZipCode(value) {
-    if (!/^\d{5}$/.test(value)) {
-      Alert.alert('Zip code is invalid', 'Please enter a 5 digit zip code')
-      return false
-    }
-    return true
+  // checkZipCode(value) {
+  //   if (!/^\d{5}$/.test(value)) {
+  //     Alert.alert('Zip code is invalid', 'Please enter a 5 digit zip code')
+  //     return false
+  //   }
+  //   return true
+  // }
+
+  editProfileOnPress() {
+    console.warn('Edit Profile')
   }
 
   changePasswordOnPress() {
     console.warn('Change Password')
   }
 
+  darkModeOnPress() {
+    console.warn('Dark Mode')
+  }
+
   signOutOnPress() {
     console.warn('Sign Out')
   }
+
+  deleteOnPress() {
+    console.warn('Delete Account')
+}
 
   // saveOnPress() {
   //   // Apply changes
@@ -78,13 +90,7 @@ export default class SettingsPopup extends Component {
   //   this.handlePress()
   // }
 
-  deleteOnPress() {
-    Alert.alert(
-      'WARNING',
-      'You are about to delete your account. This action cannot be undone!',
-      [{text: 'Delete'}, {text: 'Cancel'}]
-    )
-  }
+ 
 
   render() {
     return (
@@ -127,25 +133,49 @@ export default class SettingsPopup extends Component {
             </View> */}
             <Divider />
 
-            {/* Change Password */}
-            <Pressable
-              style={styles.actionItem}
-              onPress={this.changePasswordOnPress}>
-              <Text style={styles.text}>Change password</Text>
-              <AntDesign name='right' size={15} color='black' />
-            </Pressable>
-            <Divider />
+            
 
-            {/* Sign Out */}
-            <Pressable style={styles.actionItem} onPress={this.signOutOnPress}>
-              <Text style={styles.text}>Sign Out</Text>
-              <AntDesign name='right' size={15} color='black' />
-            </Pressable>
-            <Divider />
+          {/* Edit account information */}
+          <Pressable
+            onPress={this.editProfileOnPress}
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.transparent
+                  : COLORS.transparent
+              },
+              styles.actionItem
+            ]}>
+            <Text style={styles.text}>Edit Profile</Text>
+            <Image 
+            source={require('../../images/edit.png')}
+            style={{
+              width: 30,
+              height: 30,
+              tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
+            }}/>
+          </Pressable>
+          <Divider />
 
-            {/* Light/Dark Mode */}
-            <Pressable
-            //onPress={() => }
+          {/* Change Password */}
+          <Pressable 
+            style={styles.actionItem} 
+            onPress={this.changePasswordOnPress}>
+            <Text style={styles.text}>Change password</Text>
+            <Image 
+              source={require('../../images/edit.png')}
+              style={{
+                width: 30,
+                height: 30,
+                tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
+              }}/>
+          </Pressable>
+          <Divider />
+
+
+          {/* Light/Dark Mode */}
+          <Pressable
+            onPress={this.darkModeOnPress}
             style={({pressed}) => [
               {
                 backgroundColor: pressed
@@ -160,15 +190,30 @@ export default class SettingsPopup extends Component {
             style={{
               width: 30,
               height: 30,
+              marginRight: 3,
               tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
             }}/>
           </Pressable>
           <Divider />
+          {/* Sign Out */}
+          <Pressable 
+              style={styles.actionItem} 
+              onPress={this.signOutOnPress}>
+              <Text style={styles.text}>Sign Out</Text>
+              <Image 
+                source={require('../../images/logout.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                  tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
+                }}/>
+            </Pressable>
+            <Divider />
 
           {/* Save Button */}
-          <Pressable style={styles.saveButton} onPress={this.handlePress}>
+          {/* <Pressable style={styles.saveButton} onPress={this.handlePress}>
             <Text style={styles.saveButtonText}>Save Changes</Text>
-          </Pressable>
+          </Pressable> */}
           </View>
 
           {/* Delete Account Button */}
@@ -183,7 +228,7 @@ export default class SettingsPopup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     height: '87%',
     marginLeft: '5%',
     justifyContent: 'space-between',

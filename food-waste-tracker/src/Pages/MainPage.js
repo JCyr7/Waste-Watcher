@@ -7,16 +7,12 @@ import {
   BackHandler,
   Image,
   Text,
+  Platform
 } from 'react-native'
-import {
-  Ionicons,
-  Foundation,
-  FontAwesome
-} from '@expo/vector-icons'
 import {COLORS} from '../Utils/colors'
 import PagerView from 'react-native-pager-view'
 import HomePage from '../Pages/HomePage'
-//import ProfilePage from '../Pages/ProfilePage'
+import ProfilePage from '../Pages/ProfilePage'
 //import ArcGISMap from './ArcGISMap'
 import LeaderboardPage from './LeaderboardPage'
 import StatisticsPage from './StatisticsPage'
@@ -50,16 +46,16 @@ export default class MainPage extends Component {
             this.viewPager = viewPager
           }}
           style={styles.pagerView}
-          initialPage={1}
+          initialPage={0}
           onPageSelected={(e) => {
             this.setPageState(e.nativeEvent.position)
           }}>
           {/* Content of the home page pager view */}
           {/* <ArcGISMap key='1' /> */}
-          <StatisticsPage key='1'></StatisticsPage>
-          <HomePage key='2' navigation={navigation} />
+          <HomePage key='1' navigation={navigation} />
+          <StatisticsPage key='2'></StatisticsPage>
           <LeaderboardPage key='3' />
-          {/* <ProfilePage key='5' /> */}
+          <ProfilePage key='4' />
         </PagerView>
         {/* Navigation bar at the bottom of the page */}
         <View style={styles.navigationBar}>
@@ -79,39 +75,13 @@ export default class MainPage extends Component {
               style={{
                 color:
                   this.state.pageState === 0
-                    ? COLORS.darkGreen
+                    ? COLORS.blue
                     : COLORS.black
               }}
             /> 
           </Pressable>*/}
           <Pressable
             onPress={() => this.viewPager.setPage(0)}
-            style={styles.navigationButton}>
-            {/* Icon for grid button on the middle left */}
-            {/* <Ionicons
-              name='grid'
-              size={30}
-              style={{
-                color:
-                  this.state.pageState === 0
-                    ? COLORS.darkGreen
-                    : COLORS.black
-              }}
-            /> */}
-            <Image 
-            source={require('../../images/bulb.png')}
-            style={{
-              width: 30,
-              height: 30,
-              tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
-            }}/>
-            <Text style={[
-              styles.iconText,
-              {color: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black}
-            ]}>Insights</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => this.viewPager.setPage(1)}
             style={styles.navigationButton}>
             {/* Icon for home button in the middle */}
             {/* <Foundation
@@ -120,7 +90,7 @@ export default class MainPage extends Component {
               style={{
                 color:
                   this.state.pageState === 1
-                    ? COLORS.darkGreen
+                    ? COLORS.blue
                     : COLORS.black
               }}
             /> */}
@@ -129,13 +99,40 @@ export default class MainPage extends Component {
             style={{
               width: 30,
               height: 30,
-              tintColor: this.state.pageState === 1 ? COLORS.darkGreen : COLORS.black,
+              tintColor: this.state.pageState === 0 ? COLORS.blue : COLORS.black,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 1 ? COLORS.darkGreen : COLORS.black}
+              {color: this.state.pageState === 0 ? COLORS.blue : COLORS.black}
             ]}>Home</Text>
           </Pressable>
+          <Pressable
+            onPress={() => this.viewPager.setPage(1)}
+            style={styles.navigationButton}>
+            {/* Icon for grid button on the middle left */}
+            {/* <Ionicons
+              name='grid'
+              size={30}
+              style={{
+                color:
+                  this.state.pageState === 0
+                    ? COLORS.blue
+                    : COLORS.black
+              }}
+            /> */}
+            <Image 
+            source={require('../../images/analytics.png')}
+            style={{
+              width: 30,
+              height: 30,
+              tintColor: this.state.pageState === 1 ? COLORS.blue : COLORS.black,
+            }}/>
+            <Text style={[
+              styles.iconText,
+              {color: this.state.pageState === 1 ? COLORS.blue : COLORS.black}
+            ]}>Trends</Text>
+          </Pressable>
+
           <Pressable
             onPress={() => this.viewPager.setPage(2)}
             style={styles.navigationButton}>
@@ -146,7 +143,7 @@ export default class MainPage extends Component {
               style={{
                 color:
                   this.state.pageState === 2
-                    ? COLORS.darkGreen
+                    ? COLORS.blue
                     : COLORS.black
               }}
             /> */}
@@ -155,12 +152,38 @@ export default class MainPage extends Component {
             style={{
               width: 30,
               height: 30,
-              tintColor: this.state.pageState === 2 ? COLORS.darkGreen : COLORS.black,
+              tintColor: this.state.pageState === 2 ? COLORS.blue : COLORS.black,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 2 ? COLORS.darkGreen : COLORS.black}
-            ]}>Explore</Text>
+              {color: this.state.pageState === 2 ? COLORS.blue : COLORS.black}
+            ]}>Solutions</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => this.viewPager.setPage(3)}
+            style={styles.navigationButton}>
+            {/* Icon for grid button on the middle left */}
+            {/* <Ionicons
+              name='grid'
+              size={30}
+              style={{
+                color:
+                  this.state.pageState === 0
+                    ? COLORS.blue
+                    : COLORS.black
+              }}
+            /> */}
+            <Image
+            source={require('../../images/profile.png')}
+            style={{
+              width: 30,
+              height: 30,
+              tintColor: this.state.pageState === 3 ? COLORS.blue : COLORS.black,
+            }}/>
+            <Text style={[
+              styles.iconText,
+              {color: this.state.pageState === 3 ? COLORS.blue : COLORS.black}
+            ]}>Profile</Text>
           </Pressable>
           {/* <Pressable
             onPress={() => this.viewPager.setPage(4)}
@@ -175,7 +198,7 @@ export default class MainPage extends Component {
               style={{
                 color:
                   this.state.pageState === 4
-                    ? COLORS.darkGreen
+                    ? COLORS.blue
                     : COLORS.black
               }}
             />
@@ -207,22 +230,15 @@ const styles = StyleSheet.create({
   },
   navigationBar: {
     flexDirection: 'row',
-    width: '90%',
+    backgroundColor: 'transparent',
+    width: '95%',
     height: '6.5%',
-    borderRadius: 10,
     alignSelf: 'center',
     justifyContent: 'center',
-    shadowOffset: {
-      width: -3,
-      height: 4
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 10,
-    shadowColor: COLORS.shadow
+    marginBottom: Platform.OS === 'android' ? '3%' : '0%',
   },
   navigationButton: {
-    width: '33%',
+    width: '25%',
     height: '100%',
     backgroundColor: COLORS.transparent,
     alignSelf: 'center',
@@ -230,7 +246,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   iconText: {
-    color: COLORS.black,
     marginTop: 5,
     marginLeft: 1.5,
   },

@@ -11,7 +11,7 @@ export default class MeatReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='food-steak' size={35} color='black' />
+        <MaterialCommunityIcons name='food-steak' size={30} color='black' />
         <Text style={styles.label}>Meat</Text>
       </Pressable>
     )
@@ -20,14 +20,13 @@ export default class MeatReduciton extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '48%',
-    height: '31%',
+    width: '31%', // Adjust the width for three items in a row
+    height: '45%', // Adjust the height as needed
     borderRadius: 10,
-    backgroundColor: COLORS.gray,
-    marginVertical: '1%',
-    marginHorizontal: '1%',
+    backgroundColor: COLORS.white,
+    marginVertical: '2%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   label: {
     fontSize: 15,

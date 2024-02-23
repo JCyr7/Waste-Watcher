@@ -1,95 +1,80 @@
-import React, {Component} from 'react'
-import {StyleSheet, View, Text, ScrollView} from 'react-native'
-import {COLORS} from '../Utils/colors'
-import Divider from '../Utils/Divider'
-import Rank from './Rank'
+import React, { Component } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { COLORS } from '../Utils/colors';
+import Divider from '../Utils/Divider';
+import Rank from './Rank';
 
 export default class Leaderboard extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
-  // Store user data passed as props
-  data = this.props.data
-
   render() {
+    // Store user data passed as props
+    const data = this.props.data.slice(0, 5); // Show only the top 5 ranks
+
     return (
       <View style={styles.container}>
         {/* Leaderboard Labels */}
         <View style={styles.labels}>
           <Text style={styles.rankLabel}>Rank</Text>
-          <Text style={styles.spacerLabel} />
           <Text style={styles.nameLabel}>Name</Text>
           <Text style={styles.scoreLabel}>Score</Text>
         </View>
-        <Divider />
-        {/* Render ranks from data */}
+        {/* Render top 5 ranks from data */}
         <View style={styles.ranks}>
-          <ScrollView
-            style={styles.scrollContainer}
-            contentContainerStyle={styles.contentContainer}
-            showsVerticalScrollIndicator={false}>
-            {this.data.map((item, index) => {
-              return (
-                <Rank
-                  key={index}
-                  rank={index + 1}
-                  name={item.name}
-                  score={item.score}
-                />
-              )
-            })}
-          </ScrollView>
+          {data.map((item, index) => (
+            <Rank key={index} rank={index + 1} name={item.name} score={item.score} />
+          ))}
         </View>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
-    height: '93%',
-    alignItems: 'center'
-  },
-  scrollContainer: {
     width: '100%',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  },
-  contentContainer: {
-    flex: 1
+    height: '75%',
+    backgroundColor: COLORS.lightBlue,
+    alignItems: 'center',
   },
   labels: {
     width: '100%',
+    height: '20%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '3%'
+    backgroundColor: COLORS.blue,
+    borderRadius: 5,
+    marginBottom: 2,
+
   },
   rankLabel: {
     flex: 1,
     textAlign: 'center',
     fontSize: 15,
-    fontWeight: '500'
-  },
-  spacerLabel: {
-    flex: 1
+    fontWeight: '500',
+    marginLeft: 5, 
+    color: COLORS.white
   },
   nameLabel: {
     flex: 5,
     textAlign: 'center',
     fontSize: 15,
-    fontWeight: '500'
+    fontWeight: '500',
+    color: COLORS.white
   },
   scoreLabel: {
     flex: 1,
     textAlign: 'center',
     fontSize: 15,
-    fontWeight: '500'
+    fontWeight: '500',
+    marginRight: 5, 
+    color: COLORS.white
   },
   ranks: {
     width: '100%',
-    flex: 1
-  }
-})
+    flex: 1,
+  },
+});

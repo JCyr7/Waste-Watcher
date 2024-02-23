@@ -20,8 +20,8 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth';
+import { setDoc, collection, query, where, getDocs, doc } from "firebase/firestore";
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -46,16 +46,16 @@ export default class LogoutPage extends Component {
   createUserDataInFirebase = async () => {
 
     try {
-      const docRef = await addDoc(collection(FIREBASE_DB, "users"), {
+
+      await setDoc(doc(FIREBASE_DB, "users", this.state.userID), {
         first: this.state.firstname,
         last: this.state.lastname,
         username: this.state.username,
         email: this.state.email,
         userID: this.state.userID,
-        foodWaste: {}
+        streak: 0
       });
     
-      //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -144,7 +144,15 @@ export default class LogoutPage extends Component {
     }
 
     if (this.state.userAuth) {
-      await this.createUserDataInFirebase();
+      try {
+        await this.createUserDataInFirebase();
+      } catch (e) {
+        this.state.userAuth = false;
+        await deleteUser(user);
+        Alert.alert("Unable to create account at this time", "Please try again later.");
+        console.log(e.message);
+      }
+      
     }
     
 

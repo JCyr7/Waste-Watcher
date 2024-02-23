@@ -61,12 +61,15 @@ data3 = [
 export default class HomePage extends Component {
   constructor(props) {
     super(props)
+
+    
+
     this.state = {
       weightdropdown: '',
-      //householdName: '',
-      //zipcode: '',
+      //householdName: '', 
+      //zipcode: '', 
       selectedMonth: '',
-      selectedDay: 0,
+      selectedDay: '',
       weightUnit: '',
       weightValue: 0,
       inHomeCheckbox: false,
@@ -153,11 +156,14 @@ export default class HomePage extends Component {
     }).catch(error => {
       console.error("Error updating wheels:", error);
     });
-  }
+  } 
 
   render() {
     const {navigation} = this.props;
     const { streak } = this.state;
+    const today = new Date();
+    const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const todayDay = today.getDate().toString().padStart(2, '0');
     return (
       <View style={styles.container}>
         {/* Welcome Header */}
@@ -210,23 +216,23 @@ export default class HomePage extends Component {
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder='00' //get the date
+              placeholder={todayMonth} //get the date
               placeholderTextColor={COLORS.blue}
               style={styles.dateInput}
-              onChangeText={(value) => this.setState({selectedDay: value})}>
+              onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
-            </TextInput>
+            </TextInput> 
             <Text style={styles.dateInputText}>/</Text>
             <TextInput
               textAlign={'center'}
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder='0'
+              placeholder={todayDay} //get the month
               placeholderTextColor={COLORS.blue}
               style={styles.dateInput}
               onChangeText={(value) =>
-              this.setState({selectedMonth: value})}>
+              this.setState({selectedDay: value})}>
               <Text style={styles.dateInputText}></Text>        
             </TextInput>
           </View>
@@ -422,7 +428,7 @@ const styles = StyleSheet.create({
     paddingVertical: '1%',
     marginBottom: "7%",
     alignSelf: 'center',
-    textAlign: 'center',
+    textAlign: 'center', 
     justifyContent: 'space-evenly',
     borderColor: COLORS.blue,
     backgroundColor: COLORS.lightBlue

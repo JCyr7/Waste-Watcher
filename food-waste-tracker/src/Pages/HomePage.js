@@ -138,9 +138,10 @@ export default class HomePage extends Component {
 
         
           {/* Progress Dials */}
+        <View style={styles.dialContainer}>
+
 
           {/*streak dial*/}
-        <View style={styles.dialContainer}>
           <View style={styles.smallDial}>
               <ProgressChart 
               data={streak}
@@ -183,7 +184,7 @@ export default class HomePage extends Component {
           </View>
         </View>
         
-        {/* Track Waste */}
+        {/* Track Waste container */}
         <View style={styles.trackWasteContainer}>
           <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
 

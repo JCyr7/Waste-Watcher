@@ -381,6 +381,7 @@ const styles = StyleSheet.create({
   trackWasteContainer: {
     width: '90%',
     height: '60%',
+    position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     borderRadius: 10,
@@ -451,7 +452,7 @@ const styles = StyleSheet.create({
     marginBottom: "7%",
     alignSelf: 'center',
     textAlign: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     borderColor: COLORS.blue,
   },
   weightInput: {
@@ -459,6 +460,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 10,
     fontSize: 20,
+    right: 50,
     fontWeight: 'bold', 
     paddingVertical: "3%",
     width: '65%',
@@ -468,17 +470,21 @@ const styles = StyleSheet.create({
   weightInputText: {
     color: COLORS.blue,
     fontSize: 20,
+    position: 'absolute',
     textAlign: 'center',
     alignSelf: 'center',
     fontWeight: 'bold', 
   },
   weightDropdown: {
+    position: 'absolute',
     borderColor: COLORS.blue,
+    left: 0,
     borderWidth: 3,
     borderRadius: 10,
     paddingVertical: "3%",
     alignSelf: 'flex-end',
     backgroundColor: COLORS.lightBlue
+    
   },
   categoryContainer: {
     borderRadius: 10,
@@ -491,9 +497,12 @@ const styles = StyleSheet.create({
   },
   categoryDropdown: {
     borderColor: COLORS.blue,
+    position: 'absolute',
     borderWidth: 3,
     borderRadius: 10,
     width: '75%',
+    top: -40,
+    zIndex: 1000,
     marginBottom: '7%',
     textAlign: 'center',
     alignSelf: 'center',

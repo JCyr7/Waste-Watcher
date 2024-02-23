@@ -144,7 +144,7 @@ export default class HomePage extends Component {
           {/*streak dial*/}
           <View style={styles.smallDial}>
               <ProgressChart 
-              data={streak}
+              data={[.5,.2,.6]}
               width={82}
               height={82}
               strokeWidth={10}
@@ -240,7 +240,7 @@ export default class HomePage extends Component {
             {/* Choose Unit */}  
             <SelectList 
               textAlign={'center'}
-              boxStyles={styles.weightDropdown}
+              boxStyles={styles.weightBox}
               inputStyles={styles.weightInputText}
               dropdownStyles={styles.weightDropdown}
               dropdownTextStyles={styles.weightInputText}
@@ -256,7 +256,7 @@ export default class HomePage extends Component {
           {/* Choose Type */}  
           <SelectList 
               textAlign={'center'}
-              boxStyles={styles.categoryDropdown}
+              boxStyles={styles.categoryBox}
               inputStyles={styles.weightInputText}
               dropdownStyles={styles.categoryDropdown}
               dropdownTextStyles={styles.weightInputText}
@@ -397,11 +397,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   checkBox: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.lightBlue,
   },
   checkboxText: {
     fontSize: 15,
     color: COLORS.blue,
+    padding: 5,
     fontWeight: '500',
     textDecorationLine: 'none',
   },
@@ -456,12 +457,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: COLORS.blue,
   },
+  weightBox: {
+    borderRadius: 10,
+    flexDirection: 'row',
+    width: '75%',
+    marginBottom: "7%",
+    borderWidth: 3,
+    alignSelf: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    borderColor: COLORS.blue,
+  },
   weightInput: {
     borderColor: COLORS.blue,
     borderWidth: 3,
     borderRadius: 10,
     fontSize: 20,
-    right: 50,
+    right: 0,
     fontWeight: 'bold', 
     paddingVertical: "3%",
     width: '65%',
@@ -470,20 +482,23 @@ const styles = StyleSheet.create({
   },
   weightInputText: {
     color: COLORS.blue,
-    fontSize: 20,
+    fontSize: 13,
     position: 'absolute',
     textAlign: 'center',
     alignSelf: 'center',
     fontWeight: 'bold', 
   },
   weightDropdown: {
-    position: 'absolute',
     borderColor: COLORS.blue,
-    left: 0,
+    position: 'absolute',
     borderWidth: 3,
     borderRadius: 10,
-    paddingVertical: "3%",
-    alignSelf: 'flex-end',
+    width: '75%',
+    top: -40,
+    zIndex: 1000,
+    marginBottom: '7%',
+    textAlign: 'center',
+    alignSelf: 'center',
     backgroundColor: COLORS.lightBlue
     
   },
@@ -494,6 +509,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'flex-end',
+  },
+  categoryBox: {
+    borderRadius: 10,
+    flexDirection: 'row',
+    width: '75%',
+    marginBottom: "7%",
+    borderWidth: 3,
+    alignSelf: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
     borderColor: COLORS.blue,
   },
   categoryDropdown: {

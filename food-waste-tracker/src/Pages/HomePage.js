@@ -41,9 +41,11 @@ data = [
   {key:'7', value:'Combination'},
 ]
 data2 = [
-  {key:'1', value:'lbs'},
-  {key:'2', value:'oz'},
-  {key:'3', value:'g'},
+  {key:'1', value:'lbs  '},
+  {key:'2', value:'oz  '},
+  {key:'3', value:'cups  '},
+  {key:'4', value:'tbs  '},
+
 ]
 data3 = [
   20
@@ -161,7 +163,8 @@ export default class HomePage extends Component {
                 <TextInput
                   onChangeText={(value) => this.setState({selectedDay: value})}
                   cursorColor={COLORS.blue}
-                  selectionColor={'white'}
+                  selectionColor={COLORS.blue}
+                  maxLength={2} // Set the maximum length to 2 characters
                   keyboardType='numeric'
                   returnKeyType='done'
                   placeholder="2" //get the date
@@ -173,7 +176,7 @@ export default class HomePage extends Component {
 
 
 
-                <Text style={styles.dateInputText}>-</Text>
+                <Text style={styles.dateInputText}> - </Text>
                 <TextInput
                   cursorColor={COLORS.blue}
                   selectionColor={'white'}
@@ -186,23 +189,18 @@ export default class HomePage extends Component {
                 </TextInput>
               </View>
             </View>
+
+
+
+
+
+
+
             <View style={styles.weightContainer}>
-              <TextInput
+            <SelectList 
                 textAlign={'center'}
-                cursorColor={COLORS.blue}
-                keyboardType='numeric'
-                returnKeyType='done'
-                placeholder='8.2'
-                placeholderTextColor={COLORS.blue}
-                style={styles.weightInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})}>
-                <Text style={styles.weightInputText}></Text>        
-              </TextInput>
-              <SelectList 
-                textAlign={'center'}
-                boxStyles={styles.weightDropdown}
-                inputStyles={styles.weightInputText}
+                boxStyles={styles.weightDropdownBox}
+                inputStyles={styles.weightInputTextBox}
                 dropdownStyles={styles.weightDropdown}
                 dropdownTextStyles={styles.weightInputText}
                 search = 'false'
@@ -211,6 +209,20 @@ export default class HomePage extends Component {
                 data={data2} 
                 save="value"
               />
+              <View style={styles.dateInputContainer}>
+                <TextInput
+                  textAlign={'center'}
+                  cursorColor={COLORS.blue}
+                  keyboardType='numeric'
+                  returnKeyType='done'
+                  placeholder='8.2'
+                  placeholderTextColor={COLORS.blue}
+                  style={[styles.dateInput, { color: COLORS.blue }]}             
+                  onChangeText={(value) =>
+                  this.setState({zipcode: value})}>
+                </TextInput>
+              </View>
+              
             </View>
             <SelectList 
                 textAlign={'center'}
@@ -298,7 +310,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'flex-end',
     borderRadius: 10,
-    padding: 15,
+    padding: 17,
     backgroundColor: COLORS.lightBlue,
   },
   largeWasteDial: {
@@ -321,7 +333,7 @@ const styles = StyleSheet.create({
 
   },
   smallDialText: {
-    fontSize: 15,
+    fontSize: 17,
     color: COLORS.blue,
     fontWeight: '500',
     textAlign: 'center',
@@ -351,7 +363,7 @@ const styles = StyleSheet.create({
   dateContainer: {
     flexDirection: 'row',
     width: '40%',
-    height: '10%',
+    height: '12%',
     borderBottomWidth: 2,
     borderBottomColor: COLORS.blue,
     alignSelf: 'center',
@@ -368,7 +380,7 @@ const styles = StyleSheet.create({
   },
   dateTitleInputText:{
     fontWeight: '500', 
-    fontSize: 15,
+    fontSize: 17,
     color: COLORS.white,
   },
   dateInputContainer: {
@@ -379,13 +391,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dateInput: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: '500', 
     backgroundColor: COLORS.transparent,
   },
   dateInputText: {
     fontWeight: '500', 
-    fontSize: 15,
+    fontSize: 17,
     color: COLORS.blue,
   },
 
@@ -394,40 +406,42 @@ const styles = StyleSheet.create({
 
 
   weightContainer: {
-    borderRadius: 10,
     flexDirection: 'row',
-    width: '75%',
-    marginBottom: "7%",
+    width: '40%',
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.blue,
     alignSelf: 'center',
     textAlign: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-evenly',
     borderColor: COLORS.blue,
+    backgroundColor: COLORS.lightBlue
   },
-  weightInput: {
+  weightDropdownBox: {
+    backgroundColor: COLORS.blue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+  },
+  weightInputTextBox: {
+    width: '40%',
+
+    color: COLORS.white,
+    fontSize: 17,
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontWeight: '500', 
+  },
+  weightDropdown: {
     borderColor: COLORS.blue,
-    borderWidth: 3,
-    borderRadius: 10,
-    fontSize: 20,
-    fontWeight: 'bold', 
-    paddingVertical: "3%",
-    width: '65%',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-end',
     backgroundColor: COLORS.lightBlue
   },
   weightInputText: {
     color: COLORS.blue,
-    fontSize: 20,
+    fontSize: 17,
     textAlign: 'center',
     alignSelf: 'center',
     fontWeight: 'bold', 
-  },
-  weightDropdown: {
-    borderColor: COLORS.blue,
-    borderWidth: 3,
-    borderRadius: 10,
-    paddingVertical: "3%",
-    alignSelf: 'flex-end',
-    backgroundColor: COLORS.lightBlue
   },
 
 
@@ -463,7 +477,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   checkboxText: {
-    fontSize: 15,
+    fontSize: 17,
     color: COLORS.blue,
     fontWeight: '500',
     textDecorationLine: 'none',
@@ -517,7 +531,7 @@ const styles = StyleSheet.create({
   //   transform: [{rotate: '90 deg'}],
   //   alignSelf: 'flex-start',
   //   marginBottom: "30%",
-  //   marginLeft: '15%',
+  //   marginLeft: '17%',
   //   //justifyContent: 'center',
   // },
   // welcomeContainer: {
@@ -562,7 +576,7 @@ const styles = StyleSheet.create({
             <BarChart
             style={styles.barGraphStyle}
             data={data3}
-            width={150}
+            width={170}
             height={250}
             fromZero={true}
             showBarTops={false}

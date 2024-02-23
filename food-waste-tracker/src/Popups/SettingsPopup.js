@@ -7,7 +7,8 @@ import {
   Pressable,
   Alert,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Image
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
@@ -90,9 +91,8 @@ export default class SettingsPopup extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.actionContainer}>
-            <Divider />
+            {/* <Divider />
 
-            {/* Username */}
             <View style={styles.actionItem}>
               <Text style={styles.text}>Username</Text>
               <TextInput
@@ -103,7 +103,6 @@ export default class SettingsPopup extends Component {
             </View>
             <Divider />
 
-            {/* Email Address */}
             <View style={styles.actionItem}>
               <Text style={styles.text}>Email address</Text>
               <TextInput
@@ -116,7 +115,6 @@ export default class SettingsPopup extends Component {
             </View>
             <Divider />
 
-            {/* Zip Code */}
             <View style={styles.actionItem}>
               <Text style={styles.text}>Zip Code</Text>
               <TextInput
@@ -126,7 +124,7 @@ export default class SettingsPopup extends Component {
                 onChangeText={(value) => this.setState({zipCode: value})}
                 onSubmitEditing={() => this.zipCodeSubmit(this.state.zipCode)}
               />
-            </View>
+            </View> */}
             <Divider />
 
             {/* Change Password */}
@@ -145,10 +143,32 @@ export default class SettingsPopup extends Component {
             </Pressable>
             <Divider />
 
-            {/* Save Button */}
-            <Pressable style={styles.saveButton} onPress={this.handlePress}>
-              <Text style={styles.saveButtonText}>Save Changes</Text>
-            </Pressable>
+            {/* Light/Dark Mode */}
+            <Pressable
+            //onPress={() => }
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.transparent
+                  : COLORS.transparent
+              },
+              styles.actionItem
+            ]}>
+            <Text style={styles.text}>Dark Mode</Text>
+            <Image 
+            source={require('../../images/dark.png')}
+            style={{
+              width: 30,
+              height: 30,
+              tintColor: this.state.pageState === 0 ? COLORS.darkGreen : COLORS.black,
+            }}/>
+          </Pressable>
+          <Divider />
+
+          {/* Save Button */}
+          <Pressable style={styles.saveButton} onPress={this.handlePress}>
+            <Text style={styles.saveButtonText}>Save Changes</Text>
+          </Pressable>
           </View>
 
           {/* Delete Account Button */}
@@ -163,7 +183,7 @@ export default class SettingsPopup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
+    width: '100%',
     height: '87%',
     marginLeft: '5%',
     justifyContent: 'space-between',
@@ -171,7 +191,7 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     width: '100%',
-    height: '60%',
+    height: '40%',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -221,5 +241,5 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16
-  }
+  },
 })

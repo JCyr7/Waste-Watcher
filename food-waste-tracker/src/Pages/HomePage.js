@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState, Component} from 'react'
 import {
   View,
   StyleSheet,
@@ -8,11 +8,13 @@ import {
   TextInput,
   Platform,
   Dimensions,
+  Image,
 } from 'react-native'
 import {
     BarChart,
     ProgressChart,
 } from 'react-native-chart-kit'
+import Calendar from 'react-calendar'
 import {AntDesign} from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
@@ -22,6 +24,7 @@ import GoalPopup from '../Popups/GoalPopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import {DATA} from '../Utils/TestData'
+import ProfilePage from '../Pages/ProfilePage'
 import SubmitButton from '../TrackWaste/SubmitButton'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
@@ -44,6 +47,8 @@ barChartConfig = {
   barPercentage: 1,
   decimalPlaces: 0,
 }
+
+//calendar functions
 
 
 screenWidth = Dimensions.get('window').width;
@@ -114,9 +119,18 @@ export default class HomePage extends Component {
   }
 
   render() {
+    const {navigation} = this.props
     return (
           
         <View style={styles.container}>
+          <Pressable
+          style={styles.profileIcon}
+          onPress={() => navigation.navigate('ProfilePage')}>
+          <Image
+            source={require('../../images/profile.png')} // Provide the correct path to your profile image
+            style={{ width: 30, height: 30, tintColor: COLORS.black }}/>
+          <Text style={styles.profileText}>Profile</Text>
+        </Pressable>
         {/* Welcome Header */}
         <Text style={styles.welcomeText}>Waste Watcher</Text>
             {/* Progress Dials */}
@@ -293,6 +307,7 @@ export default class HomePage extends Component {
 }
 
 const styles = StyleSheet.create({
+    
     graphStyle: {
     },
     goalPopupHeader: {
@@ -540,6 +555,18 @@ const styles = StyleSheet.create({
     linkContainer: {
       width: '100%',
       height: '100%',
-    }
+    },
+    profileIcon: {
+      position: 'absolute',
+      flexDirection: 'column',
+      alignItems: 'center',
+      top: 10,
+      right: 40,
+    },
+    profileText: {
+      color: COLORS.black,
+      marginTop: 3,
+      fontSize: 12,
+    },
   })
   

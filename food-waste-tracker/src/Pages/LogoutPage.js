@@ -20,8 +20,8 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth';
+import { setDoc, collection, query, where, getDocs, doc } from "firebase/firestore";
 
 export default class LogoutPage extends Component {
   //Parent contstructo
@@ -46,16 +46,14 @@ export default class LogoutPage extends Component {
   createUserDataInFirebase = async () => {
 
     try {
-      const docRef = await addDoc(collection(FIREBASE_DB, "users"), {
+
+      await setDoc(doc(FIREBASE_DB, "users", this.state.userID), {
         first: this.state.firstname,
         last: this.state.lastname,
         username: this.state.username,
-        email: this.state.email,
-        userID: this.state.userID,
-        foodWaste: {}
+        email: this.state.email
       });
     
-      //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -142,7 +140,15 @@ export default class LogoutPage extends Component {
     }
 
     if (this.state.userAuth) {
-      await this.createUserDataInFirebase();
+      try {
+        await this.createUserDataInFirebase();
+      } catch (e) {
+        this.state.userAuth = false;
+        await deleteUser(user);
+        Alert.alert("Unable to create account at this time", "Please try again later.");
+        console.log(e.message);
+      }
+      
     }
     
 
@@ -276,7 +282,8 @@ export default class LogoutPage extends Component {
               <TextInput
                 cursorColor={'white'}
                 selectionColor={'white'}
-                placeholder='Username'
+                keyboardType="email-address"  // Set keyboardType to "email-address"
+                placeholder='Email'
                 placeholderTextColor={COLORS.white} // Set the color of the placeholder text
                 style={[styles.userpassinput, { color: COLORS.white }]}             
                 onChangeText={(value) => {
@@ -589,6 +596,7 @@ const styles = StyleSheet.create({
   loginText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 15,
   },
   forgotAccountButton: {
     paddingTop: 0,
@@ -716,6 +724,7 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: COLORS.white,
+    fontWeight: 'bold',
     fontSize: 15,
   },
   signupButton: {

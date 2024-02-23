@@ -1,19 +1,6 @@
 import React, {Component} from 'react'
-import {
-  View,
-  StyleSheet,
-  Text,
-  Pressable,
-  Modal,
-  TextInput,
-  Platform,
-  Dimensions,
-  Image
-} from 'react-native'
-import {
-    BarChart,
-    ProgressChart,
-} from 'react-native-chart-kit'
+import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image} from 'react-native'
+import {BarChart,ProgressChart} from 'react-native-chart-kit'
 import Calendar from 'react-calendar'
 import {AntDesign} from '@expo/vector-icons'
 import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
@@ -66,8 +53,6 @@ export default class HomePage extends Component {
 
     this.state = {
       weightdropdown: '',
-      //householdName: '', 
-      //zipcode: '', 
       selectedMonth: '',
       selectedDay: '',
       weightUnit: '',
@@ -75,25 +60,6 @@ export default class HomePage extends Component {
       inHomeCheckbox: false,
       edibleCheckbox: false,
       streak: [0]
-      //convertedWeight: 0,
-
-      //user streak
-      //total number of user logins
-    
-
-      //modal for additional data on user
-      //all relevant props
-
-
-
-
-      // householdSize: 0,
-      // userName: '',
-      // inHomeCheckbox: false,
-      // householdInfoModal: false,
-      // trackWasteModal: false,
-      // checkboxValue: false,
-
     }
     this.getData();
   }
@@ -169,7 +135,11 @@ export default class HomePage extends Component {
         {/* Welcome Header */}
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Home</Text>
+
+        
           {/* Progress Dials */}
+
+          {/*streak dial*/}
         <View style={styles.dialContainer}>
           <View style={styles.smallDial}>
               <ProgressChart 
@@ -183,6 +153,8 @@ export default class HomePage extends Component {
               <Text style={styles.smallDialText}>Daily</Text>
               <Text style={styles.smallDialText}>Streak</Text>
           </View>
+
+          {/*weekly waste dial*/}
           <View style={styles.largeDial}>
             <ProgressChart
             data={streak}
@@ -195,6 +167,8 @@ export default class HomePage extends Component {
             <Text style={styles.largeDialText}>Weekly</Text>
             <Text style={styles.largeDialText}>Waste</Text>
           </View>
+
+          {/*money dial*/}
           <View style={styles.smallDial}>
               <ProgressChart 
               data={streak}
@@ -208,27 +182,35 @@ export default class HomePage extends Component {
               <Text style={styles.smallDialText}>Saved</Text>
           </View>
         </View>
+        
+        {/* Track Waste */}
         <View style={styles.trackWasteContainer}>
-          <Text style={styles.trackWasteHeader}>Track Food Waste</Text>        
+          <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
+
+
+           {/* Choose Month */}      
           <View style={styles.dateContainer}>
             <TextInput
               textAlign={'center'}
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder={todayMonth} //get the date
+              placeholder={todayMonth} 
               placeholderTextColor={COLORS.blue}
               style={styles.dateInput}
               onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
             </TextInput> 
             <Text style={styles.dateInputText}>/</Text>
+
+
+            {/* Choose Day */}  
             <TextInput
               textAlign={'center'}
               cursorColor={COLORS.blue}
               keyboardType='numeric'
               returnKeyType='done'
-              placeholder={todayDay} //get the month
+              placeholder={todayDay} 
               placeholderTextColor={COLORS.blue}
               style={styles.dateInput}
               onChangeText={(value) =>
@@ -236,6 +218,9 @@ export default class HomePage extends Component {
               <Text style={styles.dateInputText}></Text>        
             </TextInput>
           </View>
+
+
+          {/* Choose Weight */}  
           <View style={styles.weightContainer}>
             <TextInput
               textAlign={'center'}
@@ -249,6 +234,9 @@ export default class HomePage extends Component {
               this.setState({weightValue: value})}>
               <Text style={styles.weightInputText}></Text>        
             </TextInput>
+
+
+            {/* Choose Unit */}  
             <SelectList 
               textAlign={'center'}
               boxStyles={styles.weightDropdown}
@@ -262,6 +250,9 @@ export default class HomePage extends Component {
               save="value"
             />
           </View>
+
+          
+          {/* Choose Type */}  
           <SelectList 
               textAlign={'center'}
               boxStyles={styles.categoryDropdown}
@@ -274,7 +265,11 @@ export default class HomePage extends Component {
               data={data} 
               save="value"
             />
+
+          {/* Checkbox container */}  
           <View style={styles.checkBoxContainer}>
+
+            {/* In-home checkbox */}  
             <BouncyCheckbox
                       size={22}
                       style={styles.checkBox}
@@ -290,6 +285,8 @@ export default class HomePage extends Component {
                       }}
                       textStyle={styles.checkboxText}
                     />
+
+            {/* Edible checkbox */}  
             <BouncyCheckbox
                       size={22}
                       style={styles.checkBox}
@@ -305,6 +302,9 @@ export default class HomePage extends Component {
                       textStyle={styles.checkboxText}
                     />
             </View>
+
+
+          {/* Submit button */}    
           <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
             <Text style={styles.bottomButtonText}>Submit</Text>
           </Pressable>    
@@ -508,391 +508,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: COLORS.lightBlue
   },
-
-
-
-
-
-
-
-
-
-    
   })
-  
-
-  // barGraphContainer: {
-  //   width: '66%',
-  //   height: '100%',
-  //   alignSelf: 'right',
-  //   alignContent: 'center',
-  //   justifyContent: 'center',
-  //   borderRadius: 20,
-  //   backgroundColor: COLORS.lightBlue,
-  // },
-  // friendQuestContainer: {
-  //   width: '90%',
-  //   height: '20%',
-  //   flexDirection: 'row',
-  //   verticalAlign: 'middle',
-  //   borderRadius: 20,
-  //   backgroundColor: COLORS.lightBlue,
-  // },
-  // friendQuestText: {
-  //   height: "100%",
-  //   width: "30%",
-  //   marginLeft: '2%',
-  //   marginRight: '2%',
-  //   marginTop: '8%',
-  //   fontSize: 22,
-  //   color: COLORS.blue,
-  //   fontWeight: '800',
-  //   textAlign: 'center',
-  //   verticalAlign: 'middle'
-  // },
-  // barGraphStyle: {
-  //   transform: [{rotate: '90 deg'}],
-  //   alignSelf: 'flex-start',
-  //   marginBottom: "30%",
-  //   marginLeft: '15%',
-  //   //justifyContent: 'center',
-  // },
-  // welcomeContainer: {
-  //   width: '90%',
-  //   height: '30%',
-  //   borderRadius: 10,
-  //   alignContent: "center",
-  //   backgroundColor: COLORS.lightBlue,
-  //   shadowOffset: {
-  //     width: -3,
-  //     height: 4
-  //   },
-  //   shadowOpacity: 0.2,
-  //   shadowRadius: 6,
-  //   elevation: 10,
-  //   shadowColor: COLORS.shadow
-  // },
-
-  // goalPopupHeader: {
-  //   flexDirection: 'row',
-  //   height: '10%',
-  //   justifyContent: 'space-around',
-  //   alignItems: 'center'
-  // },
-  // goalPopupHeaderText: {
-  //   fontSize: 24,
-  //   fontWeight: '800'
-  // },
-  // goalCloseButton: {
-  //   marginTop: '2%',
-  //   paddingRight: '0%',
-  //   alignItems: 'flex-end',
-  //   width: '10%'
-  // },
-  // goalPopupContent: {
-  //   width: '100%',
-  //   height: '90%'
-  // },
-        {/* <View style={styles.friendQuestContainer}>
-            <Text style={styles.friendQuestText}>Friend Quest Progress</Text>
-            <View style={styles.barGraphContainer}>
-            <BarChart
-            style={styles.barGraphStyle}
-            data={data3}
-            width={150}
-            height={250}
-            fromZero={true}
-            showBarTops={false}
-            withInnerLines={false}
-            withHorizontalLabels={false}
-            chartConfig={barChartConfig}
-            verticalLabelRotation={-90}>
-            </BarChart>
-            </View>
-        </View> */}
-        
-
-        {/* Household info Modal */}
-        {/* <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.householdInfoModal}
-            onRequestClose={() => this.openHouseHoldInfo(false)}>
-            <Popup>
-            <Pressable
-                onPress={() => this.openHouseHoldInfo(false)}
-                style={styles.closePopupButton}>
-                <AntDesign name='close' size={24} color='black' />
-            </Pressable>
-            <Text style={styles.householdInfoHeader}>Household Info</Text>
-            <Text style={styles.householdInfoInputTitle}>Household Name</Text>
-            <TextInput
-                cursorColor={'black'}
-                style={styles.householdInfoInput}
-                onChangeText={(value) =>
-                this.setState({householdName: value})
-                }></TextInput>
-            <Text style={styles.householdInfoInputTitle}>Zip Code</Text>
-            <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                style={styles.householdInfoInput}
-                onChangeText={(value) =>
-                this.setState({zipcode: value})
-                }></TextInput>
-            <Text style={styles.householdInfoInputTitle}>Household Size</Text>
-            <TextInput
-                cursorColor={'black'}
-                keyboardType='numeric'
-                style={styles.householdInfoInput}
-                onChangeText={(value) =>
-                this.setState({householdSize: value})
-                }></TextInput>
-            <Text style={styles.householdInfoPrivacyMessage}>
-                Entering some info about your household helps us at the Mitchell
-                Center get a better idea about how food is being wasted in the
-                state of Maine, but is not essential to the functionality of the
-                app. By checking the box below, you agree to associate the above
-                information with your account.
-            </Text>
-            <BouncyCheckbox
-                size={22}
-                style={styles.checkBox}
-                fillColor={COLORS.lightGreen}
-                unfillColor='white'
-                text='I agree'
-                innerIconStyle={{borderWidth: 2}}
-                onPress={() => this.toggleCheckbox(!this.state.checkboxValue)}
-                textStyle={{textDecorationLine: 'none'}}
-            />
-            <Pressable
-                onPress={() => this.submitHouseholdInfo()}
-                style={({pressed}) => [
-                {
-                    backgroundColor: pressed
-                    ? COLORS.lightGreen
-                    : COLORS.blue
-                },
-                styles.householdInfoSubmitButton
-                ]}>
-                <Text style={[styles.buttonText, {color: 'white'}]}>Submit</Text>
-            </Pressable>
-            </Popup>
-        </Modal>
-
-        {/* Track waste modal */}
-        {/* <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.trackWasteModal}
-            onRequestClose={() => this.openTrackWaste(false)}>
-            <Popup>
-            <Pressable
-                onPress={() => this.openTrackWaste(false)}
-                style={styles.closePopupButton}>
-                <AntDesign name='close' size={24} color='black' />
-            </Pressable>
-            <TrackWastePopup />
-            </Popup>
-        </Modal> */}
-
-
-  // // Sets the state for the household info modal
-  // openHouseHoldInfo = async (value) => {
-  //   await AsyncStorage.setItem('newUser', 'false')
-  //   this.setState({householdInfoModal: value})
-  // }
-
-  // // Sets state for trackWaste popup
-  // openTrackWaste(value) {
-  //   this.setState({trackWasteModal: value})
-  // }
-
-  // openGoal(value) {
-  //   this.setState({goalModal: value})
-  // }
-// barChartConfig = {
-//   backgroundGradientFrom: "#1E2923",
-//   backgroundGradientFromOpacity: 0,
-//   backgroundGradientTo: COLORS.blue,
-//   backgroundGradientToOpacity: 0,
-//   color: (opacity = 1) => COLORS.blue,
-//   strokeWidth: 1, // optional, default 3
-//   barPercentage: 1,
-//   decimalPlaces: 0,
-// }
-
-
-  {/* <Pressable
-        style={styles.profileIcon}
-        onPress={() => navigation.navigate('ProfilePage')}>
-        <Image
-          source={require('../../images/profile.png')} // Provide the correct path to your profile image
-          style={{ width: 30, height: 30, tintColor: COLORS.black }}/>
-        {/* <Text style={styles.profileText}>Profile</Text>
-        </Pressable> */}
-
-        // welcomeText: {
-        //   marginTop: '6%',
-        //   fontSize: 28,
-        //   color: COLORS.blue,
-        //   fontWeight: '800',
-        //   textAlign: 'center'
-        // },
-
-
-
-            
-    // buttonContainer: {
-    //   borderWidth: 0,
-    //   width: '95%',
-    //   height: '77%',
-    //   justifyContent: 'space-evenly',
-    //   alignItems: 'center'
-    // },
-    // weeklyWasteProgressButton: {
-    //   width: '25%',
-    //   height: '25%',
-    //   backgroundColor: COLORS.lightBlue,
-    //   borderRadius: 100,
-    //   verticalAlign: "middle",
-    //   top: "25%",
-    //   left: "65%",
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    // },
-    // moneyWastedProgressButton: {
-    //   width: '25%',
-    //   height: '25%',
-    //   backgroundColor: COLORS.lightBlue,
-    //   borderRadius: 100,
-    //   verticalAlign: "middle",
-    //   left: "10%",
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    // },
-    // buttonText: {
-    //   fontSize: 18,
-    //   color: COLORS.blue,
-    //   fontWeight: '800'
-    // },
-    // householdInfoHeader: {
-    //   marginTop: '5%',
-    //   color: COLORS.darkerGray,
-    //   fontSize: 22,
-    //   fontWeight: '500',
-    //   alignSelf: 'center',
-    //   marginBottom: '5%'
-    // },
-    // householdInfoInput: {
-    //   borderRadius: 10,
-    //   borderWidth: 3,
-    //   paddingTop: '1%',
-    //   padding: '1%',
-    //   width: '95%',
-    //   alignSelf: 'center',
-    //   borderColor: 'grey'
-    // },
-
-
-
-    // householdInfoInputTitle: {
-    //   paddingLeft: '3%',
-    //   paddingTop: '1%',
-    //   paddingBottom: '1%',
-    //   fontWeight: 'bold',
-    //   color: 'grey'
-    // },
-    // householdInfoPrivacyMessage: {
-    //   paddingLeft: '3%',
-    //   paddingTop: '1%',
-    //   paddingBottom: '1%',
-    //   fontWeight: 'bold',
-    //   color: 'grey'
-    // },
-    // householdInfoSubmitButton: {
-    //   width: 90,
-    //   height: 40,
-    //   alignItems: 'center',
-    //   alignSelf: 'center',
-    //   borderRadius: 10,
-    //   justifyContent: 'center',
-    //   marginTop: '50%'
-    // },
-
-
-    // profileIcon: {
-    //   position: 'absolute',
-    //   flexDirection: 'column',
-    //   alignItems: 'center',
-    //   top: 10,
-    //   right: 40,
-    // },
-    // profileText: {
-    //   color: COLORS.black,
-    //   marginTop: 3,
-    //   fontSize: 12,
-    // },
-
-
-    // linkContainer: {
-    //   width: '100%',
-    //   height: '100%',
-    // },
-
-
-    // checkBox: {
-    //   marginBottom: "5%",
-    //   marginLeft: '30%'
-    // },
-    // closePopupButton: {
-    //   padding: '2%',
-    //   alignSelf: 'flex-end',
-    //   alignItems: 'flex-end'
-    // },
-
-      // Sets state of checkbox
-  // toggleCheckbox(value) {
-  //   // console.log(this.state.checkboxValue)
-  //   this.setState({checkboxValue: value})
-  // }
-
-  // Method to send household info to backend
-  // submitHouseholdInfo() {
-  //   console.log(this.state.householdName)
-  //   console.log(this.state.zipcode)
-  //   console.log(this.state.householdSize)
-  //   this.setState({householdInfoModal: false})
-  // }
-
-
-    //  // method to conditionally display different numbers of days for each month
-  //  dayOption(month) {
-  //   if (month === 'February') {
-  //     return dayDropdown.slice(0, 28)
-  //   } else if (
-  //     month === 'April' ||
-  //     month === 'June' ||
-  //     month === 'September' ||
-  //     month === 'November'
-  //   ) {
-  //     return dayDropdown.slice(0, 30)
-  //   } else {
-  //     return dayDropdown
-  //   }
-  // }
-
-
-    // Method converts weight from one unit to oz
-  // convertWeight(weight, unit) {
-  //   if (unit === "g")
-  // }
-
-
-  /*calendar  
-  openCalendar(nextValue) {
-    this.setState({calendar: nextValue})
-  }
-  */

@@ -893,6 +893,50 @@ exports[`renders correctly 3`] = `
                   }
                   strokeWidth="10"
                 />
+                <RNSVGPath
+                  d="M 0 -33 A 33 33 0 1 1 -0.207344 -32.999349 L -0.207344 -32.999349 A 33 33 0 1 0 0 -33 Z "
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                      "strokeWidth",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "payload": 855648466,
+                      "type": 0,
+                    }
+                  }
+                  strokeWidth="10"
+                />
+                <RNSVGPath
+                  d="M 0 -36 A 36 36 0 1 1 -0.226193 -35.999289 L -0.226193 -35.999289 A 36 36 0 1 0 0 -36 Z "
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                      "strokeWidth",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "payload": 855648466,
+                      "type": 0,
+                    }
+                  }
+                  strokeWidth="10"
+                />
               </RNSVGGroup>
               <RNSVGGroup
                 fill={
@@ -903,7 +947,7 @@ exports[`renders correctly 3`] = `
                 }
               >
                 <RNSVGPath
-                  d="M 0 -30 A 30 30 0 0 1 0 -30 L 0 -30 A 30 30 0 0 0 0 -30 Z "
+                  d="M 0 -30 A 30 30 0 0 1 0 30 L 0 30 A 30 30 0 0 0 0 -30 Z "
                   fill={
                     {
                       "payload": 4278190080,
@@ -921,6 +965,58 @@ exports[`renders correctly 3`] = `
                   stroke={
                     {
                       "payload": 2147494098,
+                      "type": 0,
+                    }
+                  }
+                  strokeLinecap={1}
+                  strokeLinejoin={1}
+                  strokeWidth="10"
+                />
+                <RNSVGPath
+                  d="M 0 -33 A 33 33 0 0 1 31.384865 -10.197561 L 31.384865 -10.197561 A 33 33 0 0 0 0 -33 Z "
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                      "strokeWidth",
+                      "strokeLinecap",
+                      "strokeLinejoin",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "payload": 2852137170,
+                      "type": 0,
+                    }
+                  }
+                  strokeLinecap={1}
+                  strokeLinejoin={1}
+                  strokeWidth="10"
+                />
+                <RNSVGPath
+                  d="M 0 -36 A 36 36 0 1 1 -21.160269 29.124612 L -21.160269 29.124612 A 36 36 0 1 0 0 -36 Z "
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                      "strokeWidth",
+                      "strokeLinecap",
+                      "strokeLinejoin",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "payload": 3556780242,
                       "type": 0,
                     }
                   }
@@ -1388,6 +1484,7 @@ exports[`renders correctly 3`] = `
         "borderRadius": 10,
         "height": "60%",
         "justifyContent": "space-evenly",
+        "position": "relative",
         "width": "90%",
       }
     }
@@ -1491,7 +1588,7 @@ exports[`renders correctly 3`] = `
           "borderColor": "#0066ff",
           "borderRadius": 10,
           "flexDirection": "row",
-          "justifyContent": "flex-end",
+          "justifyContent": "center",
           "marginBottom": "7%",
           "textAlign": "center",
           "width": "75%",
@@ -1515,6 +1612,7 @@ exports[`renders correctly 3`] = `
             "fontSize": 20,
             "fontWeight": "bold",
             "paddingVertical": "3%",
+            "right": 0,
             "width": "65%",
           }
         }
@@ -1525,8 +1623,9 @@ exports[`renders correctly 3`] = `
             {
               "alignSelf": "center",
               "color": "#0066ff",
-              "fontSize": 20,
+              "fontSize": 13,
               "fontWeight": "bold",
+              "position": "absolute",
               "textAlign": "center",
             }
           }
@@ -1563,16 +1662,18 @@ exports[`renders correctly 3`] = `
           onStartShouldSetResponder={[Function]}
           style={
             {
-              "alignSelf": "flex-end",
-              "backgroundColor": "#ebf3ff",
+              "alignSelf": "center",
               "borderColor": "#0066ff",
               "borderRadius": 10,
               "borderWidth": 3,
               "flexDirection": "row",
-              "justifyContent": "space-between",
+              "justifyContent": "center",
+              "marginBottom": "7%",
               "opacity": 1,
               "paddingHorizontal": 20,
-              "paddingVertical": "3%",
+              "paddingVertical": 12,
+              "textAlign": "center",
+              "width": "75%",
             }
           }
         >
@@ -1585,8 +1686,9 @@ exports[`renders correctly 3`] = `
                 {
                   "alignSelf": "center",
                   "color": "#0066ff",
-                  "fontSize": 20,
+                  "fontSize": 13,
                   "fontWeight": "bold",
+                  "position": "absolute",
                   "textAlign": "center",
                 },
               ]
@@ -1639,12 +1741,11 @@ exports[`renders correctly 3`] = `
         style={
           {
             "alignSelf": "center",
-            "backgroundColor": "#ebf3ff",
             "borderColor": "#0066ff",
             "borderRadius": 10,
             "borderWidth": 3,
             "flexDirection": "row",
-            "justifyContent": "space-between",
+            "justifyContent": "center",
             "marginBottom": "7%",
             "opacity": 1,
             "paddingHorizontal": 20,
@@ -1663,8 +1764,9 @@ exports[`renders correctly 3`] = `
               {
                 "alignSelf": "center",
                 "color": "#0066ff",
-                "fontSize": 20,
+                "fontSize": 13,
                 "fontWeight": "bold",
+                "position": "absolute",
                 "textAlign": "center",
               },
             ]
@@ -1735,7 +1837,7 @@ exports[`renders correctly 3`] = `
               "flexDirection": "row",
             },
             {
-              "backgroundColor": "white",
+              "backgroundColor": "#ebf3ff",
             },
           ]
         }
@@ -1745,6 +1847,7 @@ exports[`renders correctly 3`] = `
             "color": "#0066ff",
             "fontSize": 15,
             "fontWeight": "500",
+            "padding": 5,
             "textDecorationLine": "none",
           }
         }
@@ -1809,6 +1912,7 @@ exports[`renders correctly 3`] = `
                   "color": "#0066ff",
                   "fontSize": 15,
                   "fontWeight": "500",
+                  "padding": 5,
                   "textDecorationLine": "none",
                 },
               ]
@@ -1862,7 +1966,7 @@ exports[`renders correctly 3`] = `
               "flexDirection": "row",
             },
             {
-              "backgroundColor": "white",
+              "backgroundColor": "#ebf3ff",
             },
           ]
         }
@@ -1872,6 +1976,7 @@ exports[`renders correctly 3`] = `
             "color": "#0066ff",
             "fontSize": 15,
             "fontWeight": "500",
+            "padding": 5,
             "textDecorationLine": "none",
           }
         }
@@ -1936,6 +2041,7 @@ exports[`renders correctly 3`] = `
                   "color": "#0066ff",
                   "fontSize": 15,
                   "fontWeight": "500",
+                  "padding": 5,
                   "textDecorationLine": "none",
                 },
               ]

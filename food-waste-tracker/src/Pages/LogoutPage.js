@@ -52,7 +52,7 @@ export default class LogoutPage extends Component {
         username: this.state.username,
         email: this.state.email,
         userID: this.state.userID,
-        foodWaste: {}
+        streak: 0
       });
     
       //console.log("Document written with ID: ", docRef.id);

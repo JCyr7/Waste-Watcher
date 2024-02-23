@@ -25,7 +25,7 @@ import {DATA} from '../Utils/TestData'
 import { SelectList } from 'react-native-dropdown-select-list'
 import SubmitButton from '../TrackWaste/SubmitButton'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 
@@ -54,7 +54,7 @@ data2 = [
   {key:'3', value:'g'},
 ]
 data3 = [
-  20
+  .75
 ]
 
 
@@ -70,7 +70,8 @@ export default class HomePage extends Component {
       weightUnit: '',
       weightValue: 0,
       inHomeCheckbox: false,
-      edibleCheckbox: false
+      edibleCheckbox: false,
+      streak: [0]
       //convertedWeight: 0,
 
       //user streak
@@ -91,7 +92,7 @@ export default class HomePage extends Component {
       // checkboxValue: false,
 
     }
-    this.getData()
+    this.getData();
   }
 
   // Method retrieves data from async storage
@@ -128,8 +129,35 @@ export default class HomePage extends Component {
     }
   }
 
+  updateStreak = async () => {
+    let streakVal = [0];
+
+    try {
+
+      const docRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid);
+      const docSnap = await getDoc(docRef);
+
+      streakVal = [docSnap.data().streak];
+
+    } catch (e) {
+      console.log(e.message);
+    }
+
+    return streakVal;
+  }
+
+  componentDidMount() {
+    // Update the value after component is mounted
+    this.updateStreak().then(streakVal => {
+      this.setState({streak: streakVal});
+    }).catch(error => {
+      console.error("Error updating wheels:", error);
+    });
+  }
+
   render() {
-    const {navigation} = this.props
+    const {navigation} = this.props;
+    const { streak } = this.state;
     return (
       <View style={styles.container}>
         {/* Welcome Header */}
@@ -139,7 +167,7 @@ export default class HomePage extends Component {
         <View style={styles.dialContainer}>
           <View style={styles.smallDial}>
               <ProgressChart 
-              data={data3}
+              data={streak}
               width={82}
               height={82}
               strokeWidth={10}
@@ -151,7 +179,7 @@ export default class HomePage extends Component {
           </View>
           <View style={styles.largeDial}>
             <ProgressChart
-            data={data3}
+            data={streak}
             width={125}
             height={125}
             strokeWidth={13}
@@ -163,7 +191,7 @@ export default class HomePage extends Component {
           </View>
           <View style={styles.smallDial}>
               <ProgressChart 
-              data={data3}
+              data={streak}
               width={82}
               height={82}
               strokeWidth={10}

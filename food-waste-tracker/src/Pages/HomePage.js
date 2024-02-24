@@ -32,7 +32,6 @@ dialChartConfig = {
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
 }
-
 //calendar functions
 //screenWidth = Dimensions.get('window').width;
 
@@ -42,20 +41,26 @@ data = [
   {key:'3', value:'Meat'},
   {key:'4', value:'Grains'},
   {key:'5', value:'Fish'},
-  {key:'6', value:'Beverage'},
-  {key:'7', value:'Combination'},
+  {key:'6', value:'Combination'},
+  {key:'7', value:'Beverage'},
 ]
 data2 = [
   {key:'1', value:'lbs  '},
   {key:'2', value:'oz  '},
   {key:'3', value:'cups  '},
   {key:'4', value:'tbs  '},
+  {key:'5', value:'grams  '},
+
 
 ]
 data3 = [
   .75
 ]
 
+  //5 pounds last weak
+  //4 -> 4/5 .8 -> on graph
+  //6 -> 6/5 1.2 
+  // if current weekly waste is > then last weak 1 - 1.2 = .2 and change color to red in same function
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -321,132 +326,8 @@ export default class HomePage extends Component {
           <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
             <Text style={styles.bottomButtonText}>Submit</Text>
           </Pressable>    
-          </View>
-          <View style={styles.trackWasteContainer}>
-            <Text style={styles.trackWasteHeader}>Track Food Waste</Text>        
-            <View style={styles.dateContainer}>
-              <View style={styles.dateTitleInputTextContainer}>
-              <Text style={styles.dateTitleInputText}>Date</Text>
-              </View>
+        </View>
 
-
-
-
-
-
-              <View style={styles.dateInputContainer}>
-                <TextInput
-                  onChangeText={(value) => this.setState({selectedDay: value})}
-                  cursorColor={COLORS.blue}
-                  selectionColor={COLORS.blue}
-                  maxLength={2} // Set the maximum length to 2 characters
-                  keyboardType='numeric'
-                  returnKeyType='done'
-                  placeholder="2" //get the date
-                  placeholderTextColor={COLORS.blue}
-                  style={[styles.dateInput, { color: COLORS.blue }]}>             
-                </TextInput>
-
-
-
-
-
-                <Text style={styles.dateInputText}> - </Text>
-                <TextInput
-                  cursorColor={COLORS.blue}
-                  selectionColor={'white'}
-                  keyboardType='numeric'
-                  returnKeyType='done'
-                  placeholder='22' //get the date
-                  placeholderTextColor={COLORS.blue}
-                  style={[styles.dateInput, { color: COLORS.blue }]}             
-                  onChangeText={(value) => this.setState({selectedMonth: value})}>
-                </TextInput>
-              </View>
-            </View>
-
-
-
-
-
-
-
-            <View style={styles.weightContainer}>
-            <SelectList 
-                textAlign={'center'}
-                boxStyles={styles.weightDropdownBox}
-                inputStyles={styles.weightInputTextBox}
-                dropdownStyles={styles.weightDropdown}
-                dropdownTextStyles={styles.weightInputText}
-                search = 'false'
-                defaultOption={data2[0]}
-                setSelected={(value) => {this.setState({weightdropdown: value})}} 
-                data={data2} 
-                save="value"
-              />
-              <View style={styles.dateInputContainer}>
-                <TextInput
-                  textAlign={'center'}
-                  cursorColor={COLORS.blue}
-                  keyboardType='numeric'
-                  returnKeyType='done'
-                  placeholder='8.2'
-                  placeholderTextColor={COLORS.blue}
-                  style={[styles.dateInput, { color: COLORS.blue }]}             
-                  onChangeText={(value) =>
-                  this.setState({zipcode: value})}>
-                </TextInput>
-              </View>
-              
-            </View>
-            <SelectList 
-                textAlign={'center'}
-                boxStyles={styles.categoryDropdown}
-                inputStyles={styles.weightInputText}
-                dropdownStyles={styles.categoryDropdown}
-                dropdownTextStyles={styles.weightInputText}
-                search = 'false'
-                defaultOption={data[1]}
-                setSelected={(value) => {this.setState({weightdropdown: value})}} 
-                data={data} 
-                save="value"
-              />
-            <View style={styles.checkBoxContainer}>
-              <BouncyCheckbox
-                        size={22}
-                        style={styles.checkBox}
-                        fillColor={COLORS.blue}
-                        unfillColor='white'
-                        text="In-Home"
-
-                        innerIconStyle={{borderWidth: 2}}
-                        onPress={() => {
-                          this.setState((prevState) => ({
-                            inHomeCheckbox: !prevState.inHomeCheckbox,
-                          }));
-                        }}
-                        textStyle={styles.checkboxText}
-                      />
-              <BouncyCheckbox
-                        size={22}
-                        style={styles.checkBox}
-                        fillColor={COLORS.blue}
-                        unfillColor='white'
-                        text="Edible"
-                        innerIconStyle={{borderWidth: 2}}
-                        onPress={() => {
-                          this.setState((prevState) => ({
-                            edibleCheckbox: !prevState.edibleCheckbox,
-                          }));
-                        }}
-                        textStyle={styles.checkboxText}
-                      />
-              </View>
-            <Pressable style={styles.bottomButton}>
-              <Text style={styles.bottomButtonText}>Submit</Text>
-            </Pressable>    
-
-            </View>
           </SafeAreaView>
         </TouchableWithoutFeedback>
     )

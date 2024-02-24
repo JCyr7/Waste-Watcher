@@ -8,7 +8,8 @@ import { DATA } from '../Utils/TestData';
 import Leaderboard from '../LeaderboardComponents/Leaderboard';
 import { LOCAL, GLOBAL } from '../Utils/TestData';
 import Popup from '../Popups/Popup';
-import GoalPopup from '../Popups/GoalPopup'; // Ensure this is correctly imported from your project structure
+import GoalPopup from '../Popups/GoalPopup';
+import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
 
 export default class StatisticsPage extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class StatisticsPage extends Component {
     this.state = {
       visibility: 0,
       goalPopupVisible: false, // State to control visibility of GoalPopup
+      wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
     };
   }
 
@@ -58,6 +60,10 @@ export default class StatisticsPage extends Component {
 
   toggleGoalPopup = () => {
     this.setState({ goalPopupVisible: !this.state.goalPopupVisible });
+  };
+
+  toggleWasteHistoryPopup = () => { // Toggle function for WasteHistoryPopup
+    this.setState({ wasteHistoryPopupVisible: !this.state.wasteHistoryPopupVisible });
   };
 
   render() {
@@ -117,7 +123,7 @@ export default class StatisticsPage extends Component {
         </View>
 
         <View style={styles.bottomButtonsContainer}>
-          <Pressable style={styles.bottomButton}>
+          <Pressable style={styles.bottomButton} onPress={this.toggleWasteHistoryPopup}>
             <Text style={styles.bottomButtonText}>History</Text>
           </Pressable>
           <Pressable style={styles.bottomButton} onPress={this.toggleGoalPopup}>
@@ -136,6 +142,21 @@ export default class StatisticsPage extends Component {
                 <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
               <GoalPopup />
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.wasteHistoryPopupVisible}
+          onRequestClose={this.toggleWasteHistoryPopup}>
+          <View style={styles.popupOverlay}>
+            <View style={styles.popup}>
+              <TouchableOpacity style={styles.closeButton} onPress={this.toggleWasteHistoryPopup}>
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+              <WasteHistoryPopup data={DATA} />
             </View>
           </View>
         </Modal>

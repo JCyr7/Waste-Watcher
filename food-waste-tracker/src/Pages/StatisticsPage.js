@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   bottomButtonText: {
     color: COLORS.blue,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   popupOverlay: {
     flex: 1,

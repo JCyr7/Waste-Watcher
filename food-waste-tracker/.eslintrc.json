@@ -1,0 +1,10 @@
+{
+    "parserOptions": {
+        "parser": "eslint-parser",
+        "sourceType": "module",
+        "ecmaVersion": 2023,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    }
+}

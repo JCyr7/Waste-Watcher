@@ -1,12 +1,25 @@
-import {React, Component} from 'react'
+import React, {Component} from 'react'
 import {View, StyleSheet, Text, ScrollView, TextInput, Pressable} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import Notification from '../ProfileComponents/Notification'
 
+import { getUserID, checkFriendRequestStatus, sendFriendRequest, getPendingFriendRequests, getNameFromID, acceptFriendRequest } from '../ProfileComponents/FriendHandler'
+import { FIREBASE_AUTH } from '../../FirebaseConfig'
+
 export default class NotificationsPopup extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      friendRequestText: ''
+    }
+  }
+
+  async submitOnPress() {
+    const id = this.state.friendRequestText;
+    const id2 = await getNameFromID(FIREBASE_AUTH.currentUser.uid);
+    const requestresults = await acceptFriendRequest(id, id2);
+    console.log(requestresults);
   }
 
   render() {
@@ -19,21 +32,25 @@ export default class NotificationsPopup extends Component {
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}>
    
-          <TextInput
+              <TextInput
                 cursorColor={'white'}
                 selectionColor={'white'}
-                placeholder='friend username'
+                keyboardType="email-address"  // Set keyboardType to "email-address"
+                placeholder='Email'
                 placeholderTextColor={COLORS.white} // Set the color of the placeholder text
-                style={[styles.input, { color: COLORS.white }]}>       
-              </TextInput>
+                style={[styles.userpassinput, { color: COLORS.white }]}             
+                onChangeText={(value) => {
+                  this.setState({ friendRequestText: value });
+                }}
+              ></TextInput>
               <Pressable
-                //onPress={() => navigation.navigate('LogoutPage')}
+                onPress={() => this.submitOnPress()}
                 style={({ pressed }) => [
                   {
                     backgroundColor: pressed ? COLORS.whitetransparent : COLORS.transparent
                   },
-                  styles.submitButton]}>
-                <Text style={styles.submitButtonTextColor}>Reset Password</Text>
+                  styles.submitButton,]}>
+                <Text style={styles.submitButtonTextColor}>Submit</Text>
               </Pressable>
         </ScrollView>
       </View>

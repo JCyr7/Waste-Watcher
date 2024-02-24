@@ -1,4 +1,4 @@
-import {React, Component} from 'react'
+import React, {Component} from 'react'
 import {StyleSheet, View, Text} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import {MaterialIcons, MaterialCommunityIcons} from '@expo/vector-icons'

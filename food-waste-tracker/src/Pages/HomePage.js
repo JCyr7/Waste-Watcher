@@ -33,12 +33,16 @@ data = [
   {key:'1', value:'Dairy'},
   {key:'2', value:'Produce'},
   {key:'3', value:'Meat'},
-  {key:'4', value:'Beverage'},
+  {key:'4', value:'Fish'},
+  {key:'5', value:'Grains'},
+  {key:'6', value:'Beverage'},
 ]
 data2 = [
   {key:'1', value:'lbs'},
-  {key:'2', value:'oz'},
-  {key:'3', value:'g'},
+  {key:'2', value:'ozs'},
+  {key:'3', value:'grams'},
+  {key:'4', value:'cups'},
+  {key:'5', value:'tbsps'},
 ]
 data3 = [
   .75
@@ -125,7 +129,6 @@ export default class HomePage extends Component {
   } 
 
   render() {
-    const {navigation} = this.props;
     const { streak } = this.state;
     const today = new Date();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
@@ -135,24 +138,20 @@ export default class HomePage extends Component {
         {/* Welcome Header */}
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Home</Text>
-
-        
-          {/* Progress Dials */}
+        {/* Progress Dials */}
         <View style={styles.dialContainer}>
-
-
           {/*streak dial*/}
           <View style={styles.smallDial}>
-              <ProgressChart 
-              data={[.5,.2,.6]}
-              width={82}
-              height={82}
-              strokeWidth={10}
-              radius={30}
-              chartConfig={dialChartConfig}
-              hideLegend={true}/>
-              <Text style={styles.smallDialText}>Daily</Text>
-              <Text style={styles.smallDialText}>Streak</Text>
+            <ProgressChart 
+            data={[.6]}
+            width={82}
+            height={82}
+            strokeWidth={10}
+            radius={30}
+            chartConfig={dialChartConfig}
+            hideLegend={true}/>
+            <Text style={styles.smallDialText}>Daily</Text>
+            <Text style={styles.smallDialText}>Streak</Text>
           </View>
 
           {/*weekly waste dial*/}
@@ -171,19 +170,18 @@ export default class HomePage extends Component {
 
           {/*money dial*/}
           <View style={styles.smallDial}>
-              <ProgressChart 
-              data={streak}
-              width={82}
-              height={82}
-              strokeWidth={10}
-              radius={30}
-              chartConfig={dialChartConfig}
-              hideLegend={true}/>
-              <Text style={styles.smallDialText}>Money</Text>
-              <Text style={styles.smallDialText}>Saved</Text>
+            <ProgressChart 
+            data={streak}
+            width={82}
+            height={82}
+            strokeWidth={10}
+            radius={30}
+            chartConfig={dialChartConfig}
+            hideLegend={true}/>
+            <Text style={styles.smallDialText}>Money</Text>
+            <Text style={styles.smallDialText}>Saved</Text>
           </View>
-        </View>
-        
+        </View>     
         {/* Track Waste container */}
         <View style={styles.trackWasteContainer}>
           <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
@@ -191,6 +189,9 @@ export default class HomePage extends Component {
 
            {/* Choose Month */}      
           <View style={styles.dateContainer}>
+            <View style={styles.dateTextContainer}>
+              <Text style={styles.dateText}>Date</Text>
+            </View>
             <TextInput
               textAlign={'center'}
               cursorColor={COLORS.blue}
@@ -202,8 +203,7 @@ export default class HomePage extends Component {
               onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
             </TextInput> 
-            <Text style={styles.dateInputText}>/</Text>
-
+            <Text style={styles.dateInputText}>-</Text>
 
             {/* Choose Day */}  
             <TextInput
@@ -309,8 +309,8 @@ export default class HomePage extends Component {
           <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
             <Text style={styles.bottomButtonText}>Submit</Text>
           </Pressable>    
-          </View>
         </View>
+      </View>
     )
   }
 }
@@ -379,6 +379,14 @@ const styles = StyleSheet.create({
 
 
 
+
+
+
+
+
+
+
+
   trackWasteContainer: {
     width: '90%',
     height: '60%',
@@ -393,64 +401,66 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: COLORS.blue
   },
-  checkBoxContainer: {
-    flexDirection: 'row',
-  },
-  checkBox: {
-    backgroundColor: COLORS.lightBlue,
-  },
-  checkboxText: {
-    fontSize: 15,
-    color: COLORS.blue,
-    padding: 5,
-    fontWeight: '500',
-    textDecorationLine: 'none',
-  },
-  bottomButton: {
-    backgroundColor: COLORS.white,
-    borderRadius: 10,
-    width: '40%',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomButtonText: {
-    color: COLORS.blue,
-    fontSize: 16,
-    fontWeight: '600',
-  },
+
+
+
+
+
+
+
+
+
 
 
 
 
   dateContainer: {
-    borderRadius: 10,
-    borderWidth: 3,
     flexDirection: 'row',
-    width: '60%',
-    paddingVertical: '1%',
-    marginBottom: "7%",
+    width: '80%',
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'space-evenly',
-    borderColor: COLORS.blue,
-    backgroundColor: COLORS.lightBlue
+    backgroundColor: COLORS.white,
   },
-
-  dateInput: {
-    fontSize: 22,
+  dateTextContainer: {
     fontWeight: '500', 
+    fontSize: 19,
+    color: COLORS.blue,
+  },
+  dateText: {
+    fontWeight: '500', 
+    fontSize: 19,
+    color: COLORS.blue,
+  },
+  dateInput: {
+    fontSize: 17,
+    fontWeight: '500', 
+    color: COLORS.Blue,
     backgroundColor: COLORS.lightBlue
   },
   dateInputText: {
     fontWeight: '500', 
-    fontSize: 30,
+    fontSize: 17,
     color: COLORS.blue,
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   weightContainer: {
     borderRadius: 10,
     flexDirection: 'row',
-    width: '75%',
+    width: '30%',
     marginBottom: "7%",
     alignSelf: 'center',
     textAlign: 'center',
@@ -460,7 +470,7 @@ const styles = StyleSheet.create({
   weightBox: {
     borderRadius: 10,
     flexDirection: 'row',
-    width: '75%',
+    width: '100%',
     marginBottom: "7%",
     borderWidth: 3,
     alignSelf: 'center',
@@ -468,6 +478,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: COLORS.blue,
   },
+
+
   weightInput: {
     borderColor: COLORS.blue,
     borderWidth: 3,
@@ -500,8 +512,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     backgroundColor: COLORS.lightBlue
-    
   },
+
+
+
+
+
+
+
+
+
+
   categoryContainer: {
     borderRadius: 10,
     width: '75%',
@@ -534,4 +555,39 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: COLORS.lightBlue
   },
-  })
+
+
+
+
+
+
+
+
+
+  checkBoxContainer: {
+    flexDirection: 'row',
+  },
+  checkBox: {
+    backgroundColor: COLORS.lightBlue,
+  },
+  checkboxText: {
+    fontSize: 15,
+    color: COLORS.blue,
+    padding: 5,
+    fontWeight: '500',
+    textDecorationLine: 'none',
+  },
+  bottomButton: {
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
+    width: '40%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomButtonText: {
+    color: COLORS.blue,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+})

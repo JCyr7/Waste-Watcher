@@ -192,32 +192,42 @@ export default class HomePage extends Component {
             <View style={styles.dateTextContainer}>
               <Text style={styles.dateText}>Date</Text>
             </View>
-            <TextInput
-              textAlign={'center'}
-              cursorColor={COLORS.blue}
-              keyboardType='numeric'
-              returnKeyType='done'
-              placeholder={todayMonth} 
-              placeholderTextColor={COLORS.blue}
-              style={styles.dateInput}
-              onChangeText={(value) => this.setState({selectedMonth: value})}>
-              <Text style={styles.dateInputText}></Text>        
-            </TextInput> 
-            <Text style={styles.dateInputText}>-</Text>
 
-            {/* Choose Day */}  
-            <TextInput
-              textAlign={'center'}
-              cursorColor={COLORS.blue}
-              keyboardType='numeric'
-              returnKeyType='done'
-              placeholder={todayDay} 
-              placeholderTextColor={COLORS.blue}
-              style={styles.dateInput}
-              onChangeText={(value) =>
-              this.setState({selectedDay: value})}>
-              <Text style={styles.dateInputText}></Text>        
-            </TextInput>
+            {/* Choose Month */}  
+            <View style={styles.dateInputContainer}>
+              <TextInput
+                textAlign={'center'}
+                cursorColor={COLORS.blue}
+                keyboardType='numeric'
+                returnKeyType='done'
+                placeholder={todayMonth} 
+                placeholderTextColor={COLORS.blue}
+                color={COLORS.blue}
+                style={styles.dateInput}
+                onChangeText={(value) => this.setState({selectedMonth: value})}>
+                <Text style={styles.dateInputText}></Text>        
+              </TextInput> 
+
+
+
+              <Text style={styles.dateDash}>-</Text>
+
+
+
+              {/* Choose Day */}  
+              <TextInput
+                textAlign={'center'}
+                cursorColor={COLORS.blue}
+                keyboardType='numeric'
+                returnKeyType='done'
+                placeholder={todayDay} 
+                placeholderTextColor={COLORS.blue}
+                style={styles.dateInput}
+                onChangeText={(value) =>
+                this.setState({selectedDay: value})}>
+                <Text style={styles.dateInputText}></Text>        
+              </TextInput>
+            </View>
           </View>
 
 
@@ -419,23 +429,31 @@ const styles = StyleSheet.create({
     width: '80%',
     alignSelf: 'center',
     textAlign: 'center', 
-    justifyContent: 'space-evenly',
     backgroundColor: COLORS.white,
   },
   dateTextContainer: {
-    fontWeight: '500', 
-    fontSize: 19,
-    color: COLORS.blue,
+    fontWeight: '500',
+    width: '20%', 
+    fontSize: 17,
+    padding: 5,
+    alignItems: 'center',
+    backgroundColor: COLORS.blue,
   },
   dateText: {
     fontWeight: '500', 
-    fontSize: 19,
-    color: COLORS.blue,
+    fontSize: 17,
+    color: COLORS.white,
+  },
+  dateInputContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: COLORS.green,
   },
   dateInput: {
     fontSize: 17,
     fontWeight: '500', 
-    color: COLORS.Blue,
     backgroundColor: COLORS.lightBlue
   },
   dateInputText: {
@@ -443,6 +461,13 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: COLORS.blue,
   },
+  dateDash: {
+    fontWeight: '500', 
+    fontSize: 17,
+    color: COLORS.blue,
+    paddingHorizontal: 10,
+  },
+
 
 
 

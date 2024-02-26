@@ -268,10 +268,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   popup: {
-    width: '90%',
+    width: '100%',
+    height: '100%',
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 20,
+    padding:20,
+    paddingTop: '20%',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {

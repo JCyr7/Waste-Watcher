@@ -36,6 +36,7 @@ data = [
   {key:'4', value:'Fish'},
   {key:'5', value:'Grains'},
   {key:'6', value:'Beverage'},
+  {key:'6', value:'Combination'},
 ]
 data2 = [
   {key:'1', value:'lbs'},
@@ -187,14 +188,15 @@ export default class HomePage extends Component {
           <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
 
 
-           {/* Choose Month */}      
+           {/* Date Container */}      
           <View style={styles.dateContainer}>
             <View style={styles.dateTextContainer}>
               <Text style={styles.dateText}>Date</Text>
             </View>
 
-            {/* Choose Month */}  
+            {/* Choose Date */}  
             <View style={styles.dateInputContainer}>
+              {/* Choose Month */}  
               <TextInput
                 textAlign={'center'}
                 cursorColor={COLORS.blue}
@@ -210,7 +212,7 @@ export default class HomePage extends Component {
 
 
 
-              <Text style={styles.dateDash}>-</Text>
+              <Text style={styles.dateDash}>/</Text>
 
 
 
@@ -222,6 +224,7 @@ export default class HomePage extends Component {
                 returnKeyType='done'
                 placeholder={todayDay} 
                 placeholderTextColor={COLORS.blue}
+                color={COLORS.blue}
                 style={styles.dateInput}
                 onChangeText={(value) =>
                 this.setState({selectedDay: value})}>
@@ -231,52 +234,74 @@ export default class HomePage extends Component {
           </View>
 
 
-          {/* Choose Weight */}  
+          {/* Weight Container */}  
           <View style={styles.weightContainer}>
-            <TextInput
-              textAlign={'center'}
-              cursorColor={COLORS.blue}
-              keyboardType='numeric'
-              returnKeyType='done'
-              placeholder='0'
-              placeholderTextColor={COLORS.blue}
-              style={styles.weightInput}
-              onChangeText={(value) =>
-              this.setState({weightValue: value})}>
-              <Text style={styles.weightInputText}></Text>        
-            </TextInput>
+
+            {/* Choose Weight Title */}  
+            <View style={styles.weightTextContainer}>
+              <Text style={styles.weightText}>Amount</Text>
+            </View>
+
+            <View style={styles.weightInputContainer}>
+              {/* Choose Weight */}  
+              <TextInput
+                textAlign={'center'}
+                cursorColor={COLORS.blue}
+                keyboardType='numeric'
+                returnKeyType='done'
+                placeholder='0'
+                placeholderTextColor={COLORS.blue}
+                color={COLORS.blue}
+                style={styles.weightInput}
+                onChangeText={(value) =>
+                this.setState({weightValue: value})}>
+                <Text style={styles.weightInputText}></Text>        
+              </TextInput>
 
 
-            {/* Choose Unit */}  
-            <SelectList 
-              textAlign={'center'}
-              boxStyles={styles.weightBox}
-              inputStyles={styles.weightInputText}
-              dropdownStyles={styles.weightDropdown}
-              dropdownTextStyles={styles.weightInputText}
-              search = 'false'
-              defaultOption={data2[0]}
-              setSelected={(value) => {this.setState({weightUnit: value})}} 
-              data={data2} 
-              save="value"
-            />
+              {/* Choose Unit */}  
+              <SelectList 
+                textAlign={'center'}
+                boxStyles={styles.weightBox}
+                inputStyles={styles.weightDropdownInputText}
+                dropdownStyles={styles.weightDropdown}
+                dropdownItemStyles={styles.weightDropdownItems}
+                dropdownTextStyles={styles.weightDropdownText}
+                search = 'false'
+                defaultOption={data2[0]}
+                setSelected={(value) => {this.setState({weightUnit: value})}} 
+                data={data2} 
+                save="value"
+              />
+            </View>
           </View>
 
-          
-          {/* Choose Type */}  
-          <SelectList 
+
+          {/* Type Container */}  
+          <View style={styles.typeContainer}>
+            {/* Choose Weight Title */}  
+            <View style={styles.typeTitleTextContainer}>
+              <Text style={styles.typeTitleText}>Type</Text>
+            </View>
+
+            <View style={styles.typeDropdownContainer}>
+              {/* Choose Type */}  
+              <SelectList 
               textAlign={'center'}
               boxStyles={styles.categoryBox}
-              inputStyles={styles.weightInputText}
-              dropdownStyles={styles.categoryDropdown}
-              dropdownTextStyles={styles.weightInputText}
+              inputStyles={styles.categoryDropdownInputText}
+              dropdownStyles={styles.typeDropdown}
+              dropdownItemStyles={styles.weightDropdownItems}
+              dropdownTextStyles={styles.weightDropdownText}
               search = 'false'
               defaultOption={data[1]}
               setSelected={(value) => {this.setState({weightDropdown: value})}} 
               data={data} 
               save="value"
-            />
-
+              />
+            </View>
+          </View>
+         
           {/* Checkbox container */}  
           <View style={styles.checkBoxContainer}>
 
@@ -286,7 +311,7 @@ export default class HomePage extends Component {
                       style={styles.checkBox}
                       fillColor={COLORS.blue}
                       unfillColor='white'
-                      text="In-Home"
+                      text="Edible"
 
                       innerIconStyle={{borderWidth: 2}}
                       onPress={() => {
@@ -303,7 +328,7 @@ export default class HomePage extends Component {
                       style={styles.checkBox}
                       fillColor={COLORS.blue}
                       unfillColor='white'
-                      text="Edible"
+                      text="Inedible"
                       innerIconStyle={{borderWidth: 2}}
                       onPress={() => {
                         this.setState((prevState) => ({
@@ -313,12 +338,57 @@ export default class HomePage extends Component {
                       textStyle={styles.checkboxText}
                     />
             </View>
+            <View style={styles.checkBoxContainer}>
+              {/* In-home checkbox */}  
+              <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.blue}
+                        unfillColor='white'
+                        text="Home"
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            inHomeCheckbox: !prevState.inHomeCheckbox,
+                          }));
+                        }}
+                        textStyle={styles.checkboxText}
+                      />
+
+              {/* Edible checkbox */}  
+              <BouncyCheckbox
+                        size={22}
+                        style={styles.checkBox}
+                        fillColor={COLORS.blue}
+                        unfillColor='white'
+                        text="Resuraunt"
+                        innerIconStyle={{borderWidth: 2}}
+                        onPress={() => {
+                          this.setState((prevState) => ({
+                            edibleCheckbox: !prevState.edibleCheckbox,
+                          }));
+                        }}
+                        textStyle={styles.checkboxText}
+                      />
+              </View>
+
+
 
 
           {/* Submit button */}    
-          <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
+
+          <Pressable
+            onPress={() => this.createFoodWasteFirestore()}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.lightBlue
+                  : COLORS.blue,
+              },
+              styles.bottomButton,
+            ]}>
             <Text style={styles.bottomButtonText}>Submit</Text>
-          </Pressable>    
+          </Pressable>  
         </View>
       </View>
     )
@@ -342,7 +412,7 @@ const styles = StyleSheet.create({
   // },
   titleText: {
     color: COLORS.blue,
-    fontWeight: '500',
+    fontWeight: '400',
     fontSize: 28,
     // alignSelf: 'flex-start',
     // paddingLeft: '5%'  
@@ -369,7 +439,7 @@ const styles = StyleSheet.create({
   largeDialText: {
     fontSize: 17,
     color: COLORS.blue,
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'center',
   },
   smallDial: {
@@ -382,7 +452,7 @@ const styles = StyleSheet.create({
   smallDialText: {
     fontSize: 15,
     color: COLORS.blue,
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign: 'center',
   },
 
@@ -403,6 +473,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    alignContent: 'center',
     borderRadius: 10,
     backgroundColor: COLORS.lightBlue,
   },
@@ -426,43 +497,52 @@ const styles = StyleSheet.create({
 
   dateContainer: {
     flexDirection: 'row',
-    width: '80%',
+    width: '90%',
+    height: '10%',
     alignSelf: 'center',
-    textAlign: 'center', 
-    backgroundColor: COLORS.white,
-  },
-  dateTextContainer: {
-    fontWeight: '500',
-    width: '20%', 
-    fontSize: 17,
-    padding: 5,
-    alignItems: 'center',
+    textAlign: 'center',
+    borderWidth: 2,
+    borderColor: COLORS.blue,
+    borderRadius: 12, 
     backgroundColor: COLORS.blue,
   },
+
+  dateTextContainer: {
+    fontWeight: '400',
+    width: '40%', 
+    fontSize: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   dateText: {
-    fontWeight: '500', 
+    fontWeight: '400', 
     fontSize: 17,
     color: COLORS.white,
   },
+
   dateInputContainer: {
-    width: '80%',
+    width: '60%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: COLORS.green,
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10, 
   },
   dateInput: {
     fontSize: 17,
-    fontWeight: '500', 
-    backgroundColor: COLORS.lightBlue
+    fontWeight: '400', 
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.transparent
   },
   dateInputText: {
-    fontWeight: '500', 
+    fontWeight: '400', 
     fontSize: 17,
     color: COLORS.blue,
   },
   dateDash: {
-    fontWeight: '500', 
+    fontWeight: '400', 
     fontSize: 17,
     color: COLORS.blue,
     paddingHorizontal: 10,
@@ -480,63 +560,102 @@ const styles = StyleSheet.create({
 
 
 
-
-
   weightContainer: {
-    borderRadius: 10,
     flexDirection: 'row',
-    width: '30%',
-    marginBottom: "7%",
+    width: '90%',
+    height: '10%',
+
     alignSelf: 'center',
-    textAlign: 'center',
+    textAlign: 'center', 
     justifyContent: 'center',
+    backgroundColor: COLORS.blue,
+    borderWidth: 2,
     borderColor: COLORS.blue,
+    borderRadius: 12, 
+    zIndex: 7, // Higher zIndex for weightContainer
   },
-  weightBox: {
-    borderRadius: 10,
-    flexDirection: 'row',
-    width: '100%',
-    marginBottom: "7%",
-    borderWidth: 3,
-    alignSelf: 'center',
-    textAlign: 'center',
+  
+  weightTextContainer: {
+    fontWeight: '400',
+    width: '40%', 
+    fontSize: 17,
+    alignItems: 'center',
     justifyContent: 'center',
-    borderColor: COLORS.blue,
+    zIndex: 2, // Higher zIndex for weightTextContainer
+  },
+  weightText: {
+    fontWeight: '400', 
+    fontSize: 17,
+    color: COLORS.white,
   },
 
 
+  weightInputContainer: {
+    width: '60%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: COLORS.green,
+    paddingLeft: 10,
+    borderRadius: 10, 
+    zIndex: 3, // Higher zIndex for weightInputContainer
+  },
   weightInput: {
-    borderColor: COLORS.blue,
-    borderWidth: 3,
-    borderRadius: 10,
-    fontSize: 20,
-    right: 0,
-    fontWeight: 'bold', 
-    paddingVertical: "3%",
-    width: '65%',
-    alignSelf: 'flex-start',
-    backgroundColor: COLORS.lightBlue
+    width: '30%',
+    height: '90%',
+    fontSize: 17,
+    fontWeight: '400', 
+    backgroundColor: COLORS.red,
   },
   weightInputText: {
+    fontWeight: '400', 
+    fontSize: 17,
     color: COLORS.blue,
-    fontSize: 13,
-    position: 'absolute',
-    textAlign: 'center',
-    alignSelf: 'center',
-    fontWeight: 'bold', 
+    backgroundColor: 'white',
+  },
+  weightBox: {
+    width: '90%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 0,
+    paddingVertical: 4,
+    paddingHorizontal: 0,
+    backgroundColor: 'orange',
+    paddingLeft: 0,
+    borderColor: COLORS.grey,
+    zIndex: 4, // Higher zIndex for weightBox
+  },
+  weightDropdownInputText: {
+    fontWeight: '400', 
+    fontSize: 17,
+    color: COLORS.blue,
   },
   weightDropdown: {
     borderColor: COLORS.blue,
+    borderWidth: 2,
     position: 'absolute',
-    borderWidth: 3,
-    borderRadius: 10,
-    width: '75%',
-    top: -40,
-    zIndex: 1000,
-    marginBottom: '7%',
-    textAlign: 'center',
-    alignSelf: 'center',
-    backgroundColor: COLORS.lightBlue
+    backgroundColor: COLORS.lightBlue,
+    MarginHorizontal: 0,
+    marginTop: -2,
+    marginRight: 0,
+    width: '103%',
+    zIndex: 5, // Higher zIndex for weightDropdown
+  },
+  weightDropdownItems: {
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    width: '100%',
+    zIndex: 5, // Higher zIndex for weightDropdownItems
+  },
+  weightDropdownText: {
+    paddingVertical: 10,
+    paddingLeft: 20,
+    marginVertical: 0,
+    fontWeight: '400', 
+    width: '100%',
+    fontSize: 17,
+    color: COLORS.blue,
   },
 
 
@@ -548,38 +667,83 @@ const styles = StyleSheet.create({
 
 
 
-  categoryContainer: {
-    borderRadius: 10,
-    width: '75%',
-    marginBottom: "7%",
+
+
+
+
+  typeContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    height: '10%',
     alignSelf: 'center',
-    textAlign: 'center',
-    justifyContent: 'flex-end',
+    textAlign: 'center', 
+    justifyContent: 'center',
+    backgroundColor: COLORS.blue,
+    borderWidth: 2,
+    borderColor: COLORS.blue,
+    borderRadius: 12, 
+    zIndex: 3, // Higher zIndex for weightContainer
+  },
+  typeTitleTextContainer: {
+    fontWeight: '400',
+    width: '40%', 
+    fontSize: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2, // Higher zIndex for weightTextContainer
+  },
+  typeTitleText: {
+    fontWeight: '400', 
+    fontSize: 17,
+    color: COLORS.white,
   },
   categoryBox: {
-    borderRadius: 10,
-    flexDirection: 'row',
-    width: '75%',
-    marginBottom: "7%",
-    borderWidth: 3,
-    alignSelf: 'center',
-    textAlign: 'center',
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
-    borderColor: COLORS.blue,
+    alignItems: 'center',
+    borderRadius: 0,
+    paddingVertical: 4,
+    paddingHorizontal: 0,
+    backgroundColor: COLORS.transparent,
+    paddingLeft: 0,
+    borderColor: COLORS.transparent,
+    zIndex: 4, // Higher zIndex for weightBox
+  }, 
+  typeDropdownContainer: {
+    width: '60%',
+    backgroundColor: COLORS.lightBlue,
+    borderRadius: 10, 
+    zIndex: 3, // Higher zIndex for weightInputContainer
   },
-  categoryDropdown: {
+
+  categoryDropdownInputText: {
+    fontWeight: '400', 
+    fontSize: 17,
+    color: COLORS.blue,
+    paddingLeft: 10,
+  },
+
+
+
+  typeDropdown: {
     borderColor: COLORS.blue,
+    borderWidth: 2,
     position: 'absolute',
-    borderWidth: 3,
-    borderRadius: 10,
-    width: '75%',
-    top: -40,
-    zIndex: 1000,
-    marginBottom: '7%',
-    textAlign: 'center',
-    alignSelf: 'center',
-    backgroundColor: COLORS.lightBlue
+    backgroundColor: COLORS.lightBlue,
+    MarginHorizontal: 0,
+    marginTop: -2,
+    marginRight: 0,
+    width: '102%',
+    zIndex: 5, // Higher zIndex for weightDropdown
   },
+  
+
+
+
+
+
+
 
 
 
@@ -591,28 +755,47 @@ const styles = StyleSheet.create({
 
   checkBoxContainer: {
     flexDirection: 'row',
+    zIndex: 1,
+    width: '90%',
+    height: '10%',
+    justifyContent: 'space-evenly',
+    borderWidth: 2,
+    borderColor: COLORS.blue,
+    borderRadius: 12, 
   },
   checkBox: {
-    backgroundColor: COLORS.lightBlue,
   },
   checkboxText: {
     fontSize: 15,
     color: COLORS.blue,
-    padding: 5,
-    fontWeight: '500',
+    fontWeight: '400',
     textDecorationLine: 'none',
+    marginLeft: -5,
   },
+
+
+
+
+
+
+
+
   bottomButton: {
-    backgroundColor: COLORS.white,
     borderRadius: 10,
-    width: '40%',
+    width: '45%',
+    height: '10%',
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 0,
+    borderWidth: 2,
+    borderColor: COLORS.white,
+    borderRadius: 12, 
   },
   bottomButtonText: {
-    color: COLORS.blue,
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '600',
   },
+  
 })

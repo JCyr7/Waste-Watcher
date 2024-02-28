@@ -11,7 +11,7 @@ export default class GrainReduciton extends Component {
     return (
       <Pressable style={styles.container}>
         <FontAwesome5 name='seedling' size={28} color='black' />
-        <Text style={styles.label}>Grains</Text>
+        <Text style={styles.label}>Grain</Text>
       </Pressable>
     )
   }

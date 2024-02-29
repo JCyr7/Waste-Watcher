@@ -56,13 +56,25 @@ export const getFriendRequestStatus = async (user1, user2) => {
     user1 = userTuple[0];
     user2 = userTuple[1];
 
-    const requestRef = collection(FIREBASE_DB, "friendship-matrix");
-    const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+    console.log("u1:", user1, "u2:", user2);
 
-    const requestQuerySnapshot = await getDocs(requestQuery);
+    try {
 
-    if (requestQuerySnapshot != null && requestQuerySnapshot.docs.length > 0) {
-        return requestQuerySnapshot.docs[0].data().status;
+        const requestRef = collection(FIREBASE_DB, "friendship-matrix");
+        const requestQuery = query(requestRef, where("friend1_ID", "==", user1), where("friend2_ID", "==", user2));
+
+        const requestQuerySnapshot = await getDocs(requestQuery);
+
+        requestQuerySnapshot.forEach((doc) => {
+            console.log("test:", doc.data().friend1_ID);
+        });
+
+        if (requestQuerySnapshot != null && requestQuerySnapshot.docs.length > 0) {
+            return requestQuerySnapshot.docs[0].data().status;
+        }
+
+    } catch (e) {
+        console.log(e.message);
     }
 
     return null;
@@ -79,7 +91,11 @@ export const sendFriendRequest = async (sender, reciever) => {
     const user1 = userTuple[0];
     const user2 = userTuple[1];
 
-    if (await getFriendRequestStatus(user1, user2)) {
+    requestStatus = await getFriendRequestStatus(user1, user2);
+
+    console.log("requestStatus:", requestStatus);
+
+    if (requestStatus) {
         return false;
     }
 
@@ -173,7 +189,7 @@ export const acceptFriendRequest = async (username1, username2) => {
     try {
 
         const requestRef = collection(FIREBASE_DB, "friendship-matrix");
-        const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+        const requestQuery = query(requestRef, where("friend1_ID", "==", user1), where("friend2_ID", "==", user2));
 
         const requestQuerySnapshot = await getDocs(requestQuery);
 
@@ -185,7 +201,7 @@ export const acceptFriendRequest = async (username1, username2) => {
 
             const docRef = doc(FIREBASE_DB, "friendship-matrix", requestQuerySnapshot.docs[0].id);
 
-            setDoc(docRef, {
+            await setDoc(docRef, {
                 status: "accepted"
             }, {merge: true});
 
@@ -193,9 +209,8 @@ export const acceptFriendRequest = async (username1, username2) => {
         }
 
     } catch (e) {
-        console.log("failed");
-        console.log(e.message);
-        return null;
+        console.log("Unable to accept friend request", e.message);
+        return false;
     }   
 
     return null;
@@ -221,7 +236,7 @@ export const blockFriendRequest = async (username1, username2) => {
     try {
 
         const requestRef = collection(FIREBASE_DB, "friendship-matrix");
-        const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+        const requestQuery = query(requestRef, where("friend1_ID", "==", user1), where("friend2_ID", "==", user2));
 
         const requestQuerySnapshot = await getDocs(requestQuery);
 
@@ -233,7 +248,7 @@ export const blockFriendRequest = async (username1, username2) => {
 
             const docRef = doc(FIREBASE_DB, "friendship-matrix", requestQuerySnapshot.docs[0].id);
 
-            setDoc(docRef, {
+            await setDoc(docRef, {
                 status: "blocked"
             }, {merge: true});
 
@@ -269,7 +284,7 @@ export const refuseFriendRequest = async (username1, username2) => {
     try {
 
         const requestRef = collection(FIREBASE_DB, "friendship-matrix");
-        const requestQuery = query(requestRef, where("friend1-ID", "==", user1), where("friend2-ID", "==", user2));
+        const requestQuery = query(requestRef, where("friend1_ID", "==", user1), where("friend2_ID", "==", user2));
 
         const requestQuerySnapshot = await getDocs(requestQuery);
 
@@ -281,7 +296,7 @@ export const refuseFriendRequest = async (username1, username2) => {
 
             const docRef = doc(FIREBASE_DB, "friendship-matrix", requestQuerySnapshot.docs[0].id);
 
-            deleteDoc(docRef);
+            await deleteDoc(docRef);
 
             return true;
         }
@@ -293,5 +308,20 @@ export const refuseFriendRequest = async (username1, username2) => {
     }   
 
     return null;
+
+}
+
+export const getUserStreak = async (ID) => {
+
+    try {
+        const docRef = doc(FIREBASE_DB, "users", ID);
+        const docSnap = await getDoc(docRef);
+
+        return docSnap.data().streak;
+
+    } catch (e) {
+        console.log("Unable to get User Streak", e.message);
+        return null;
+    }
 
 }

@@ -307,7 +307,7 @@ export default class HomePage extends Component {
         <View style={styles.checkBoxContainer}>
           {/* Resturaunt Title */}  
           <View style={styles.checkboxTitleContainer}>
-            <Text style={styles.checkboxTitleText}>Is it edible?</Text>
+            <Text style={styles.checkboxTitleText}>From grocery store?</Text>
           </View>
           {/* Resturaunt checkbox */}  
           <View style={styles.questionContainer}>
@@ -365,7 +365,7 @@ export default class HomePage extends Component {
             {
               backgroundColor: pressed
                 ? COLORS.lightBlue
-                : 'orange',
+                : COLORS.blue,
             },
             styles.bottomButton,
           ]}>

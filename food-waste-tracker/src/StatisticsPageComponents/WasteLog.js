@@ -14,7 +14,7 @@ export default class WasteLog extends Component {
         <View style={styles.logContainer}>
           <Text style={styles.date}>{this.props.date}</Text>
           <Text style={styles.category}>{this.props.category}</Text>
-          <Text style={styles.amount}>{this.props.amount.toFixed(2)} lbs</Text>
+          <Text style={styles.amount}>{this.props.amount} lbs</Text>
         </View>
         <Divider />
       </View>

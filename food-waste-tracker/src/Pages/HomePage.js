@@ -59,7 +59,8 @@ export default class HomePage extends Component {
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: [0]
+      streak: [0],
+      graphData: []
     }
     this.getData();
   }
@@ -303,8 +304,7 @@ export default class HomePage extends Component {
                       textStyle={styles.checkboxText}
                     />
             </View>
-
-
+                      
           {/* Submit button */}    
           <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
             <Text style={styles.bottomButtonText}>Submit</Text>

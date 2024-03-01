@@ -10,6 +10,9 @@ import { LOCAL, GLOBAL } from '../Utils/TestData';
 import Popup from '../Popups/Popup';
 import GoalPopup from '../Popups/GoalPopup';
 import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
+import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 
 export default class StatisticsPage extends Component {
   constructor(props) {
@@ -19,7 +22,49 @@ export default class StatisticsPage extends Component {
       goalPopupVisible: false, // State to control visibility of GoalPopup
       wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
     };
+
   }
+
+  componentDidMount() {
+    this.updateWasteData().then(data => {
+      this.setState({ wasteData: data });
+      console.log(this.state.wasteData);
+    });
+  }
+
+  updateWasteData = async () => {
+    let wasteData = [];
+
+    try {
+        // Ensure you have a valid user before proceeding
+        if (!FIREBASE_AUTH.currentUser) {
+            console.log("No user signed in.");
+            return wasteData;
+        }
+
+        const userId = FIREBASE_AUTH.currentUser.uid;
+        const subcollectionRef = collection(FIREBASE_DB, `users/${userId}/Wasted Food`);
+        const querySnapshot = await getDocs(subcollectionRef);
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            console.log(data.foodType);
+            const date = `${data.selectedMonth}/${data.selectedDay}`;
+            wasteData.push({
+                date: date,
+                category: data.foodType, 
+                amount: data.weightValue,
+                
+                
+            });
+        });
+
+        this.setState({ wasteData });
+    } catch (e) {
+        console.log(e.message);
+    }
+    console.log(wasteData);
+    return wasteData;
+    };
 
   setVisibility(value) {
     this.setState({ visibility: value });
@@ -156,7 +201,8 @@ export default class StatisticsPage extends Component {
               <TouchableOpacity style={styles.closeButton} onPress={this.toggleWasteHistoryPopup}>
                 <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
-              <WasteHistoryPopup data={DATA} />
+
+              <WasteHistoryPopup data={this.state.wasteData} />
             </View>
           </View>
         </Modal>

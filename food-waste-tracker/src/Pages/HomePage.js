@@ -86,7 +86,7 @@ export default class HomePage extends Component {
         selectedDay: this.state.selectedDay,
         selectedMonth: this.state.selectedMonth,
         weightUnit: this.state.weightUnit,
-        weightValue: this.state.weightValue,
+        weightValue: parseFloat(this.state.weightValue),
         inHome: this.state.inHomeCheckbox,
         edible: this.state.edibleCheckbox
 

@@ -13,6 +13,7 @@ import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the Waste
 import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
 
 export default class StatisticsPage extends Component {
   constructor(props) {
@@ -21,15 +22,17 @@ export default class StatisticsPage extends Component {
       visibility: 0,
       goalPopupVisible: false, // State to control visibility of GoalPopup
       wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
+      wasteData: [],
+      loading: true
     };
 
   }
 
-  componentDidMount() {
-    this.updateWasteData().then(data => {
+  async componentDidMount() {
+    await this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
-      console.log(this.state.wasteData);
     });
+    this.setState({ loading: false });
   }
 
   updateWasteData = async () => {
@@ -47,7 +50,6 @@ export default class StatisticsPage extends Component {
         const querySnapshot = await getDocs(subcollectionRef);
         querySnapshot.forEach((doc) => {
             const data = doc.data();
-            console.log(data.foodType);
             const date = `${data.selectedMonth}/${data.selectedDay}`;
             wasteData.push({
                 date: date,
@@ -62,7 +64,7 @@ export default class StatisticsPage extends Component {
     } catch (e) {
         console.log(e.message);
     }
-    console.log(wasteData);
+    //console.log(wasteData);
     return wasteData;
     };
 
@@ -76,7 +78,34 @@ export default class StatisticsPage extends Component {
   }
 
   getLastSevenDays(data) {
-    return data.length <= 7 ? data : data.slice(data.length - 7);
+    let sortedData = [];
+    let count = 0;
+    let dates = [];
+
+    today = new Date();
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(today);
+      day.setDate(today.getDate() - i); // Subtract i days from today
+      dates.push(day);
+  }
+
+  
+    for (let i = 0; i < 7; i++) {
+      count = 0;
+      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
+
+      for (let x = 0; x < data.length; x++) {
+        if (data[x].date === formattedDate) {
+          count += data[x].amount;
+        }
+      }
+      sortedData.push({ date: formattedDate, amount: count });
+      console.log(sortedData[i]);
+    }
+
+  
+    return sortedData.reverse();
+    //return data.length <= 7 ? data : data.slice(data.length - 7);
   }
 
   getTotalWaste(data) {
@@ -112,19 +141,23 @@ export default class StatisticsPage extends Component {
   };
 
   render() {
-    const lastSevenDays = this.getLastSevenDays(DATA);
+    const lastSevenDays = [];
     const localData = this.sortDescendingScore(LOCAL);
     const globalData = this.sortDescendingScore(GLOBAL);
 
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.titleText}>Trends</Text>
-
         <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
-          <Graph data={lastSevenDays} />
+          {this.state.loading === false ? (
+          <Graph data={this.getLastSevenDays(this.state.wasteData)} />
+        ) : (
+          // Optionally, render a placeholder or a loading indicator here
+          <Text>Loading...</Text>
+          
+        )}
         </View>
-
         <View style={styles.fulllbContainer}>
           <View style={styles.lbcontainer}>
             <View style={styles.lbheader}>

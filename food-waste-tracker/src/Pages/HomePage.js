@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image} from 'react-native'
-import {BarChart,ProgressChart} from 'react-native-chart-kit'
+import {ProgressChart} from 'react-native-chart-kit'
 import Calendar from 'react-calendar'
 import {AntDesign} from '@expo/vector-icons'
 import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
@@ -21,7 +21,7 @@ dialChartConfig = {
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: COLORS.transparent,
   backgroundGradientToOpacity: 0,
-  color: (opacity = 1) => `rgba(0, 40, 210, ${opacity})`,
+  color: (opacity = 0) => `rgba(0, 102, 255, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
 }
@@ -140,48 +140,60 @@ export default class HomePage extends Component {
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Home</Text>
         {/* Progress Dials */}
-        <View style={styles.dialContainer}>
-          {/*streak dial*/}
-          <View style={styles.smallDial}>
-            <ProgressChart 
-            data={[.6]}
-            width={82}
-            height={82}
-            strokeWidth={10}
-            radius={30}
-            chartConfig={dialChartConfig}
-            hideLegend={true}/>
-            <Text style={styles.smallDialText}>Daily</Text>
-            <Text style={styles.smallDialText}>Streak</Text>
-          </View>
+        <View style={styles.dashContainer}>
+
+
+          {/*streakdash item*/}
+          <Pressable style={styles.dashItemSmall}>
+            <Image source={require('../../images/streak.png')} style={styles.dashImage}/>
+            <View style={styles.dashTextContainer}>
+
+              <View style={styles.dashTopTextContainer}>
+                <Text style={styles.topLeftStreakText}>{this.state.streak} </Text>
+                <Text style={styles.topRightStreakText}>Day</Text>
+              </View>
+
+              <View style={styles.dashBottomTextContainer}>
+                <Text style={styles.bottomStreakText}>Streak</Text>
+              </View>
+            </View>
+          </Pressable>
 
           {/*weekly waste dial*/}
-          <View style={styles.largeDial}>
+          <View style={styles.dialContainer}>
+            <View style={styles.dial}>
             <ProgressChart
-            data={streak}
+            data={[.6]}
             width={125}
             height={125}
-            strokeWidth={13}
-            radius={45}
+            strokeWidth={11}
+            radius={44}
             chartConfig={dialChartConfig}
             hideLegend={true}/>
+            <View style={styles.dialLabel}>
+              <Text style={styles.additionalText}>4.2 lbs</Text>
+            </View>
+            </View>
             <Text style={styles.largeDialText}>Weekly</Text>
             <Text style={styles.largeDialText}>Waste</Text>
           </View>
 
-          {/*money dial*/}
-          <View style={styles.smallDial}>
-            <ProgressChart 
-            data={streak}
-            width={82}
-            height={82}
-            strokeWidth={10}
-            radius={30}
-            chartConfig={dialChartConfig}
-            hideLegend={true}/>
-            <Text style={styles.smallDialText}>Money</Text>
-            <Text style={styles.smallDialText}>Saved</Text>
-          </View>
+          {/*money dash item*/}
+          <Pressable style={styles.dashItemSmall}>
+            <Image source={require('../../images/money.png')} style={styles.dashImage}/>
+            <View style={styles.dashTextContainer}>
+
+              <View style={styles.dashTopTextContainer}>
+                <Text style={styles.topRightStreakText}>$</Text>
+                <Text style={styles.topLeftStreakText}>14.34</Text>
+              </View>
+
+              <View style={styles.dashBottomTextContainer}>
+                <Text style={styles.bottomStreakText}>Saved</Text>
+              </View>
+            </View>
+          </Pressable>
+          
         </View>     
         {/* Track Waste container */}
         <View style={styles.trackWasteContainer}>
@@ -318,7 +330,7 @@ export default class HomePage extends Component {
               unfillColor='white'
               text="Yes"
 
-              innerIconStyle={{borderWidth: 2}}
+              innerIconStyle={{borderWidth: 2, borderRadius: 7}}
               onPress={() => {
                 this.setState((prevState) => ({
                   inHomeCheckbox: !prevState.inHomeCheckbox,
@@ -335,7 +347,7 @@ export default class HomePage extends Component {
 
           {/* Edible Title */}  
           <View style={styles.checkboxTitleContainer}>
-            <Text style={styles.checkboxTitleText}>Can it still be eaten?</Text>
+            <Text style={styles.checkboxTitleText}>Is the food edible?</Text>
           </View>
 
           {/* Edible Checkbox */}  
@@ -346,7 +358,7 @@ export default class HomePage extends Component {
               fillColor={COLORS.blue}
               unfillColor='white'
               text="Yes"
-              innerIconStyle={{borderWidth: 2}}
+              innerIconStyle={{borderWidth: 2, borderRadius: 7}}
               onPress={() => {
                 this.setState((prevState) => ({
                   edibleCheckbox: !prevState.edibleCheckbox,
@@ -400,7 +412,7 @@ const styles = StyleSheet.create({
   },
 
 
-  dialContainer: {
+  dashContainer: {
     width: '90%',
     height: '27.5%',
     flexDirection: 'row',
@@ -410,30 +422,93 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: COLORS.lightBlue,
   },
-  largeWasteDial: {
+  
+  dialContainer: {
+  },
+  dial: {
     width: '100',
     height: '100',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative', // Ensure relative positioning for proper absolute positioning
   },
+  
   largeDialText: {
     fontSize: 17,
     color: COLORS.blue,
     fontWeight: '400',
     textAlign: 'center',
   },
-  smallDial: {
+
+  dialLabel: {
+    top: '43%',
+    position: 'absolute', // Absolute positioning
+  },
+  additionalText: {
+    fontSize: 17,
+    color: COLORS.blue,
+    fontWeight: '500',
+  },
+
+
+
+
+
+
+
+  // largeDialText: {
+  //   fontSize: 17,
+  //   color: COLORS.blue,
+  //   fontWeight: '400',
+  //   textAlign: 'center',
+  // },
+
+
+
+  
+ 
+ 
+  dashItemSmall: {
     width: '100',
     height: '100',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  smallDialText: {
-    fontSize: 15,
-    color: COLORS.blue,
-    fontWeight: '400',
-    textAlign: 'center',
+  dashImage: {
+    width: 55,
+    height: 55,
+    tintColor: COLORS.blue
   },
+  dashTextContainer: {
+    marginTop: 5,
+    alignItems: 'center',
+  },
+  dashTopTextContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+  },
+  topLeftStreakText: {
+    fontSize: 17,
+    color: COLORS.blue,
+    fontWeight: '700',    
+  },
+  topRightStreakText: {
+    fontSize: 16,
+    right: 0,
+    color: COLORS.blue,
+    fontWeight: '500',    
+  },
+  dashBottomTextContainer: {
+  },
+  bottomStreakText: {
+    fontSize: 16,
+    color: COLORS.blue,
+    fontWeight: '500',    
+  },
+
+
+
 
 
   trackWasteContainer: {
@@ -701,18 +776,18 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: COLORS.blue,
     borderRadius: 12, 
-    zIndex: 3, // Higher zIndex for weightContainer
+    zIndex: 1, // Higher zIndex for weightContainer
   },
   checkboxTitleContainer: {
     fontWeight: '400',
     width: '55%', 
-    fontSize: 16,
+    fontSize: 17,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxTitleText: {
     fontWeight: '400', 
-    fontSize: 16,
+    fontSize: 17,
     color: COLORS.white,
   },
   questionContainer: {
@@ -724,7 +799,7 @@ const styles = StyleSheet.create({
     borderRadius: 10, 
   },
   checkboxText: {
-    fontSize: 16,
+    fontSize: 17,
     color: COLORS.blue,
     fontWeight: '400',
     textDecorationLine: 'none',

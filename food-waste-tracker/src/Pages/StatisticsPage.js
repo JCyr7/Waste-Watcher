@@ -6,39 +6,18 @@ import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import Graph from '../StatisticsPageComponents/Graph'
 import {DATA} from '../Utils/TestData'
 import Leaderboard from '../LeaderboardComponents/Leaderboard'
-import { getFriends, getNameFromID, getUserStreak } from '../ProfileComponents/FriendHandler'
+import { getFriends, getNameFromID, getUserStreak, getPendingFriendRequestsRecieved } from '../ProfileComponents/FriendHandler'
 import { FIREBASE_AUTH } from '../../FirebaseConfig'
 
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      visibility: 0
+      visibility: 0,
+      localLeaderboard: [],
+      globalLeaderboard: []
     }
   }
-
-  LOCAL = [
-    {
-      name: 'Declan',
-      score: '1'
-    },
-    {
-      name: 'Finn',
-      score: '2'
-    },
-    {
-      name: 'Levi',
-      score: '3'
-    },
-    {
-      name: 'Gavin',
-      score: '4'
-    },
-    {
-      name: 'Chase',
-      score: '5'
-    }
-  ]
 
   GLOBAL = [
     {
@@ -142,19 +121,21 @@ export default class StatisticsPage extends Component {
 
   componentDidMount() {
     console.log("mounted");
-
-    this.getLeaderboardLocal().then((localLeaderboard) => {
-      console.log(localLeaderboard);
+    
+    this.getLeaderboardLocal().then((localLB) => {
+      console.log("LB:", localLB);
+      this.setState({localLeaderboard: localLB});
+      console.log("state", this.state.localLeaderboard);
     });
   }
 
   render() {
-    const lastSevenDays = this.getLastSevenDays(DATA)
-    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2)
-    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2)
-    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays)
-    const localData = this.sortDescendingScore(this.LOCAL)
-    const globalData = this.sortDescendingScore(this.GLOBAL)
+    const lastSevenDays = this.getLastSevenDays(DATA);
+    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2);
+    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2);
+    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays);
+    const localData = this.sortDescendingScore(this.state.localLeaderboard);
+    const globalData = this.sortDescendingScore(this.GLOBAL);
 
     return (
       <View style={styles.container}>

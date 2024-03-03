@@ -122,8 +122,9 @@ export const getPendingFriendRequestsRecieved = async () => {
 
     user = FIREBASE_AUTH.currentUser.uid.toString();
 
-    const usersRef = collection(FIREBASE_DB, "friendship-matrix");
-    const requestQuery = query(usersRef, and(
+    try {
+        const usersRef = collection(FIREBASE_DB, "friendship-matrix");
+        const requestQuery = query(usersRef, and(
         where("status", "==", "pending"),
         where("initiated", "!=", user),
         or(
@@ -135,6 +136,11 @@ export const getPendingFriendRequestsRecieved = async () => {
     const requestQuerySnapshot = await getDocs(requestQuery);
 
     return requestQuerySnapshot.docs;
+    } catch (e) {
+        console.log(e.message);
+        return null;
+    }
+    
         
 }
 
@@ -142,18 +148,25 @@ export const getFriends = async () => {
 
     user = FIREBASE_AUTH.currentUser.uid.toString();
 
-    const usersRef = collection(FIREBASE_DB, "friendship-matrix");
-    const requestQuery = query(usersRef, and(
-        where("status", "==", "accepted"),
-        or(
-            where("friend1_ID", "==", user),
-            where("friend2_ID", "==", user)
-        ))
-    );
-    
-    const requestQuerySnapshot = await getDocs(requestQuery);
 
-    return requestQuerySnapshot.docs;
+    try {
+        const usersRef = collection(FIREBASE_DB, "friendship-matrix");
+        const requestQuery = query(usersRef, and(
+            where("status", "==", "accepted"),
+            or(
+                where("friend1_ID", "==", user),
+                where("friend2_ID", "==", user)
+            ))
+        );
+        
+        const requestQuerySnapshot = await getDocs(requestQuery);
+    
+        return requestQuerySnapshot.docs;
+    } catch (e) {
+        console.log(e.message);
+        return null;
+    }
+    
         
 }
 

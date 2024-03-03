@@ -18,6 +18,7 @@ export default class WasteHistoryPopup extends Component {
           <Text style={styles.categoryLabel}>Category</Text>
           <Text style={styles.amountLabel}>Amount</Text>
           <Text style={styles.amountLabel}>Unit</Text>
+          <Text style={styles.amountLabel}></Text>
         </View>
         <Divider />
 
@@ -65,13 +66,13 @@ const styles = StyleSheet.create({
   },
   categoryLabel: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
     textAlign: 'center'
   },
   amountLabel: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '700',
     textAlign: 'right'
   },

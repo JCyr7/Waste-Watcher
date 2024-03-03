@@ -44,9 +44,9 @@ export default class StatisticsPage extends Component {
             console.log("No user signed in.");
             return wasteData;
         }
-
         const userId = FIREBASE_AUTH.currentUser.uid;
-        const subcollectionRef = collection(FIREBASE_DB, FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
+        
+        const subcollectionRef = collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
         const querySnapshot = await getDocs(subcollectionRef);
         querySnapshot.forEach((doc) => {
             const data = doc.data();
@@ -58,12 +58,10 @@ export default class StatisticsPage extends Component {
                 amountType: data.weightUnit,
             });
         });
-
         this.setState({ wasteData });
     } catch (e) {
         console.log(e.message);
     }
-    //console.log(wasteData);
     return wasteData;
     };
 
@@ -99,7 +97,6 @@ export default class StatisticsPage extends Component {
         }
       }
       sortedData.push({ date: formattedDate, amount: count });
-      console.log(sortedData[i]);
     }
 
   

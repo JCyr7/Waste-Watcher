@@ -134,6 +134,7 @@ export default class HomePage extends Component {
     return (
       <View style={styles.container}>
         {/* Welcome Header */}
+        
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Home</Text>
 

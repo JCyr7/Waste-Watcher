@@ -28,9 +28,8 @@ export default class WasteLog extends Component {
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const date = `${data.selectedMonth}/${data.selectedDay}`;
-            console.log(data.foodType, data.weightValue, data.weightUnit, date, "dsahdasjdhas", this.props.date, this.props.category, this.props.amount, this.props.unit)
             if (date === this.props.date || data.foodType === this.props.category || data.weightValue === this.props.amount || data.weightUnit === this.props.unit) {
-               deleteDoc(doc);
+               deleteDoc(doc.ref);
             }
             wasteData.push({
                 date: date,
@@ -52,7 +51,7 @@ export default class WasteLog extends Component {
           <Text style={styles.category}>{this.props.category}</Text>
           <Text style={styles.amount}>{this.props.amount}</Text>
           <Text style={styles.amount}>{this.props.unit}</Text>
-          <Pressable style={styles.amount} onPress={() => this.removeWaste()}><Text>Remove</Text></Pressable>
+          <Pressable style={styles.amount} onPress={() => this.removeWaste()}><Text>R</Text></Pressable>
         </View>
         <Divider />
       </View>
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   category: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 18
+    fontSize: 14
   },
   amount: {
     flex: 1,

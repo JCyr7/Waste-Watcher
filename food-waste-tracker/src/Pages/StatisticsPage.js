@@ -46,7 +46,7 @@ export default class StatisticsPage extends Component {
         }
 
         const userId = FIREBASE_AUTH.currentUser.uid;
-        const subcollectionRef = collection(FIREBASE_DB, `users/${userId}/Wasted Food`);
+        const subcollectionRef = collection(FIREBASE_DB, FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
         const querySnapshot = await getDocs(subcollectionRef);
         querySnapshot.forEach((doc) => {
             const data = doc.data();
@@ -55,8 +55,7 @@ export default class StatisticsPage extends Component {
                 date: date,
                 category: data.foodType, 
                 amount: data.weightValue,
-                
-                
+                amountType: data.weightUnit,
             });
         });
 

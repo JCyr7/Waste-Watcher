@@ -17,6 +17,7 @@ export default class WasteHistoryPopup extends Component {
           <Text style={styles.dateLabel}>Date</Text>
           <Text style={styles.categoryLabel}>Category</Text>
           <Text style={styles.amountLabel}>Amount</Text>
+          <Text style={styles.amountLabel}>Unit</Text>
         </View>
         <Divider />
 
@@ -33,6 +34,7 @@ export default class WasteHistoryPopup extends Component {
                   date={item.date}
                   category={item.category}
                   amount={item.amount}
+                  unit={item.amountType}
                 />
               )
             })

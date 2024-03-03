@@ -311,6 +311,24 @@ export const refuseFriendRequest = async (username1, username2) => {
 
 }
 
+// Existing imports...
+
+// Existing functions...
+
+export const removeFriend = async (friendId) => {
+  // Assuming friendId is the ID of the friendship document
+  try {
+    await deleteDoc(doc(FIREBASE_DB, "friendship-matrix", friendId));
+    return true;
+  } catch (e) {
+    console.log("Failed to remove friend", e.message);
+    return false;
+  }
+}
+
+// Existing functions continue...
+
+
 export const getUserStreak = async (ID) => {
 
     try {

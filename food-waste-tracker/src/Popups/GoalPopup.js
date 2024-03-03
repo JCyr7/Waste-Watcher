@@ -14,6 +14,9 @@ import {SelectList} from 'react-native-dropdown-select-list'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import Goal from './Goal'
+import { addDoc, collection, getDoc, doc } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 
 // Window dimensions are used for absolute positioning of lowerContainer
 // Allows for the use of z-index so that date dropdown doesn't push down elements when opened
@@ -26,6 +29,7 @@ export default class GoalPopup extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      key: 0,
       selectedMonth: '',
       selectedDay: 0,
       wasteGoal: 0,
@@ -33,6 +37,21 @@ export default class GoalPopup extends Component {
       goals: GOALS
     }
     this.handleCallBack = this.handleCallBack.bind(this)
+  }
+  createGoalsFirestore = async () => {
+
+    try {
+      const docRef = await addDoc(collection(FIREBASE_DB, "users/Wnb19yz5mWWdqvrfm02MxapOYeW2/Goals"), {
+        key: this.state.key,
+        selectedMonth: this.state.selectedMonth,
+        selectedDay: this.state.selectedDay,
+        wasteGoal: this.state.wasteGoal,
+        streakGoal: this.state.streakGoal
+      });
+    
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   // Updates state containing list of goals
@@ -116,7 +135,9 @@ export default class GoalPopup extends Component {
                         day: this.state.selectedDay,
                         waste: this.state.wasteGoal,
                         streak: this.state.streakGoal
-                      })
+                      })}
+                    onPressIn={() =>
+                      this.createGoalsFirestore()
                     }>
                     <Text style={styles.buttonText}>Add Goal</Text>
                   </Pressable>

@@ -10,6 +10,7 @@ import { LOCAL, GLOBAL } from '../Utils/TestData';
 import Popup from '../Popups/Popup';
 import GoalPopup from '../Popups/GoalPopup';
 import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
+import Goal from '../Popups/Goal';
 
 export default class StatisticsPage extends Component {
   constructor(props) {

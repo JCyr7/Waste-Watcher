@@ -51,7 +51,7 @@ export default class WasteLog extends Component {
           <Text style={styles.category}>{this.props.category}</Text>
           <Text style={styles.amount}>{this.props.amount}</Text>
           <Text style={styles.amount}>{this.props.unit}</Text>
-          <Pressable style={styles.amount} onPress={() => this.removeWaste()}><Text>R</Text></Pressable>
+          <Pressable style={styles.delete} onPress={() => this.removeWaste()}><Text>R</Text></Pressable>
         </View>
         <Divider />
       </View>
@@ -80,10 +80,15 @@ const styles = StyleSheet.create({
   },
   category: {
     flex: 1,
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: 14
   },
   amount: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18
+  },
+  delete: {
     flex: 1,
     textAlign: 'right',
     fontSize: 18

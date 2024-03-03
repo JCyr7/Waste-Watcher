@@ -28,7 +28,7 @@ export default class WasteLog extends Component {
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const date = `${data.selectedMonth}/${data.selectedDay}`;
-            if (date === this.props.date || data.foodType === this.props.category || data.weightValue === this.props.amount || data.weightUnit === this.props.unit) {
+            if (date === this.props.date && data.foodType === this.props.category && data.weightValue === this.props.amount && data.weightUnit === this.props.unit) {
                deleteDoc(doc.ref);
             }
             wasteData.push({
@@ -38,7 +38,7 @@ export default class WasteLog extends Component {
                 amountType: data.weightUnit,
             });
         });
-    } catch (e) {
+    } catch (e) {  
         console.log(e.message);
     }
     };
@@ -47,9 +47,9 @@ export default class WasteLog extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.logContainer}>
-          <Text style={styles.date}>{this.props.date}</Text>
+          <Text style={styles.date}>{this.props.date}</Text> 
           <Text style={styles.category}>{this.props.category}</Text>
-          <Text style={styles.amount}>{this.props.amount}</Text>
+          <Text style={styles.amount}>{this.props.amount}</Text> 
           <Text style={styles.amount}>{this.props.unit}</Text>
           <Pressable style={styles.delete} onPress={() => this.removeWaste()}><Text>R</Text></Pressable>
         </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   date: {
     flex: 1,
-    fontSize: 18
+    fontSize: 14
   },
   category: {
     flex: 1,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   amount: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 18
+    fontSize: 14
   },
   delete: {
     flex: 1,

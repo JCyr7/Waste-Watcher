@@ -6,20 +6,21 @@
       "id": 1,
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.2313031113183, 44.5868532476275, 0]
+        "coordinates": [-70.287344,44.030175, 0]
       },
       "properties": {
+        "marker-color": "#17b322",
         "FID": 1,
-        "NAME": "Collins Cakes & Bakes Inc.",
-        "ADDRESS": "285 Main St",
-        "CITY": "Wilton",
-        "COUNTY": "Franklin",
+        "NAME": "Good Shepherd Food Bank",
+        "ADDRESS": "3121 Hotel Road/ PO Box 1807",
+        "CITY": "Auburn",
+        "COUNTY": "Androscoggin",
         "STATE": "ME",
         "EXCESSFOOD": 0.5,
         "EXCESSFO_1": 117,
         "FEATURE_CL": "Baked Goods Stores",
-        "Phone": " ",
-        "Website": " ",
+        "Phone": "207-782-3554",
+        "Website": "http://www.gsfb.org",
         "Class": "Specialty",
         "ZipCode": "04294"
       }
@@ -28,6 +29,7 @@
       "type": "Feature",
       "id": 2,
       "geometry": {
+        "color": "Blue",
         "type": "Point",
         "coordinates": [-69.5979396859417, 44.591444099483, 0]
       },

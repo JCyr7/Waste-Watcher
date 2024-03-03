@@ -91,18 +91,18 @@ export default class StatisticsPage extends Component {
       count = 0;
       let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
 
-      for (let x = 0; x < data.length; x++) {
-        if (data[x].date === formattedDate) {
-          if (data[x].amountType === "lb") {count += data[x].amount;}
+      for (let x = 0; x < data.length; x++) { 
+        if (data[x].date === formattedDate) { 
+          if (data[x].amountType === "lbs") {count += data[x].amount;}
           else if (data[x].amountType === "oz") {count += data[x].amount/16;}
           else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
           
-        }
+        } 
       }
       sortedData.push({ date: formattedDate, amount: count });
     }
 
-  
+    
     return sortedData.reverse();
     //return data.length <= 7 ? data : data.slice(data.length - 7);
   }

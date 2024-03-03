@@ -59,8 +59,7 @@ export default class HomePage extends Component {
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: [0],
-      graphData: []
+      streak: [0]
     }
     this.getData();
   }
@@ -82,12 +81,12 @@ export default class HomePage extends Component {
   createFoodWasteFirestore = async () => {
 
     try {
-      const docRef = await addDoc(collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food"), {
+      const docRef = await addDoc(collection(FIREBASE_DB, "users/",FIREBASE_AUTH.currentUser.uid,"/Wasted Food"), {
         foodType: this.state.weightDropdown,
         selectedDay: this.state.selectedDay,
         selectedMonth: this.state.selectedMonth,
         weightUnit: this.state.weightUnit,
-        weightValue: parseFloat(parseFloat(this.state.weightValue).toFixed(2)),
+        weightValue: parseFloat(this.state.weightValue),
         inHome: this.state.inHomeCheckbox,
         edible: this.state.edibleCheckbox
 
@@ -134,7 +133,6 @@ export default class HomePage extends Component {
     return (
       <View style={styles.container}>
         {/* Welcome Header */}
-        
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Home</Text>
 
@@ -305,7 +303,8 @@ export default class HomePage extends Component {
                       textStyle={styles.checkboxText}
                     />
             </View>
-                      
+
+
           {/* Submit button */}    
           <Pressable onPress={() => this.createFoodWasteFirestore()} style={styles.bottomButton}>
             <Text style={styles.bottomButtonText}>Submit</Text>

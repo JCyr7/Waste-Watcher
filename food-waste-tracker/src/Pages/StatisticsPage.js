@@ -93,7 +93,10 @@ export default class StatisticsPage extends Component {
 
       for (let x = 0; x < data.length; x++) {
         if (data[x].date === formattedDate) {
-          count += data[x].amount;
+          if (data[x].amountType === "lb") {count += data[x].amount;}
+          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
+          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
+          
         }
       }
       sortedData.push({ date: formattedDate, amount: count });

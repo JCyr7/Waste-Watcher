@@ -475,12 +475,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dashImage: {
-    width: 55,
-    height: 55,
+    width: 50,
+    height: 50,
     tintColor: COLORS.blue
   },
   dashTextContainer: {
-    marginTop: 5,
+    marginTop: 10,
     alignItems: 'center',
   },
   dashTopTextContainer: {

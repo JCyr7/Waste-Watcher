@@ -369,6 +369,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
+    height: '6.5%',
   },
   bottomButton: {
     backgroundColor: COLORS.lightBlue,
@@ -376,10 +377,11 @@ const styles = StyleSheet.create({
     width: '40%',
     padding: 10,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomButtonText: {
     color: COLORS.blue,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
 

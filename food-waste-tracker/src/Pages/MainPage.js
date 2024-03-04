@@ -26,6 +26,11 @@ export default class MainPage extends Component {
     }
   }
 
+  callStatisticsFunction = () => {
+    // Assuming you have a reference to the StatisticsPage component
+    this.statisticsPageRef.reloadHistoryPage();
+  };
+
   //used to keep track of page state and sync swiping with nav bar
   setPageState(value) {
     this.setState({pageState: value})
@@ -52,8 +57,8 @@ export default class MainPage extends Component {
           }}>
           {/* Content of the home page pager view */}
           {/* <ArcGISMap key='1' /> */}
-          <HomePage key='1' navigation={navigation} />
-          <StatisticsPage key='2'></StatisticsPage>
+          <HomePage key='1' navigation={navigation} onCallStatisticsFunction={this.callStatisticsFunction}/>
+          <StatisticsPage key='2' ref={(ref) => { this.statisticsPageRef = ref; }}></StatisticsPage>
           <LeaderboardPage key='3' />
           <ProfilePage key='4' />
         </PagerView>
@@ -107,7 +112,7 @@ export default class MainPage extends Component {
             ]}>Home</Text>
           </Pressable>
           <Pressable
-            onPress={() => this.viewPager.setPage(1)}
+            onPress={() => {this.viewPager.setPage(1); this.callStatisticsFunction()}}
             style={styles.navigationButton}>
             {/* Icon for grid button on the middle left */}
             {/* <Ionicons

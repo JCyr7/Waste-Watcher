@@ -167,7 +167,7 @@ export default class StatisticsPage extends Component {
   }
 
   reloadHistoryPage = () => {
-
+    console.log("mjvoshdsjlfsd");
     this.setState({ wasteData: [] }, this.updateWasteData);
   
   }

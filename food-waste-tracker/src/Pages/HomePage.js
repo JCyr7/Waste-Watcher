@@ -378,7 +378,7 @@ export default class HomePage extends Component {
 
         {/* Submit button */}    
         <Pressable
-          onPress={() => this.createFoodWasteFirestore()}
+          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction()}}
           style={({ pressed }) => [
             {
               backgroundColor: pressed

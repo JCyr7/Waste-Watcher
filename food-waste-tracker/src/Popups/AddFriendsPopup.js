@@ -19,6 +19,7 @@ import {
   acceptFriendRequest,
   refuseFriendRequest,
   getFriends,
+  getNameFromID,
   removeFriend
 } from '../ProfileComponents/FriendHandler';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
@@ -64,8 +65,16 @@ export default class AddFriendsPopup extends Component {
     this.setState({ friendRequestText: '' }); // Reset input field
   }
 
-  async handleAccept(requestId) {
-    const result = await acceptFriendRequest(requestId);
+  async handleAccept(request) {
+
+    const friend1 = request.friend1_ID;
+    const friend2 = request.friend2_ID;
+
+    const user2 = await getNameFromID(FIREBASE_AUTH.currentUser.uid);
+
+    const user1 = await getNameFromID(request.initiated);
+
+    const result = await acceptFriendRequest(user1, user2);
     if (result) {
       Alert.alert('Success', 'Friend request accepted.');
       this.fetchPendingRequests(); // Refresh the list of pending requests
@@ -117,7 +126,7 @@ export default class AddFriendsPopup extends Component {
         <View style={styles.buttonsContainer}>
           <Pressable
             style={[styles.button, styles.acceptButton]}
-            onPress={() => this.handleAccept(request.id)}>
+            onPress={() => this.handleAccept(request.data())}>
             <Text style={styles.buttonText}>Accept</Text>
           </Pressable>
           <Pressable

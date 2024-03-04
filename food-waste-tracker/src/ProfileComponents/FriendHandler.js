@@ -158,7 +158,6 @@ export const getFriends = async () => {
 }
 
 export const getNameFromID = async (ID) => {
-
     try {
         const docRef = doc(FIREBASE_DB, "users", ID);
         const docSnap = await getDoc(docRef);

@@ -265,11 +265,6 @@ export default class StatisticsPage extends Component {
             </View>
           </View>
         </View>
-        <View style={styles.bottomButtonsContainer}>
-          <Pressable style={styles.bottomButton} onPress={this.reloadHistoryPage}>
-            <Text style={styles.bottomButtonText}>reload</Text>
-          </Pressable>
-        </View>
 
         <View style={styles.bottomButtonsContainer}>
           <Pressable style={styles.bottomButton} onPress={this.toggleWasteHistoryPopup}>

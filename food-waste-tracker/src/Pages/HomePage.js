@@ -64,9 +64,15 @@ export default class HomePage extends Component {
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: [0]
+      streak: 0
     }
     this.getData();
+  }
+
+  reloadHomePage = () => {
+
+    this.setState({ streak: [] }, this.streak);
+  
   }
 
   // Method retrieves data from async storage
@@ -96,8 +102,7 @@ export default class HomePage extends Component {
         edible: this.state.edibleCheckbox
 
       });
-      this.setState({ streak: this.state.streak});
-      this.render();
+      this.reloadHomePage();
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);

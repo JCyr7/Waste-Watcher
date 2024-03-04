@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   container: {
     width: '90%',
     height: '97%',
-    marginLeft: '5%',
+    marginLeft: '-5%',
     justifyContent: 'space-between'
   },
   inputContainer: {
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.darkGreen
+    backgroundColor: COLORS.blue
   },
   buttonText: {
     color: COLORS.white,

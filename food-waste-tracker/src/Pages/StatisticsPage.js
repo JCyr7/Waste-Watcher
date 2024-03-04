@@ -23,16 +23,44 @@ export default class StatisticsPage extends Component {
       goalPopupVisible: false, // State to control visibility of GoalPopup
       wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
       wasteData: [],
-      loading: true
+      loading: true,
+       localLeaderboard: [],
+      globalLeaderboard: []
     };
 
   }
+  
+  GLOBAL = [
+    {
+      name: 'Declan',
+      score: '936'
+    },
+    {
+      name: 'Finn',
+      score: '695'
+    },
+    {
+      name: 'Levi',
+      score: '643'
+    },
+    {
+      name: 'Gavin',
+      score: '885'
+    },
+    {
+      name: 'Callen',
+      score: '737'
+    }
+  ]
 
   async componentDidMount() {
     await this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
     });
     this.setState({ loading: false });
+    this.getLeaderboardLocal().then((localLB) => {
+      this.setState({localLeaderboard: localLB});
+    });
   }
 
   updateWasteData = async () => {
@@ -65,6 +93,32 @@ export default class StatisticsPage extends Component {
     return wasteData;
     };
 
+  getLeaderboardLocal = async () => {
+    const friends = await getFriends();
+    const friendIDs = [];
+    friends.forEach((doc) => {
+      const id = doc.data().friend1_ID;
+      const id2 = doc.data().friend2_ID;
+
+      if (id == FIREBASE_AUTH.currentUser.uid) {
+        id = id2;
+      }
+
+      friendIDs.push(id);
+
+    });
+
+    const retval = [];
+    for (let i = 0; i < friendIDs.length; i++) {
+      retval.push({name: await getNameFromID(friendIDs[i]), score: await getUserStreak(friendIDs[i])});
+    }
+
+    return retval;
+
+  }
+
+  // Toggle visibility of local and all time leaderboard
+  // 0 = Local, 1 = All Time
   setVisibility(value) {
     this.setState({ visibility: value });
   }
@@ -139,10 +193,15 @@ export default class StatisticsPage extends Component {
     this.setState({ wasteHistoryPopupVisible: !this.state.wasteHistoryPopupVisible });
   };
 
+
   render() {
     const lastSevenDays = [];
-    const localData = this.sortDescendingScore(LOCAL);
-    const globalData = this.sortDescendingScore(GLOBAL);
+    const lastSevenDays = this.getLastSevenDays(DATA);
+    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2);
+    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2);
+    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays);
+    const localData = this.sortDescendingScore(this.state.localLeaderboard);
+    const globalData = this.sortDescendingScore(this.GLOBAL);
 
     return (
       <SafeAreaView style={styles.container}>

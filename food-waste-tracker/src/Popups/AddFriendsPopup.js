@@ -16,10 +16,10 @@ export default class NotificationsPopup extends Component {
   }
 
   async submitOnPress() {
-    const id = this.state.friendRequestText;
-    const id2 = await getNameFromID(FIREBASE_AUTH.currentUser.uid);
-    const requestresults = await acceptFriendRequest(id, id2);
-    console.log(requestresults);
+    const id = await getUserID(this.state.friendRequestText);
+    const id2 = FIREBASE_AUTH.currentUser.uid;
+    const requestresults = await sendFriendRequest(id2, id);
+    const acceptResults = await acceptFriendRequest(await getNameFromID(id), await getNameFromID(id2));
   }
 
   render() {

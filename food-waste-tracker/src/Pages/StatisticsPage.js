@@ -6,14 +6,64 @@ import ViewWaste from '../StatisticsPageComponents/ViewWaste'
 import Graph from '../StatisticsPageComponents/Graph'
 import {DATA} from '../Utils/TestData'
 import Leaderboard from '../LeaderboardComponents/Leaderboard'
-import {LOCAL, GLOBAL} from '../Utils/TestData'
+import { getFriends, getNameFromID, getUserStreak, getPendingFriendRequestsRecieved } from '../ProfileComponents/FriendHandler'
+import { FIREBASE_AUTH } from '../../FirebaseConfig'
 
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      visibility: 0
+      visibility: 0,
+      localLeaderboard: [],
+      globalLeaderboard: []
     }
+  }
+
+  GLOBAL = [
+    {
+      name: 'Declan',
+      score: '936'
+    },
+    {
+      name: 'Finn',
+      score: '695'
+    },
+    {
+      name: 'Levi',
+      score: '643'
+    },
+    {
+      name: 'Gavin',
+      score: '885'
+    },
+    {
+      name: 'Callen',
+      score: '737'
+    }
+  ]
+
+  getLeaderboardLocal = async () => {
+    const friends = await getFriends();
+    const friendIDs = [];
+    friends.forEach((doc) => {
+      const id = doc.data().friend1_ID;
+      const id2 = doc.data().friend2_ID;
+
+      if (id == FIREBASE_AUTH.currentUser.uid) {
+        id = id2;
+      }
+
+      friendIDs.push(id);
+
+    });
+
+    const retval = [];
+    for (let i = 0; i < friendIDs.length; i++) {
+      retval.push({name: await getNameFromID(friendIDs[i]), score: await getUserStreak(friendIDs[i])});
+    }
+
+    return retval;
+
   }
 
   // Toggle visibility of local and all time leaderboard
@@ -69,13 +119,23 @@ export default class StatisticsPage extends Component {
     return mostFrequent
   }
 
+  componentDidMount() {
+    console.log("mounted");
+    
+    this.getLeaderboardLocal().then((localLB) => {
+      console.log("LB:", localLB);
+      this.setState({localLeaderboard: localLB});
+      console.log("state", this.state.localLeaderboard);
+    });
+  }
+
   render() {
-    const lastSevenDays = this.getLastSevenDays(DATA)
-    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2)
-    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2)
-    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays)
-    const localData = this.sortDescendingScore(LOCAL)
-    const globalData = this.sortDescendingScore(GLOBAL)
+    const lastSevenDays = this.getLastSevenDays(DATA);
+    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2);
+    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2);
+    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays);
+    const localData = this.sortDescendingScore(this.state.localLeaderboard);
+    const globalData = this.sortDescendingScore(this.GLOBAL);
 
     return (
       <View style={styles.container}>

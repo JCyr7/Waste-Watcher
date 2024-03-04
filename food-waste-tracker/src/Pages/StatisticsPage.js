@@ -119,13 +119,16 @@ export default class StatisticsPage extends Component {
     return mostFrequent
   }
 
+  refreshLeaderboard = async () => {
+    const localLB = this.getLeaderboardLocal;
+    this.setState({localLeaderboard: localLB});
+  }
+
   componentDidMount() {
     console.log("mounted");
     
     this.getLeaderboardLocal().then((localLB) => {
-      console.log("LB:", localLB);
       this.setState({localLeaderboard: localLB});
-      console.log("state", this.state.localLeaderboard);
     });
   }
 

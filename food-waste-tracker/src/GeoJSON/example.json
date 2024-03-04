@@ -3,44 +3,26 @@
   "features": [
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "marker-color": "#17b322",
+        "FID": 1,
+        "NAME": "Good Shepherd Food Bank",
+        "ADDRESS": "3121 Hotel Road/ PO Box 1807",
+        "CITY": "Auburn",
+        "COUNTY": "Androscoggin",
+        "STATE": "ME",
+        "EXCESSFOOD": 0.5,
+        "EXCESSFO_1": 117,
+        "FEATURE_CL": "Baked Goods Stores",
+        "Phone": "207-782-3554",
+        "Website": "http://www.gsfb.org",
+        "Class": "Specialty",
+        "ZipCode": "04294"
+      },
       "geometry": {
         "coordinates": [
           -68.77420688609685,
           44.80874201381849
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          -70.33040931553703,
-          43.70327403864715
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          -68.02033479965941,
-          46.70198688625905
-        ],
-        "type": "Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "coordinates": [
-          -70.14722173750094,
-          44.661579633429795
         ],
         "type": "Point"
       }

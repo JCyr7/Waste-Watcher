@@ -10,20 +10,70 @@ import { LOCAL, GLOBAL } from '../Utils/TestData';
 import Popup from '../Popups/Popup';
 import GoalPopup from '../Popups/GoalPopup';
 import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
-import { getFriends, getNameFromID, getUserStreak, getPendingFriendRequestsRecieved } from '../ProfileComponents/FriendHandler'
-import { FIREBASE_AUTH } from '../../FirebaseConfig'
+import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
+
 
 export default class StatisticsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       visibility: 0,
+      localLeaderboard: [],
+      globalLeaderboard: [],
       goalPopupVisible: false, // State to control visibility of GoalPopup
       wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
-      localLeaderboard: [],
-      globalLeaderboard: []
-    }
+      wasteData: [],
+      loading: true
+    };
+    this.reloadHistoryPage = this.reloadHistoryPage.bind(this);
   }
+
+  async componentDidMount() {
+    console.log("mounted");
+    await this.updateWasteData().then(data => {
+      this.setState({ wasteData: data });
+    });
+    this.setState({ loading: false });
+
+    this.getLeaderboardLocal().then((localLB) => {
+      console.log("LB:", localLB);
+      this.setState({localLeaderboard: localLB});
+      console.log("state", this.state.localLeaderboard);
+    });
+  }
+
+  updateWasteData = async () => {
+    let wasteData = [];
+
+    try {
+        // Ensure you have a valid user before proceeding
+        if (!FIREBASE_AUTH.currentUser) {
+            console.log("No user signed in.");
+            return wasteData;
+        }
+        const userId = FIREBASE_AUTH.currentUser.uid;
+        
+        const subcollectionRef = collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
+        const querySnapshot = await getDocs(subcollectionRef);
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const date = `${data.selectedMonth}/${data.selectedDay}`;
+            wasteData.push({
+                date: date,
+                category: data.foodType, 
+                amount: data.weightValue,
+                amountType: data.weightUnit,
+            });
+        });
+        this.setState({ wasteData });
+    } catch (e) {
+        console.log(e.message);
+    }
+    return wasteData;
+    };
 
   GLOBAL = [
     {
@@ -74,7 +124,6 @@ export default class StatisticsPage extends Component {
 
   // Toggle visibility of local and all time leaderboard
   // 0 = Local, 1 = All Time
-  
   setVisibility(value) {
     this.setState({ visibility: value });
   }
@@ -85,8 +134,44 @@ export default class StatisticsPage extends Component {
   }
 
   getLastSevenDays(data) {
-    return data.length <= 7 ? data : data.slice(data.length - 7);
+    let sortedData = [];
+    let count = 0;
+    let dates = [];
+
+    today = new Date();
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(today);
+      day.setDate(today.getDate() - i); // Subtract i days from today
+      dates.push(day);
   }
+
+  
+    for (let i = 0; i < 7; i++) {
+      count = 0.01;
+      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
+
+      for (let x = 0; x < data.length; x++) { 
+        if (data[x].date === formattedDate) { 
+          if (data[x].amountType === "lbs") {count += data[x].amount;}
+          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
+          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
+          
+        } 
+      }
+      sortedData.push({ date: formattedDate, amount: count });
+    }
+
+    
+    return sortedData.reverse();
+    //return data.length <= 7 ? data : data.slice(data.length - 7);
+  }
+
+  reloadHistoryPage = () => {
+    console.log("mjvoshdsjlfsd");
+    this.setState({ wasteData: [] }, this.updateWasteData);
+  
+  }
+
 
   getTotalWaste(data) {
     return data.reduce((accumulator, item) => accumulator + item.amount, 0);
@@ -120,37 +205,25 @@ export default class StatisticsPage extends Component {
     this.setState({ wasteHistoryPopupVisible: !this.state.wasteHistoryPopupVisible });
   };
 
-
-  refreshLeaderboard = async () => {
-    const localLB = this.getLeaderboardLocal;
-    this.setState({localLeaderboard: localLB});
-  }
-
-  componentDidMount() {
-    console.log("mounted");
-    
-    this.getLeaderboardLocal().then((localLB) => {
-      this.setState({localLeaderboard: localLB});
-    });
-  }
-
   render() {
-    const lastSevenDays = this.getLastSevenDays(DATA);
-    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2);
-    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2);
-    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays);
-    const localData = this.sortDescendingScore(this.state.localLeaderboard);
-    const globalData = this.sortDescendingScore(this.GLOBAL);
+    const lastSevenDays = [];
+    const localData = this.sortDescendingScore(LOCAL);
+    const globalData = this.sortDescendingScore(GLOBAL);
 
     return (
       <SafeAreaView style={styles.container}>
+        
         <Text style={styles.titleText}>Trends</Text>
-
         <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
-          <Graph data={lastSevenDays} />
+          {this.state.loading === false ? (
+          <Graph data={this.getLastSevenDays(this.state.wasteData)} />
+        ) : (
+          // Optionally, render a placeholder or a loading indicator here
+          <Text>Loading...</Text>
+          
+        )}
         </View>
-
         <View style={styles.fulllbContainer}>
           <View style={styles.lbcontainer}>
             <View style={styles.lbheader}>
@@ -187,7 +260,7 @@ export default class StatisticsPage extends Component {
             </View>
 
             <View style={styles.lbcontent}>
-              {this.state.visibility === 0 && <Leaderboard data={localData} />}
+              {this.state.visibility === 0 && <Leaderboard data={this.state.localLeaderboard} />}
               {this.state.visibility === 1 && <Leaderboard data={globalData} />}
             </View>
           </View>
@@ -227,7 +300,8 @@ export default class StatisticsPage extends Component {
               <TouchableOpacity style={styles.closeButton} onPress={this.toggleWasteHistoryPopup}>
                 <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
-              <WasteHistoryPopup data={DATA} />
+
+              <WasteHistoryPopup data={this.state.wasteData} onReload={this.reloadHistoryPage}/>
             </View>
           </View>
         </Modal>

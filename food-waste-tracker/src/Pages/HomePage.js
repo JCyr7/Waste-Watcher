@@ -86,12 +86,12 @@ export default class HomePage extends Component {
   createFoodWasteFirestore = async () => {
 
     try {
-      const docRef = await addDoc(collection(FIREBASE_DB, "users/Wnb19yz5mWWdqvrfm02MxapOYeW2/Wasted Food"), {
+      const docRef = await addDoc(collection(FIREBASE_DB, "users/",FIREBASE_AUTH.currentUser.uid,"/Wasted Food"), {
         foodType: this.state.weightDropdown,
         selectedDay: this.state.selectedDay,
         selectedMonth: this.state.selectedMonth,
         weightUnit: this.state.weightUnit,
-        weightValue: this.state.weightValue,
+        weightValue: parseFloat(this.state.weightValue),
         inHome: this.state.inHomeCheckbox,
         edible: this.state.edibleCheckbox
 

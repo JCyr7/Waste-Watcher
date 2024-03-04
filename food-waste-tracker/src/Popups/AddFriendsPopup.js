@@ -7,7 +7,7 @@ import {
   TextInput,
   Pressable,
   Image,
-  Alert
+  Alert,
 } from 'react-native';
 import { COLORS } from '../Utils/colors';
 import Divider from '../Utils/Divider';
@@ -17,10 +17,9 @@ import {
   sendFriendRequest,
   getPendingFriendRequestsRecieved,
   acceptFriendRequest,
-  refuseFriendRequest,
   getFriends,
   getNameFromID,
-  removeFriend
+  removeFriend,
 } from '../ProfileComponents/FriendHandler';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 
@@ -35,8 +34,12 @@ export default class AddFriendsPopup extends Component {
   }
 
   componentDidMount() {
-    this.fetchPendingRequests();
-    this.fetchFriends();
+    this.refreshPage();
+  }
+
+  async refreshPage() {
+    await this.fetchPendingRequests();
+    await this.fetchFriends();
   }
 
   async fetchFriends() {
@@ -66,29 +69,22 @@ export default class AddFriendsPopup extends Component {
   }
 
   async handleAccept(request) {
-
-    const friend1 = request.friend1_ID;
-    const friend2 = request.friend2_ID;
-
     const user2 = await getNameFromID(FIREBASE_AUTH.currentUser.uid);
-
     const user1 = await getNameFromID(request.initiated);
-
     const result = await acceptFriendRequest(user1, user2);
     if (result) {
       Alert.alert('Success', 'Friend request accepted.');
-      this.fetchPendingRequests(); // Refresh the list of pending requests
-      this.fetchFriends(); // Also refresh the friends list as a new friend has been added
+      this.refreshPage(); // Refresh the list of pending requests and friends
     } else {
       Alert.alert('Error', 'Failed to accept friend request. Please try again later.');
     }
   }
 
   async handleIgnore(requestId) {
-    const result = await refuseFriendRequest(requestId);
+    const result = await removeFriend(requestId); // Changed to removeFriend
     if (result) {
       Alert.alert('Success', 'Friend request ignored.');
-      this.fetchPendingRequests(); // Refresh the list of pending requests
+      this.refreshPage(); // Refresh the list of pending requests
     } else {
       Alert.alert('Error', 'Failed to ignore friend request. Please try again later.');
     }
@@ -98,7 +94,7 @@ export default class AddFriendsPopup extends Component {
     const result = await removeFriend(friendId);
     if (result) {
       Alert.alert('Success', 'Friend removed successfully.');
-      this.fetchFriends(); // Refresh the list of friends after removal
+      this.refreshPage(); // Refresh the list of friends after removal
     } else {
       Alert.alert('Error', 'Failed to remove friend. Please try again later.');
     }
@@ -164,10 +160,15 @@ export default class AddFriendsPopup extends Component {
           style={styles.scrollContainer}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}>
-          {this.state.friends.map((friend) => this.renderFriendItem(friend))}
-          <Divider style={{ width: '100%', marginVertical: 20 }} />
           {this.state.pendingRequests.map((request) => this.renderRequestItem(request))}
+          <Divider style={{ width: '100%', marginVertical: 20 }} />
+          {this.state.friends.map((friend) => this.renderFriendItem(friend))}
         </ScrollView>
+        <Pressable
+          onPress={() => this.refreshPage()}
+          style={[styles.refreshButton]}>
+          <Text style={styles.refreshButtonText}>Refresh</Text>
+        </Pressable>
       </View>
     );
   }
@@ -255,5 +256,24 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.white,
+  },
+  container: {
+    width: '90%',
+    height: '87%',
+    marginLeft: '5%',
+    alignItems: 'center',
+    backgroundColor: COLORS.whitetransparent,
+  },
+  // Other styles remain unchanged
+  refreshButton: {
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.lightblue,
+    borderRadius: 5,
+  },
+  refreshButtonText: {
+    color: COLORS.blue,
+    fontSize: 16,
   },
 });

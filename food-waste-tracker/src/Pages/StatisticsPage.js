@@ -28,14 +28,21 @@ export default class StatisticsPage extends Component {
       wasteData: [],
       loading: true
     };
-
+    this.reloadHistoryPage = this.reloadHistoryPage.bind(this);
   }
 
   async componentDidMount() {
+    console.log("mounted");
     await this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
     });
     this.setState({ loading: false });
+
+    this.getLeaderboardLocal().then((localLB) => {
+      console.log("LB:", localLB);
+      this.setState({localLeaderboard: localLB});
+      console.log("state", this.state.localLeaderboard);
+    });
   }
 
   updateWasteData = async () => {
@@ -159,16 +166,12 @@ export default class StatisticsPage extends Component {
     //return data.length <= 7 ? data : data.slice(data.length - 7);
   }
 
+  reloadHistoryPage = () => {
 
-  componentDidMount() {
-    console.log("mounted");
-    
-    this.getLeaderboardLocal().then((localLB) => {
-      console.log("LB:", localLB);
-      this.setState({localLeaderboard: localLB});
-      console.log("state", this.state.localLeaderboard);
-    });
+    this.setState({ wasteData: [] }, this.updateWasteData);
+  
   }
+
 
   getTotalWaste(data) {
     return data.reduce((accumulator, item) => accumulator + item.amount, 0);
@@ -209,6 +212,7 @@ export default class StatisticsPage extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
+        
         <Text style={styles.titleText}>Trends</Text>
         <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
@@ -256,7 +260,7 @@ export default class StatisticsPage extends Component {
             </View>
 
             <View style={styles.lbcontent}>
-              {this.state.visibility === 0 && <Leaderboard data={localData} />}
+              {this.state.visibility === 0 && <Leaderboard data={this.state.localLeaderboard} />}
               {this.state.visibility === 1 && <Leaderboard data={globalData} />}
             </View>
           </View>
@@ -297,7 +301,7 @@ export default class StatisticsPage extends Component {
                 <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
 
-              <WasteHistoryPopup data={this.state.wasteData} />
+              <WasteHistoryPopup data={this.state.wasteData} onReload={this.reloadHistoryPage}/>
             </View>
           </View>
         </Modal>

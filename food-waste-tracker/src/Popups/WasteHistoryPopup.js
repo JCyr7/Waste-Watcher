@@ -31,12 +31,13 @@ export default class WasteHistoryPopup extends Component {
             .map((item, index) => {
               return (
                 <WasteLog
+                  onDelete={this.onDelete}
+                  onWasteDeleted={this.props.onReload}
                   key={index}
                   date={item.date}
                   category={item.category}
                   amount={item.amount}
-                  unit={item.amountType}
-                />
+                  unit={item.amountType}/>
               )
             })
             .reverse()}

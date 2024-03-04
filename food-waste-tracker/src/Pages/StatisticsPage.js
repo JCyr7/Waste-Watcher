@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Pressable, Platform, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Modal, Pressable, Platform, StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { COLORS } from '../Utils/colors';
 import Divider from '../Utils/Divider';
 import ViewWaste from '../StatisticsPageComponents/ViewWaste';
@@ -10,6 +10,8 @@ import { LOCAL, GLOBAL } from '../Utils/TestData';
 import Popup from '../Popups/Popup';
 import GoalPopup from '../Popups/GoalPopup';
 import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
+import { getFriends, getNameFromID, getUserStreak, getPendingFriendRequestsRecieved } from '../ProfileComponents/FriendHandler'
+import { FIREBASE_AUTH } from '../../FirebaseConfig'
 
 export default class StatisticsPage extends Component {
   constructor(props) {
@@ -18,9 +20,61 @@ export default class StatisticsPage extends Component {
       visibility: 0,
       goalPopupVisible: false, // State to control visibility of GoalPopup
       wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
-    };
+      localLeaderboard: [],
+      globalLeaderboard: []
+    }
   }
 
+  GLOBAL = [
+    {
+      name: 'Declan',
+      score: '936'
+    },
+    {
+      name: 'Finn',
+      score: '695'
+    },
+    {
+      name: 'Levi',
+      score: '643'
+    },
+    {
+      name: 'Gavin',
+      score: '885'
+    },
+    {
+      name: 'Callen',
+      score: '737'
+    }
+  ]
+
+  getLeaderboardLocal = async () => {
+    const friends = await getFriends();
+    const friendIDs = [];
+    friends.forEach((doc) => {
+      const id = doc.data().friend1_ID;
+      const id2 = doc.data().friend2_ID;
+
+      if (id == FIREBASE_AUTH.currentUser.uid) {
+        id = id2;
+      }
+
+      friendIDs.push(id);
+
+    });
+
+    const retval = [];
+    for (let i = 0; i < friendIDs.length; i++) {
+      retval.push({name: await getNameFromID(friendIDs[i]), score: await getUserStreak(friendIDs[i])});
+    }
+
+    return retval;
+
+  }
+
+  // Toggle visibility of local and all time leaderboard
+  // 0 = Local, 1 = All Time
+  
   setVisibility(value) {
     this.setState({ visibility: value });
   }
@@ -66,10 +120,27 @@ export default class StatisticsPage extends Component {
     this.setState({ wasteHistoryPopupVisible: !this.state.wasteHistoryPopupVisible });
   };
 
+
+  refreshLeaderboard = async () => {
+    const localLB = this.getLeaderboardLocal;
+    this.setState({localLeaderboard: localLB});
+  }
+
+  componentDidMount() {
+    console.log("mounted");
+    
+    this.getLeaderboardLocal().then((localLB) => {
+      this.setState({localLeaderboard: localLB});
+    });
+  }
+
   render() {
     const lastSevenDays = this.getLastSevenDays(DATA);
-    const localData = this.sortDescendingScore(LOCAL);
-    const globalData = this.sortDescendingScore(GLOBAL);
+    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2);
+    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2);
+    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays);
+    const localData = this.sortDescendingScore(this.state.localLeaderboard);
+    const globalData = this.sortDescendingScore(this.GLOBAL);
 
     return (
       <SafeAreaView style={styles.container}>
@@ -248,6 +319,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
+    height: '6.5%',
   },
   bottomButton: {
     backgroundColor: COLORS.lightBlue,
@@ -255,10 +327,11 @@ const styles = StyleSheet.create({
     width: '40%',
     padding: 10,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomButtonText: {
     color: COLORS.blue,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
   popupOverlay: {

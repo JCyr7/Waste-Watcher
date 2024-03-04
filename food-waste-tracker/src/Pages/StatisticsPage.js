@@ -88,7 +88,7 @@ export default class StatisticsPage extends Component {
 
   
     for (let i = 0; i < 7; i++) {
-      count = 0;
+      count = 0.01;
       let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
 
       for (let x = 0; x < data.length; x++) { 

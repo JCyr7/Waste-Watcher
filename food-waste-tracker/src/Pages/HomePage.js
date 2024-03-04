@@ -91,7 +91,8 @@ export default class HomePage extends Component {
         edible: this.state.edibleCheckbox
 
       });
-    
+      this.setState({ streak: this.state.streak});
+      this.render();
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);

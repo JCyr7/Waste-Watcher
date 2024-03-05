@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, Text, Pressable} from 'react-native'
+import {StyleSheet, View, Text, Pressable, Image} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import Divider from '../Utils/Divider'
 import {deleteDoc} from "firebase/firestore";
@@ -50,9 +50,15 @@ export default class WasteLog extends Component {
           <Text style={styles.category}>{this.props.category}</Text>
           <Text style={styles.amount}>{this.props.amount}</Text>
           <Text style={styles.amount}>{this.props.unit}</Text>
-          <Pressable style={styles.delete} onPress={this.onDelete}><Text>R</Text></Pressable>
+          <Pressable style={styles.delete} onPress={this.onDelete}><Image 
+            source={require('../../images/trash.png')}
+            style={{
+              width: 25,
+              height: 25,
+              tintColor: COLORS.blue,
+            }}/></Pressable>
         </View>
-        <Divider />
+     
       </View>
     )
   }
@@ -60,14 +66,17 @@ export default class WasteLog extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '10%',
-    alignItems: 'center'
+    width: '98%',
+    height: '6%',
+    alignItems: 'center',
+    backgroundColor: COLORS.gray,
+    borderRadius: 30,
+    margin: 2,
   },
   logContainer: {
     width: '100%',
     height: '100%',
-    paddingHorizontal: '5%',
+    paddingHorizontal: '3%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -75,9 +84,10 @@ const styles = StyleSheet.create({
   },
   date: {
     flex: 1,
-    fontSize: 14
+    fontSize: 16
   },
   category: {
+    paddingLeft: 20,
     flex: 1,
     textAlign: 'left',
     fontSize: 14
@@ -85,10 +95,12 @@ const styles = StyleSheet.create({
   amount: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 14
+    fontSize: 16,
+    paddingLeft: 25
   },
   delete: {
     flex: 1,
+    right: -20,
     textAlign: 'right',
     fontSize: 18
   }

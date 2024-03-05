@@ -50,32 +50,36 @@ export default class WasteHistoryPopup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
+    width: '105%',
     height: '97%',
-    alignItems: 'center'
+    alignItems: 'space-between'
   },
   header: {
     width: '95%',
     marginBottom: '3%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    
   },
   dateLabel: {
     flex: 1,
-    fontSize: 18,
-    fontWeight: '700'
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.blue
   },
   categoryLabel: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '700',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: COLORS.blue
   },
   amountLabel: {
     flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '700',
-    textAlign: 'right'
+    textAlign: 'right',
+    color: COLORS.blue
   },
   scrollContainer: {
     width: '100%',
@@ -86,6 +90,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bottomMargin: {
-    marginBottom: 4
+    marginBottom: 1
   }
 })

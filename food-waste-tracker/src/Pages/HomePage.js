@@ -15,6 +15,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import updateWasteData from '../Pages/StatisticsPage';
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -57,10 +58,10 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      weightdropdown: '',
-      selectedMonth: '',
-      selectedDay: '',
-      weightUnit: '',
+      weightdropdown: 'mixed',
+      selectedMonth: new Date().getMonth() + 1,
+      selectedDay: new Date().getDate(),
+      weightUnit: 'lbs',
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,

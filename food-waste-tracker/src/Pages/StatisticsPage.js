@@ -146,6 +146,7 @@ export default class StatisticsPage extends Component {
   }
 
   
+    //really bad time complexity but it works for now. it goes through each food log 7 times
     for (let i = 0; i < 7; i++) {
       count = 0.01;
       let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
@@ -416,7 +417,7 @@ const styles = StyleSheet.create({
   },
   popup: {
     width: '100%',
-    height: '100%',
+    height: '120%',
     backgroundColor: 'white',
     borderRadius: 20,
     padding:20,
@@ -433,7 +434,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: 'flex-end',
-    marginBottom: 10,
+    marginBottom: 0
   },
   closeButtonText: {
     fontSize: 20,

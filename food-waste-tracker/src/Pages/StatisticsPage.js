@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { Modal, Pressable, Platform, StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { COLORS } from '../Utils/colors';
-import Divider from '../Utils/Divider';
-import ViewWaste from '../StatisticsPageComponents/ViewWaste';
 import Graph from '../StatisticsPageComponents/Graph';
-import { DATA } from '../Utils/TestData';
 import Leaderboard from '../LeaderboardComponents/Leaderboard';
 import { LOCAL, GLOBAL } from '../Utils/TestData';
-import Popup from '../Popups/Popup';
 import GoalPopup from '../Popups/GoalPopup';
 import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
-import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { collection, getDocs} from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
-import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
-
+import { getFriends, getNameFromID, getUserStreak} from '../ProfileComponents/FriendHandler'
 
 export default class StatisticsPage extends Component {
   constructor(props) {
@@ -33,7 +27,7 @@ export default class StatisticsPage extends Component {
 
   async componentDidMount() {
     console.log("mounted");
-    await this.updateWasteData().then(data => {
+    this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
     });
     this.setState({ loading: false });

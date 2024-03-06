@@ -1,7 +1,6 @@
 import { ImageBackground } from "react-native";
 
 export const COLORS = {
-  green: '#00e673',
   darkGreen: '#2e992a',
   lightestGreen: '#B5FFE7',
   lightGreen: '#78FCC9',
@@ -14,20 +13,46 @@ export const COLORS = {
   lesswhitetransparent: 'rgba(255, 255, 255, 0.15)',
   whitetransparent: 'rgba(255, 255, 255, 0.25)',
   morewhitetransparent: 'rgba(255, 255, 255, 0.75)',
-  red: '#f00',
-
-
-  blue: '#0066ff',
   black: '#000',
   darkGray: '#474747',
   white: '#fff',
   lightBlue: '#99c1ff',
+  red: 'ff0000',
 
-  // blue: '#fff',
-  // black: '#fff',
-  // darkGray: '#B6C6FF',
-  // white: '#004C93',
-  // lightBlue: '#00355C',
 
+  blue: '#0066ff',
+  green: '#00e673',
+
+
+
+  //light mode
+
+  background: '#fff',
+  header: '#0066ff',
+  text: '#474747',
+  boldtext: '#0066ff',
+  shadow: '#0066ff',
+  icon: '#474747',
+  element: '#474747',
+  elementText: '#fff',
+  button: '#0066ff',
+  buttonPress: '#3D7FFF',
+  buttonText: '#fff',
+
+
+
+  //dark mode
+
+  // background: '#003399',
+  // header: '#fff',
+  // text: '#e6e6ff',
+  // boldtext: '#fff',
+  // shadow: '#99ff99',
+  // icon: '#e6e6ff',
+  // element: '#e6e6ff',
+  // elementText: '#000066',
+  // button: '#99ff99',
+  // buttonPress: '#ffb3ff',
+  // buttonText: '#000066',
   
 }

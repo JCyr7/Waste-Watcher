@@ -1,23 +1,16 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image} from 'react-native'
-import {ProgressChart} from 'react-native-chart-kit'
-import Calendar from 'react-calendar'
 import {AntDesign} from '@expo/vector-icons'
-import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
-import TrackWastePopup from '../Popups/TrackWastePopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
-import {DATA} from '../Utils/TestData'
 import { SelectList } from 'react-native-dropdown-select-list'
-import SubmitButton from '../TrackWaste/SubmitButton'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import StreakPopup from '../Popups/StreakPopup';
-
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -33,13 +26,13 @@ dialChartConfig = {
 screenWidth = Dimensions.get('window').width;
 
 data = [
-  {key:'1', value:'Dairy'},
+  {key:'1', value:'Combo'},
   {key:'2', value:'Produce'},
   {key:'3', value:'Meat'},
-  {key:'4', value:'Fish'},
+  {key:'4', value:'Dairy'},
   {key:'5', value:'Grains'},
-  {key:'6', value:'Beverage'},
-  {key:'6', value:'Combination'},
+  {key:'6', value:'Fish'},
+  {key:'7', value:'Beverage'},
 ]
 data2 = [
   {key:'1', value:'lbs'},
@@ -151,7 +144,7 @@ export default class HomePage extends Component {
           <Image source={require('../../images/logo.png')} style={styles.image}/>
         </View>
 
-        {/* Progress Dials */}
+        {/* This Weeks Insights */}
         <View style={styles.dashContainer}>
           <Text style={styles.trackWasteHeader}>This Weeks Insights</Text>  
 
@@ -196,7 +189,7 @@ export default class HomePage extends Component {
                   <Pressable
                     style={styles.closePopupButton}
                     onPress={() => this.streakVisibility(false)}>
-                    <AntDesign name='close' size={24} color='black' />
+                    <AntDesign name='close' size={24} color='text' />
                   </Pressable>
                 </View>
                 <View style={styles.popupContent}>
@@ -257,9 +250,9 @@ export default class HomePage extends Component {
 
         </View>  
            
-        {/* Track Waste container */}
+        {/* Track Daily Food Waste */}
         <View style={styles.trackWasteContainer}>
-        <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
+        <Text style={styles.trackWasteHeader}>Track Daily Food Waste</Text> 
 
         {/* Date Container */}      
         <View style={styles.dateContainer}>
@@ -272,12 +265,12 @@ export default class HomePage extends Component {
             {/* Choose Month */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.black}
+              cursorColor={COLORS.text}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder={todayMonth} 
-              placeholderTextColor={COLORS.black}
-              color={COLORS.black}
+              placeholderTextColor={COLORS.text}
+              color={COLORS.text}
               style={styles.dateInput}
               onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
@@ -292,12 +285,12 @@ export default class HomePage extends Component {
             {/* Choose Day */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.black}
+              cursorColor={COLORS.text}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder={todayDay} 
-              placeholderTextColor={COLORS.black}
-              color={COLORS.black}
+              placeholderTextColor={COLORS.text}
+              color={COLORS.text}
               style={styles.dateInput}
               onChangeText={(value) =>
               this.setState({selectedDay: value})}>
@@ -318,12 +311,12 @@ export default class HomePage extends Component {
             {/* Choose Weight */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.black}
+              cursorColor={COLORS.text}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder='0'
-              placeholderTextColor={COLORS.black}
-              color={COLORS.black}
+              placeholderTextColor={COLORS.text}
+              color={COLORS.text}
               style={styles.weightInput}
               onChangeText={(value) =>
               this.setState({weightValue: value})}>
@@ -340,7 +333,7 @@ export default class HomePage extends Component {
               dropdownItemStyles={styles.weightDropdownItems}
               dropdownTextStyles={styles.weightDropdownText}
               search = 'false'
-              defaultOption={data2[0]}
+              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.text }} />}              defaultOption={data2[0]}
               setSelected={(value) => {this.setState({weightUnit: value})}} 
               data={data2} 
               save="value"
@@ -365,7 +358,7 @@ export default class HomePage extends Component {
             dropdownItemStyles={styles.weightDropdownItems}
             dropdownTextStyles={styles.weightDropdownText}
             search = 'false'
-            defaultOption={data[1]}
+            arrowicon={<FontAwesome name="chevron-down" marginLeft={5} size={12} style={{ color: COLORS.text }} />}         
             setSelected={(value) => {this.setState({weightDropdown: value})}} 
             data={data} 
             save="value"
@@ -386,8 +379,8 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.darkGray}
-              unfillColor={COLORS.white}
+              fillColor={COLORS.element}
+              unfillColor={COLORS.background}
               text="Yes"
               innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
               onPress={() => {
@@ -407,8 +400,8 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.darkGray}
-              unfillColor={COLORS.white}
+              fillColor={COLORS.element}
+              unfillColor={COLORS.background}
               text="Resturaunt"
 
               innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
@@ -419,8 +412,8 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.darkGray}
-              unfillColor={COLORS.white}
+              fillColor={COLORS.element}
+              unfillColor={COLORS.background}
               text="Home"
 
               innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
@@ -440,8 +433,8 @@ export default class HomePage extends Component {
           style={({ pressed }) => [
             {
               backgroundColor: pressed
-                ? '#3D7FFF'
-                : COLORS.blue,
+                ? COLORS.buttonPress
+                : COLORS.button,
             },
             styles.bottomButton,
           ]}>
@@ -464,21 +457,21 @@ const styles = StyleSheet.create({
 
   headerContainer: {
     flexDirection: 'row',
-    width: '90%',
+    width: '88%',
     justifyContent: 'space-between',
     alignItems: 'center',
 
   },
 
   titleText: {
-    color: COLORS.blue,
+    color: COLORS.header,
     fontWeight: '400',
     fontSize: 28,
   },
   image: {
-    width: '60%',
+    width: '65%',
     height: 'auto',
-    tintColor: COLORS.blue,
+    tintColor: COLORS.header,
     aspectRatio: 1290 / 193,
     justifyContent: 'flex-end',
   },
@@ -487,18 +480,18 @@ const styles = StyleSheet.create({
   dashContainer: {
     width: '90%',
     height: '30%',
-    borderRadius: 10,
-    backgroundColor: COLORS.white,
     alignItems: 'center',
+    borderRadius: 10,
     padding: 15,
+    backgroundColor: COLORS.background,
+    shadowColor: COLORS.shadow,
     shadowOffset: {
-      width: -7,
-      height: 7
+      width: -10,
+      height: 10
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowOpacity: 0.5,
+    shadowRadius: 15,
+    elevation: 10,
   },
 
 
@@ -521,7 +514,7 @@ const styles = StyleSheet.create({
   dashImage: {
     width: 60,
     height: 60,
-    tintColor: COLORS.darkGray
+    tintColor: COLORS.button
   },
   dashTextContainer: {
     marginTop: 5,
@@ -534,19 +527,19 @@ const styles = StyleSheet.create({
   },
   topLeftStreakText: {
     fontSize: 18,
-    color: COLORS.blue,
+    color: COLORS.boldtext,
     fontWeight: '700',    
   },
   topRightStreakText: {
     fontSize: 18,
-    color: COLORS.blue,
+    color: COLORS.boldtext,
     fontWeight: '700',     
   },
   dashBottomTextContainer: {
   },
   bottomStreakText: {
     fontSize: 18,
-    color: COLORS.black,
+    color: COLORS.text,
     fontWeight: '500',    
   },
 
@@ -559,7 +552,7 @@ const styles = StyleSheet.create({
   dashRightImage: {
     width: 30,
     height: 30,
-    tintColor: COLORS.darkGray,
+    tintColor: COLORS.icon,
     marginRight: 12,
     transform: [{ scaleX: -1 }], // Flip horizontally
 
@@ -574,39 +567,37 @@ const styles = StyleSheet.create({
   },
   subDashTextLeft: {
     fontSize: 16,
-    color: COLORS.blue,
+    color: COLORS.boldtext,
     fontWeight: '600',   
   },
   subDashTextRight: {
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.text,
     fontWeight: '400',   
   },
 
 
 
   trackWasteContainer: {
-    width: '90%',
+    width: '95%',
     height: '57%',
     position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.white,
-    shadowOffset: {
-      width: -7,
-      height: 7
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 2,
-    shadowColor: COLORS.blue,
+    backgroundColor: COLORS.transparent,
   },
   trackWasteHeader: {
     fontSize: 20,
-    fontWeight: '400',
-    color: COLORS.blue
+    fontWeight: '500',
+    color: COLORS.header,
+    // textShadowColor: COLORS.lightBlue,
+    // textShadowRadius: 1,
+    // textShadowOffset: {
+    //   width: -1,
+    //   height: 1
+    // },
   },
 
   dateContainer: {
@@ -616,9 +607,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     borderWidth: 2,
-    borderColor: COLORS.lightBlue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.element,
   },
   dateTextContainer: {
     width: '40%', 
@@ -629,7 +620,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.elementText,
   },
   dateInputContainer: {
     width: '60%',
@@ -637,7 +628,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderRadius: 10, 
   },
   dateInput: {
@@ -650,12 +641,12 @@ const styles = StyleSheet.create({
   dateInputText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.blue,
+    color: COLORS.text,
   },
   dateDash: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.text,
     paddingHorizontal: 10,
   },
 
@@ -668,9 +659,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.element,
     borderWidth: 2,
-    borderColor: COLORS.lightBlue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
     zIndex: 7, // Higher zIndex for weightContainer
   },
@@ -684,14 +675,14 @@ const styles = StyleSheet.create({
   weightText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.elementText,
   },
   weightInputContainer: {
     width: '60%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     paddingLeft: 10,
     borderRadius: 10, 
     zIndex: 3, // Higher zIndex for weightInputContainer
@@ -705,8 +696,8 @@ const styles = StyleSheet.create({
   weightInputText: {
     fontWeight: '500', 
     fontSize: 17,
-    color: COLORS.black,
-    backgroundColor: COLORS.white,
+    color: COLORS.text,
+    backgroundColor: COLORS.background,
   },
   weightBox: {
     width: '95%',
@@ -723,13 +714,13 @@ const styles = StyleSheet.create({
   weightDropdownInputText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.text,
   },
   weightDropdown: {
-    borderColor: COLORS.darkGray,
+    borderColor: COLORS.element,
     borderWidth: 2,
     position: 'absolute',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     MarginHorizontal: 0,
     marginTop: -2,
     marginRight: 0,
@@ -749,7 +740,7 @@ const styles = StyleSheet.create({
     fontWeight: '500', 
     width: '100%',
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.text,
   },
 
 
@@ -760,9 +751,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.element,
     borderWidth: 2,
-    borderColor: COLORS.lightBlue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
     zIndex: 3, // Higher zIndex for weightContainer
   },
@@ -776,7 +767,7 @@ const styles = StyleSheet.create({
   typeTitleText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.elementText,
   },
   categoryBox: {
     width: '100%',
@@ -793,21 +784,21 @@ const styles = StyleSheet.create({
   }, 
   typeDropdownContainer: {
     width: '60%',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderRadius: 10, 
     zIndex: 3, // Higher zIndex for weightInputContainer
   },
   categoryDropdownInputText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.text,
     paddingLeft: 10,
   },
   typeDropdown: {
-    borderColor: COLORS.darkGray,
+    borderColor: COLORS.element,
     borderWidth: 2,
     position: 'absolute',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     MarginHorizontal: 0,
     marginTop: -2,
     marginRight: 0,
@@ -823,9 +814,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.element,
     borderWidth: 2,
-    borderColor: COLORS.lightBlue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
     zIndex: 1, // Higher zIndex for weightContainer
   },
@@ -838,19 +829,19 @@ const styles = StyleSheet.create({
   checkboxTitleText: {
     fontWeight: '500', 
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.elementText,
   },
   questionContainer: {
     width: '45%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderRadius: 10, 
   },
   checkboxText: {
     fontSize: 16,
-    color: COLORS.black,
+    color: COLORS.text,
     fontWeight: '500',
     textDecorationLine: 'none',
     marginLeft: -3,
@@ -867,8 +858,8 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: COLORS.lightBlue,
-    backgroundColor: COLORS.white,
+    borderColor: COLORS.element,
+    backgroundColor: COLORS.background,
     borderRadius: 12, 
     zIndex: 1, // Higher zIndex for weightContainer
   },
@@ -877,7 +868,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
 
@@ -892,7 +883,7 @@ const styles = StyleSheet.create({
     borderRadius: 12, 
   },
   bottomButtonText: {
-    color: COLORS.white,
+    color: COLORS.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },

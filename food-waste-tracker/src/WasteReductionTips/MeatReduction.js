@@ -27,6 +27,15 @@ const styles = StyleSheet.create({
     marginVertical: '2%',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.white,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
+    shadowColor: COLORS.blue,
   },
   label: {
     fontSize: 15,

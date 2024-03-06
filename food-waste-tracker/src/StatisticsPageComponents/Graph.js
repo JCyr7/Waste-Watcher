@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
 
 const chartConfig = {
   backgroundColor: COLORS.white,
-  backgroundGradientFrom: COLORS.lightBlue,
-  backgroundGradientTo: COLORS.lightBlue,
+  backgroundGradientFrom: COLORS.white,
+  backgroundGradientTo: COLORS.white,
   fillShadowGradientFrom: COLORS.blue,
   fillShadowGradientTo: COLORS.white,
   fillShadowGradientFromOpacity: 0.5,
@@ -105,7 +105,7 @@ const chartConfig = {
   strokeWidth: 3,
   
   propsForBackgroundLines: {
-    stroke: COLORS.lightBlue,
+    stroke: COLORS.white,
     strokeWidth: 1,  // Set the desired width for the lines
     //strokeDasharray: [],  // Set an empty array to make the lines continuous
   },

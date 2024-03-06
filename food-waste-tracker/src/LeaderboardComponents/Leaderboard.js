@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '75%',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     alignItems: 'center',
   },
   labels: {

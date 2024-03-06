@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
-    marginBottom: '5%'
+    marginBottom: '2%'
   },
 
 
@@ -268,16 +268,16 @@ const styles = StyleSheet.create({
     padding: '3%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
-    // shadowOffset: {
-    //   width: -3,
-    //   height: 4
-    // },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 6,
-    // elevation: 10,
-    // shadowColor: COLORS.shadow
+    shadowOffset: {
+      width: -5,
+      height: 5
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 2,
+    shadowColor: COLORS.blue,
   },
 
   graphHeader: {
@@ -294,8 +294,16 @@ const styles = StyleSheet.create({
   fulllbContainer: {
     width: '90%',
     height: '40%',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
+    shadowColor: COLORS.blue,
   },
   lbcontainer: {
     flex: 1,
@@ -339,7 +347,7 @@ const styles = StyleSheet.create({
     width: '91%',
     height: 'auto',
     alignItems: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
     marginBottom: '5%',
   },
@@ -375,17 +383,25 @@ const styles = StyleSheet.create({
     height: '6.5%',
   },
   bottomButton: {
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
     width: '40%',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
+    shadowColor: COLORS.blue,
   },
   bottomButtonText: {
     color: COLORS.blue,
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '500',
   },
 
 

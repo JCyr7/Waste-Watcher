@@ -93,30 +93,6 @@ export default class ProfilePage extends Component {
           <Text style={styles.name}>{this.state.userName}</Text>
           <Text style={styles.info}>{this.state.email}</Text>
         </View>
-          {/* Back Button Container */}
-          {/* <View style={styles.backButtonContainer}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-                },
-                styles.backbutton,
-              ]}
-              onPress={() => this.badgesVisibility(true)}>
-              <Image 
-                source={require('../../images/backarrow.png')}
-                style={{
-                  width: 35,
-                  height: 35,
-                }}
-              />
-              <Text style={styles.backbuttontext}>Back</Text>
-            </Pressable>
-          </View> */}
-
-          {/* Profile Information Container */}
-
-
 
         {/* Account Actions Container */}
         <View style={styles.actionsContainer}>
@@ -162,9 +138,7 @@ export default class ProfilePage extends Component {
               <NotificationsPopup />
             </Popup>
           </Modal>
-
-
-          {/* add friends Button*/}
+          {/* Add Friends Button*/}
           <Pressable
             style={({ pressed }) => [
               {
@@ -186,7 +160,7 @@ export default class ProfilePage extends Component {
               <Text style={styles.actionDescription}>View and invite friends</Text>
             </View>
           </Pressable>
-          {/* Notifications Modal */}
+          {/* Add Friends Modal */}
           <Modal
             animationType='fade'
             transparent={true}
@@ -207,8 +181,7 @@ export default class ProfilePage extends Component {
             </Popup>
           </Modal>
 
-
-          {/* Streak Button */}
+          {/* Referral Button */}
           <Pressable
             style={({ pressed }) => [
               {
@@ -216,48 +189,24 @@ export default class ProfilePage extends Component {
               },
               styles.action,
             ]}
-            onPress={() => this.streakVisibility(true)}>
+            onPress={() => this.referralOnPress()}>
             <View style={styles.actionIcon}>
-            <Image 
-              source={require('../../images/streak.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
+              <Image 
+                source={require('../../images/refer.png')}
+                style={{
+                  width: 35,
+                  height: 35,
+                }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Streak</Text>
+              <Text style={styles.actionName}>Refer a Friend</Text>
               <Text style={styles.actionDescription}>
-                Track daily, earn rewards
+                Connect and track together
               </Text>
             </View>
           </Pressable>
-          {/* Streak Modal */}
-          <Modal
-            style={styles.modal}
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.streakModal}
-            onRequestClose={() => this.streakVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                <Text style={styles.popupHeaderText}>Streak</Text>
-                <Pressable
-                  style={styles.closePopupButton}
-                  onPress={() => this.streakVisibility(false)}>
-                  <AntDesign name='close' size={24} color='black' />
-                </Pressable>
-              </View>
-              <View style={styles.popupContent}>
-                <StreakPopup />
-              </View>
-            </Popup>
-          </Modal>
 
-
-          {/* Badges Button */}
+          {/* Dark Mode Button */}
           <Pressable
             style={({ pressed }) => [
               {
@@ -265,46 +214,22 @@ export default class ProfilePage extends Component {
               },
               styles.action,
             ]}
-            onPress={() => this.badgesVisibility(true)}>
+            onPress={() => this.referralOnPress()}>
             <View style={styles.actionIcon}>
-            <Image 
-              source={require('../../images/ribbon.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
+              <Image 
+                source={require('../../images/dark.png')}
+                style={{
+                  width: 35,
+                  height: 35,
+                }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>My Badges</Text>
+              <Text style={styles.actionName}>Dark Mode</Text>
               <Text style={styles.actionDescription}>
-                Earn badges, complete goals
+                Change the apps appearance
               </Text>
             </View>
           </Pressable>
-          {/* Badges Modal */}
-          <Modal
-            style={styles.modal}
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.badgesModal}
-            onRequestClose={() => this.badgesVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                <Text style={styles.popupHeaderText}>Badges</Text>
-                <Pressable
-                  style={styles.closePopupButton}
-                  onPress={() => this.badgesVisibility(false)}>
-                  <AntDesign name='close' size={24} color='black' />
-                </Pressable>
-              </View>
-              <View style={styles.popupContent}>
-                <BadgesPopup />
-              </View>
-            </Popup>
-          </Modal>
-
 
           {/* settings Button */}
           <Pressable
@@ -324,7 +249,7 @@ export default class ProfilePage extends Component {
               }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Settings</Text>
+              <Text style={styles.actionName}>Edit Account</Text>
               <Text style={styles.actionDescription}>
                 Edit your account info
               </Text>
@@ -354,36 +279,11 @@ export default class ProfilePage extends Component {
                   zipCode={this.state.zipCode}
                 />
               </Popup>
-            </Modal>
+            </Modal>  
 
-
-          {/* Referral Button */}
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-              },
-              styles.action,
-            ]}
-            onPress={() => this.referralOnPress()}>
-            <View style={styles.actionIcon}>
-              <Image 
-                source={require('../../images/refer.png')}
-                style={{
-                  width: 35,
-                  height: 35,
-                }}/>
-            </View>
-            <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Refer a Friend</Text>
-              <Text style={styles.actionDescription}>
-                Connect and track together
-              </Text>
-            </View>
-          </Pressable>
 
           {/* Log out button */}
-          {/* <Pressable
+          <Pressable
             style={({ pressed }) => [
               {
                 backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
@@ -403,7 +303,7 @@ export default class ProfilePage extends Component {
               <Text style={styles.actionName}>Sign out</Text>
 
             </View>
-          </Pressable> */}
+          </Pressable>
         </View>
       </View>
     )
@@ -421,8 +321,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
-
   accountContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -456,9 +354,6 @@ const styles = StyleSheet.create({
     color: COLORS.darkGray,
     marginBottom: '5%'
   },
-  
-
-
   action: {
     width: '100%',
     height: '13%',
@@ -480,7 +375,6 @@ const styles = StyleSheet.create({
     height: '100%',
     marginTop: '5%',
   },
-
   actionInfoContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -516,5 +410,127 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '90%',
     alignItems: 'center'
-  }
+  },
 })
+{/* Streak Button */}
+{/* <Pressable
+  style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+    },
+    styles.action,
+  ]}
+  onPress={() => this.streakVisibility(true)}>
+  <View style={styles.actionIcon}>
+  <Image 
+    source={require('../../images/streak.png')}
+    style={{
+      width: 35,
+      height: 35,
+    }}/>
+  </View>
+  <View style={styles.actionInfoContainer}>
+    <Text style={styles.actionName}>Streak</Text>
+    <Text style={styles.actionDescription}>
+      Track daily, earn rewards
+    </Text>
+  </View>
+</Pressable> */}
+{/* Streak Modal */}
+{/* <Modal
+  style={styles.modal}
+  animationType='fade'
+  transparent={true}
+  statusBarTranslucent={true}
+  visible={this.state.streakModal}
+  onRequestClose={() => this.streakVisibility(false)}>
+  <Popup>
+    <View style={styles.popupHeader}>
+      <View style={{width: '10%'}} />
+      <Text style={styles.popupHeaderText}>Streak</Text>
+      <Pressable
+        style={styles.closePopupButton}
+        onPress={() => this.streakVisibility(false)}>
+        <AntDesign name='close' size={24} color='black' />
+      </Pressable>
+    </View>
+    <View style={styles.popupContent}>
+      <StreakPopup />
+    </View>
+  </Popup>
+</Modal> */}
+
+
+{/* Badges Button */}
+{/* <Pressable
+  style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+    },
+    styles.action,
+  ]}
+  onPress={() => this.badgesVisibility(true)}>
+  <View style={styles.actionIcon}>
+  <Image 
+    source={require('../../images/ribbon.png')}
+    style={{
+      width: 35,
+      height: 35,
+    }}/>
+  </View>
+  <View style={styles.actionInfoContainer}>
+    <Text style={styles.actionName}>My Badges</Text>
+    <Text style={styles.actionDescription}>
+      Earn badges, complete goals
+    </Text>
+  </View>
+</Pressable> */}
+{/* Badges Modal */}
+{/* <Modal
+  style={styles.modal}
+  animationType='fade'
+  transparent={true}
+  statusBarTranslucent={true}
+  visible={this.state.badgesModal}
+  onRequestClose={() => this.badgesVisibility(false)}>
+  <Popup>
+    <View style={styles.popupHeader}>
+      <View style={{width: '10%'}} />
+      <Text style={styles.popupHeaderText}>Badges</Text>
+      <Pressable
+        style={styles.closePopupButton}
+        onPress={() => this.badgesVisibility(false)}>
+        <AntDesign name='close' size={24} color='black' />
+      </Pressable>
+    </View>
+    <View style={styles.popupContent}>
+      <BadgesPopup />
+    </View>
+  </Popup>
+</Modal> */}
+
+
+
+{/* Back Button Container */} 
+{/* <View style={styles.backButtonContainer}>
+  <Pressable
+    style={({ pressed }) => [
+      {
+        backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+      },
+      styles.backbutton,
+    ]}
+    onPress={() => this.badgesVisibility(true)}>
+    <Image 
+      source={require('../../images/backarrow.png')}
+      style={{
+        width: 35,
+        height: 35,
+      }}
+    />
+    <Text style={styles.backbuttontext}>Back</Text>
+  </Pressable>
+</View> */}
+
+{/* Profile Information Container */}
+

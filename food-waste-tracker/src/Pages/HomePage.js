@@ -15,6 +15,9 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import StreakPopup from '../Popups/StreakPopup';
+
+
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -57,7 +60,8 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      weightdropdown: '',
+      streakModal: false,
+      weightDropdown: '',
       selectedMonth: '',
       selectedDay: '',
       weightUnit: '',
@@ -67,6 +71,10 @@ export default class HomePage extends Component {
       streak: [0]
     }
     this.getData();
+  }
+
+  streakVisibility(value) {
+    this.setState({streakModal: value})
   }
 
   // Method retrieves data from async storage
@@ -136,71 +144,124 @@ export default class HomePage extends Component {
     const todayDay = today.getDate().toString().padStart(2, '0');
     return (
       <View style={styles.container}>
-        {/* Welcome Header */}
-        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
-        <Text style={styles.titleText}>Home</Text>
+
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.titleText}>Home</Text>
+          <Image source={require('../../images/logo.png')} style={styles.image}/>
+        </View>
+
         {/* Progress Dials */}
         <View style={styles.dashContainer}>
+          <Text style={styles.trackWasteHeader}>This Weeks Insights</Text>  
 
+          <View style={styles.statsDash}>
+            <View style={styles.leftDash}>
+              {/*streakdash item*/}
+              <Pressable 
+                style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                },
+                styles.dashItemSmall,
+              ]}
+                onPress={() => this.streakVisibility(true)}>
+                <Image source={require('../../images/flamesharp.png')} style={styles.dashImage}/>
+                <View style={styles.dashTextContainer}>
 
-          {/*streakdash item*/}
-          <Pressable style={styles.dashItemSmall}>
-            <Image source={require('../../images/streak.png')} style={styles.dashImage}/>
-            <View style={styles.dashTextContainer}>
+                  <View style={styles.dashTopTextContainer}>
+                    <Text style={styles.topLeftStreakText}>{this.state.streak} </Text>
+                    <Text style={styles.topRightStreakText}>Day</Text>
+                  </View>
 
-              <View style={styles.dashTopTextContainer}>
-                <Text style={styles.topLeftStreakText}>{this.state.streak} </Text>
-                <Text style={styles.topRightStreakText}>Day</Text>
-              </View>
-
-              <View style={styles.dashBottomTextContainer}>
-                <Text style={styles.bottomStreakText}>Streak</Text>
-              </View>
+                  <View style={styles.dashBottomTextContainer}>
+                    <Text style={styles.bottomStreakText}>Streak</Text>
+                  </View>
+                </View>
+              </Pressable>
             </View>
-          </Pressable>
 
-          {/*weekly waste dial*/}
-          <View style={styles.dialContainer}>
-            <View style={styles.dial}>
-            <ProgressChart
-            data={[.6]}
-            width={125}
-            height={125}
-            strokeWidth={11}
-            radius={44}
-            chartConfig={dialChartConfig}
-            hideLegend={true}/>
-            <View style={styles.dialLabel}>
-              <Text style={styles.additionalText}>4.2 lbs</Text>
+            {/* Streak Modal */}
+            <Modal
+              style={styles.modal}
+              animationType='fade'
+              transparent={true}
+              statusBarTranslucent={true}
+              visible={this.state.streakModal}
+              onRequestClose={() => this.streakVisibility(false)}>
+              <Popup>
+                <View style={styles.popupHeader}>
+                  <View style={{width: '10%'}} />
+                  <Text style={styles.popupHeaderText}>Streak</Text>
+                  <Pressable
+                    style={styles.closePopupButton}
+                    onPress={() => this.streakVisibility(false)}>
+                    <AntDesign name='close' size={24} color='black' />
+                  </Pressable>
+                </View>
+                <View style={styles.popupContent}>
+                  <StreakPopup />
+                </View>
+              </Popup>
+            </Modal>
+
+            <View style={styles.rightDash}>
+
+
+
+              {/*weekly waste dash item*/}
+              <Pressable style={styles.dashItemHorizontal}>
+                <Image source={require('../../images/trash.png')} style={styles.dashRightImage}/>
+                <View style={styles.dashTextContainer}>
+
+                  <View style={styles.subDashTextContainer}>
+                    <Text style={styles.subDashTextLeft}>4.4 lbs</Text>
+                    <Text style={styles.subDashTextRight}> of Food Waste</Text>
+
+                  </View>
+                </View>
+              </Pressable>
+
+
+
+              {/*money dash item*/}
+              <Pressable style={styles.dashItemHorizontal}>
+                <Image source={require('../../images/money.png')} style={styles.dashRightImage}/>
+                <View style={styles.dashTextContainer}>
+
+                  <View style={styles.subDashTextContainer}>
+                    <Text style={styles.subDashTextLeft}>$15.24</Text>
+                    <Text style={styles.subDashTextRight}> Wasted on Food</Text>
+
+                  </View>
+                </View>
+              </Pressable>
+
+
+
+              {/*CO2 dash item*/}
+              <Pressable style={styles.dashItemHorizontal}>
+                <Image source={require('../../images/leaf.png')} style={styles.dashRightImage}/>
+                <View style={styles.dashTextContainer}>
+
+                  <View style={styles.subDashTextContainer}>
+                    <Text style={styles.subDashTextLeft}>9.2 lbs</Text>
+                    <Text style={styles.subDashTextRight}> of CO2 Emissions</Text>
+
+                  </View>
+                </View>
+              </Pressable>
             </View>
-            </View>
-            <Text style={styles.largeDialText}>Weekly</Text>
-            <Text style={styles.largeDialText}>Waste</Text>
           </View>
 
-          {/*money dash item*/}
-          <Pressable style={styles.dashItemSmall}>
-            <Image source={require('../../images/money.png')} style={styles.dashImage}/>
-            <View style={styles.dashTextContainer}>
 
-              <View style={styles.dashTopTextContainer}>
-                <Text style={styles.topRightStreakText}>$</Text>
-                <Text style={styles.topLeftStreakText}>14.34</Text>
-              </View>
-
-              <View style={styles.dashBottomTextContainer}>
-                <Text style={styles.bottomStreakText}>Saved</Text>
-              </View>
-            </View>
-          </Pressable>
-          
-        </View>     
+        </View>  
+           
         {/* Track Waste container */}
         <View style={styles.trackWasteContainer}>
         <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
 
-
-          {/* Date Container */}      
+        {/* Date Container */}      
         <View style={styles.dateContainer}>
           <View style={styles.dateTextContainer}>
             <Text style={styles.dateText}>Date</Text>
@@ -211,12 +272,12 @@ export default class HomePage extends Component {
             {/* Choose Month */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.blue}
+              cursorColor={COLORS.black}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder={todayMonth} 
-              placeholderTextColor={COLORS.blue}
-              color={COLORS.blue}
+              placeholderTextColor={COLORS.black}
+              color={COLORS.black}
               style={styles.dateInput}
               onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
@@ -231,12 +292,12 @@ export default class HomePage extends Component {
             {/* Choose Day */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.blue}
+              cursorColor={COLORS.black}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder={todayDay} 
-              placeholderTextColor={COLORS.blue}
-              color={COLORS.blue}
+              placeholderTextColor={COLORS.black}
+              color={COLORS.black}
               style={styles.dateInput}
               onChangeText={(value) =>
               this.setState({selectedDay: value})}>
@@ -244,7 +305,6 @@ export default class HomePage extends Component {
             </TextInput>
           </View>
         </View>
-
 
         {/* Weight Container */}  
         <View style={styles.weightContainer}>
@@ -258,12 +318,12 @@ export default class HomePage extends Component {
             {/* Choose Weight */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.blue}
+              cursorColor={COLORS.black}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder='0'
-              placeholderTextColor={COLORS.blue}
-              color={COLORS.blue}
+              placeholderTextColor={COLORS.black}
+              color={COLORS.black}
               style={styles.weightInput}
               onChangeText={(value) =>
               this.setState({weightValue: value})}>
@@ -288,7 +348,6 @@ export default class HomePage extends Component {
           </View>
         </View>
 
-
         {/* Type Container */}  
         <View style={styles.typeContainer}>
           {/* Choose Weight Title */}  
@@ -312,35 +371,7 @@ export default class HomePage extends Component {
             save="value"
             />
           </View>
-        </View>
-         
-
-        {/* At Home Checkbox container */}  
-        <View style={styles.checkBoxContainer}>
-          {/* Resturaunt Title */}  
-          <View style={styles.checkboxTitleContainer}>
-            <Text style={styles.checkboxTitleText}>From grocery store?</Text>
-          </View>
-          {/* Resturaunt checkbox */}  
-          <View style={styles.questionContainer}>
-            <BouncyCheckbox
-              size={22}
-              style={styles.checkBox}
-              fillColor={COLORS.blue}
-              unfillColor='white'
-              text="Yes"
-
-              innerIconStyle={{borderWidth: 2, borderRadius: 7}}
-              onPress={() => {
-                this.setState((prevState) => ({
-                  inHomeCheckbox: !prevState.inHomeCheckbox,
-                }));
-              }}
-              textStyle={styles.checkboxText}
-            />
-          </View>
-        </View>
-
+        </View>    
 
         {/* Edible Checkbox container */}  
         <View style={styles.checkBoxContainer}>
@@ -355,10 +386,10 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.blue}
-              unfillColor='white'
+              fillColor={COLORS.darkGray}
+              unfillColor={COLORS.white}
               text="Yes"
-              innerIconStyle={{borderWidth: 2, borderRadius: 7}}
+              innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
               onPress={() => {
                 this.setState((prevState) => ({
                   edibleCheckbox: !prevState.edibleCheckbox,
@@ -369,6 +400,39 @@ export default class HomePage extends Component {
           </View>
         </View>
 
+        {/* At Home Checkbox container */}  
+        <View style={styles.homecheckBoxContainer}>
+          {/* Resturaunt checkbox */}  
+          <View style={styles.homequestionContainer}>
+            <BouncyCheckbox
+              size={20}
+              style={styles.checkBox}
+              fillColor={COLORS.darkGray}
+              unfillColor={COLORS.white}
+              text="Resturaunt"
+
+              innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
+              textStyle={styles.checkboxText}
+            />
+          </View>
+          <View style={styles.questionContainer}>
+            <BouncyCheckbox
+              size={20}
+              style={styles.checkBox}
+              fillColor={COLORS.darkGray}
+              unfillColor={COLORS.white}
+              text="Home"
+
+              innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
+              onPress={() => {
+                this.setState((prevState) => ({
+                  inHomeCheckbox: !prevState.inHomeCheckbox,
+                }));
+              }}
+              textStyle={styles.checkboxText}
+            />
+          </View>
+        </View>
 
         {/* Submit button */}    
         <Pressable
@@ -376,7 +440,7 @@ export default class HomePage extends Component {
           style={({ pressed }) => [
             {
               backgroundColor: pressed
-                ? COLORS.lightBlue
+                ? '#3D7FFF'
                 : COLORS.blue,
             },
             styles.bottomButton,
@@ -394,80 +458,60 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
-    marginBottom: '5%'
+    marginBottom: '2%'
   },
 
-  // image: {
-  //   width: '60%',
-  //   height: 'auto',
-  //   tintColor: COLORS.blue,
-  //   aspectRatio: 1290 / 193,
-  // },
+
+  headerContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+  },
+
   titleText: {
     color: COLORS.blue,
     fontWeight: '400',
     fontSize: 28,
-    // alignSelf: 'flex-start',
-    // paddingLeft: '5%'  
+  },
+  image: {
+    width: '60%',
+    height: 'auto',
+    tintColor: COLORS.blue,
+    aspectRatio: 1290 / 193,
+    justifyContent: 'flex-end',
   },
 
 
   dashContainer: {
     width: '90%',
-    height: '27.5%',
+    height: '30%',
+    borderRadius: 10,
+    backgroundColor: COLORS.white,
+    alignItems: 'center',
+    padding: 15,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
+    shadowColor: COLORS.blue,
+  },
+
+
+  statsDash: {
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'flex-end',
-    borderRadius: 10,
-    padding: 15,
-    backgroundColor: COLORS.lightBlue,
-  },
-  
-  dialContainer: {
-  },
-  dial: {
-    width: '100',
-    height: '100',
-    justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative', // Ensure relative positioning for proper absolute positioning
+    paddingVertical: 10,
   },
-  
-  largeDialText: {
-    fontSize: 17,
-    color: COLORS.blue,
-    fontWeight: '400',
-    textAlign: 'center',
+  leftDash: {
+    width: '30%',
   },
-
-  dialLabel: {
-    top: '43%',
-    position: 'absolute', // Absolute positioning
-  },
-  additionalText: {
-    fontSize: 17,
-    color: COLORS.blue,
-    fontWeight: '500',
-  },
-
-
-
-
-
-
-
-  // largeDialText: {
-  //   fontSize: 17,
-  //   color: COLORS.blue,
-  //   fontWeight: '400',
-  //   textAlign: 'center',
-  // },
-
-
-
-  
- 
- 
   dashItemSmall: {
     width: '100',
     height: '100',
@@ -475,12 +519,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dashImage: {
-    width: 50,
-    height: 50,
-    tintColor: COLORS.blue
+    width: 60,
+    height: 60,
+    tintColor: COLORS.darkGray
   },
   dashTextContainer: {
-    marginTop: 10,
+    marginTop: 5,
     alignItems: 'center',
   },
   dashTopTextContainer: {
@@ -489,44 +533,81 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topLeftStreakText: {
-    fontSize: 17,
+    fontSize: 18,
     color: COLORS.blue,
     fontWeight: '700',    
   },
   topRightStreakText: {
-    fontSize: 16,
-    right: 0,
+    fontSize: 18,
     color: COLORS.blue,
-    fontWeight: '500',    
+    fontWeight: '700',     
   },
   dashBottomTextContainer: {
   },
   bottomStreakText: {
-    fontSize: 16,
-    color: COLORS.blue,
+    fontSize: 18,
+    color: COLORS.black,
     fontWeight: '500',    
   },
 
+  rightDash: {
+    justifyContent: 'space-between',
+    height: '90%',
+    width: '69.5%',
+    marginLeft: '1.5%',
+  },
+  dashRightImage: {
+    width: 30,
+    height: 30,
+    tintColor: COLORS.darkGray,
+    marginRight: 12,
+    transform: [{ scaleX: -1 }], // Flip horizontally
 
+  },
+  dashItemHorizontal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subDashTextContainer: {
+    flexDirection: 'row',
+    paddingBottom: 3,
+  },
+  subDashTextLeft: {
+    fontSize: 16,
+    color: COLORS.blue,
+    fontWeight: '600',   
+  },
+  subDashTextRight: {
+    fontSize: 16,
+    color: COLORS.black,
+    fontWeight: '400',   
+  },
 
 
 
   trackWasteContainer: {
     width: '90%',
-    height: '60%',
+    height: '57%',
     position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 2,
+    shadowColor: COLORS.blue,
   },
   trackWasteHeader: {
     fontSize: 20,
     fontWeight: '400',
     color: COLORS.blue
   },
-
 
   dateContainer: {
     flexDirection: 'row',
@@ -535,22 +616,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.lightBlue,
     borderRadius: 12, 
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.lightBlue,
   },
-
   dateTextContainer: {
-    fontWeight: '400',
     width: '40%', 
-    fontSize: 17,
+    fontSize: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
   dateText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
   },
   dateInputContainer: {
     width: '60%',
@@ -558,25 +637,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10, 
   },
   dateInput: {
-    fontSize: 17,
-    fontWeight: '400', 
+    fontSize: 16,
+    fontWeight: '500', 
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: COLORS.transparent
   },
   dateInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
+    fontWeight: '500', 
+    fontSize: 16,
     color: COLORS.blue,
   },
   dateDash: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
     paddingHorizontal: 10,
   },
 
@@ -589,31 +668,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.lightBlue,
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.lightBlue,
     borderRadius: 12, 
     zIndex: 7, // Higher zIndex for weightContainer
   },
   weightTextContainer: {
-    fontWeight: '400',
     width: '40%', 
-    fontSize: 17,
+    fontSize: 16,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2, // Higher zIndex for weightTextContainer
   },
   weightText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
   },
   weightInputContainer: {
     width: '60%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     paddingLeft: 10,
     borderRadius: 10, 
     zIndex: 3, // Higher zIndex for weightInputContainer
@@ -622,16 +700,16 @@ const styles = StyleSheet.create({
     width: '30%',
     height: '90%',
     fontSize: 17,
-    fontWeight: '400', 
+    fontWeight: '500', 
   },
   weightInputText: {
-    fontWeight: '400', 
+    fontWeight: '500', 
     fontSize: 17,
-    color: COLORS.blue,
-    backgroundColor: 'white',
+    color: COLORS.black,
+    backgroundColor: COLORS.white,
   },
   weightBox: {
-    width: '90%',
+    width: '95%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -643,15 +721,15 @@ const styles = StyleSheet.create({
     zIndex: 4, // Higher zIndex for weightBox
   },
   weightDropdownInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
   },
   weightDropdown: {
-    borderColor: COLORS.blue,
+    borderColor: COLORS.darkGray,
     borderWidth: 2,
     position: 'absolute',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     MarginHorizontal: 0,
     marginTop: -2,
     marginRight: 0,
@@ -668,23 +746,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 20,
     marginVertical: 0,
-    fontWeight: '400', 
+    fontWeight: '500', 
     width: '100%',
-    fontSize: 17,
-    color: COLORS.blue,
+    fontSize: 16,
+    color: COLORS.black,
   },
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   typeContainer: {
@@ -694,24 +760,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.lightBlue,
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.lightBlue,
     borderRadius: 12, 
     zIndex: 3, // Higher zIndex for weightContainer
   },
   typeTitleTextContainer: {
-    fontWeight: '400',
     width: '40%', 
-    fontSize: 17,
+    fontSize: 16,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2, // Higher zIndex for weightTextContainer
   },
   typeTitleText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
   },
   categoryBox: {
     width: '100%',
@@ -728,21 +793,21 @@ const styles = StyleSheet.create({
   }, 
   typeDropdownContainer: {
     width: '60%',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10, 
     zIndex: 3, // Higher zIndex for weightInputContainer
   },
   categoryDropdownInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
     paddingLeft: 10,
   },
   typeDropdown: {
-    borderColor: COLORS.blue,
+    borderColor: COLORS.darkGray,
     borderWidth: 2,
     position: 'absolute',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     MarginHorizontal: 0,
     marginTop: -2,
     marginRight: 0,
@@ -751,20 +816,6 @@ const styles = StyleSheet.create({
   },
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   checkBoxContainer: {
     flexDirection: 'row',
     width: '90%',
@@ -772,36 +823,35 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.lightBlue,
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.lightBlue,
     borderRadius: 12, 
     zIndex: 1, // Higher zIndex for weightContainer
   },
   checkboxTitleContainer: {
-    fontWeight: '400',
     width: '55%', 
-    fontSize: 17,
+    fontSize: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxTitleText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 16,
+    color: COLORS.black,
   },
   questionContainer: {
     width: '45%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     borderRadius: 10, 
   },
   checkboxText: {
-    fontSize: 17,
-    color: COLORS.blue,
-    fontWeight: '400',
+    fontSize: 16,
+    color: COLORS.black,
+    fontWeight: '500',
     textDecorationLine: 'none',
     marginLeft: -3,
   },
@@ -809,10 +859,26 @@ const styles = StyleSheet.create({
   },
 
 
-
-
-
-
+  homecheckBoxContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    height: '10%',
+    alignSelf: 'center',
+    textAlign: 'center', 
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
+    borderRadius: 12, 
+    zIndex: 1, // Higher zIndex for weightContainer
+  },
+  homequestionContainer: {
+    width: '45%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.white,
+  },
 
 
   bottomButton: {
@@ -830,5 +896,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  
+
+
+  modal: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  popupHeader: {
+    flexDirection: 'row',
+    height: '10%',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  popupHeaderText: {
+    fontSize: 24,
+    fontWeight: '800'
+  },
+  closePopupButton: {
+    marginTop: '2%',
+    paddingRight: '2%',
+    alignItems: 'flex-end',
+    width: '10%'
+  },
+  popupContent: {
+    width: '100%',
+    height: '90%',
+    alignItems: 'center'
+  }
 })

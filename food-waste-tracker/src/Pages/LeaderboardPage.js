@@ -45,27 +45,29 @@ export default class LeaderboardPage extends Component {
         Feeding Animals (livestock farms)
         Compost (service providers/drop-off sites)
         AD (service providers) */}
-        <View style={styles.mapContainer}>
-          <Pressable 
-            style={styles.maptitlecontainer} 
-            onPress={this.navmap}>
-            <Text style={styles.mapText}>Map of Food Waste Solutions</Text>
-            <Image source={require('../../images/expand.png')} style={styles.expandImage} />
-          </Pressable>
-          <MapView
-            style={styles.map}
-            zoomEnabled={true}
-            provider={PROVIDER_GOOGLE}
-            customMapStyle={mapStyle}
-            initialRegion={{
-              latitude: 45.2538,
-              longitude: -69.4455,
-              latitudeDelta: 4,
-              longitudeDelta: 4
-            }}>
-            {/* GeoJSON object displays simple line for testing */}
-            <Geojson geojson={geojson} />
-          </MapView>
+        <View style={styles.fullmapContainer}>
+          <View style={styles.mapContainer}>
+            <Pressable 
+              style={styles.maptitlecontainer} 
+              onPress={this.navmap}>
+              <Text style={styles.mapText}>Map of Food Waste Solutions</Text>
+              <Image source={require('../../images/expand.png')} style={styles.expandImage} />
+            </Pressable>
+            <MapView
+              style={styles.map}
+              zoomEnabled={true}
+              provider={PROVIDER_GOOGLE}
+              customMapStyle={mapStyle}
+              initialRegion={{
+                latitude: 45.2538,
+                longitude: -69.4455,
+                latitudeDelta: 4,
+                longitudeDelta: 4
+              }}>
+              {/* GeoJSON object displays simple line for testing */}
+              <Geojson geojson={geojson} />
+            </MapView>
+          </View>
         </View>
         <View style={styles.newContainer}>
           {/* Hierarchy Container */}
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
-    marginBottom: '5%'
+    marginBottom: '2%'
   },
   // image: {
   //   width: '60%',
@@ -118,16 +120,29 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 28,
   },
-  mapContainer:{
+ fullmapContainer:{
     width: '90%',
     height: '32%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    overflow: 'hidden',
     marginTop: '3%',
     padding: 10, // Add padding
-    backgroundColor: COLORS.lightBlue, // Set background color
+    borderRadius: 10,
+    backgroundColor: COLORS.white,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
+    shadowColor: COLORS.blue,
+  },
+  mapContainer:{
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+
   },
   maptitlecontainer: {
     width: '100%',
@@ -164,7 +179,15 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     marginBottom: '3%',
     borderRadius: 10,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
+    shadowColor: COLORS.blue,
   },
   heirarchyContainer:{
     height: '100%',
@@ -211,7 +234,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.white,
     // shadowOffset: {
     //   width: -3,
     //   height: 4
@@ -231,7 +254,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Set flexDirection to 'row'
     flexWrap: 'wrap', // Allow items to wrap to the next line
     justifyContent: 'space-between',
-    width: '92%', // Adjust the width as needed
+    width: '100%', // Adjust the width as needed
     height: '80%',
     paddingBottom: '5%', // Add horizontal padding for spacing between items
   },

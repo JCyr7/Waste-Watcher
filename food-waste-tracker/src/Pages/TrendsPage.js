@@ -1,23 +1,79 @@
-import React, {Component} from 'react'
-import {StyleSheet, View, Text, Platform, Pressable, Image, ScrollView} from 'react-native'
-import {COLORS} from '../Utils/colors'
-import Divider from '../Utils/Divider'
-import ViewWaste from '../StatisticsPageComponents/ViewWaste'
-import Graph from '../StatisticsPageComponents/Graph'
-import {DATA} from '../Utils/TestData'
-import Leaderboard from '../LeaderboardComponents/Leaderboard'
-import { getFriends, getNameFromID, getUserStreak, getPendingFriendRequestsRecieved } from '../ProfileComponents/FriendHandler'
-import { FIREBASE_AUTH } from '../../FirebaseConfig'
+import React, { Component } from 'react';
+import { Modal, Pressable, Platform, StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { COLORS } from '../Utils/colors';
+import Divider from '../Utils/Divider';
+import ViewWaste from '../StatisticsPageComponents/ViewWaste';
+import Graph from '../StatisticsPageComponents/Graph';
+import { DATA } from '../Utils/TestData';
+import Leaderboard from '../LeaderboardComponents/Leaderboard';
+import { LOCAL, GLOBAL } from '../Utils/TestData';
+import Popup from '../Popups/Popup';
+import GoalPopup from '../Popups/GoalPopup';
+import WasteHistoryPopup from '../Popups/WasteHistoryPopup'; // Import the WasteHistoryPopup
+import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
+
 
 export default class StatisticsPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       visibility: 0,
       localLeaderboard: [],
-      globalLeaderboard: []
-    }
+      globalLeaderboard: [],
+      goalPopupVisible: false, // State to control visibility of GoalPopup
+      wasteHistoryPopupVisible: false, // State to control visibility of WasteHistoryPopup
+      wasteData: [],
+      loading: true
+    };
+    this.reloadHistoryPage = this.reloadHistoryPage.bind(this);
   }
+
+  async componentDidMount() {
+    console.log("mounted");
+    await this.updateWasteData().then(data => {
+      this.setState({ wasteData: data });
+    });
+    this.setState({ loading: false });
+
+    this.getLeaderboardLocal().then((localLB) => {
+      console.log("LB:", localLB);
+      this.setState({localLeaderboard: localLB});
+      console.log("state", this.state.localLeaderboard);
+    });
+  }
+
+  updateWasteData = async () => {
+    let wasteData = [];
+
+    try {
+        // Ensure you have a valid user before proceeding
+        if (!FIREBASE_AUTH.currentUser) {
+            console.log("No user signed in.");
+            return wasteData;
+        }
+        const userId = FIREBASE_AUTH.currentUser.uid;
+        
+        const subcollectionRef = collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
+        const querySnapshot = await getDocs(subcollectionRef);
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const date = `${data.selectedMonth}/${data.selectedDay}`;
+            wasteData.push({
+                date: date,
+                category: data.foodType, 
+                amount: data.weightValue,
+                amountType: data.weightUnit,
+            });
+        });
+        this.setState({ wasteData });
+    } catch (e) {
+        console.log(e.message);
+    }
+    return wasteData;
+    };
 
   GLOBAL = [
     {
@@ -69,105 +125,118 @@ export default class StatisticsPage extends Component {
   // Toggle visibility of local and all time leaderboard
   // 0 = Local, 1 = All Time
   setVisibility(value) {
-    this.setState({visibility: value})
+    this.setState({ visibility: value });
   }
 
-  // Sort ranks in descending order depending on score
   sortDescendingScore(array) {
-    array.sort(function (a, b) {
-      return b.score - a.score
-    })
-    return array
+    array.sort((a, b) => b.score - a.score);
+    return array;
   }
-  // Returns array of entries from last 7 days
+
   getLastSevenDays(data) {
-    if (data.length <= 7) return data
-    else return data.slice(data.length - 7)
+    let sortedData = [];
+    let count = 0;
+    let dates = [];
+
+    today = new Date();
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(today);
+      day.setDate(today.getDate() - i); // Subtract i days from today
+      dates.push(day);
   }
 
-  // Returns total waste from datset
-  getTotalWaste(data) {
-    const total = data.reduce(
-      (accumulator, item) => accumulator + item.amount,
-      0
-    )
-    return total
-  }
+  
+    //really bad time complexity but it works for now. it goes through each food log 7 times
+    for (let i = 0; i < 7; i++) {
+      count = 0.01;
+      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
 
-  // Returns the average waste from dataset
-  getAverageWaste(data) {
-    const total = data.reduce(
-      (accumulator, item) => accumulator + item.amount,
-      0
-    )
-    return total / data.length
-  }
-
-  // Returns the most frequent wasted catefoy from dataset
-  getMostFrequentCategory(data) {
-    const categoriesCount = {}
-    let maxCount = 0
-    let mostFrequent = null
-
-    data.forEach(({category}) => {
-      categoriesCount[category] = (categoriesCount[category] || 0) + 1
-      if (categoriesCount[category] > maxCount) {
-        maxCount = categoriesCount[category]
-        mostFrequent = category
+      for (let x = 0; x < data.length; x++) { 
+        if (data[x].date === formattedDate) { 
+          if (data[x].amountType === "lbs") {count += data[x].amount;}
+          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
+          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
+          
+        } 
       }
-    })
-    return mostFrequent
-  }
+      sortedData.push({ date: formattedDate, amount: count });
+    }
 
-  refreshLeaderboard = async () => {
-    const localLB = this.getLeaderboardLocal;
-    this.setState({localLeaderboard: localLB});
-  }
-
-  componentDidMount() {
-    console.log("mounted");
     
-    this.getLeaderboardLocal().then((localLB) => {
-      this.setState({localLeaderboard: localLB});
-    });
+    return sortedData.reverse();
+    //return data.length <= 7 ? data : data.slice(data.length - 7);
   }
+
+  reloadHistoryPage = () => {
+    console.log("mjvoshdsjlfsd");
+    this.setState({ wasteData: [] }, this.updateWasteData);
+  
+  }
+
+
+  getTotalWaste(data) {
+    return data.reduce((accumulator, item) => accumulator + item.amount, 0);
+  }
+
+  getAverageWaste(data) {
+    const total = this.getTotalWaste(data);
+    return total / data.length;
+  }
+
+  getMostFrequentCategory(data) {
+    const categoriesCount = {};
+    let maxCount = 0;
+    let mostFrequent = null;
+
+    data.forEach(({ category }) => {
+      categoriesCount[category] = (categoriesCount[category] || 0) + 1;
+      if (categoriesCount[category] > maxCount) {
+        maxCount = categoriesCount[category];
+        mostFrequent = category;
+      }
+    });
+    return mostFrequent;
+  }
+
+  toggleGoalPopup = () => {
+    this.setState({ goalPopupVisible: !this.state.goalPopupVisible });
+  };
+
+  toggleWasteHistoryPopup = () => { // Toggle function for WasteHistoryPopup
+    this.setState({ wasteHistoryPopupVisible: !this.state.wasteHistoryPopupVisible });
+  };
 
   render() {
-    const lastSevenDays = this.getLastSevenDays(DATA);
-    const totalWaste = this.getTotalWaste(lastSevenDays).toFixed(2);
-    const averageWaste = this.getAverageWaste(lastSevenDays).toFixed(2);
-    const mostFrequentCategory = this.getMostFrequentCategory(lastSevenDays);
-    const localData = this.sortDescendingScore(this.state.localLeaderboard);
-    const globalData = this.sortDescendingScore(this.GLOBAL);
+    const lastSevenDays = [];
+    const localData = this.sortDescendingScore(LOCAL);
+    const globalData = this.sortDescendingScore(GLOBAL);
 
     return (
-      <View style={styles.container}>
-        {/* Header */}
-        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
+      <SafeAreaView style={styles.container}>
+        
         <Text style={styles.titleText}>Trends</Text>
-
-        {/* Line Graph */}
         <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
-          <Graph data={lastSevenDays} />
+          {this.state.loading === false ? (
+          <Graph data={this.getLastSevenDays(this.state.wasteData)} />
+        ) : (
+          // Optionally, render a placeholder or a loading indicator here
+          <Text>Loading...</Text>
+          
+        )}
         </View>
-
         <View style={styles.fulllbContainer}>
-          {/* Average Daily Waste */}
           <View style={styles.lbcontainer}>
-            {/* Header Container */}
             <View style={styles.lbheader}>
               <Text style={styles.lbheaderText}>Leaderboard</Text>
               <View style={styles.lbheaderButtons}>
-                {/* Local Button */}
                 <Pressable
                   style={[
                     styles.lbbutton,
                     {
                       backgroundColor: COLORS.transparent,
-                      borderBottomColor:
-                        this.state.visibility === 0 ? COLORS.blue : COLORS.transparent
-                    }
+                      borderBottomColor: this.state.visibility === 0 ? COLORS.blue : COLORS.transparent,
+                    },
                   ]}
                   onPress={() => this.setVisibility(0)}>
                   <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.blue : COLORS.blue }]}>
@@ -180,9 +249,8 @@ export default class StatisticsPage extends Component {
                     styles.lbbutton,
                     {
                       backgroundColor: COLORS.transparent,
-                      borderBottomColor:
-                        this.state.visibility === 1 ? COLORS.blue : COLORS.transparent
-                    }
+                      borderBottomColor: this.state.visibility === 1 ? COLORS.blue : COLORS.transparent,
+                    },
                   ]}
                   onPress={() => this.setVisibility(1)}>
                   <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.blue : COLORS.blue }]}>
@@ -192,47 +260,54 @@ export default class StatisticsPage extends Component {
               </View>
             </View>
 
-            {/* Leaderboard Container */}
             <View style={styles.lbcontent}>
-              {this.state.visibility === 0 && <Leaderboard data={localData} />}
+              {this.state.visibility === 0 && <Leaderboard data={this.state.localLeaderboard} />}
               {this.state.visibility === 1 && <Leaderboard data={globalData} />}
             </View>
           </View>
         </View>
 
-
-        {/* <View style={styles.statsContainer}>
-          <View style={styles.statsContent}>
-            <Text style={styles.statsText}>Average Daily Waste:</Text>
-            <Text style={styles.statsText}>{averageWaste} lbs</Text>
-          </View>
-          <Divider /> 
-
-          <View style={styles.statsContent}>
-            <Text style={styles.statsText}>Total Waste:</Text>
-            <Text style={styles.statsText}>{totalWaste} lbs</Text>
-          </View>
-          <Divider />
-
-          <View style={styles.statsContent}>
-            <Text style={styles.statsText}>Most Wasted Category:</Text>
-            <Text style={styles.statsText}>{mostFrequentCategory}</Text>
-          </View>
-        </View> */}
-
-
         <View style={styles.bottomButtonsContainer}>
-          <Pressable style={styles.bottomButton}>
+          <Pressable style={styles.bottomButton} onPress={this.toggleWasteHistoryPopup}>
             <Text style={styles.bottomButtonText}>History</Text>
           </Pressable>
-          <Pressable style={styles.bottomButton}>
+          <Pressable style={styles.bottomButton} onPress={this.toggleGoalPopup}>
             <Text style={styles.bottomButtonText}>Goals</Text>
           </Pressable>
         </View>
 
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.goalPopupVisible}
+          onRequestClose={this.toggleGoalPopup}>
+          <View style={styles.popupOverlay}>
+            <View style={styles.popup}>
+              <TouchableOpacity style={styles.closeButton} onPress={this.toggleGoalPopup}>
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+              <GoalPopup />
+            </View>
+          </View>
+        </Modal>
 
-      </View>
-    )
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.wasteHistoryPopupVisible}
+          onRequestClose={this.toggleWasteHistoryPopup}>
+          <View style={styles.popupOverlay}>
+            <View style={styles.popup}>
+              <TouchableOpacity style={styles.closeButton} onPress={this.toggleWasteHistoryPopup}>
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+
+              <WasteHistoryPopup data={this.state.wasteData} onReload={this.reloadHistoryPage}/>
+            </View>
+          </View>
+        </Modal>
+      </SafeAreaView>
+    );
   }
 }
 
@@ -244,24 +319,11 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
     marginBottom: '2%'
   },
-
-
-  // image: {
-  //   width: '60%',
-  //   height: 'auto',
-  //   tintColor: COLORS.blue,
-  //   aspectRatio: 1290 / 193,
-  // },
   titleText: {
     color: COLORS.blue,
     fontWeight: '500',
     fontSize: 28,
   },
-
-
-
-
-
   graphContainer: {
     width: '90%',
     height: '40%',
@@ -279,18 +341,11 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowColor: COLORS.blue,
   },
-
   graphHeader: {
     fontSize: 20,
     fontWeight: '400',
-    color: COLORS.blue
+    color: COLORS.blue,
   },
-
-
-
-
-
-
   fulllbContainer: {
     width: '90%',
     height: '40%',
@@ -321,7 +376,7 @@ const styles = StyleSheet.create({
   lbheaderText: {
     fontSize: 20,
     fontWeight: '400',
-    color: COLORS.blue
+    color: COLORS.blue,
   },
   lbheaderButtons: {
     width: '100%',
@@ -337,11 +392,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 15,
     backgroundColor: COLORS.transparent,
-    borderBottomWidth: 3,  // Add a bottom border
-    borderBottomColor: COLORS.transparent  // Set initial border color
+    borderBottomWidth: 3,
+    borderBottomColor: COLORS.transparent,
   },
   lbbuttonText: {
-    color: COLORS.white //initial text color
+    color: COLORS.white,
   },
   lbcontent: {
     width: '91%',
@@ -351,31 +406,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: '5%',
   },
-
-
-
-
-  // statsContainer: {
-  //   width: '90%',
-  //   height: '10%',
-  //   backgroundColor: COLORS.lightBlue,
-  //   borderRadius: 10,
-  // },  
-  // statsContent: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   width: '100%',
-  //   marginBottom: '2%',
-  // },
-  // statsText: {
-  //   fontSize: 15,
-  //   color: COLORS.blue,
-  // },
-  
-
-
-
   bottomButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -403,6 +433,36 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '500',
   },
-
-
-})
+  popupOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  popup: {
+    width: '100%',
+    height: '120%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding:20,
+    paddingTop: '20%',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  closeButton: {
+    alignSelf: 'flex-end',
+    marginBottom: 0
+  },
+  closeButtonText: {
+    fontSize: 20,
+    color: '#333',
+  },
+  // Add or adjust other styles as needed
+});

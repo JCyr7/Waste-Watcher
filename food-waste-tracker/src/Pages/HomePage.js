@@ -11,6 +11,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import StreakPopup from '../Popups/StreakPopup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
+import updateWasteData from '../Pages/TrendsPage';
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -53,21 +54,26 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      streakModal: false,
-      weightDropdown: '',
-      selectedMonth: '',
-      selectedDay: '',
-      weightUnit: '',
+      weightdropdown: '',
+      selectedMonth: new Date().getMonth() + 1,
+      selectedDay: new Date().getDate(),
+      weightUnit: 'lbs',
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: [0]
+      streak: 0
     }
     this.getData();
   }
 
   streakVisibility(value) {
     this.setState({streakModal: value})
+  }
+
+  reloadHomePage = () => {
+
+    this.setState({ streak: [] }, this.streak);
+  
   }
 
   // Method retrieves data from async storage
@@ -97,7 +103,7 @@ export default class HomePage extends Component {
         edible: this.state.edibleCheckbox,
 
       });
-      Alert.alert("Success", "Food Waste Tracked!"); // Show success alert
+      this.reloadHomePage();
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -189,7 +195,7 @@ export default class HomePage extends Component {
                   <Pressable
                     style={styles.closePopupButton}
                     onPress={() => this.streakVisibility(false)}>
-                    <AntDesign name='close' size={24} color='text' />
+                    <AntDesign name='close' size={24} color= 'COLORS.text' />
                   </Pressable>
                 </View>
                 <View style={styles.popupContent}>
@@ -199,7 +205,7 @@ export default class HomePage extends Component {
             </Modal>
 
             <View style={styles.rightDash}>
-
+ 
 
 
               {/*weekly waste dash item*/}
@@ -429,7 +435,7 @@ export default class HomePage extends Component {
 
         {/* Submit button */}    
         <Pressable
-          onPress={() => this.createFoodWasteFirestore()}
+          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction()}}
           style={({ pressed }) => [
             {
               backgroundColor: pressed

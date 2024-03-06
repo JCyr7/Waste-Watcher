@@ -28,14 +28,14 @@ export const COLORS = {
   //light mode
 
   background: '#fff',
-  header: '#0066ff',
-  text: '#474747',
+  header: '#005ce6',
+  text: '#002966',
   boldtext: '#0066ff',
   shadow: '#0066ff',
-  icon: '#474747',
-  element: '#474747',
+  icon: '#002966',
+  element: '#3385ff',
   elementText: '#fff',
-  button: '#0066ff',
+  button: '#FA4616',
   buttonPress: '#3D7FFF',
   buttonText: '#fff',
 

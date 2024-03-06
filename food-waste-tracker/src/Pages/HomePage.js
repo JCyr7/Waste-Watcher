@@ -94,10 +94,10 @@ export default class HomePage extends Component {
         weightUnit: this.state.weightUnit,
         weightValue: parseFloat(this.state.weightValue),
         inHome: this.state.inHomeCheckbox,
-        edible: this.state.edibleCheckbox
+        edible: this.state.edibleCheckbox,
 
       });
-    
+      Alert.alert("Success", "Food Waste Tracked!"); // Show success alert
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -333,7 +333,7 @@ export default class HomePage extends Component {
               dropdownItemStyles={styles.weightDropdownItems}
               dropdownTextStyles={styles.weightDropdownText}
               search = 'false'
-              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.text }} />}              defaultOption={data2[0]}
+              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.element }} />}              defaultOption={data2[0]}
               setSelected={(value) => {this.setState({weightUnit: value})}} 
               data={data2} 
               save="value"
@@ -358,7 +358,7 @@ export default class HomePage extends Component {
             dropdownItemStyles={styles.weightDropdownItems}
             dropdownTextStyles={styles.weightDropdownText}
             search = 'false'
-            arrowicon={<FontAwesome name="chevron-down" marginLeft={5} size={12} style={{ color: COLORS.text }} />}         
+            arrowicon={<FontAwesome name="chevron-down" marginLeft={5} size={12} style={{ color: COLORS.element }} />}         
             setSelected={(value) => {this.setState({weightDropdown: value})}} 
             data={data} 
             save="value"
@@ -379,7 +379,7 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.element}
+              fillColor={COLORS.text}
               unfillColor={COLORS.background}
               text="Yes"
               innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
@@ -400,7 +400,7 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.element}
+              fillColor={COLORS.text}
               unfillColor={COLORS.background}
               text="Resturaunt"
 
@@ -412,7 +412,7 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.element}
+              fillColor={COLORS.text}
               unfillColor={COLORS.background}
               text="Home"
 

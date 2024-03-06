@@ -63,6 +63,7 @@ export default class HomePage extends Component {
       edibleCheckbox: false,
       streak: 0,
       wasteData: [],
+      today: new Date(),
     }
     this.getData();
   }
@@ -145,18 +146,17 @@ export default class HomePage extends Component {
     return wasteData;
     };
 
-  getLastSevenDaysHomePageEdition(data) {
+  getLastSevenDaysHomePageEdition(data, date) {
     let sortedData = 0;
     let count = 0;
     let dates = [];
 
-    today = new Date();
+    today = new Date(date);
     for (let i = 0; i < 7; i++) {
       const day = new Date(today);
       day.setDate(today.getDate() - i); // Subtract i days from today
       dates.push(day);
   }
-
   
     //really bad time complexity but it works for now. it goes through each food log 7 times
     for (let i = 0; i < 7; i++) {
@@ -174,7 +174,6 @@ export default class HomePage extends Component {
       sortedData += count;
     }
 
-    console.log(sortedData);
     return sortedData;
     //return data.length <= 7 ? data : data.slice(data.length - 7);
   }
@@ -200,7 +199,7 @@ export default class HomePage extends Component {
     // Update the value after component is mounted
 
     console.log("mounted");
-    await this.updateWasteData().then(data => {
+    this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
     });
     this.setState({ loading: false });
@@ -217,6 +216,12 @@ export default class HomePage extends Component {
     const today = new Date();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
     const todayDay = today.getDate().toString().padStart(2, '0');
+    const theOtherday = new Date(today.getDate() - 7);
+
+    const otherDay = new Date(today);
+    otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
+    console.log('ffidfsdkfdospfds', otherDay);
+
     return (
       <View style={styles.container}>
 
@@ -290,7 +295,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData)).toFixed(2)} lbs</Text>
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2)} lbs</Text>
                     <Text style={styles.subDashTextRight}> of Food Waste</Text>
 
                   </View>
@@ -305,7 +310,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>${parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData)).toFixed(2) * 1} lbs</Text>
+                    <Text style={styles.subDashTextLeft}>${parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
                     <Text style={styles.subDashTextRight}> Wasted on Food</Text>
 
                   </View>
@@ -320,7 +325,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData)).toFixed(2) * 1} lbs</Text>
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
                     <Text style={styles.subDashTextRight}> of CO2 Emissions</Text>
 
                   </View>

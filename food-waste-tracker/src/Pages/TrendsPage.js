@@ -33,7 +33,7 @@ export default class StatisticsPage extends Component {
 
   async componentDidMount() {
     console.log("mounted");
-    await this.updateWasteData().then(data => {
+    this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
     });
     this.setState({ loading: false });

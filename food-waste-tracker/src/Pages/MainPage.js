@@ -12,10 +12,9 @@ import {
 import {COLORS} from '../Utils/colors'
 import PagerView from 'react-native-pager-view'
 import HomePage from '../Pages/HomePage'
+import TrendsPage from './TrendsPage'
+import SolutionsPage from './SolutionsPage'
 import ProfilePage from '../Pages/ProfilePage'
-//import ArcGISMap from './ArcGISMap'
-import LeaderboardPage from './LeaderboardPage'
-import StatisticsPage from './StatisticsPage'
 
 export default class MainPage extends Component {
   constructor(props) {
@@ -53,8 +52,8 @@ export default class MainPage extends Component {
           {/* Content of the home page pager view */}
           {/* <ArcGISMap key='1' /> */}
           <HomePage key='1' navigation={navigation} />
-          <StatisticsPage key='2'></StatisticsPage>
-          <LeaderboardPage key='3' />
+          <TrendsPage key='2'></TrendsPage>
+          <SolutionsPage key='3' />
           <ProfilePage key='4' />
         </PagerView>
         {/* Navigation bar at the bottom of the page */}
@@ -136,7 +135,7 @@ export default class MainPage extends Component {
           <Pressable
             onPress={() => this.viewPager.setPage(2)}
             style={styles.navigationButton}>
-            {/* Icon for leaderboard on middle right */}
+            {/* Icon for Solutions on middle right */}
             {/* <Foundation
               name='book'
               size={30}

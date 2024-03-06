@@ -1,9 +1,6 @@
 import LogoutPage from './src/Pages/LogoutPage'
 import ForgotPassword from './src/Pages/ForgotPassword'
 import MainPage from './src/Pages/MainPage'
-import ProfilePage from './src/Pages/ProfilePage'
-import ArcGISMap from './src/Pages/ArcGISMap'
-import LeaderboardPage from './src/Pages/LeaderboardPage'
 
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
@@ -30,10 +27,6 @@ export default function App() {
         <Stack.Screen name='LogoutPage' component={LogoutPage}></Stack.Screen>
         <Stack.Screen name='ForgotPassword' component={ForgotPassword}></Stack.Screen>
         <Stack.Screen name='MainPage' component={MainPage}></Stack.Screen>
-        <Stack.Screen name='ProfilePage' component={ProfilePage}></Stack.Screen>
-        <Stack.Screen name='ArcGISMap' component={ArcGISMap}></Stack.Screen>
-        <Stack.Screen name='LeaderboardPage' component={LeaderboardPage}></Stack.Screen>
-
       </Stack.Navigator>
     </NavigationContainer>
   )

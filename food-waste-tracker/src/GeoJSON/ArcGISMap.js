@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {Dimensions, StyleSheet, View} from 'react-native'
 import MapView, {Geojson, PROVIDER_GOOGLE} from 'react-native-maps'
-import mapStyle from '../GeoJSON/mapStyle.json'
-import geojson from '../GeoJSON/example.json'
+import mapStyle from './mapStyle.json'
+import geojson from './example.json'
 
 //Component displays a map view of Maine
 export default class ArcGISMap extends Component {

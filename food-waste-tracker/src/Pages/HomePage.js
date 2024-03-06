@@ -196,13 +196,9 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
-    // Update the value after component is mounted
-
-    console.log("mounted");
     this.updateWasteData().then(data => {
       this.setState({ wasteData: data });
     });
-    this.setState({ loading: false });
 
     this.updateStreak().then(streakVal => {
       this.setState({streak: streakVal});

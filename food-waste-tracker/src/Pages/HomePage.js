@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image} from 'react-native'
+import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image, Alert} from 'react-native'
 import {AntDesign} from '@expo/vector-icons'
 import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
@@ -73,7 +73,7 @@ export default class HomePage extends Component {
 
   reloadHomePage = () => {
 
-    this.setState({ streak: [] }, this.streak);
+    this.setState({ streak: [] }, this.state.streak);
   
   }
 
@@ -89,6 +89,10 @@ export default class HomePage extends Component {
     } catch(e) {
       //
     }
+  }
+
+  reloadHomePage = () => {
+    this.componentDidMount();
   }
 
   createFoodWasteFirestore = async () => {
@@ -121,7 +125,6 @@ export default class HomePage extends Component {
             return wasteData;
         }
         const userId = FIREBASE_AUTH.currentUser.uid;
-        console.log("dapsjdajshdas", userId);
         const subcollectionRef = collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
         const querySnapshot = await getDocs(subcollectionRef);
         querySnapshot.forEach((doc) => {
@@ -508,7 +511,7 @@ export default class HomePage extends Component {
 
         {/* Submit button */}    
         <Pressable
-          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction()}}
+          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
           style={({ pressed }) => [
             {
               backgroundColor: pressed

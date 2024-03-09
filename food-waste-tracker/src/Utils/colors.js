@@ -28,14 +28,16 @@ export const COLORS = {
   //light mode
 
   background: '#fff',
-  header: '#005ce6',
-  text: '#002966',
+  card: '#fff',
+  header: '#0066ff',
+  text: '#474747',
   boldtext: '#0066ff',
   shadow: '#0066ff',
-  icon: '#002966',
-  element: '#3385ff',
+  icon: '#0066ff',
+  iconlight: '#262626',
+  element: '#1a75ff',
   elementText: '#fff',
-  button: '#FA4616',
+  button: '#ff6600',
   buttonPress: '#3D7FFF',
   buttonText: '#fff',
 
@@ -43,15 +45,17 @@ export const COLORS = {
 
   //dark mode
 
-  // background: '#003399',
+  // background: '#002266',
+  // card: '#003399',
   // header: '#fff',
   // text: '#e6e6ff',
   // boldtext: '#fff',
-  // shadow: '#99ff99',
-  // icon: '#e6e6ff',
+  // shadow: '#002266',
+  // icon: '#fff',
+  // iconlight: 'rgba(255, 255, 255, 0.6)',
   // element: '#e6e6ff',
   // elementText: '#000066',
-  // button: '#99ff99',
+  // button: '#ff6600',
   // buttonPress: '#ffb3ff',
   // buttonText: '#000066',
   

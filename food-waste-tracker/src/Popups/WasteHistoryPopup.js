@@ -50,7 +50,7 @@ export default class WasteHistoryPopup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '105%',
+    width: '100%',
     height: '97%',
     alignItems: 'space-between'
   },

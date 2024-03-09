@@ -168,7 +168,7 @@ export default class StatisticsPage extends Component {
   }
 
   reloadHistoryPage = () => {
-    console.log("mjvoshdsjlfsd");
+    console.log("Reload Stats");
     this.setState({ wasteData: [] }, this.updateWasteData);
   
   }
@@ -214,8 +214,12 @@ export default class StatisticsPage extends Component {
     return (
       <SafeAreaView style={styles.container}>
         
-        <Text style={styles.titleText}>Trends</Text>
-        <View style={styles.graphContainer}>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.titleText}>Trends</Text>
+          <Image source={require('../../images/logo.png')} style={styles.image}/>
+        </View>
+          <View style={styles.graphContainer}>
           <Text style={styles.graphHeader}>This Week's Daily Waste</Text>
           {this.state.loading === false ? (
           <Graph data={this.getLastSevenDays(this.state.wasteData)} />
@@ -284,7 +288,7 @@ export default class StatisticsPage extends Component {
           <View style={styles.popupOverlay}>
             <View style={styles.popup}>
               <TouchableOpacity style={styles.closeButton} onPress={this.toggleGoalPopup}>
-                <Text style={styles.closeButtonText}>X</Text>
+                <Text style={styles.closeButtonText}>×</Text>
               </TouchableOpacity>
               <GoalPopup />
             </View>
@@ -299,7 +303,7 @@ export default class StatisticsPage extends Component {
           <View style={styles.popupOverlay}>
             <View style={styles.popup}>
               <TouchableOpacity style={styles.closeButton} onPress={this.toggleWasteHistoryPopup}>
-                <Text style={styles.closeButtonText}>X</Text>
+                <Text style={styles.closeButtonText}>×</Text>
               </TouchableOpacity>
 
               <WasteHistoryPopup data={this.state.wasteData} onReload={this.reloadHistoryPage}/>
@@ -319,18 +323,37 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
     marginBottom: '2%'
   },
+
+
+  headerContainer: {
+    flexDirection: 'row',
+    width: '88%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
   titleText: {
-    color: COLORS.blue,
-    fontWeight: '500',
+    color: COLORS.header,
+    fontWeight: '400',
     fontSize: 28,
   },
+  image: {
+    width: '65%',
+    height: 'auto',
+    tintColor: COLORS.header,
+    aspectRatio: 1290 / 193,
+    justifyContent: 'flex-end',
+  },
+
+
+
   graphContainer: {
     width: '90%',
     height: '40%',
     padding: '3%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderRadius: 10,
     shadowOffset: {
       width: -5,
@@ -339,12 +362,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 2,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
   },
   graphHeader: {
     fontSize: 20,
-    fontWeight: '400',
-    color: COLORS.blue,
+    fontWeight: '500',
+    color: COLORS.header
   },
   fulllbContainer: {
     width: '90%',
@@ -358,7 +381,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
   },
   lbcontainer: {
     flex: 1,
@@ -375,7 +398,7 @@ const styles = StyleSheet.create({
   },
   lbheaderText: {
     fontSize: 20,
-    fontWeight: '400',
+    fontWeight: '500',
     color: COLORS.blue,
   },
   lbheaderButtons: {
@@ -413,7 +436,7 @@ const styles = StyleSheet.create({
     height: '6.5%',
   },
   bottomButton: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.element,
     borderRadius: 10,
     width: '40%',
     padding: 10,
@@ -426,10 +449,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
   },
   bottomButtonText: {
-    color: COLORS.blue,
+    color: COLORS.elementText,
     fontSize: 17,
     fontWeight: '500',
   },
@@ -441,7 +464,7 @@ const styles = StyleSheet.create({
   },
   popup: {
     width: '100%',
-    height: '120%',
+    height: '100%',
     backgroundColor: 'white',
     borderRadius: 20,
     padding:20,
@@ -458,10 +481,11 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: 'flex-end',
-    marginBottom: 0
+    marginBottom: 10,
+    marginRight: 15,
   },
   closeButtonText: {
-    fontSize: 20,
+    fontSize: 30,
     color: '#333',
   },
   // Add or adjust other styles as needed

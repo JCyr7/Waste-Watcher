@@ -54,14 +54,15 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      weightdropdown: '',
+      weightDropdown: '',
       selectedMonth: new Date().getMonth() + 1,
       selectedDay: new Date().getDate(),
       weightUnit: 'lbs',
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: 0
+      streak: 0,
+      streakModal: false,
     }
     this.getData();
   }
@@ -466,7 +467,6 @@ const styles = StyleSheet.create({
     width: '88%',
     justifyContent: 'space-between',
     alignItems: 'center',
-
   },
 
   titleText: {
@@ -489,15 +489,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     padding: 15,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.card,
     shadowColor: COLORS.shadow,
     shadowOffset: {
-      width: -10,
-      height: 10
+      width: -7,
+      height: 7
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 15,
-    elevation: 10,
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
   },
 
 
@@ -532,19 +532,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topLeftStreakText: {
-    fontSize: 18,
+    fontSize: 15,
     color: COLORS.boldtext,
     fontWeight: '700',    
   },
   topRightStreakText: {
-    fontSize: 18,
+    fontSize: 15,
     color: COLORS.boldtext,
     fontWeight: '700',     
   },
   dashBottomTextContainer: {
   },
   bottomStreakText: {
-    fontSize: 18,
+    fontSize: 15,
     color: COLORS.text,
     fontWeight: '500',    
   },
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
   dashRightImage: {
     width: 30,
     height: 30,
-    tintColor: COLORS.icon,
+    tintColor: COLORS.element,
     marginRight: 12,
     transform: [{ scaleX: -1 }], // Flip horizontally
 
@@ -572,12 +572,12 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   subDashTextLeft: {
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.boldtext,
     fontWeight: '600',   
   },
   subDashTextRight: {
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
     fontWeight: '400',   
   },
@@ -585,14 +585,22 @@ const styles = StyleSheet.create({
 
 
   trackWasteContainer: {
-    width: '95%',
+    width: '90%',
     height: '57%',
     position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.transparent,
+    backgroundColor: COLORS.card,
+    shadowColor: COLORS.shadow,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
   },
   trackWasteHeader: {
     fontSize: 20,
@@ -619,13 +627,13 @@ const styles = StyleSheet.create({
   },
   dateTextContainer: {
     width: '40%', 
-    fontSize: 16,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   dateText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.elementText,
   },
   dateInputContainer: {
@@ -638,7 +646,7 @@ const styles = StyleSheet.create({
     borderRadius: 10, 
   },
   dateInput: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '500', 
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -646,12 +654,12 @@ const styles = StyleSheet.create({
   },
   dateInputText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
   },
   dateDash: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
     paddingHorizontal: 10,
   },
@@ -673,14 +681,14 @@ const styles = StyleSheet.create({
   },
   weightTextContainer: {
     width: '40%', 
-    fontSize: 16,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2, // Higher zIndex for weightTextContainer
   },
   weightText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.elementText,
   },
   weightInputContainer: {
@@ -696,12 +704,12 @@ const styles = StyleSheet.create({
   weightInput: {
     width: '30%',
     height: '90%',
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '500', 
   },
   weightInputText: {
     fontWeight: '500', 
-    fontSize: 17,
+    fontSize: 15,
     color: COLORS.text,
     backgroundColor: COLORS.background,
   },
@@ -719,7 +727,7 @@ const styles = StyleSheet.create({
   },
   weightDropdownInputText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
   },
   weightDropdown: {
@@ -745,7 +753,7 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     fontWeight: '500', 
     width: '100%',
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
   },
 
@@ -765,14 +773,14 @@ const styles = StyleSheet.create({
   },
   typeTitleTextContainer: {
     width: '40%', 
-    fontSize: 16,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2, // Higher zIndex for weightTextContainer
   },
   typeTitleText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.elementText,
   },
   categoryBox: {
@@ -796,7 +804,7 @@ const styles = StyleSheet.create({
   },
   categoryDropdownInputText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
     paddingLeft: 10,
   },
@@ -828,13 +836,13 @@ const styles = StyleSheet.create({
   },
   checkboxTitleContainer: {
     width: '55%', 
-    fontSize: 16,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxTitleText: {
     fontWeight: '500', 
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.elementText,
   },
   questionContainer: {
@@ -846,7 +854,7 @@ const styles = StyleSheet.create({
     borderRadius: 10, 
   },
   checkboxText: {
-    fontSize: 16,
+    fontSize: 15,
     color: COLORS.text,
     fontWeight: '500',
     textDecorationLine: 'none',
@@ -890,7 +898,7 @@ const styles = StyleSheet.create({
   },
   bottomButtonText: {
     color: COLORS.buttonText,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
 

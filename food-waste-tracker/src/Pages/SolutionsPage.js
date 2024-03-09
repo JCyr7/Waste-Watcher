@@ -80,7 +80,7 @@ export default class LeaderboardPage extends Component {
           <Image source={require('../../images/expand.png')} style={styles.heirarchyexpandImage} />
             <View style={styles.learnmoretextcontainer}>
               <Text style={styles.learnMoreText}>Food Waste</Text>
-              <Text style={styles.learnMoreText}>Heirarchy</Text>
+              <Text style={styles.learnMoreText}>Hierarchy</Text>
             </View>
           </View>
         </View>

@@ -103,11 +103,11 @@ export default class MainPage extends Component {
             style={{
               width: 30,
               height: 30,
-              tintColor: this.state.pageState === 0 ? COLORS.blue : COLORS.black,
+              tintColor: this.state.pageState === 0 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 0 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 0 ? COLORS.icon : COLORS.iconlight}
             ]}>Home</Text>
           </Pressable>
           <Pressable
@@ -129,11 +129,11 @@ export default class MainPage extends Component {
             style={{
               width: 30,
               height: 30,
-              tintColor: this.state.pageState === 1 ? COLORS.blue : COLORS.black,
+              tintColor: this.state.pageState === 1 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 1 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 1 ? COLORS.icon : COLORS.iconlight}
             ]}>Trends</Text>
           </Pressable>
 
@@ -156,11 +156,11 @@ export default class MainPage extends Component {
             style={{
               width: 30,
               height: 30,
-              tintColor: this.state.pageState === 2 ? COLORS.blue : COLORS.black,
+              tintColor: this.state.pageState === 2 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 2 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 2 ? COLORS.icon : COLORS.iconlight}
             ]}>Solutions</Text>
           </Pressable>
           <Pressable
@@ -182,11 +182,11 @@ export default class MainPage extends Component {
             style={{
               width: 30,
               height: 30,
-              tintColor: this.state.pageState === 3 ? COLORS.blue : COLORS.black,
+              tintColor: this.state.pageState === 3 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 3 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 3 ? COLORS.icon : COLORS.iconlight}
             ]}>Profile</Text>
           </Pressable>
           {/* <Pressable
@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background
   },
+
   pagerView: {
     flex: 1
   },

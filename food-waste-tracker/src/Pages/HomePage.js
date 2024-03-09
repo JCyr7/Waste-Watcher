@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image} from 'react-native'
+import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image, Alert} from 'react-native'
 import {AntDesign} from '@expo/vector-icons'
 import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { SelectList } from 'react-native-dropdown-select-list'
-import { addDoc, collection, getDoc, doc } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc, getDocs } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import StreakPopup from '../Popups/StreakPopup';
@@ -62,6 +62,8 @@ export default class HomePage extends Component {
       inHomeCheckbox: false,
       edibleCheckbox: false,
       streak: 0,
+      wasteData: [],
+      today: new Date(),
       streakModal: false,
     }
     this.getData();
@@ -73,7 +75,7 @@ export default class HomePage extends Component {
 
   reloadHomePage = () => {
 
-    this.setState({ streak: [] }, this.streak);
+    this.setState({ streak: [] }, this.state.streak);
   
   }
 
@@ -89,6 +91,10 @@ export default class HomePage extends Component {
     } catch(e) {
       //
     }
+  }
+
+  reloadHomePage = () => {
+    this.componentDidMount();
   }
 
   createFoodWasteFirestore = async () => {
@@ -111,6 +117,68 @@ export default class HomePage extends Component {
     }
   }
 
+  updateWasteData = async () => {
+    let wasteData = [];
+
+    try {
+        // Ensure you have a valid user before proceeding
+        if (!FIREBASE_AUTH.currentUser) {
+            console.log("No user signed in.");
+            return wasteData;
+        }
+        const userId = FIREBASE_AUTH.currentUser.uid;
+        const subcollectionRef = collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
+        const querySnapshot = await getDocs(subcollectionRef);
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const date = `${data.selectedMonth}/${data.selectedDay}`;
+            wasteData.push({
+                date: date,
+                category: data.foodType, 
+                amount: data.weightValue,
+                amountType: data.weightUnit,
+            });
+        });
+        this.setState({ wasteData });
+    } catch (e) {
+        console.log(e.message);
+    }
+    //console.log(wasteData);
+    return wasteData;
+    };
+
+  getLastSevenDaysHomePageEdition(data, date) {
+    let sortedData = 0;
+    let count = 0;
+    let dates = [];
+
+    today = new Date(date);
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(today);
+      day.setDate(today.getDate() - i); // Subtract i days from today
+      dates.push(day);
+  }
+  
+    //really bad time complexity but it works for now. it goes through each food log 7 times
+    for (let i = 0; i < 7; i++) {
+      count = 0;
+      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
+
+      for (let x = 0; x < data.length; x++) { 
+        if (data[x].date === formattedDate) { 
+          if (data[x].amountType === "lbs") {count += data[x].amount;}
+          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
+          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
+          
+        } 
+      }
+      sortedData += count;
+    }
+
+    return sortedData;
+    //return data.length <= 7 ? data : data.slice(data.length - 7);
+  }
+
   updateStreak = async () => {
     let streakVal = [0];
 
@@ -128,8 +196,11 @@ export default class HomePage extends Component {
     return streakVal;
   }
 
-  componentDidMount() {
-    // Update the value after component is mounted
+  async componentDidMount() {
+    this.updateWasteData().then(data => {
+      this.setState({ wasteData: data });
+    });
+
     this.updateStreak().then(streakVal => {
       this.setState({streak: streakVal});
     }).catch(error => {
@@ -142,6 +213,12 @@ export default class HomePage extends Component {
     const today = new Date();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
     const todayDay = today.getDate().toString().padStart(2, '0');
+    const theOtherday = new Date(today.getDate() - 7);
+
+    const otherDay = new Date(today);
+    otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
+    console.log('ffidfsdkfdospfds', otherDay);
+
     return (
       <View style={styles.container}>
 
@@ -196,7 +273,7 @@ export default class HomePage extends Component {
                   <Pressable
                     style={styles.closePopupButton}
                     onPress={() => this.streakVisibility(false)}>
-                    <AntDesign name='close' size={24} color= 'COLORS.text' />
+                    <AntDesign name='close' size={24} color= 'black' />
                   </Pressable>
                 </View>
                 <View style={styles.popupContent}>
@@ -215,7 +292,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>4.4 lbs</Text>
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2)} lbs</Text>
                     <Text style={styles.subDashTextRight}> of Food Waste</Text>
 
                   </View>
@@ -230,7 +307,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>$15.24</Text>
+                    <Text style={styles.subDashTextLeft}>${parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
                     <Text style={styles.subDashTextRight}> Wasted on Food</Text>
 
                   </View>
@@ -245,7 +322,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>9.2 lbs</Text>
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
                     <Text style={styles.subDashTextRight}> of CO2 Emissions</Text>
 
                   </View>
@@ -281,7 +358,7 @@ export default class HomePage extends Component {
               style={styles.dateInput}
               onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
-            </TextInput> 
+            </TextInput>  
 
 
 
@@ -436,7 +513,7 @@ export default class HomePage extends Component {
 
         {/* Submit button */}    
         <Pressable
-          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction()}}
+          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
           style={({ pressed }) => [
             {
               backgroundColor: pressed

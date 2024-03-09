@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   },
   customDotText: {
     color: COLORS.blue,
+
   },
 })
 

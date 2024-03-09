@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    height: '6.5%',
+    height: '6%',
   },
   bottomButton: {
     backgroundColor: COLORS.element,

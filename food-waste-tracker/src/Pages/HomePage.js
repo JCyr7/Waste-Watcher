@@ -9,7 +9,6 @@ import { addDoc, collection, getDoc, doc, getDocs } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import StreakPopup from '../Popups/StreakPopup';
-import WelcomePopup from '../Popups/WelcomePopup';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
 import updateWasteData from '../Pages/TrendsPage';
@@ -63,11 +62,9 @@ export default class HomePage extends Component {
       inHomeCheckbox: false,
       edibleCheckbox: false,
       streak: 0,
-      highestStreak: 0,
       wasteData: [],
       today: new Date(),
       streakModal: false,
-      welcomeModal: false,
     }
     this.getData();
   }
@@ -76,12 +73,10 @@ export default class HomePage extends Component {
     this.setState({streakModal: value})
   }
 
-  welcomeVisibility(value) {
-    this.setState({welcomeModal: value})
-  }
-
   reloadHomePage = () => {
+
     this.setState({ streak: [] }, this.state.streak);
+  
   }
 
   // Method retrieves data from async storage
@@ -211,12 +206,6 @@ export default class HomePage extends Component {
     }).catch(error => {
       console.error("Error updating wheels:", error);
     });
-
-      // Check if highestStreak is 0 and show welcomeModal if true
-      if (this.props.highestStreak === 0) {
-      this.welcomeVisibility(true);
-      console.log("went through");
-    }
   } 
 
   render() {
@@ -228,7 +217,7 @@ export default class HomePage extends Component {
 
     const otherDay = new Date(today);
     otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
-    console.log('OtherDay:', otherDay);
+    console.log('ffidfsdkfdospfds', otherDay);
 
     return (
       <View style={styles.container}>
@@ -536,30 +525,6 @@ export default class HomePage extends Component {
           <Text style={styles.bottomButtonText}>Submit</Text>
         </Pressable>  
       </View>
-
-      {/* Welcome Modal */}
-      <Modal
-        style={styles.modal}
-        animationType='fade'
-        transparent={true}
-        statusBarTranslucent={true}
-        visible={this.state.welcomeModal}
-        onRequestClose={() => this.welcomeVisibility(false)}>
-        <Popup>
-          <View style={styles.popupHeader}>
-            <View style={{width: '10%'}} />
-            <Text style={styles.popupHeaderText}>Welcome</Text>
-            <Pressable
-              style={styles.closePopupButton}
-              onPress={() => this.welcomeVisibility(false)}>
-              <AntDesign name='close' size={24} color= 'black' />
-            </Pressable>
-          </View>
-          <View style={styles.popupContent}>
-            <WelcomePopup />
-          </View>
-        </Popup>
-      </Modal>
     </View>
   )
 }}

@@ -37,8 +37,11 @@ export default class LeaderboardPage extends Component {
     const {navigation} = this.props
     return (
       <View style={styles.container}>
-        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
-        <Text style={styles.titleText}>Solutions</Text>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.titleText}>Solutions</Text>
+          <Image source={require('../../images/logo.png')} style={styles.image}/>
+        </View>
         {/* Map of Food Waste Solutions:
         Reduce Waste (see tips below) 
         Feeding People (food pantries/donation sites)
@@ -109,24 +112,34 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
     marginBottom: '2%'
   },
-  // image: {
-  //   width: '60%',
-  //   height: 'auto',
-  //   tintColor: COLORS.blue, // Use tintColor instead of color
-  //   aspectRatio: 1290 / 193,
-  // },
+
+  headerContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
   titleText: {
-    color: COLORS.blue,
-    fontWeight: '500',
+    color: COLORS.header,
+    fontWeight: '400',
     fontSize: 28,
   },
+  image: {
+    width: '55%',
+    height: 'auto',
+    tintColor: COLORS.header,
+    aspectRatio: 1290 / 193,
+    justifyContent: 'flex-end',
+  },
+
  fullmapContainer:{
     width: '90%',
     height: '32%',
     marginTop: '3%',
     padding: 10, // Add padding
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     shadowOffset: {
       width: -7,
       height: 7
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
   },
   mapContainer:{
     width: '100%',
@@ -150,9 +163,9 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   mapText: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: '600',
-    color: COLORS.blue,
+    color: COLORS.header,
     textAlign: 'center', // Center text
   },
   expandImage: {
@@ -160,7 +173,7 @@ const styles = StyleSheet.create({
     right: '0%', // Align to the right
     width: 25,
     height: 25,
-    tintColor: COLORS.blue,
+    tintColor: COLORS.header,
   },
   map: {
     marginTop: 6,
@@ -179,7 +192,7 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     marginBottom: '3%',
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     shadowOffset: {
       width: -7,
       height: 7
@@ -187,7 +200,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
   },
   heirarchyContainer:{
     height: '100%',
@@ -208,7 +221,7 @@ const styles = StyleSheet.create({
     right: '7.5%', // Align to the right
     width: 25,
     height: 25,
-    tintColor: COLORS.blue,
+    tintColor: COLORS.header,
   },
   learnMoreContainer: {
     height: '90%',
@@ -226,7 +239,7 @@ const styles = StyleSheet.create({
   learnMoreText: {
     fontSize: 20,
     fontWeight: '600',
-    color: COLORS.blue,
+    color: COLORS.header,
   },
   tipsContainer: {
     height: '28%',
@@ -234,7 +247,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     // shadowOffset: {
     //   width: -3,
     //   height: 4
@@ -245,10 +258,10 @@ const styles = StyleSheet.create({
     // shadowColor: COLORS.shadow
   },
   tipsHeader: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: '600',
-    color: COLORS.blue,
-    marginTop: '4%'
+    color: COLORS.header,
+    marginVertical: '2%'
   },
   linkContainer: {
     flexDirection: 'row', // Set flexDirection to 'row'

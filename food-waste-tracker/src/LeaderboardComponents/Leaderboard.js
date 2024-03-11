@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '75%',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.transparent,
     alignItems: 'center',
   },
   labels: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.element,
     borderRadius: 5,
     marginBottom: 2,
 
@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     marginLeft: 5, 
-    color: COLORS.white
+    color: COLORS.elementText
   },
   nameLabel: {
     flex: 5,
     textAlign: 'center',
     fontSize: 15,
     fontWeight: '500',
-    color: COLORS.white
+    color: COLORS.elementText
   },
   scoreLabel: {
     flex: 1,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     marginRight: 5, 
-    color: COLORS.white
+    color: COLORS.elementText
   },
   ranks: {
     width: '100%',

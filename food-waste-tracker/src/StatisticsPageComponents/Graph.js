@@ -73,8 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
     borderRadius: 10,
-    backgroundColor: COLORS.whitetransparent,
-
+    backgroundColor: COLORS.card,
   },
   chart: {
     width: '100%',
@@ -82,40 +81,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     marginLeft: '10%',
-    
   },
   customDot: {
     position: 'absolute',
-    height: 20, // Adjust the height as needed
+    height: 20, 
     backgroundColor: COLORS.transparent,
   },
   customDotText: {
-    color: COLORS.blue,
+    color: COLORS.element,
 
   },
 })
 
 const chartConfig = {
-  backgroundColor: COLORS.white,
-  backgroundGradientFrom: COLORS.white,
-  backgroundGradientTo: COLORS.white,
-  fillShadowGradientFrom: COLORS.blue,
-  fillShadowGradientTo: COLORS.white,
+  backgroundColor: COLORS.blue,
+  backgroundGradientFrom: COLORS.card,
+  backgroundGradientTo: COLORS.card,
+  fillShadowGradientFrom: COLORS.element,
+  fillShadowGradientTo: COLORS.card,
   fillShadowGradientFromOpacity: 0.5,
   fillShadowGradientToOpacity: 0.8,
   strokeWidth: 3,
   
   propsForBackgroundLines: {
-    stroke: COLORS.white,
+    stroke: COLORS.card,
     strokeWidth: 1,  // Set the desired width for the lines
     //strokeDasharray: [],  // Set an empty array to make the lines continuous
   },
     propsForDots: {
     r: "2",  // Set the radius of the dots
     strokeWidth: "2",  // Set the stroke width of the dots
-    stroke: COLORS.blue,  // Set the stroke color of the dots
+    stroke: COLORS.element,  // Set the stroke color of the dots
   },
-  color: () => COLORS.blue,
-  labelColor: () => COLORS.blue,
+  color: () => COLORS.element,
+  labelColor: () => COLORS.element,
   decimalPlaces: 0,
 }

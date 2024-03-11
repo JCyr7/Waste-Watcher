@@ -23,11 +23,10 @@ const styles = StyleSheet.create({
     width: '31%', // Adjust the width for three items in a row
     height: '45%', // Adjust the height as needed
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     marginVertical: '1%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
     shadowOffset: {
       width: -7,
       height: 7
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.white,
   },
   label: {
     fontSize: 15,

@@ -239,11 +239,11 @@ export default class StatisticsPage extends Component {
                     styles.lbbutton,
                     {
                       backgroundColor: COLORS.transparent,
-                      borderBottomColor: this.state.visibility === 0 ? COLORS.blue : COLORS.transparent,
+                      borderBottomColor: this.state.visibility === 0 ? COLORS.text : COLORS.transparent,
                     },
                   ]}
                   onPress={() => this.setVisibility(0)}>
-                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.blue : COLORS.blue }]}>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.text : COLORS.text }]}>
                     Friends
                   </Text>
                 </Pressable>
@@ -253,11 +253,11 @@ export default class StatisticsPage extends Component {
                     styles.lbbutton,
                     {
                       backgroundColor: COLORS.transparent,
-                      borderBottomColor: this.state.visibility === 1 ? COLORS.blue : COLORS.transparent,
+                      borderBottomColor: this.state.visibility === 1 ? COLORS.text : COLORS.transparent,
                     },
                   ]}
                   onPress={() => this.setVisibility(1)}>
-                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.blue : COLORS.blue }]}>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.text : COLORS.text }]}>
                     Global
                   </Text>
                 </Pressable>
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     padding: '3%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.card,
     borderRadius: 10,
     shadowOffset: {
       width: -5,
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
   fulllbContainer: {
     width: '90%',
     height: '40%',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 10,
     shadowOffset: {
       width: -7,
@@ -394,12 +394,11 @@ const styles = StyleSheet.create({
     height: '25%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: COLORS.transparent,
   },
   lbheaderText: {
     fontSize: 20,
     fontWeight: '500',
-    color: COLORS.blue,
+    color: COLORS.header,
   },
   lbheaderButtons: {
     width: '100%',
@@ -414,18 +413,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 15,
-    backgroundColor: COLORS.transparent,
+    backgroundColor: COLORS.text,
     borderBottomWidth: 3,
     borderBottomColor: COLORS.transparent,
   },
   lbbuttonText: {
-    color: COLORS.white,
+    color: COLORS.element,
   },
   lbcontent: {
     width: '91%',
     height: 'auto',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     borderRadius: 10,
     marginBottom: '5%',
   },
@@ -436,7 +435,7 @@ const styles = StyleSheet.create({
     height: '6.5%',
   },
   bottomButton: {
-    backgroundColor: COLORS.element,
+    backgroundColor: COLORS.card,
     borderRadius: 10,
     width: '40%',
     padding: 10,
@@ -452,7 +451,7 @@ const styles = StyleSheet.create({
     shadowColor: COLORS.shadow,
   },
   bottomButtonText: {
-    color: COLORS.elementText,
+    color: COLORS.text,
     fontSize: 17,
     fontWeight: '500',
   },
@@ -465,7 +464,7 @@ const styles = StyleSheet.create({
   popup: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: COLORS.background,
     borderRadius: 20,
     padding:20,
     paddingTop: '20%',
@@ -487,6 +486,7 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 30,
     color: '#333',
+    color: COLORS.text
   },
   // Add or adjust other styles as needed
 });

@@ -115,6 +115,8 @@ export default class AddFriendsPopup extends Component {
   }
 
   renderRequestItem(request) {
+  console.log('muh dick')
+  console.log(request)
     return (
       <View key={request.id} style={styles.requestItem}>
         <Image source={require('../../images/profile.png')} style={styles.profilePic} />
@@ -173,6 +175,7 @@ export default class AddFriendsPopup extends Component {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -233,8 +236,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   usernameText: {
-    color: COLORS.blue,
     flex: 1,
+    fontSize: 15,
+    // Color is set dynamically in render methods
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -257,23 +261,19 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.white,
   },
-  container: {
-    width: '90%',
-    height: '87%',
-    marginLeft: '5%',
-    alignItems: 'center',
-    backgroundColor: COLORS.whitetransparent,
-  },
-  // Other styles remain unchanged
   refreshButton: {
+    height: 50,
+    width: '85%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: COLORS.blue,
+    borderWidth: 2,
+    borderRadius: 7,
     marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: COLORS.lightblue,
-    borderRadius: 5,
   },
   refreshButtonText: {
     color: COLORS.blue,
-    fontSize: 16,
+    fontSize: 15,
   },
 });
+

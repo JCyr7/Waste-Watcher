@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, Pressable, Text} from 'react-native'
+import {StyleSheet, Pressable, Text,Linking} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import {FontAwesome5} from '@expo/vector-icons'
 export default class GrainReduciton extends Component {
@@ -8,8 +8,11 @@ export default class GrainReduciton extends Component {
   }
 
   render() {
+    const URL =
+      'https://wholegrainscouncil.org/blog/2019/11/reducing-food-waste-whole-grains'
+
     return (
-      <Pressable style={styles.container}>
+      <Pressable style={styles.container} onPress={() => Linking.openURL(URL)}>
         <FontAwesome5 name='seedling' size={28} color='black' />
         <Text style={styles.label}>Grains</Text>
       </Pressable>

@@ -10,7 +10,7 @@ export default class GeneralReduciton extends Component {
 
   render() {
     const URL =
-      'https://www.mayoclinichealthsystem.org/hometown-health/speaking-of-health/7-ways-to-reduce-food-waste-in-your-kitchen'
+      'https://www.epa.gov/recycle/preventing-wasted-food-home'
 
     return (
       <Pressable style={styles.container} onPress={() => Linking.openURL(URL)}>

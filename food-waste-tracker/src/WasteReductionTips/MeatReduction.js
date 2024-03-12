@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, Pressable, Text} from 'react-native'
+import {StyleSheet, Pressable, Text, Linking} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 
@@ -9,8 +9,10 @@ export default class MeatReduciton extends Component {
   }
 
   render() {
+    const URL =
+          'https://www.respectfood.com/article/9-ways-to-save-meat-before-it-gets-wasted/'
     return (
-      <Pressable style={styles.container}>
+      <Pressable style={styles.container} onPress={() => Linking.openURL(URL)}>
         <MaterialCommunityIcons name='food-steak' size={30} color='black' />
         <Text style={styles.label}>Meat</Text>
       </Pressable>

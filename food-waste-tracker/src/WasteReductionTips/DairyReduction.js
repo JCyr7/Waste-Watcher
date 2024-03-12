@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, Pressable, Text} from 'react-native'
+import {StyleSheet, Pressable, Text, Linking} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
 
@@ -9,8 +9,11 @@ export default class DairyReduciton extends Component {
   }
 
   render() {
+    const URL =
+      "https://www.floridamilk.com/in-the-news/blog/easy-ways-to-reduce-dairy-food-waste.stml#:~:text=Store%20in%20the%20coldest%20part,you're%20finished%20with%20it."
+
     return (
-      <Pressable style={styles.container}>
+      <Pressable style={styles.container} onPress={() => Linking.openURL(URL)}>
         <MaterialCommunityIcons name='cow' size={30} color='black' />
         <Text style={styles.label}>Dairy</Text>
       </Pressable>

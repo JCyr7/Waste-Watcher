@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, Pressable, Text} from 'react-native'
+import {StyleSheet, Pressable, Text, Linking} from 'react-native'
 import {COLORS} from '../Utils/colors'
 import {FontAwesome5} from '@expo/vector-icons'
 
@@ -9,8 +9,11 @@ export default class ProduceReduciton extends Component {
   }
 
   render() {
+    const URL =
+      'https://www.bamco.com/blog/24-tips-to-reduce-food-waste/'
+
     return (
-      <Pressable style={styles.container}>
+      <Pressable style={styles.container} onPress={() => Linking.openURL(URL)}>
         <FontAwesome5 name='carrot' size={30} color='black' />
         <Text style={styles.label}>Produce</Text>
       </Pressable>

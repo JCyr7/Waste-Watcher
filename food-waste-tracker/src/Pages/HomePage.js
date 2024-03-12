@@ -27,7 +27,7 @@ dialChartConfig = {
 screenWidth = Dimensions.get('window').width;
 
 data = [
-  {key:'1', value:'Combo'},
+  {key:'1', value:'Mixed'},
   {key:'2', value:'Produce'},
   {key:'3', value:'Meat'},
   {key:'4', value:'Dairy'},
@@ -39,8 +39,6 @@ data2 = [
   {key:'1', value:'lbs'},
   {key:'2', value:'ozs'},
   {key:'3', value:'grams'},
-  {key:'4', value:'cups'},
-  {key:'5', value:'tbsps'},
 ]
 data3 = [
   .75
@@ -217,7 +215,7 @@ export default class HomePage extends Component {
 
     const otherDay = new Date(today);
     otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
-    console.log('ffidfsdkfdospfds', otherDay);
+    console.log('otherday', otherDay);
 
     return (
       <View style={styles.container}>
@@ -388,7 +386,7 @@ export default class HomePage extends Component {
 
           {/* Choose Weight Title */}  
           <View style={styles.weightTextContainer}>
-            <Text style={styles.weightText}>Amount</Text>
+            <Text style={styles.weightText}>Weight</Text>
           </View>
 
           <View style={styles.weightInputContainer}>

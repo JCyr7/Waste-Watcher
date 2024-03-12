@@ -11,7 +11,7 @@ export default class DairyReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='cow' size={30} color='black' />
+        <MaterialCommunityIcons name='cow' size={30} color={COLORS.element} />
         <Text style={styles.label}>Dairy</Text>
       </Pressable>
     )
@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.white,
+    shadowColor: COLORS.shadow,
   },
   label: {
     fontSize: 15,
-    marginTop: '2%'
+    marginTop: '2%',
+    color: COLORS.element
   }
 })

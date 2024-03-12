@@ -96,53 +96,11 @@ export default class ProfilePage extends Component {
 
         {/* Account Actions Container */}
         <View style={styles.actionsContainer}>
-          {/* Notifications Button*/}
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-              },
-              styles.action,
-            ]}
-            onPress={() => this.notificaitonsVisibility(true)}>
-            <View style={styles.actionIcon}>
-              <Image 
-              source={require('../../images/bell.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
-            </View>
-            <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Notifications</Text>
-              <Text style={styles.actionDescription}>No new messages</Text>
-            </View>
-          </Pressable>
-          {/* Notifications Modal */}
-          <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.notificationsModal}
-            onRequestClose={() => this.notificaitonsVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                <Text style={styles.popupHeaderText}>Notifications</Text>
-                <Pressable
-                  style={styles.closePopupButton}
-                  onPress={() => this.notificaitonsVisibility(false)}>
-                  <AntDesign name='close' size={24} color='black' />
-                </Pressable>
-              </View>
-              <NotificationsPopup />
-            </Popup>
-          </Modal>
           {/* Add Friends Button*/}
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -185,7 +143,7 @@ export default class ProfilePage extends Component {
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -210,7 +168,7 @@ export default class ProfilePage extends Component {
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -235,7 +193,7 @@ export default class ProfilePage extends Component {
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -258,7 +216,7 @@ export default class ProfilePage extends Component {
           {/* Settings Modal */}
           <Modal
             animationType='fade'
-            transparent={true}
+            transparent={false}
             statusBarTranslucent={true}
             visible={this.state.settingsModal}
             onRequestClose={() => this.settingsVisibility(false)}>
@@ -286,7 +244,7 @@ export default class ProfilePage extends Component {
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -319,12 +277,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
   },
   accountContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     width: '100%',
     height: '20%',
     marginTop: Platform.OS === 'android' ? '5%' : '0%',
@@ -336,7 +295,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 10,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
     marginBottom: 20,
   },
   profilePicture: {
@@ -348,10 +307,11 @@ const styles = StyleSheet.create({
     marginVertical: '1%',
     fontWeight: 'bold',
     fontSize: 20,
+    color: COLORS.setting,
   },
   info: {
     fontSize: 16,
-    color: COLORS.darkGray,
+    color: COLORS.settingsub,
     marginBottom: '5%'
   },
   action: {
@@ -360,7 +320,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.morewhitetransparent
+    borderBottomColor: COLORS.card
   },
   actionIcon: {
     marginLeft: '7.5%',
@@ -386,7 +346,7 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
   actionDescription: {
-    color: COLORS.darkGray,
+    color: COLORS.settingsub,
     fontSize: 13,
     marginRight: '10%'
   },
@@ -412,125 +372,3 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 })
-{/* Streak Button */}
-{/* <Pressable
-  style={({ pressed }) => [
-    {
-      backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-    },
-    styles.action,
-  ]}
-  onPress={() => this.streakVisibility(true)}>
-  <View style={styles.actionIcon}>
-  <Image 
-    source={require('../../images/streak.png')}
-    style={{
-      width: 35,
-      height: 35,
-    }}/>
-  </View>
-  <View style={styles.actionInfoContainer}>
-    <Text style={styles.actionName}>Streak</Text>
-    <Text style={styles.actionDescription}>
-      Track daily, earn rewards
-    </Text>
-  </View>
-</Pressable> */}
-{/* Streak Modal */}
-{/* <Modal
-  style={styles.modal}
-  animationType='fade'
-  transparent={true}
-  statusBarTranslucent={true}
-  visible={this.state.streakModal}
-  onRequestClose={() => this.streakVisibility(false)}>
-  <Popup>
-    <View style={styles.popupHeader}>
-      <View style={{width: '10%'}} />
-      <Text style={styles.popupHeaderText}>Streak</Text>
-      <Pressable
-        style={styles.closePopupButton}
-        onPress={() => this.streakVisibility(false)}>
-        <AntDesign name='close' size={24} color='black' />
-      </Pressable>
-    </View>
-    <View style={styles.popupContent}>
-      <StreakPopup />
-    </View>
-  </Popup>
-</Modal> */}
-
-
-{/* Badges Button */}
-{/* <Pressable
-  style={({ pressed }) => [
-    {
-      backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-    },
-    styles.action,
-  ]}
-  onPress={() => this.badgesVisibility(true)}>
-  <View style={styles.actionIcon}>
-  <Image 
-    source={require('../../images/ribbon.png')}
-    style={{
-      width: 35,
-      height: 35,
-    }}/>
-  </View>
-  <View style={styles.actionInfoContainer}>
-    <Text style={styles.actionName}>My Badges</Text>
-    <Text style={styles.actionDescription}>
-      Earn badges, complete goals
-    </Text>
-  </View>
-</Pressable> */}
-{/* Badges Modal */}
-{/* <Modal
-  style={styles.modal}
-  animationType='fade'
-  transparent={true}
-  statusBarTranslucent={true}
-  visible={this.state.badgesModal}
-  onRequestClose={() => this.badgesVisibility(false)}>
-  <Popup>
-    <View style={styles.popupHeader}>
-      <View style={{width: '10%'}} />
-      <Text style={styles.popupHeaderText}>Badges</Text>
-      <Pressable
-        style={styles.closePopupButton}
-        onPress={() => this.badgesVisibility(false)}>
-        <AntDesign name='close' size={24} color='black' />
-      </Pressable>
-    </View>
-    <View style={styles.popupContent}>
-      <BadgesPopup />
-    </View>
-  </Popup>
-</Modal> */}
-
-
-
-{/* Back Button Container */} 
-{/* <View style={styles.backButtonContainer}>
-  <Pressable
-    style={({ pressed }) => [
-      {
-        backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-      },
-      styles.backbutton,
-    ]}
-    onPress={() => this.badgesVisibility(true)}>
-    <Image 
-      source={require('../../images/backarrow.png')}
-      style={{
-        width: 35,
-        height: 35,
-      }}
-    />
-    <Text style={styles.backbuttontext}>Back</Text>
-  </Pressable>
-</View> */}
-
-{/* Profile Information Container */}
-

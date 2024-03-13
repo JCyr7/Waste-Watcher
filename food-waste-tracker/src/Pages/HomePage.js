@@ -34,6 +34,9 @@ data = [
   {key:'5', value:'Grains'},
   {key:'6', value:'Fish'},
   {key:'7', value:'Beverage'},
+  {key:'8', value:'Fruit'},
+  {key:'9', value:'Desert'},
+
 ]
 data2 = [
   {key:'1', value:'lbs'},

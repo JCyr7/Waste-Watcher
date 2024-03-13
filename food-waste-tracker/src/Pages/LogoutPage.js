@@ -582,7 +582,7 @@ const styles = StyleSheet.create({
     aspectRatio: 792 / 283,
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontSize: 32,
     color: 'white',
   },

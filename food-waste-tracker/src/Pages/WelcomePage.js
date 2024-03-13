@@ -49,20 +49,48 @@ export default class LogoutPage extends Component {
             <SafeAreaView style={styles.container}>
                 {/* title */}
                 <View style={styles.headerContainer}>
-                    <Text style={styles.title}>Welcome to Waste Watcher!</Text>
+                    <Text style={styles.title}>Why Track My Food Waste?</Text>
                 </View>
-                <Pressable
-                style={({pressed}) => [
-                  {
-                    backgroundColor: pressed
-                      ? COLORS.blue
-                      : COLORS.blue
-                  },
-                  styles.continueButton
-                ]}
-                onPress={() => navigation.navigate('MainPage')}>
-                <Text style={styles.continueText}>Continue</Text>
-              </Pressable>
+                <View style={styles.infoContainer}>
+                    <View style={styles.infoItem}>
+                        <Text style={styles.infoText}>Tracking and measuring is a proven most-effective way to help you reduce your food waste and gain these benefits:</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Image 
+                            source={require('../../images/trash.png')}
+                            style={styles.infoImage}/>
+                        <Text style={styles.infoText}>Save on your ever-increasing food spending.</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Image 
+                            source={require('../../images/trash.png')}
+                            style={styles.infoImage}/>
+                        <Text style={styles.infoText}>Fight hunger in your community.</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Image 
+                            source={require('../../images/trash.png')}
+                            style={styles.infoImage}/>
+                        <Text style={styles.infoText}>Reduce GHG emissions driving climate change impact.</Text>
+                    </View>
+                    <View style={styles.infoItem}>
+                        <Text style={styles.infoText}>Thanks for doing your part to end food waste!</Text>
+                    </View>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Pressable
+                    style={({pressed}) => [
+                    {
+                        backgroundColor: pressed
+                        ? COLORS.blue
+                        : COLORS.blue
+                    },
+                    styles.continueButton
+                    ]}
+                    onPress={() => navigation.navigate('MainPage')}>
+                    <Text style={styles.continueText}>Continue</Text>
+                </Pressable>
+              </View>
             </SafeAreaView>
         </TouchableWithoutFeedback>
 
@@ -74,21 +102,54 @@ const styles = StyleSheet.create({
 
     //sign in page
     container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 0,
-    margin: 0,
-    width: '100%',
-    height: '100%',
+        flex: 1,
+        alignItems: 'center',
+        padding: 0,
+        margin: 0,
+        width: '100%',
+        height: '100%',
     },
     headerContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: COLORS.green
+        width: '100%',
+        height: '7.5%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.green
     },
     title: {
-    fontWeight: 'bold',
-    fontSize: 32,
-    color: COLORS.blue,
+        fontWeight: '600',
+        fontSize: 24,
+        color: COLORS.blue,
+    },
+    infoContainer: {
+        width: '90%',
+        height: '72.5%',
+        justifyContent: 'space-evenly',
+        backgroundColor: COLORS.button
+    },
+    infoItem: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    infoImage: {
+        width: 25,
+        height: 25,
+        marginRight: 15,
+    },
+    infoText: {
+        width: '85%',
+        fontSize: 17,
+    },
+    buttonContainer: {
+        height: '20%',
+        backgroundColor: COLORS.green
+    },
+    continueButton: {
+        height: '20%',
+    },
+    continueText: {
+        color
     },
 });

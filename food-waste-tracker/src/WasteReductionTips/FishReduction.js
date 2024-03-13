@@ -11,7 +11,7 @@ export default class FishReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='fish' size={30} color={COLORS.element} />
+        <MaterialCommunityIcons name='fish' size={30} color={COLORS.tip} />
         <Text style={styles.label}>Fish</Text>
       </Pressable>
     )
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 15,
     marginTop: '2%',
-    color: COLORS.element
+    color: COLORS.tiplabel
   }
 })

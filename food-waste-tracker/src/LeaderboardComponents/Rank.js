@@ -42,8 +42,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'row',
     borderRadius: 5,
-    borderWidth: 1.5,
-    borderColor: COLORS.element,
+    backgroundColor: COLORS.settingpress
   },
   rank: {
     flex: 1,

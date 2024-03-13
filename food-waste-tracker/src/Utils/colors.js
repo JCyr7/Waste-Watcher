@@ -3,6 +3,8 @@ import { ImageBackground } from "react-native";
 export const COLORS = {
 
 
+
+
   //home screen colors 
   blue: '#0066ff',
   green: '#00e673',
@@ -10,6 +12,7 @@ export const COLORS = {
   lesswhitetransparent: 'rgba(255, 255, 255, 0.15)',
   whitetransparent: 'rgba(255, 255, 255, 0.25)',
   morewhitetransparent: 'rgba(255, 255, 255, 0.75)',
+  white: '#fff',
 
 
   //light mode
@@ -28,7 +31,10 @@ export const COLORS = {
   buttonText: '#fff',
   setting: '#000',
   settingsub: '#262626',
-  settingpress: '#e6f0ff'
+  settingpress: '#e6f0ff',
+  tip: '#000',
+  tiplabel: '#000',
+  profileicon: '#000',
 
 
   //dark mode
@@ -45,5 +51,12 @@ export const COLORS = {
   // button: '#ff6600',
   // buttonPress: '#ffb3ff',
   // buttonText: '#000066',
+  // setting: '#e6e6ff',
+  // settingsub: 'rgba(255, 255, 255, 0.6)',
+  // settingpress: '#003cb3',
+  // tip: 'rgba(255, 255, 255, 0.6)',
+  // tiplabel: '#e6e6ff',
+  // profileicon: '#e6e6ff',
+
   
 }

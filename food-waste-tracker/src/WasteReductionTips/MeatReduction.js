@@ -11,7 +11,7 @@ export default class MeatReduciton extends Component {
   render() {
     return (
       <Pressable style={styles.container}>
-        <MaterialCommunityIcons name='food-steak' size={30} color='black' />
+        <MaterialCommunityIcons name='food-steak' size={30} color={COLORS.tip} />
         <Text style={styles.label}>Meat</Text>
       </Pressable>
     )
@@ -23,11 +23,10 @@ const styles = StyleSheet.create({
     width: '31%', // Adjust the width for three items in a row
     height: '45%', // Adjust the height as needed
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.card,
     marginVertical: '2%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.white,
     shadowOffset: {
       width: -7,
       height: 7
@@ -35,10 +34,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 1,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.shadow,
   },
   label: {
     fontSize: 15,
-    marginTop: '2%'
+    marginTop: '2%',
+    color: COLORS.tiplabel
+
   }
 })

@@ -17,7 +17,7 @@ export default class GeneralReduciton extends Component {
         <MaterialCommunityIcons
           name='food-fork-drink'
           size={30}
-          color={COLORS.element}
+          color={COLORS.tip}
         />
         <Text style={styles.label}>General</Text>
       </Pressable>
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 15,
     marginTop: '2%',
-    color: COLORS.element,
+    color: COLORS.tiplabel,
   }
 })

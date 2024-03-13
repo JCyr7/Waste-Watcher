@@ -239,11 +239,11 @@ export default class StatisticsPage extends Component {
                     styles.lbbutton,
                     {
                       backgroundColor: COLORS.transparent,
-                      borderBottomColor: this.state.visibility === 0 ? COLORS.text : COLORS.transparent,
+                      borderBottomColor: this.state.visibility === 0 ? COLORS.element : COLORS.transparent,
                     },
                   ]}
                   onPress={() => this.setVisibility(0)}>
-                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.text : COLORS.text }]}>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.element : COLORS.element }]}>
                     Friends
                   </Text>
                 </Pressable>
@@ -253,11 +253,11 @@ export default class StatisticsPage extends Component {
                     styles.lbbutton,
                     {
                       backgroundColor: COLORS.transparent,
-                      borderBottomColor: this.state.visibility === 1 ? COLORS.text : COLORS.transparent,
+                      borderBottomColor: this.state.visibility === 1 ? COLORS.element : COLORS.transparent,
                     },
                   ]}
                   onPress={() => this.setVisibility(1)}>
-                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.text : COLORS.text }]}>
+                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.element : COLORS.element }]}>
                     Global
                   </Text>
                 </Pressable>
@@ -414,11 +414,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 15,
     backgroundColor: COLORS.text,
-    borderBottomWidth: 3,
+    borderBottomWidth: 2.5,
     borderBottomColor: COLORS.transparent,
   },
   lbbuttonText: {
     color: COLORS.element,
+    fontWeight: '500',
   },
   lbcontent: {
     width: '91%',
@@ -451,7 +452,7 @@ const styles = StyleSheet.create({
     shadowColor: COLORS.shadow,
   },
   bottomButtonText: {
-    color: COLORS.text,
+    color: COLORS.element,
     fontSize: 17,
     fontWeight: '500',
   },

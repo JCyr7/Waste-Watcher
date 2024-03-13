@@ -88,6 +88,7 @@ export default class ProfilePage extends Component {
               style={{
                 width: 50,
                 height: 50,
+                tintColor: COLORS.profileicon
               }}/>
           </View>
           <Text style={styles.name}>{this.state.userName}</Text>
@@ -111,6 +112,7 @@ export default class ProfilePage extends Component {
               style={{
                 width: 30,
                 height: 30,
+                tintColor: COLORS.profileicon
               }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -139,31 +141,6 @@ export default class ProfilePage extends Component {
             </Popup>
           </Modal>
 
-          {/* Referral Button */}
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
-              },
-              styles.action,
-            ]}
-            onPress={() => this.referralOnPress()}>
-            <View style={styles.actionIcon}>
-              <Image 
-                source={require('../../images/refer.png')}
-                style={{
-                  width: 30,
-                  height: 30,
-                }}/>
-            </View>
-            <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Refer a Friend</Text>
-              <Text style={styles.actionDescription}>
-                Connect and track together
-              </Text>
-            </View>
-          </Pressable>
-
           {/* Dark Mode Button */}
           <Pressable
             style={({ pressed }) => [
@@ -179,6 +156,7 @@ export default class ProfilePage extends Component {
                 style={{
                   width: 30,
                   height: 30,
+                  tintColor: COLORS.profileicon
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -204,6 +182,7 @@ export default class ProfilePage extends Component {
                 style={{
                   width: 28,
                   height: 28,
+                  tintColor: COLORS.profileicon
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -213,7 +192,31 @@ export default class ProfilePage extends Component {
               </Text>
             </View>
           </Pressable>
-
+          {/* Referral Button */}
+          <Pressable
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
+              },
+              styles.action,
+            ]}
+            onPress={() => this.referralOnPress()}>
+            <View style={styles.actionIcon}>
+              <Image 
+                source={require('../../images/refer.png')}
+                style={{
+                  width: 30,
+                  height: 30,
+                  tintColor: COLORS.profileicon
+                }}/>
+            </View>
+            <View style={styles.actionInfoContainer}>
+              <Text style={styles.actionName}>Refer a Friend</Text>
+              <Text style={styles.actionDescription}>
+                Connect and track together
+              </Text>
+            </View>
+          </Pressable>
 
           {/* Log out button */}
           <Pressable
@@ -230,6 +233,7 @@ export default class ProfilePage extends Component {
                 style={{
                   width: 30,
                   height: 30,
+                  tintColor: COLORS.profileicon
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -258,7 +262,7 @@ const styles = StyleSheet.create({
   accountContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.card,
+    backgroundColor: COLORS.background,
     width: '100%',
     height: '20%',
     marginTop: Platform.OS === 'android' ? '5%' : '0%',
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 10,
-    shadowColor: COLORS.shadow,
+    shadowColor: COLORS.element,
     marginBottom: 20,
   },
   profilePicture: {
@@ -319,6 +323,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: 'bold',
     marginBottom: 1,
+    color: COLORS.setting
   },
   actionDescription: {
     color: COLORS.settingsub,

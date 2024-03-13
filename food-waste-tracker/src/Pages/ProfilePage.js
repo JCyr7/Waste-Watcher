@@ -109,8 +109,8 @@ export default class ProfilePage extends Component {
               <Image 
               source={require('../../images/friends.png')}
               style={{
-                width: 35,
-                height: 35,
+                width: 30,
+                height: 30,
               }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -121,7 +121,7 @@ export default class ProfilePage extends Component {
           {/* Add Friends Modal */}
           <Modal
             animationType='fade'
-            transparent={true}
+            transparent={false}
             statusBarTranslucent={true}
             visible={this.state.addfriendsModal}
             onRequestClose={() => this.addfriendsVisibility(false)}>
@@ -152,8 +152,8 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/refer.png')}
                 style={{
-                  width: 35,
-                  height: 35,
+                  width: 30,
+                  height: 30,
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -177,19 +177,19 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/dark.png')}
                 style={{
-                  width: 35,
-                  height: 35,
+                  width: 30,
+                  height: 30,
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Dark Mode</Text>
               <Text style={styles.actionDescription}>
-                Change the apps appearance
+                Change app appearance
               </Text>
             </View>
           </Pressable>
 
-          {/* settings Button */}
+          {/* change password Button */}
           <Pressable
             style={({ pressed }) => [
               {
@@ -197,47 +197,22 @@ export default class ProfilePage extends Component {
               },
               styles.action,
             ]}
-            onPress={() => this.settingsVisibility(true)}>
+            onPress={() => this.referralOnPress()}>
             <View style={styles.actionIcon}>
-            <Image 
-              source={require('../../images/settings.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
+              <Image 
+                source={require('../../images/edit.png')}
+                style={{
+                  width: 28,
+                  height: 28,
+                }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Edit Account</Text>
+              <Text style={styles.actionName}>Change Password</Text>
               <Text style={styles.actionDescription}>
-                Edit your account info
+                Reset your password
               </Text>
             </View>
           </Pressable>
-          {/* Settings Modal */}
-          <Modal
-            animationType='fade'
-            transparent={false}
-            statusBarTranslucent={true}
-            visible={this.state.settingsModal}
-            onRequestClose={() => this.settingsVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                  <Text style={styles.popupHeaderText}>Settings</Text>
-                  <Pressable
-                    style={styles.closePopupButton}
-                    onPress={() => this.settingsVisibility(false)}>
-                    <AntDesign name='close' size={24} color='black' />
-                  </Pressable>
-                </View>
-                <SettingsPopup
-                  callBack={this.handleCallBack}
-                  userName={this.state.userName}
-                  email={this.state.email}
-                  zipCode={this.state.zipCode}
-                />
-              </Popup>
-            </Modal>  
 
 
           {/* Log out button */}
@@ -253,8 +228,8 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/logout.png')}
                 style={{
-                  width: 35,
-                  height: 35,
+                  width: 30,
+                  height: 30,
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -316,14 +291,14 @@ const styles = StyleSheet.create({
   },
   action: {
     width: '100%',
-    height: '13%',
+    height: '15%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: COLORS.card
   },
   actionIcon: {
-    marginLeft: '7.5%',
+    marginLeft: '10%',
     marginRight: '2%'
   },
   infoContainer: {

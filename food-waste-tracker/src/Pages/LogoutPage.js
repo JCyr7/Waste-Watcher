@@ -131,7 +131,7 @@ export default class LogoutPage extends Component {
         this.setState({userID: user.uid});
         this.setState({userAuth: true});
         this.setModalVisible(false);
-        navigation.navigate('MainPage');
+        navigation.navigate('WelcomePage');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -273,9 +273,8 @@ export default class LogoutPage extends Component {
         colors={[COLORS.blue, COLORS.green]} style={styles.container}
         start={{x: 0, y: 0.2}}
         end={{x: 1, y: 1}}>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.container}>
-          
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <SafeAreaView style={styles.container}>
             <Image source={require('../../images/FoodRescueMaine_Logo_Final-01.png')} style={styles.image}/>
             {/* title */}
             <Text style={styles.title}>Waste Watcher</Text>
@@ -331,7 +330,7 @@ export default class LogoutPage extends Component {
                   },
                   styles.loginButton
                 ]}
-                onPress={() => navigation.navigate('MainPage')}>
+                onPress={() => navigation.navigate('WelcomePage')}>
                 <Text style={styles.loginText}>Bypass Log In</Text>
               </Pressable>
 

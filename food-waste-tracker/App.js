@@ -1,6 +1,7 @@
 import LogoutPage from './src/Pages/LogoutPage'
 import ForgotPassword from './src/Pages/ForgotPassword'
 import MainPage from './src/Pages/MainPage'
+import WelcomePage from './src/Pages/WelcomePage'
 
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
@@ -26,6 +27,7 @@ export default function App() {
         screenOptions={{ headerShown: false, gestureEnabled: false}}>
         <Stack.Screen name='LogoutPage' component={LogoutPage}></Stack.Screen>
         <Stack.Screen name='ForgotPassword' component={ForgotPassword}></Stack.Screen>
+        <Stack.Screen name='WelcomePage' component={WelcomePage}></Stack.Screen>
         <Stack.Screen name='MainPage' component={MainPage}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

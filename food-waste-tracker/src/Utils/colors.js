@@ -35,6 +35,7 @@ export const COLORS = {
   tip: '#000',
   tiplabel: '#000',
   profileicon: '#000',
+  navbar: '#3D7FFF',
 
 
   //dark mode

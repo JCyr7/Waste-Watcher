@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   },
   action: {
     width: '100%',
-    height: '12%',
+    height: '13%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,

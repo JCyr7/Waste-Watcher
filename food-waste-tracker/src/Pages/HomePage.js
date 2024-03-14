@@ -669,16 +669,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignContent: 'center',
-    borderRadius: 10,
-    backgroundColor: COLORS.card,
-    shadowColor: COLORS.shadow,
-    shadowOffset: {
-      width: -7,
-      height: 7
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 1,
   },
   trackWasteHeader: {
     fontSize: 20,

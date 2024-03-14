@@ -110,8 +110,8 @@ export default class ProfilePage extends Component {
               <Image 
               source={require('../../images/friends.png')}
               style={{
-                width: 30,
-                height: 30,
+                width: 33,
+                height: 33,
                 tintColor: COLORS.profileicon
               }}/>
             </View>
@@ -154,8 +154,8 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/dark.png')}
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 33,
+                  height: 33,
                   tintColor: COLORS.profileicon
                 }}/>
             </View>
@@ -180,8 +180,8 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/edit.png')}
                 style={{
-                  width: 28,
-                  height: 28,
+                  width: 33,
+                  height: 33,
                   tintColor: COLORS.profileicon
                 }}/>
             </View>
@@ -205,8 +205,8 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/refer.png')}
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 33,
+                  height: 33,
                   tintColor: COLORS.profileicon
                 }}/>
             </View>
@@ -231,8 +231,8 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/logout.png')}
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 33,
+                  height: 33,
                   tintColor: COLORS.profileicon
                 }}/>
             </View>
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
   },
   action: {
     width: '100%',
-    height: '15%',
+    height: '12%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,

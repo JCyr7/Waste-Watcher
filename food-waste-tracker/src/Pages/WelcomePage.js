@@ -52,29 +52,29 @@ export default class LogoutPage extends Component {
                     <Text style={styles.title}>Why Track My Food Waste?</Text>
                 </View>
                 <View style={styles.infoContainer}>
-                    <View style={styles.infoItem}>
-                        <Text style={styles.infoText}>Tracking and measuring is a proven most-effective way to help you reduce your food waste and gain these benefits:</Text>
+                    <View style={styles.infoMessage}>
+                        <Text style={styles.messageText}>Tracking and measuring is proven to be the most-effective way to help you reduce your food waste and gain these benefits:</Text>
                     </View>
                     <View style={styles.infoItem}>
                         <Image 
-                            source={require('../../images/trash.png')}
+                            source={require('../../images/reciept.png')}
                             style={styles.infoImage}/>
                         <Text style={styles.infoText}>Save on your ever-increasing food spending.</Text>
                     </View>
                     <View style={styles.infoItem}>
                         <Image 
-                            source={require('../../images/trash.png')}
+                            source={require('../../images/donation.png')}
                             style={styles.infoImage}/>
                         <Text style={styles.infoText}>Fight hunger in your community.</Text>
                     </View>
                     <View style={styles.infoItem}>
                         <Image 
-                            source={require('../../images/trash.png')}
+                            source={require('../../images/donation.png')}
                             style={styles.infoImage}/>
                         <Text style={styles.infoText}>Reduce GHG emissions driving climate change impact.</Text>
                     </View>
-                    <View style={styles.infoItem}>
-                        <Text style={styles.infoText}>Thanks for doing your part to end food waste!</Text>
+                    <View style={styles.infoMessage}>
+                        <Text style={styles.messageText}>Thanks for doing your part to end food waste!</Text>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
@@ -89,6 +89,9 @@ export default class LogoutPage extends Component {
                     ]}
                     onPress={() => navigation.navigate('MainPage')}>
                     <Text style={styles.continueText}>Continue</Text>
+                    <Image 
+                        source={require('../../images/arrow.png')}
+                        style={styles.continueImage}/>
                 </Pressable>
               </View>
             </SafeAreaView>
@@ -108,13 +111,13 @@ const styles = StyleSheet.create({
         margin: 0,
         width: '100%',
         height: '100%',
+        backgroundColor: COLORS.white
     },
     headerContainer: {
         width: '100%',
         height: '7.5%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: COLORS.green
     },
     title: {
         fontWeight: '600',
@@ -122,10 +125,21 @@ const styles = StyleSheet.create({
         color: COLORS.blue,
     },
     infoContainer: {
-        width: '90%',
-        height: '72.5%',
+        width: '100%',
+        height: '82.5%',
         justifyContent: 'space-evenly',
-        backgroundColor: COLORS.button
+    },
+    infoMessage: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    messageText: {
+        width: '90%',
+        fontSize: 20,
+        textAlign: 'center',
+        color: COLORS.blue,
     },
     infoItem: {
         width: '100%',
@@ -134,22 +148,36 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     infoImage: {
-        width: 25,
-        height: 25,
+        width: 120,
+        height: 120,
         marginRight: 15,
     },
     infoText: {
-        width: '85%',
-        fontSize: 17,
+        width: '60%',
+        fontSize: 20,
+        color: COLORS.blue
     },
     buttonContainer: {
-        height: '20%',
-        backgroundColor: COLORS.green
+        height: '10%',
+        width: '60%',
+        justifyContent: 'center',
     },
     continueButton: {
-        height: '20%',
+        height: '60%',
+        flexDirection: 'row',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     continueText: {
-        color
+        color: COLORS.white,
+        fontSize: '18',
+        fontWeight: '500',
+    },
+    continueImage: {
+        tintColor: COLORS.white,
+        width: 25,
+        height: 25,
+        marginLeft: 25,
     },
 });

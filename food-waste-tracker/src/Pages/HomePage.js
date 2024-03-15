@@ -511,20 +511,34 @@ export default class HomePage extends Component {
             />
           </View>
         </View>
-
-        {/* Submit button */}    
-        <Pressable
-          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed
-                ? COLORS.buttonPress
-                : COLORS.button,
-            },
-            styles.bottomButton,
-          ]}>
-          <Text style={styles.bottomButtonText}>Submit</Text>
-        </Pressable>  
+        <View style={styles.buttonsContainer}>
+          {/* Submit button */}    
+          <Pressable
+            onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.buttonPress
+                  : COLORS.button,
+              },
+              styles.bottomButtonLeft,
+            ]}>
+            <Text style={styles.bottomButtonTextLeft}>Submit</Text>
+          </Pressable>  
+          {/* Submit no waste button */}    
+          <Pressable
+            onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.buttonPress
+                  : COLORS.button,
+              },
+              styles.bottomButtonRight,
+            ]}>
+            <Text style={styles.bottomButtonTextRight}>No Waste</Text>
+          </Pressable>  
+        </View>
       </View>
     </View>
   )
@@ -543,6 +557,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     width: '88%',
+    height: '5%',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -664,22 +679,26 @@ const styles = StyleSheet.create({
 
   trackWasteContainer: {
     width: '90%',
-    height: '57%',
+    height: '58%',
     position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignContent: 'center',
+    borderRadius: 10,
+    backgroundColor: COLORS.card,
+    shadowColor: COLORS.shadow,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
   },
   trackWasteHeader: {
     fontSize: 20,
     fontWeight: '500',
     color: COLORS.header,
-    // textShadowColor: COLORS.lightBlue,
-    // textShadowRadius: 1,
-    // textShadowOffset: {
-    //   width: -1,
-    //   height: 1
-    // },
   },
 
   dateContainer: {
@@ -953,20 +972,40 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
 
-
-  bottomButton: {
-    borderRadius: 10,
-    width: '45%',
+  buttonsContainer: {
+    flexDirection: 'row',
     height: '10%',
+  },
+  bottomButtonLeft: {
+    borderRadius: 10,
+    width: '40%',
+    height: '100%',
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 0,
     borderRadius: 12, 
+    marginRight: '5%', // Add margin to create space between buttons
   },
-  bottomButtonText: {
+  bottomButtonTextLeft: {
     color: COLORS.buttonText,
-    fontSize: 15,
+    fontSize: 17,
+    fontWeight: '600',
+  },
+  bottomButtonRight: {
+    borderRadius: 10,
+    width: '40%',
+    height: '100%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 0,
+    borderRadius: 12, 
+    marginLeft: '5%', // Add margin to create space between buttons
+  },
+  bottomButtonTextRight: {
+    color: COLORS.buttonText,
+    fontSize: 17,
     fontWeight: '600',
   },
 

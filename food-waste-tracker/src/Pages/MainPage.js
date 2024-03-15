@@ -75,7 +75,7 @@ export default class MainPage extends Component {
             {/* Icon for layer button on the far left */}
             {/* <FontAwesome5
               name='layer-group'
-              size={25}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 0
@@ -90,7 +90,7 @@ export default class MainPage extends Component {
             {/* Icon for home button in the middle */}
             {/* <Foundation
               name='home'
-              size={25}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 1
@@ -101,10 +101,9 @@ export default class MainPage extends Component {
             <Image 
             source={require('../../images/home.png')}
             style={{
-              width: 25,
-              height: 25,
+              width: 27,
+              height: 27,
               tintColor: this.state.pageState === 0 ? COLORS.icon : COLORS.iconlight,
-              marginTop: 12,
             }}/>
             <Text style={[
               styles.iconText,
@@ -117,7 +116,7 @@ export default class MainPage extends Component {
             {/* Icon for grid button on the middle left */}
             {/* <Ionicons
               name='grid'
-              size={25}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 0
@@ -128,10 +127,9 @@ export default class MainPage extends Component {
             <Image 
             source={require('../../images/analytics.png')}
             style={{
-              width: 25,
-              height: 25,
+              width: 27,
+              height: 27,
               tintColor: this.state.pageState === 1 ? COLORS.icon : COLORS.iconlight,
-              marginTop: 12,
             }}/>
             <Text style={[
               styles.iconText,
@@ -145,7 +143,7 @@ export default class MainPage extends Component {
             {/* Icon for Solutions on middle right */}
             {/* <Foundation
               name='book'
-              size={25}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 2
@@ -156,10 +154,9 @@ export default class MainPage extends Component {
             <Image 
             source={require('../../images/book.png')}
             style={{
-              width: 25,
-              height: 25,
+              width: 27,
+              height: 27,
               tintColor: this.state.pageState === 2 ? COLORS.icon : COLORS.iconlight,
-              marginTop: 12,
             }}/>
             <Text style={[
               styles.iconText,
@@ -172,7 +169,7 @@ export default class MainPage extends Component {
             {/* Icon for grid button on the middle left */}
             {/* <Ionicons
               name='grid'
-              size={25}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 0
@@ -183,10 +180,9 @@ export default class MainPage extends Component {
             <Image
             source={require('../../images/profile.png')}
             style={{
-              width: 25,
-              height: 25,
+              width: 27,
+              height: 27,
               tintColor: this.state.pageState === 3 ? COLORS.icon : COLORS.iconlight,
-              marginTop: 12,
             }}/>
             <Text style={[
               styles.iconText,
@@ -202,7 +198,7 @@ export default class MainPage extends Component {
             {/* Icon for profile on the far right */}
             {/* <FontAwesome
               name='user'
-              size={25}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 4
@@ -220,7 +216,7 @@ export default class MainPage extends Component {
           }}>
           <Image
             source={require('../../images/profile.png')} // Provide the correct path to your profile image
-            style={{ width: 25, height: 25, tintColor: COLORS.black }}/>
+            style={{ width: 27, height: 27, tintColor: COLORS.black }}/>
           <Text style={styles.profileText}>Profile</Text>
         </Pressable> */}
       </SafeAreaView>
@@ -239,8 +235,7 @@ const styles = StyleSheet.create({
   },
   navigationBar: {
     flexDirection: 'row',
-    borderTopWidth: 2,
-    borderColor: COLORS.navbar,
+    backgroundColor: 'transparent',
     width: '95%',
     height: '6.5%',
     alignSelf: 'center',
@@ -248,7 +243,7 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'android' ? '3%' : '0%',
   },
   navigationButton: {
-    width: '24%',
+    width: '25%',
     height: '100%',
     backgroundColor: COLORS.transparent,
     alignSelf: 'center',

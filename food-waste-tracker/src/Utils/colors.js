@@ -27,7 +27,7 @@ export const COLORS = {
   element: '#1a75ff',
   elementText: '#fff',
   button: '#ff6600',
-  buttonPress: '#3D7FFF',
+  buttonPress: '#ffc299',
   buttonText: '#fff',
   setting: '#000',
   settingsub: '#262626',
@@ -35,8 +35,6 @@ export const COLORS = {
   tip: '#000',
   tiplabel: '#000',
   profileicon: '#000',
-  navbar: '#3D7FFF',
-
 
   //dark mode
   // background: '#002266',

@@ -1,21 +1,17 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image} from 'react-native'
-import {ProgressChart} from 'react-native-chart-kit'
-import Calendar from 'react-calendar'
+import {View, StyleSheet, Text, Pressable, Modal, TextInput, Platform, Dimensions, Image, Alert} from 'react-native'
 import {AntDesign} from '@expo/vector-icons'
-import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
 import {COLORS} from '../Utils/colors'
 import Popup from '../Popups/Popup'
-import TrackWastePopup from '../Popups/TrackWastePopup'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
-import {DATA} from '../Utils/TestData'
 import { SelectList } from 'react-native-dropdown-select-list'
-import SubmitButton from '../TrackWaste/SubmitButton'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
-import { addDoc, collection, getDoc, doc } from "firebase/firestore";
+import { addDoc, collection, getDoc, doc, getDocs } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
-import updateWasteData from '../Pages/StatisticsPage';
+import StreakPopup from '../Popups/StreakPopup';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {ReactNativeAsyncStorage} from '@react-native-async-storage/async-storage'
+import updateWasteData from '../Pages/TrendsPage';
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -31,20 +27,21 @@ dialChartConfig = {
 screenWidth = Dimensions.get('window').width;
 
 data = [
-  {key:'1', value:'Dairy'},
+  {key:'1', value:'Mixed'},
   {key:'2', value:'Produce'},
   {key:'3', value:'Meat'},
-  {key:'4', value:'Fish'},
+  {key:'4', value:'Dairy'},
   {key:'5', value:'Grains'},
-  {key:'6', value:'Beverage'},
-  {key:'6', value:'Combination'},
+  {key:'6', value:'Fish'},
+  {key:'7', value:'Beverage'},
+  {key:'8', value:'Fruit'},
+  {key:'9', value:'Desert'},
+
 ]
 data2 = [
   {key:'1', value:'lbs'},
   {key:'2', value:'ozs'},
   {key:'3', value:'grams'},
-  {key:'4', value:'cups'},
-  {key:'5', value:'tbsps'},
 ]
 data3 = [
   .75
@@ -58,21 +55,28 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      weightdropdown: 'mixed',
+      weightDropdown: '',
       selectedMonth: new Date().getMonth() + 1,
       selectedDay: new Date().getDate(),
       weightUnit: 'lbs',
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: 0
+      streak: 0,
+      wasteData: [],
+      today: new Date(),
+      streakModal: false,
     }
     this.getData();
   }
 
+  streakVisibility(value) {
+    this.setState({streakModal: value})
+  }
+
   reloadHomePage = () => {
 
-    this.setState({ streak: [] }, this.streak);
+    this.setState({ streak: [] }, this.state.streak);
   
   }
 
@@ -90,6 +94,10 @@ export default class HomePage extends Component {
     }
   }
 
+  reloadHomePage = () => {
+    this.componentDidMount();
+  }
+
   createFoodWasteFirestore = async () => {
 
     try {
@@ -100,7 +108,7 @@ export default class HomePage extends Component {
         weightUnit: this.state.weightUnit,
         weightValue: parseFloat(this.state.weightValue),
         inHome: this.state.inHomeCheckbox,
-        edible: this.state.edibleCheckbox
+        edible: this.state.edibleCheckbox,
 
       });
       this.reloadHomePage();
@@ -108,6 +116,68 @@ export default class HomePage extends Component {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  }
+
+  updateWasteData = async () => {
+    let wasteData = [];
+
+    try {
+        // Ensure you have a valid user before proceeding
+        if (!FIREBASE_AUTH.currentUser) {
+            console.log("No user signed in.");
+            return wasteData;
+        }
+        const userId = FIREBASE_AUTH.currentUser.uid;
+        const subcollectionRef = collection(FIREBASE_DB, "users",FIREBASE_AUTH.currentUser.uid,"/Wasted Food");
+        const querySnapshot = await getDocs(subcollectionRef);
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const date = `${data.selectedMonth}/${data.selectedDay}`;
+            wasteData.push({
+                date: date,
+                category: data.foodType, 
+                amount: data.weightValue,
+                amountType: data.weightUnit,
+            });
+        });
+        this.setState({ wasteData });
+    } catch (e) {
+        console.log(e.message);
+    }
+    //console.log(wasteData);
+    return wasteData;
+    };
+
+  getLastSevenDaysHomePageEdition(data, date) {
+    let sortedData = 0;
+    let count = 0;
+    let dates = [];
+
+    today = new Date(date);
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(today);
+      day.setDate(today.getDate() - i); // Subtract i days from today
+      dates.push(day);
+  }
+  
+    //really bad time complexity but it works for now. it goes through each food log 7 times
+    for (let i = 0; i < 7; i++) {
+      count = 0;
+      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
+
+      for (let x = 0; x < data.length; x++) { 
+        if (data[x].date === formattedDate) { 
+          if (data[x].amountType === "lbs") {count += data[x].amount;}
+          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
+          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
+          
+        } 
+      }
+      sortedData += count;
+    }
+
+    return sortedData;
+    //return data.length <= 7 ? data : data.slice(data.length - 7);
   }
 
   updateStreak = async () => {
@@ -127,8 +197,11 @@ export default class HomePage extends Component {
     return streakVal;
   }
 
-  componentDidMount() {
-    // Update the value after component is mounted
+  async componentDidMount() {
+    this.updateWasteData().then(data => {
+      this.setState({ wasteData: data });
+    });
+
     this.updateStreak().then(streakVal => {
       this.setState({streak: streakVal});
     }).catch(error => {
@@ -141,73 +214,132 @@ export default class HomePage extends Component {
     const today = new Date();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
     const todayDay = today.getDate().toString().padStart(2, '0');
+    const theOtherday = new Date(today.getDate() - 7);
+
+    const otherDay = new Date(today);
+    otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
+    console.log('otherday', otherDay);
+
     return (
       <View style={styles.container}>
-        {/* Welcome Header */}
-        {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
-        <Text style={styles.titleText}>Home</Text>
-        {/* Progress Dials */}
+
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.titleText}>Home</Text>
+          <Image source={require('../../images/logo.png')} style={styles.image}/>
+        </View>
+
+        {/* This Weeks Insights */}
         <View style={styles.dashContainer}>
+          <Text style={styles.trackWasteHeader}>This Weeks Insights</Text>  
 
+          <View style={styles.statsDash}>
+            <View style={styles.leftDash}>
+              {/*streakdash item*/}
+              <Pressable 
+                style={({ pressed }) => [
+                {
+                  backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                },
+                styles.dashItemSmall,
+              ]}
+                onPress={() => this.streakVisibility(true)}>
+                <Image source={require('../../images/flamesharp.png')} style={styles.dashImage}/>
+                <View style={styles.dashTextContainer}>
 
-          {/*streakdash item*/}
-          <Pressable style={styles.dashItemSmall}>
-            <Image source={require('../../images/streak.png')} style={styles.dashImage}/>
-            <View style={styles.dashTextContainer}>
+                  <View style={styles.dashTopTextContainer}>
+                    <Text style={styles.topLeftStreakText}>{this.state.streak} </Text>
+                    <Text style={styles.topRightStreakText}>Day</Text>
+                  </View>
 
-              <View style={styles.dashTopTextContainer}>
-                <Text style={styles.topLeftStreakText}>{this.state.streak} </Text>
-                <Text style={styles.topRightStreakText}>Day</Text>
-              </View>
-
-              <View style={styles.dashBottomTextContainer}>
-                <Text style={styles.bottomStreakText}>Streak</Text>
-              </View>
+                  <View style={styles.dashBottomTextContainer}>
+                    <Text style={styles.bottomStreakText}>Streak</Text>
+                  </View>
+                </View>
+              </Pressable>
             </View>
-          </Pressable>
 
-          {/*weekly waste dial*/}
-          <View style={styles.dialContainer}>
-            <View style={styles.dial}>
-            <ProgressChart
-            data={[.6]}
-            width={125}
-            height={125}
-            strokeWidth={11}
-            radius={44}
-            chartConfig={dialChartConfig}
-            hideLegend={true}/>
-            <View style={styles.dialLabel}>
-              <Text style={styles.additionalText}>4.2 lbs</Text>
+            {/* Streak Modal */}
+            <Modal
+              style={styles.modal}
+              animationType='fade'
+              transparent={true}
+              statusBarTranslucent={true}
+              visible={this.state.streakModal}
+              onRequestClose={() => this.streakVisibility(false)}>
+              <Popup>
+                <View style={styles.popupHeader}>
+                  <View style={{width: '10%'}} />
+                  <Text style={styles.popupHeaderText}>Streak</Text>
+                  <Pressable
+                    style={styles.closePopupButton}
+                    onPress={() => this.streakVisibility(false)}>
+                    <AntDesign name='close' size={24} color= 'black' />
+                  </Pressable>
+                </View>
+                <View style={styles.popupContent}>
+                  <StreakPopup />
+                </View>
+              </Popup>
+            </Modal>
+
+            <View style={styles.rightDash}>
+ 
+
+
+              {/*weekly waste dash item*/}
+              <Pressable style={styles.dashItemHorizontal}>
+                <Image source={require('../../images/trash.png')} style={styles.dashRightImage}/>
+                <View style={styles.dashTextContainer}>
+
+                  <View style={styles.subDashTextContainer}>
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2)} lbs</Text>
+                    <Text style={styles.subDashTextRight}> of Food Waste</Text>
+
+                  </View>
+                </View>
+              </Pressable>
+
+
+
+              {/*money dash item*/}
+              <Pressable style={styles.dashItemHorizontal}>
+                <Image source={require('../../images/money.png')} style={styles.dashRightImage}/>
+                <View style={styles.dashTextContainer}>
+
+                  <View style={styles.subDashTextContainer}>
+                    <Text style={styles.subDashTextLeft}>${parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
+                    <Text style={styles.subDashTextRight}> Wasted on Food</Text>
+
+                  </View>
+                </View>
+              </Pressable>
+
+
+
+              {/*CO2 dash item*/}
+              <Pressable style={styles.dashItemHorizontal}>
+                <Image source={require('../../images/leaf.png')} style={styles.dashRightImage}/>
+                <View style={styles.dashTextContainer}>
+
+                  <View style={styles.subDashTextContainer}>
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
+                    <Text style={styles.subDashTextRight}> of CO2 Emissions</Text>
+
+                  </View>
+                </View>
+              </Pressable>
             </View>
-            </View>
-            <Text style={styles.largeDialText}>Weekly</Text>
-            <Text style={styles.largeDialText}>Waste</Text>
           </View>
 
-          {/*money dash item*/}
-          <Pressable style={styles.dashItemSmall}>
-            <Image source={require('../../images/money.png')} style={styles.dashImage}/>
-            <View style={styles.dashTextContainer}>
 
-              <View style={styles.dashTopTextContainer}>
-                <Text style={styles.topRightStreakText}>$</Text>
-                <Text style={styles.topLeftStreakText}>14.34</Text>
-              </View>
-
-              <View style={styles.dashBottomTextContainer}>
-                <Text style={styles.bottomStreakText}>Saved</Text>
-              </View>
-            </View>
-          </Pressable>
-          
-        </View>     
-        {/* Track Waste container */}
+        </View>  
+           
+        {/* Track Daily Food Waste */}
         <View style={styles.trackWasteContainer}>
-        <Text style={styles.trackWasteHeader}>Track Food Waste</Text> 
+        <Text style={styles.trackWasteHeader}>Track Daily Food Waste</Text> 
 
-
-          {/* Date Container */}      
+        {/* Date Container */}      
         <View style={styles.dateContainer}>
           <View style={styles.dateTextContainer}>
             <Text style={styles.dateText}>Date</Text>
@@ -218,16 +350,16 @@ export default class HomePage extends Component {
             {/* Choose Month */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.blue}
+              cursorColor={COLORS.text}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder={todayMonth} 
-              placeholderTextColor={COLORS.blue}
-              color={COLORS.blue}
+              placeholderTextColor={COLORS.text}
+              color={COLORS.text}
               style={styles.dateInput}
               onChangeText={(value) => this.setState({selectedMonth: value})}>
               <Text style={styles.dateInputText}></Text>        
-            </TextInput> 
+            </TextInput>  
 
 
 
@@ -238,12 +370,12 @@ export default class HomePage extends Component {
             {/* Choose Day */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.blue}
+              cursorColor={COLORS.text}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder={todayDay} 
-              placeholderTextColor={COLORS.blue}
-              color={COLORS.blue}
+              placeholderTextColor={COLORS.text}
+              color={COLORS.text}
               style={styles.dateInput}
               onChangeText={(value) =>
               this.setState({selectedDay: value})}>
@@ -252,25 +384,24 @@ export default class HomePage extends Component {
           </View>
         </View>
 
-
         {/* Weight Container */}  
         <View style={styles.weightContainer}>
 
           {/* Choose Weight Title */}  
           <View style={styles.weightTextContainer}>
-            <Text style={styles.weightText}>Amount</Text>
+            <Text style={styles.weightText}>Weight</Text>
           </View>
 
           <View style={styles.weightInputContainer}>
             {/* Choose Weight */}  
             <TextInput
               textAlign={'center'}
-              cursorColor={COLORS.blue}
+              cursorColor={COLORS.text}
               keyboardType='numeric'
               returnKeyType='done'
               placeholder='0'
-              placeholderTextColor={COLORS.blue}
-              color={COLORS.blue}
+              placeholderTextColor={COLORS.text}
+              color={COLORS.text}
               style={styles.weightInput}
               onChangeText={(value) =>
               this.setState({weightValue: value})}>
@@ -287,14 +418,13 @@ export default class HomePage extends Component {
               dropdownItemStyles={styles.weightDropdownItems}
               dropdownTextStyles={styles.weightDropdownText}
               search = 'false'
-              defaultOption={data2[0]}
+              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.element }} />}              defaultOption={data2[0]}
               setSelected={(value) => {this.setState({weightUnit: value})}} 
               data={data2} 
               save="value"
             />
           </View>
         </View>
-
 
         {/* Type Container */}  
         <View style={styles.typeContainer}>
@@ -313,41 +443,13 @@ export default class HomePage extends Component {
             dropdownItemStyles={styles.weightDropdownItems}
             dropdownTextStyles={styles.weightDropdownText}
             search = 'false'
-            defaultOption={data[1]}
+            arrowicon={<FontAwesome name="chevron-down" marginLeft={5} size={12} style={{ color: COLORS.element }} />}         
             setSelected={(value) => {this.setState({weightDropdown: value})}} 
             data={data} 
             save="value"
             />
           </View>
-        </View>
-         
-
-        {/* At Home Checkbox container */}  
-        <View style={styles.checkBoxContainer}>
-          {/* Resturaunt Title */}  
-          <View style={styles.checkboxTitleContainer}>
-            <Text style={styles.checkboxTitleText}>From grocery store?</Text>
-          </View>
-          {/* Resturaunt checkbox */}  
-          <View style={styles.questionContainer}>
-            <BouncyCheckbox
-              size={22}
-              style={styles.checkBox}
-              fillColor={COLORS.blue}
-              unfillColor='white'
-              text="Yes"
-
-              innerIconStyle={{borderWidth: 2, borderRadius: 7}}
-              onPress={() => {
-                this.setState((prevState) => ({
-                  inHomeCheckbox: !prevState.inHomeCheckbox,
-                }));
-              }}
-              textStyle={styles.checkboxText}
-            />
-          </View>
-        </View>
-
+        </View>    
 
         {/* Edible Checkbox container */}  
         <View style={styles.checkBoxContainer}>
@@ -362,10 +464,10 @@ export default class HomePage extends Component {
             <BouncyCheckbox
               size={20}
               style={styles.checkBox}
-              fillColor={COLORS.blue}
-              unfillColor='white'
+              fillColor={COLORS.text}
+              unfillColor={COLORS.background}
               text="Yes"
-              innerIconStyle={{borderWidth: 2, borderRadius: 7}}
+              innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
               onPress={() => {
                 this.setState((prevState) => ({
                   edibleCheckbox: !prevState.edibleCheckbox,
@@ -376,20 +478,67 @@ export default class HomePage extends Component {
           </View>
         </View>
 
+        {/* At Home Checkbox container */}  
+        <View style={styles.homecheckBoxContainer}>
+          {/* Resturaunt checkbox */}  
+          <View style={styles.homequestionContainer}>
+            <BouncyCheckbox
+              size={20}
+              style={styles.checkBox}
+              fillColor={COLORS.text}
+              unfillColor={COLORS.background}
+              text="Resturaunt"
 
-        {/* Submit button */}    
-        <Pressable
-          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction()}}
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed
-                ? COLORS.lightBlue
-                : COLORS.blue,
-            },
-            styles.bottomButton,
-          ]}>
-          <Text style={styles.bottomButtonText}>Submit</Text>
-        </Pressable>  
+              innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
+              textStyle={styles.checkboxText}
+            />
+          </View>
+          <View style={styles.questionContainer}>
+            <BouncyCheckbox
+              size={20}
+              style={styles.checkBox}
+              fillColor={COLORS.text}
+              unfillColor={COLORS.background}
+              text="Home"
+
+              innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
+              onPress={() => {
+                this.setState((prevState) => ({
+                  inHomeCheckbox: !prevState.inHomeCheckbox,
+                }));
+              }}
+              textStyle={styles.checkboxText}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonsContainer}>
+          {/* Submit button */}    
+          <Pressable
+            onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.buttonPress
+                  : COLORS.button,
+              },
+              styles.bottomButtonLeft,
+            ]}>
+            <Text style={styles.bottomButtonTextLeft}>Submit</Text>
+          </Pressable>  
+          {/* Submit no waste button */}    
+          <Pressable
+            onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction(); this.reloadHomePage(); Alert.alert("Waste Logged")}}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? COLORS.buttonPress
+                  : COLORS.button,
+              },
+              styles.bottomButtonRight,
+            ]}>
+            <Text style={styles.bottomButtonTextRight}>No Waste</Text>
+          </Pressable>  
+        </View>
       </View>
     </View>
   )
@@ -401,80 +550,60 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     marginTop: Platform.OS === 'android' ? '3%' : '0%',
-    marginBottom: '5%'
+    marginBottom: '2%'
   },
 
-  // image: {
-  //   width: '60%',
-  //   height: 'auto',
-  //   tintColor: COLORS.blue,
-  //   aspectRatio: 1290 / 193,
-  // },
+
+  headerContainer: {
+    flexDirection: 'row',
+    width: '88%',
+    height: '5%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
   titleText: {
-    color: COLORS.blue,
+    color: COLORS.header,
     fontWeight: '400',
     fontSize: 28,
-    // alignSelf: 'flex-start',
-    // paddingLeft: '5%'  
+  },
+  image: {
+    width: '65%',
+    height: 'auto',
+    tintColor: COLORS.header,
+    aspectRatio: 1290 / 193,
+    justifyContent: 'flex-end',
   },
 
 
   dashContainer: {
     width: '90%',
-    height: '27.5%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'flex-end',
+    height: '30%',
+    alignItems: 'center',
     borderRadius: 10,
     padding: 15,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.card,
+    shadowColor: COLORS.shadow,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
   },
-  
-  dialContainer: {
-  },
-  dial: {
-    width: '100',
-    height: '100',
-    justifyContent: 'center',
+
+
+  statsDash: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    position: 'relative', // Ensure relative positioning for proper absolute positioning
+    paddingVertical: 10,
   },
-  
-  largeDialText: {
-    fontSize: 17,
-    color: COLORS.blue,
-    fontWeight: '400',
-    textAlign: 'center',
+  leftDash: {
+    width: '30%',
   },
-
-  dialLabel: {
-    top: '43%',
-    position: 'absolute', // Absolute positioning
-  },
-  additionalText: {
-    fontSize: 17,
-    color: COLORS.blue,
-    fontWeight: '500',
-  },
-
-
-
-
-
-
-
-  // largeDialText: {
-  //   fontSize: 17,
-  //   color: COLORS.blue,
-  //   fontWeight: '400',
-  //   textAlign: 'center',
-  // },
-
-
-
-  
- 
- 
   dashItemSmall: {
     width: '100',
     height: '100',
@@ -482,12 +611,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dashImage: {
-    width: 50,
-    height: 50,
-    tintColor: COLORS.blue
+    width: 60,
+    height: 60,
+    tintColor: COLORS.button
   },
   dashTextContainer: {
-    marginTop: 10,
+    marginTop: 5,
     alignItems: 'center',
   },
   dashTopTextContainer: {
@@ -496,44 +625,81 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topLeftStreakText: {
-    fontSize: 17,
-    color: COLORS.blue,
+    fontSize: 15,
+    color: COLORS.boldtext,
     fontWeight: '700',    
   },
   topRightStreakText: {
-    fontSize: 16,
-    right: 0,
-    color: COLORS.blue,
-    fontWeight: '500',    
+    fontSize: 15,
+    color: COLORS.boldtext,
+    fontWeight: '700',     
   },
   dashBottomTextContainer: {
   },
   bottomStreakText: {
-    fontSize: 16,
-    color: COLORS.blue,
+    fontSize: 15,
+    color: COLORS.text,
     fontWeight: '500',    
   },
 
+  rightDash: {
+    justifyContent: 'space-between',
+    height: '90%',
+    width: '69.5%',
+    marginLeft: '1.5%',
+  },
+  dashRightImage: {
+    width: 30,
+    height: 30,
+    tintColor: COLORS.element,
+    marginRight: 12,
+    transform: [{ scaleX: -1 }], // Flip horizontally
 
+  },
+  dashItemHorizontal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subDashTextContainer: {
+    flexDirection: 'row',
+    paddingBottom: 3,
+  },
+  subDashTextLeft: {
+    fontSize: 15,
+    color: COLORS.boldtext,
+    fontWeight: '600',   
+  },
+  subDashTextRight: {
+    fontSize: 15,
+    color: COLORS.text,
+    fontWeight: '400',   
+  },
 
 
 
   trackWasteContainer: {
     width: '90%',
-    height: '60%',
+    height: '58%',
     position: 'relative',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: 10,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.card,
+    shadowColor: COLORS.shadow,
+    shadowOffset: {
+      width: -7,
+      height: 7
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 1,
   },
   trackWasteHeader: {
     fontSize: 20,
-    fontWeight: '400',
-    color: COLORS.blue
+    fontWeight: '500',
+    color: COLORS.header,
   },
-
 
   dateContainer: {
     flexDirection: 'row',
@@ -542,22 +708,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.element,
   },
-
   dateTextContainer: {
-    fontWeight: '400',
     width: '40%', 
-    fontSize: 17,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   dateText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.elementText,
   },
   dateInputContainer: {
     width: '60%',
@@ -565,25 +729,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.background,
     borderRadius: 10, 
   },
   dateInput: {
-    fontSize: 17,
-    fontWeight: '400', 
+    fontSize: 15,
+    fontWeight: '500', 
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: COLORS.transparent
   },
   dateInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.text,
   },
   dateDash: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.text,
     paddingHorizontal: 10,
   },
 
@@ -596,31 +760,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.element,
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
     zIndex: 7, // Higher zIndex for weightContainer
   },
   weightTextContainer: {
-    fontWeight: '400',
     width: '40%', 
-    fontSize: 17,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2, // Higher zIndex for weightTextContainer
   },
   weightText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.elementText,
   },
   weightInputContainer: {
     width: '60%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.background,
     paddingLeft: 10,
     borderRadius: 10, 
     zIndex: 3, // Higher zIndex for weightInputContainer
@@ -628,17 +791,17 @@ const styles = StyleSheet.create({
   weightInput: {
     width: '30%',
     height: '90%',
-    fontSize: 17,
-    fontWeight: '400', 
+    fontSize: 15,
+    fontWeight: '500', 
   },
   weightInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
-    backgroundColor: 'white',
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.text,
+    backgroundColor: COLORS.background,
   },
   weightBox: {
-    width: '90%',
+    width: '95%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -650,15 +813,15 @@ const styles = StyleSheet.create({
     zIndex: 4, // Higher zIndex for weightBox
   },
   weightDropdownInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.text,
   },
   weightDropdown: {
-    borderColor: COLORS.blue,
+    borderColor: COLORS.element,
     borderWidth: 2,
     position: 'absolute',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.background,
     MarginHorizontal: 0,
     marginTop: -2,
     marginRight: 0,
@@ -675,23 +838,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 20,
     marginVertical: 0,
-    fontWeight: '400', 
+    fontWeight: '500', 
     width: '100%',
-    fontSize: 17,
-    color: COLORS.blue,
+    fontSize: 15,
+    color: COLORS.text,
   },
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   typeContainer: {
@@ -701,24 +852,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.element,
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
     zIndex: 3, // Higher zIndex for weightContainer
   },
   typeTitleTextContainer: {
-    fontWeight: '400',
     width: '40%', 
-    fontSize: 17,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2, // Higher zIndex for weightTextContainer
   },
   typeTitleText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.elementText,
   },
   categoryBox: {
     width: '100%',
@@ -735,21 +885,21 @@ const styles = StyleSheet.create({
   }, 
   typeDropdownContainer: {
     width: '60%',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.background,
     borderRadius: 10, 
     zIndex: 3, // Higher zIndex for weightInputContainer
   },
   categoryDropdownInputText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.blue,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.text,
     paddingLeft: 10,
   },
   typeDropdown: {
-    borderColor: COLORS.blue,
+    borderColor: COLORS.element,
     borderWidth: 2,
     position: 'absolute',
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.background,
     MarginHorizontal: 0,
     marginTop: -2,
     marginRight: 0,
@@ -758,20 +908,6 @@ const styles = StyleSheet.create({
   },
   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   checkBoxContainer: {
     flexDirection: 'row',
     width: '90%',
@@ -779,36 +915,35 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center', 
     justifyContent: 'center',
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.element,
     borderWidth: 2,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.element,
     borderRadius: 12, 
     zIndex: 1, // Higher zIndex for weightContainer
   },
   checkboxTitleContainer: {
-    fontWeight: '400',
     width: '55%', 
-    fontSize: 17,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkboxTitleText: {
-    fontWeight: '400', 
-    fontSize: 17,
-    color: COLORS.white,
+    fontWeight: '500', 
+    fontSize: 15,
+    color: COLORS.elementText,
   },
   questionContainer: {
     width: '45%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.background,
     borderRadius: 10, 
   },
   checkboxText: {
-    fontSize: 17,
-    color: COLORS.blue,
-    fontWeight: '400',
+    fontSize: 15,
+    color: COLORS.text,
+    fontWeight: '500',
     textDecorationLine: 'none',
     marginLeft: -3,
   },
@@ -816,26 +951,90 @@ const styles = StyleSheet.create({
   },
 
 
-
-
-
-
-
-
-  bottomButton: {
-    borderRadius: 10,
-    width: '45%',
+  homecheckBoxContainer: {
+    flexDirection: 'row',
+    width: '90%',
     height: '10%',
+    alignSelf: 'center',
+    textAlign: 'center', 
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: COLORS.element,
+    backgroundColor: COLORS.background,
+    borderRadius: 12, 
+    zIndex: 1, // Higher zIndex for weightContainer
+  },
+  homequestionContainer: {
+    width: '45%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.background,
+  },
+
+  buttonsContainer: {
+    flexDirection: 'row',
+    height: '10%',
+  },
+  bottomButtonLeft: {
+    borderRadius: 10,
+    width: '40%',
+    height: '100%',
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 0,
     borderRadius: 12, 
+    marginRight: '5%', // Add margin to create space between buttons
   },
-  bottomButtonText: {
-    color: COLORS.white,
-    fontSize: 16,
+  bottomButtonTextLeft: {
+    color: COLORS.buttonText,
+    fontSize: 17,
     fontWeight: '600',
   },
-  
+  bottomButtonRight: {
+    borderRadius: 10,
+    width: '40%',
+    height: '100%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 0,
+    borderRadius: 12, 
+    marginLeft: '5%', // Add margin to create space between buttons
+  },
+  bottomButtonTextRight: {
+    color: COLORS.buttonText,
+    fontSize: 17,
+    fontWeight: '600',
+  },
+
+
+  modal: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  popupHeader: {
+    flexDirection: 'row',
+    height: '10%',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  popupHeaderText: {
+    fontSize: 24,
+    fontWeight: '800'
+  },
+  closePopupButton: {
+    marginTop: '2%',
+    paddingRight: '2%',
+    alignItems: 'flex-end',
+    width: '10%'
+  },
+  popupContent: {
+    width: '100%',
+    height: '90%',
+    alignItems: 'center'
+  }
 })

@@ -12,10 +12,9 @@ import {
 import {COLORS} from '../Utils/colors'
 import PagerView from 'react-native-pager-view'
 import HomePage from '../Pages/HomePage'
+import TrendsPage from './TrendsPage'
+import SolutionsPage from './SolutionsPage'
 import ProfilePage from '../Pages/ProfilePage'
-//import ArcGISMap from './ArcGISMap'
-import LeaderboardPage from './LeaderboardPage'
-import StatisticsPage from './StatisticsPage'
 
 export default class MainPage extends Component {
   constructor(props) {
@@ -58,8 +57,8 @@ export default class MainPage extends Component {
           {/* Content of the home page pager view */}
           {/* <ArcGISMap key='1' /> */}
           <HomePage key='1' navigation={navigation} onCallStatisticsFunction={this.callStatisticsFunction}/>
-          <StatisticsPage key='2' ref={(ref) => { this.statisticsPageRef = ref; }}></StatisticsPage>
-          <LeaderboardPage key='3' />
+          <TrendsPage key='2' ref={(ref) => { this.statisticsPageRef = ref; }}></TrendsPage>
+          <SolutionsPage key='3' />
           <ProfilePage key='4' />
         </PagerView>
         {/* Navigation bar at the bottom of the page */}
@@ -76,7 +75,7 @@ export default class MainPage extends Component {
             {/* Icon for layer button on the far left */}
             {/* <FontAwesome5
               name='layer-group'
-              size={30}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 0
@@ -91,7 +90,7 @@ export default class MainPage extends Component {
             {/* Icon for home button in the middle */}
             {/* <Foundation
               name='home'
-              size={30}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 1
@@ -102,13 +101,13 @@ export default class MainPage extends Component {
             <Image 
             source={require('../../images/home.png')}
             style={{
-              width: 30,
-              height: 30,
-              tintColor: this.state.pageState === 0 ? COLORS.blue : COLORS.black,
+              width: 27,
+              height: 27,
+              tintColor: this.state.pageState === 0 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 0 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 0 ? COLORS.icon : COLORS.iconlight}
             ]}>Home</Text>
           </Pressable>
           <Pressable
@@ -117,7 +116,7 @@ export default class MainPage extends Component {
             {/* Icon for grid button on the middle left */}
             {/* <Ionicons
               name='grid'
-              size={30}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 0
@@ -128,23 +127,23 @@ export default class MainPage extends Component {
             <Image 
             source={require('../../images/analytics.png')}
             style={{
-              width: 30,
-              height: 30,
-              tintColor: this.state.pageState === 1 ? COLORS.blue : COLORS.black,
+              width: 27,
+              height: 27,
+              tintColor: this.state.pageState === 1 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 1 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 1 ? COLORS.icon : COLORS.iconlight}
             ]}>Trends</Text>
           </Pressable>
 
           <Pressable
             onPress={() => this.viewPager.setPage(2)}
             style={styles.navigationButton}>
-            {/* Icon for leaderboard on middle right */}
+            {/* Icon for Solutions on middle right */}
             {/* <Foundation
               name='book'
-              size={30}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 2
@@ -155,13 +154,13 @@ export default class MainPage extends Component {
             <Image 
             source={require('../../images/book.png')}
             style={{
-              width: 30,
-              height: 30,
-              tintColor: this.state.pageState === 2 ? COLORS.blue : COLORS.black,
+              width: 27,
+              height: 27,
+              tintColor: this.state.pageState === 2 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 2 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 2 ? COLORS.icon : COLORS.iconlight}
             ]}>Solutions</Text>
           </Pressable>
           <Pressable
@@ -170,7 +169,7 @@ export default class MainPage extends Component {
             {/* Icon for grid button on the middle left */}
             {/* <Ionicons
               name='grid'
-              size={30}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 0
@@ -181,13 +180,13 @@ export default class MainPage extends Component {
             <Image
             source={require('../../images/profile.png')}
             style={{
-              width: 30,
-              height: 30,
-              tintColor: this.state.pageState === 3 ? COLORS.blue : COLORS.black,
+              width: 27,
+              height: 27,
+              tintColor: this.state.pageState === 3 ? COLORS.icon : COLORS.iconlight,
             }}/>
             <Text style={[
               styles.iconText,
-              {color: this.state.pageState === 3 ? COLORS.blue : COLORS.black}
+              {color: this.state.pageState === 3 ? COLORS.icon : COLORS.iconlight}
             ]}>Profile</Text>
           </Pressable>
           {/* <Pressable
@@ -199,7 +198,7 @@ export default class MainPage extends Component {
             {/* Icon for profile on the far right */}
             {/* <FontAwesome
               name='user'
-              size={30}
+              size={27}
               style={{
                 color:
                   this.state.pageState === 4
@@ -217,7 +216,7 @@ export default class MainPage extends Component {
           }}>
           <Image
             source={require('../../images/profile.png')} // Provide the correct path to your profile image
-            style={{ width: 30, height: 30, tintColor: COLORS.black }}/>
+            style={{ width: 27, height: 27, tintColor: COLORS.black }}/>
           <Text style={styles.profileText}>Profile</Text>
         </Pressable> */}
       </SafeAreaView>
@@ -228,8 +227,9 @@ export default class MainPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white
+    backgroundColor: COLORS.background
   },
+
   pagerView: {
     flex: 1
   },

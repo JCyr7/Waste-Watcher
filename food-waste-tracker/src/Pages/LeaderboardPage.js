@@ -30,7 +30,7 @@ export default class LeaderboardPage extends Component {
 
   // Updated navmap function to handle URL redirection
   navmap() {
-    Linking.openURL('https://www.gsfb.org/food-map/');
+    Linking.openURL('https://findfood.hungerfreeamerica.org/');
   }
 
   // Function to navigate to the Food Waste Hierarchy URL

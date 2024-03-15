@@ -15,6 +15,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
+import updateWasteData from '../Pages/StatisticsPage';
 
 dialChartConfig = {
   backgroundGradientFrom: COLORS.transparent,
@@ -57,16 +58,22 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      weightdropdown: '',
-      selectedMonth: '',
-      selectedDay: '',
-      weightUnit: '',
+      weightdropdown: 'mixed',
+      selectedMonth: new Date().getMonth() + 1,
+      selectedDay: new Date().getDate(),
+      weightUnit: 'lbs',
       weightValue: 0,
       inHomeCheckbox: false,
       edibleCheckbox: false,
-      streak: [0]
+      streak: 0
     }
     this.getData();
+  }
+
+  reloadHomePage = () => {
+
+    this.setState({ streak: [] }, this.streak);
+  
   }
 
   // Method retrieves data from async storage
@@ -96,7 +103,7 @@ export default class HomePage extends Component {
         edible: this.state.edibleCheckbox
 
       });
-    
+      this.reloadHomePage();
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -372,7 +379,7 @@ export default class HomePage extends Component {
 
         {/* Submit button */}    
         <Pressable
-          onPress={() => this.createFoodWasteFirestore()}
+          onPress={() => {this.createFoodWasteFirestore(); this.props.onCallStatisticsFunction()}}
           style={({ pressed }) => [
             {
               backgroundColor: pressed

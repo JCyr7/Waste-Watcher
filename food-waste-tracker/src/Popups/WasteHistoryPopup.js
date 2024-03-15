@@ -17,6 +17,8 @@ export default class WasteHistoryPopup extends Component {
           <Text style={styles.dateLabel}>Date</Text>
           <Text style={styles.categoryLabel}>Category</Text>
           <Text style={styles.amountLabel}>Amount</Text>
+          <Text style={styles.amountLabel}>Unit</Text>
+          <Text style={styles.amountLabel}></Text>
         </View>
         <Divider />
 
@@ -29,11 +31,13 @@ export default class WasteHistoryPopup extends Component {
             .map((item, index) => {
               return (
                 <WasteLog
+                  onDelete={this.onDelete}
+                  onWasteDeleted={this.props.onReload}
                   key={index}
                   date={item.date}
                   category={item.category}
                   amount={item.amount}
-                />
+                  unit={item.amountType}/>
               )
             })
             .reverse()}
@@ -46,32 +50,36 @@ export default class WasteHistoryPopup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
+    width: '105%',
     height: '97%',
-    alignItems: 'center'
+    alignItems: 'space-between'
   },
   header: {
     width: '95%',
     marginBottom: '3%',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    
   },
   dateLabel: {
     flex: 1,
-    fontSize: 18,
-    fontWeight: '700'
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.blue
   },
   categoryLabel: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
-    textAlign: 'center'
+    textAlign: 'center',
+    color: COLORS.blue
   },
   amountLabel: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
-    textAlign: 'right'
+    textAlign: 'right',
+    color: COLORS.blue
   },
   scrollContainer: {
     width: '100%',
@@ -82,6 +90,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bottomMargin: {
-    marginBottom: 4
+    marginBottom: 1
   }
 })

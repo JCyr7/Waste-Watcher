@@ -60,13 +60,6 @@ export default class ProfilePage extends Component {
     this.setState({addfriendsModal: value})
   }
 
-  streakVisibility(value) {
-    this.setState({streakModal: value})
-  }
-
-  badgesVisibility(value) {
-    this.setState({badgesModal: value})
-  }
 
   referralOnPress() {
     const APPSTORE = 'https://www.apple.com/app-store/'
@@ -295,7 +288,7 @@ const styles = StyleSheet.create({
   },
   action: {
     width: '100%',
-    height: '13%',
+    height: '15%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,

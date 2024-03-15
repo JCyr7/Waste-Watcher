@@ -49,15 +49,16 @@ export default class WasteLog extends Component {
           <Text style={styles.date}>{this.props.date}</Text>
           <Text style={styles.category}>{this.props.category}</Text>
           <Text style={styles.amount}>{this.props.amount}</Text>
-          <Text style={styles.amount}>{this.props.unit}</Text>
+          <Text style={styles.unit}>{this.props.unit}</Text>
           <Pressable style={styles.delete} onPress={this.onDelete}><Image 
             source={require('../../images/trash.png')}
             style={{
               width: 25,
               height: 25,
-              tintColor: COLORS.blue,
+              tintColor: COLORS.red,
             }}/></Pressable>
         </View>
+        <Divider />
      
       </View>
     )
@@ -66,42 +67,47 @@ export default class WasteLog extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '98%',
-    height: '6%',
+    width: '100%',
+    height: '7%',
     alignItems: 'center',
-    backgroundColor: COLORS.gray,
-    borderRadius: 30,
+    borderRadius: 10,
     margin: 2,
   },
   logContainer: {
     width: '100%',
     height: '100%',
-    paddingHorizontal: '3%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 1
   },
   date: {
-    flex: 1,
-    fontSize: 16
+    fontSize: 16,
+    color: COLORS.text,
+    width: '15%',
+    alignSelf: 'center',
+    textAlign: 'center', // Center text horizontally
   },
   category: {
-    paddingLeft: 20,
-    flex: 1,
-    textAlign: 'left',
-    fontSize: 14
+    fontSize: 16,
+    color: COLORS.text,
+    width: '25%',
+    textAlign: 'center', // Center text horizontally
   },
   amount: {
-    flex: 1,
-    textAlign: 'center',
     fontSize: 16,
-    paddingLeft: 25
+    color: COLORS.text,
+    width: '25%',
+    textAlign: 'center', // Center text horizontally
+  },
+  unit: {
+    fontSize: 16,
+    color: COLORS.text,
+    width: '20%',
+    textAlign: 'center', // Center text horizontally
   },
   delete: {
-    flex: 1,
+    width: '15%',
     right: -20,
-    textAlign: 'right',
-    fontSize: 18
   }
 })

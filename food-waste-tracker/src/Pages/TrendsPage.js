@@ -457,11 +457,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '500',
   },
+
+
+
   popupOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: COLORS.background,
   },
   popup: {
     width: '100%',
@@ -482,7 +485,8 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: 'flex-end',
-    marginBottom: 10,
+    marginTop: -10,
+    marginBottom: 20,
     marginRight: 15,
   },
   closeButtonText: {
@@ -490,5 +494,4 @@ const styles = StyleSheet.create({
     color: '#333',
     color: COLORS.text
   },
-  // Add or adjust other styles as needed
 });

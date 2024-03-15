@@ -12,13 +12,16 @@ export default class WasteHistoryPopup extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerlabel}>My Waste History</Text>
+        </View>
         {/* Labels */}
         <View style={styles.header}>
           <Text style={styles.dateLabel}>Date</Text>
           <Text style={styles.categoryLabel}>Category</Text>
-          <Text style={styles.amountLabel}>Amount</Text>
-          <Text style={styles.amountLabel}>Unit</Text>
-          <Text style={styles.amountLabel}></Text>
+          <Text style={styles.amountLabel}>Weight</Text>
+          <Text style={styles.unitLabel}>Unit</Text>
+          <Text style={styles.trashSpace}>trash</Text>
         </View>
         <Divider />
 
@@ -52,34 +55,63 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '97%',
-    alignItems: 'space-between'
+    backgroundColor: COLORS.background,
+  },
+  headerContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -30,
+    marginBottom: 30,
+  },
+  headerlabel: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: COLORS.text,
   },
   header: {
-    width: '95%',
+    width: '100%',
     marginBottom: '3%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    
+    alignItems: 'center',
   },
   dateLabel: {
-    flex: 1,
     fontSize: 16,
-    fontWeight: '700',
-    color: COLORS.blue
+    fontWeight: '600',
+    color: COLORS.element,
+    width: '15%',
+    textAlign: 'center', // Center text horizontally
   },
   categoryLabel: {
-    flex: 1,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
     textAlign: 'center',
-    color: COLORS.blue
+    color: COLORS.element,
+    width: '25%',
+    textAlign: 'center', // Center text horizontally
   },
   amountLabel: {
-    flex: 1,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
+    textAlign: 'center',
+    color: COLORS.element,
+    width: '25%',
+    textAlign: 'center', // Center text horizontally
+  },
+  unitLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: COLORS.element,
+    width: '20%',
+    textAlign: 'center', // Center text horizontally
+  },
+  trashSpace: {
+    fontSize: 16,
+    fontWeight: '600',
     textAlign: 'right',
-    color: COLORS.blue
+    color: COLORS.background,
+    width: '15%',
   },
   scrollContainer: {
     width: '100%',

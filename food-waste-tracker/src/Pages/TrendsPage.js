@@ -232,36 +232,7 @@ export default class StatisticsPage extends Component {
         <View style={styles.fulllbContainer}>
           <View style={styles.lbcontainer}>
             <View style={styles.lbheader}>
-              <Text style={styles.lbheaderText}>Leaderboard</Text>
-              <View style={styles.lbheaderButtons}>
-                <Pressable
-                  style={[
-                    styles.lbbutton,
-                    {
-                      backgroundColor: COLORS.transparent,
-                      borderBottomColor: this.state.visibility === 0 ? COLORS.element : COLORS.transparent,
-                    },
-                  ]}
-                  onPress={() => this.setVisibility(0)}>
-                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 0 ? COLORS.element : COLORS.element }]}>
-                    Friends
-                  </Text>
-                </Pressable>
-
-                <Pressable
-                  style={[
-                    styles.lbbutton,
-                    {
-                      backgroundColor: COLORS.transparent,
-                      borderBottomColor: this.state.visibility === 1 ? COLORS.element : COLORS.transparent,
-                    },
-                  ]}
-                  onPress={() => this.setVisibility(1)}>
-                  <Text style={[styles.lbbuttonText, { color: this.state.visibility === 1 ? COLORS.element : COLORS.element }]}>
-                    Global
-                  </Text>
-                </Pressable>
-              </View>
+              <Text style={styles.lbheaderText}>Friends Leaderboard</Text>
             </View>
 
             <View style={styles.lbcontent}>

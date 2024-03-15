@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {StyleSheet,
   View,
-  Text, 
-  Pressable, 
+  Text,
+  Pressable,
   Image,
   Platform,
+  Linking, // Import Linking to handle URL navigation
 } from 'react-native'
 import {COLORS} from '../Utils/colors'
 import MapView, {Geojson, PROVIDER_GOOGLE} from 'react-native-maps'
@@ -23,15 +24,19 @@ export default class LeaderboardPage extends Component {
     this.state = {
 
     }
-  }
- 
- 
-  navmap(navigation) {
-    navigation.navigate('ArcGISMap');
+    // Bind the navigation function to this class
+    this.navmap = this.navmap.bind(this);
   }
 
+  // Updated navmap function to handle URL redirection
+  navmap() {
+    Linking.openURL('https://www.gsfb.org/food-map/');
+  }
 
-
+  // Function to navigate to the Food Waste Hierarchy URL
+  navFoodWasteHierarchy = () => {
+    Linking.openURL('https://www.epa.gov/sustainable-management-food/wasted-food-scale');
+  }
 
   render() {
     const {navigation} = this.props
@@ -40,18 +45,16 @@ export default class LeaderboardPage extends Component {
         {/* <Image source={require('../../images/logo.png')} style={styles.image}/> */}
         <Text style={styles.titleText}>Solutions</Text>
         {/* Map of Food Waste Solutions:
-        Reduce Waste (see tips below) 
+        Reduce Waste (see tips below)
         Feeding People (food pantries/donation sites)
         Feeding Animals (livestock farms)
         Compost (service providers/drop-off sites)
         AD (service providers) */}
-        <View style={styles.mapContainer}>
-          <Pressable 
-            style={styles.maptitlecontainer} 
-            onPress={this.navmap}>
+        <Pressable style={styles.mapContainer} onPress={this.navmap}>
+          <View style={styles.maptitlecontainer}>
             <Text style={styles.mapText}>Map of Food Waste Solutions</Text>
             <Image source={require('../../images/expand.png')} style={styles.expandImage} />
-          </Pressable>
+          </View>
           <MapView
             style={styles.map}
             zoomEnabled={true}
@@ -66,16 +69,16 @@ export default class LeaderboardPage extends Component {
             {/* GeoJSON object displays simple line for testing */}
             <Geojson geojson={geojson} />
           </MapView>
-        </View>
+        </Pressable>
         <View style={styles.newContainer}>
           {/* Hierarchy Container */}
-          <View style={styles.heirarchyContainer}>
+          <Pressable style={styles.heirarchyContainer} onPress={this.navFoodWasteHierarchy}>
             <Image source={require('../../images/heirarchy.png')} style={styles.heirarchyImage} />
-          </View>
+          </Pressable>
 
           {/* Learn More Container */}
           <View style={styles.learnMoreContainer}>
-          <Image source={require('../../images/expand.png')} style={styles.heirarchyexpandImage} />
+            <Image source={require('../../images/expand.png')} style={styles.heirarchyexpandImage} />
             <View style={styles.learnmoretextcontainer}>
               <Text style={styles.learnMoreText}>Food Waste</Text>
               <Text style={styles.learnMoreText}>Heirarchy</Text>
@@ -154,8 +157,6 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 6,
   },
-
-
   newContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     height: '90%',
     width: 'auto',
     aspectRatio: 584/427,
-  },  
+  },
   heirarchyexpandImage: {
     position: 'absolute', // Make the expandImage absolute
     top: '7.5%', // Align to the top
@@ -212,14 +213,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: COLORS.lightBlue,
-    // shadowOffset: {
-    //   width: -3,
-    //   height: 4
-    // },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 6,
-    // elevation: 10,
-    // shadowColor: COLORS.shadow
   },
   tipsHeader: {
     fontSize: 17,
@@ -235,4 +228,5 @@ const styles = StyleSheet.create({
     height: '80%',
     paddingBottom: '5%', // Add horizontal padding for spacing between items
   },
-})
+});
+

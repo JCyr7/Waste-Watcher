@@ -1,27 +1,62 @@
+import { ImageBackground } from "react-native";
+
 export const COLORS = {
-  white: '#fff',
-  black: '#000',
-  green: '#00e673',
-  darkGreen: '#2e992a',
-  lightestGreen: '#b6eab4',
-  lightGreen: '#53c44f',
-  lightGray: '#d0dce4',
-  gray: '#d3d3d3',
-  lightBlue: '#ebf3ff',
+
+
+
+
+  //home screen colors 
   blue: '#0066ff',
-  darkGray: '#474747',
-  shadow: '#171717',
-  darkerGray: '#5A5A5A',
-  opaqueGray: 'rgba(23,67,88,0.7)',
+  green: '#00e673',
   transparent: 'rgba(0,0,0,0)',
   lesswhitetransparent: 'rgba(255, 255, 255, 0.15)',
   whitetransparent: 'rgba(255, 255, 255, 0.25)',
   morewhitetransparent: 'rgba(255, 255, 255, 0.75)',
-  red: '#f00',
+  white: '#fff',
+  red: '#ff0000',
 
-  color1: '#0091ad',
-  color2: '#2e6f95',
-  color3: '#455e89',
-  color4: '#892b64',
-  color5: '#b7094c',
+
+  //light mode
+  // background: '#fff',
+  // card: '#fff',
+  // header: '#0066ff',
+  // text: '#474747',
+  // boldtext: '#0066ff',
+  // shadow: '#0066ff',
+  // icon: '#0066ff',
+  // iconlight: '#262626',
+  // element: '#1a75ff',
+  // elementText: '#fff',
+  // button: '#ff6600',
+  // buttonPress: '#ffc299',
+  // buttonText: '#fff',
+  // setting: '#000',
+  // settingsub: '#262626',
+  // settingpress: '#e6f0ff',
+  // tip: '#000',
+  // tiplabel: '#000',
+  // profileicon: '#000',
+
+  //dark mode
+  background: '#002266',
+  card: '#003399',
+  header: '#fff',
+  text: '#e6e6ff',
+  boldtext: '#fff',
+  shadow: '#002266',
+  icon: '#fff',
+  iconlight: 'rgba(255, 255, 255, 0.6)',
+  element: '#e6e6ff',
+  elementText: '#000066',
+  button: '#ff4dff',
+  buttonPress: '#ff80ff',
+  buttonText: '#000066',
+  setting: '#e6e6ff',
+  settingsub: 'rgba(255, 255, 255, 0.6)',
+  settingpress: '#003cb3',
+  tip: 'rgba(255, 255, 255, 0.6)',
+  tiplabel: '#e6e6ff',
+  profileicon: '#e6e6ff',
+
+  
 }

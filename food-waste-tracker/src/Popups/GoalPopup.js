@@ -58,7 +58,10 @@ export default class GoalPopup extends Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View style={styles.inputContainer}>
+          <View style={styles.comingSoonContainer}>
+            <Text style={styles.comingSoon}>Feature Coming Soon!</Text>
+          </View>
+          {/* <View style={styles.inputContainer}>
             <View style={styles.dateContainer}>
               <View style={styles.monthContainer}>
                 <Text style={styles.inputLabel}>Month</Text>
@@ -153,7 +156,7 @@ export default class GoalPopup extends Component {
                 )
               })}
             </ScrollView>
-          </View>
+          </View> */}
         </View>
       </TouchableWithoutFeedback>
     )
@@ -165,7 +168,15 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '97%',
     marginLeft: '-5%',
-    justifyContent: 'space-between'
+    alignItems: 'center',
+  },
+  comingSoonContainer: {
+    marginTop: '70%'
+  },
+  comingSoon: {
+    fontSize: 24,
+    fontWeight: '500',
+    color: COLORS.text,
   },
   inputContainer: {
     height: '40%',

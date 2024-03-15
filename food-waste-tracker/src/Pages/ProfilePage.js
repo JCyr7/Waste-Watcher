@@ -60,13 +60,6 @@ export default class ProfilePage extends Component {
     this.setState({addfriendsModal: value})
   }
 
-  streakVisibility(value) {
-    this.setState({streakModal: value})
-  }
-
-  badgesVisibility(value) {
-    this.setState({badgesModal: value})
-  }
 
   referralOnPress() {
     const APPSTORE = 'https://www.apple.com/app-store/'
@@ -88,87 +81,20 @@ export default class ProfilePage extends Component {
               style={{
                 width: 50,
                 height: 50,
+                tintColor: COLORS.profileicon
               }}/>
           </View>
           <Text style={styles.name}>{this.state.userName}</Text>
           <Text style={styles.info}>{this.state.email}</Text>
         </View>
-          {/* Back Button Container */}
-          {/* <View style={styles.backButtonContainer}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-                },
-                styles.backbutton,
-              ]}
-              onPress={() => this.badgesVisibility(true)}>
-              <Image 
-                source={require('../../images/backarrow.png')}
-                style={{
-                  width: 35,
-                  height: 35,
-                }}
-              />
-              <Text style={styles.backbuttontext}>Back</Text>
-            </Pressable>
-          </View> */}
-
-          {/* Profile Information Container */}
-
-
 
         {/* Account Actions Container */}
         <View style={styles.actionsContainer}>
-          {/* Notifications Button*/}
+          {/* Add Friends Button*/}
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-              },
-              styles.action,
-            ]}
-            onPress={() => this.notificaitonsVisibility(true)}>
-            <View style={styles.actionIcon}>
-              <Image 
-              source={require('../../images/bell.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
-            </View>
-            <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Notifications</Text>
-              <Text style={styles.actionDescription}>No new messages</Text>
-            </View>
-          </Pressable>
-          {/* Notifications Modal */}
-          <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.notificationsModal}
-            onRequestClose={() => this.notificaitonsVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                <Text style={styles.popupHeaderText}>Notifications</Text>
-                <Pressable
-                  style={styles.closePopupButton}
-                  onPress={() => this.notificaitonsVisibility(false)}>
-                  <AntDesign name='close' size={24} color='black' />
-                </Pressable>
-              </View>
-              <NotificationsPopup />
-            </Popup>
-          </Modal>
-
-
-          {/* add friends Button*/}
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -177,8 +103,9 @@ export default class ProfilePage extends Component {
               <Image 
               source={require('../../images/friends.png')}
               style={{
-                width: 35,
-                height: 35,
+                width: 33,
+                height: 33,
+                tintColor: COLORS.profileicon
               }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -186,10 +113,10 @@ export default class ProfilePage extends Component {
               <Text style={styles.actionDescription}>View and invite friends</Text>
             </View>
           </Pressable>
-          {/* Notifications Modal */}
+          {/* Add Friends Modal */}
           <Modal
             animationType='fade'
-            transparent={true}
+            transparent={false}
             statusBarTranslucent={true}
             visible={this.state.addfriendsModal}
             onRequestClose={() => this.addfriendsVisibility(false)}>
@@ -207,161 +134,62 @@ export default class ProfilePage extends Component {
             </Popup>
           </Modal>
 
-
-          {/* Streak Button */}
+          {/* Dark Mode Button */}
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
-            onPress={() => this.streakVisibility(true)}>
+            onPress={() => this.referralOnPress()}>
             <View style={styles.actionIcon}>
-            <Image 
-              source={require('../../images/streak.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
+              <Image 
+                source={require('../../images/dark.png')}
+                style={{
+                  width: 33,
+                  height: 33,
+                  tintColor: COLORS.profileicon
+                }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Streak</Text>
+              <Text style={styles.actionName}>Dark Mode</Text>
               <Text style={styles.actionDescription}>
-                Track daily, earn rewards
+                Change app appearance
               </Text>
             </View>
           </Pressable>
-          {/* Streak Modal */}
-          <Modal
-            style={styles.modal}
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.streakModal}
-            onRequestClose={() => this.streakVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                <Text style={styles.popupHeaderText}>Streak</Text>
-                <Pressable
-                  style={styles.closePopupButton}
-                  onPress={() => this.streakVisibility(false)}>
-                  <AntDesign name='close' size={24} color='black' />
-                </Pressable>
-              </View>
-              <View style={styles.popupContent}>
-                <StreakPopup />
-              </View>
-            </Popup>
-          </Modal>
 
-
-          {/* Badges Button */}
+          {/* change password Button */}
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
-            onPress={() => this.badgesVisibility(true)}>
+            onPress={() => this.referralOnPress()}>
             <View style={styles.actionIcon}>
-            <Image 
-              source={require('../../images/ribbon.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
+              <Image 
+                source={require('../../images/edit.png')}
+                style={{
+                  width: 33,
+                  height: 33,
+                  tintColor: COLORS.profileicon
+                }}/>
             </View>
             <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>My Badges</Text>
+              <Text style={styles.actionName}>Change Password</Text>
               <Text style={styles.actionDescription}>
-                Earn badges, complete goals
+                Reset your password
               </Text>
             </View>
           </Pressable>
-          {/* Badges Modal */}
-          <Modal
-            style={styles.modal}
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.badgesModal}
-            onRequestClose={() => this.badgesVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                <Text style={styles.popupHeaderText}>Badges</Text>
-                <Pressable
-                  style={styles.closePopupButton}
-                  onPress={() => this.badgesVisibility(false)}>
-                  <AntDesign name='close' size={24} color='black' />
-                </Pressable>
-              </View>
-              <View style={styles.popupContent}>
-                <BadgesPopup />
-              </View>
-            </Popup>
-          </Modal>
-
-
-          {/* settings Button */}
-          <Pressable
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
-              },
-              styles.action,
-            ]}
-            onPress={() => this.settingsVisibility(true)}>
-            <View style={styles.actionIcon}>
-            <Image 
-              source={require('../../images/settings.png')}
-              style={{
-                width: 35,
-                height: 35,
-              }}/>
-            </View>
-            <View style={styles.actionInfoContainer}>
-              <Text style={styles.actionName}>Settings</Text>
-              <Text style={styles.actionDescription}>
-                Edit your account info
-              </Text>
-            </View>
-          </Pressable>
-          {/* Settings Modal */}
-          <Modal
-            animationType='fade'
-            transparent={true}
-            statusBarTranslucent={true}
-            visible={this.state.settingsModal}
-            onRequestClose={() => this.settingsVisibility(false)}>
-            <Popup>
-              <View style={styles.popupHeader}>
-                <View style={{width: '10%'}} />
-                  <Text style={styles.popupHeaderText}>Settings</Text>
-                  <Pressable
-                    style={styles.closePopupButton}
-                    onPress={() => this.settingsVisibility(false)}>
-                    <AntDesign name='close' size={24} color='black' />
-                  </Pressable>
-                </View>
-                <SettingsPopup
-                  callBack={this.handleCallBack}
-                  userName={this.state.userName}
-                  email={this.state.email}
-                  zipCode={this.state.zipCode}
-                />
-              </Popup>
-            </Modal>
-
-
           {/* Referral Button */}
           <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -370,8 +198,9 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/refer.png')}
                 style={{
-                  width: 35,
-                  height: 35,
+                  width: 33,
+                  height: 33,
+                  tintColor: COLORS.profileicon
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
@@ -383,10 +212,10 @@ export default class ProfilePage extends Component {
           </Pressable>
 
           {/* Log out button */}
-          {/* <Pressable
+          <Pressable
             style={({ pressed }) => [
               {
-                backgroundColor: pressed ? COLORS.lightBlue : COLORS.transparent,
+                backgroundColor: pressed ? COLORS.settingpress : COLORS.transparent,
               },
               styles.action,
             ]}
@@ -395,15 +224,16 @@ export default class ProfilePage extends Component {
               <Image 
                 source={require('../../images/logout.png')}
                 style={{
-                  width: 35,
-                  height: 35,
+                  width: 33,
+                  height: 33,
+                  tintColor: COLORS.profileicon
                 }}/>
             </View>
             <View style={styles.actionInfoContainer}>
               <Text style={styles.actionName}>Sign out</Text>
 
             </View>
-          </Pressable> */}
+          </Pressable>
         </View>
       </View>
     )
@@ -419,14 +249,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
   },
-
-
   accountContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     width: '100%',
     height: '20%',
     marginTop: Platform.OS === 'android' ? '5%' : '0%',
@@ -438,7 +267,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 10,
-    shadowColor: COLORS.blue,
+    shadowColor: COLORS.element,
     marginBottom: 20,
   },
   profilePicture: {
@@ -450,25 +279,23 @@ const styles = StyleSheet.create({
     marginVertical: '1%',
     fontWeight: 'bold',
     fontSize: 20,
+    color: COLORS.setting,
   },
   info: {
     fontSize: 16,
-    color: COLORS.darkGray,
+    color: COLORS.settingsub,
     marginBottom: '5%'
   },
-  
-
-
   action: {
     width: '100%',
-    height: '13%',
+    height: '15%',
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.morewhitetransparent
+    borderBottomColor: COLORS.card
   },
   actionIcon: {
-    marginLeft: '7.5%',
+    marginLeft: '10%',
     marginRight: '2%'
   },
   infoContainer: {
@@ -480,7 +307,6 @@ const styles = StyleSheet.create({
     height: '100%',
     marginTop: '5%',
   },
-
   actionInfoContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -490,9 +316,10 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: 'bold',
     marginBottom: 1,
+    color: COLORS.setting
   },
   actionDescription: {
-    color: COLORS.darkGray,
+    color: COLORS.settingsub,
     fontSize: 13,
     marginRight: '10%'
   },
@@ -516,5 +343,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '90%',
     alignItems: 'center'
-  }
+  },
 })

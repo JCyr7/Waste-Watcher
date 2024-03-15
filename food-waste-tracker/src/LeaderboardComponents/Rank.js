@@ -16,14 +16,13 @@ export default class Rank extends Component {
       <View style={styles.container}>
         <View style={styles.rankContainer}>
           <View style={styles.rank}>
-            <Text>{this.props.rank}</Text>
+            <Text style={styles.textStyle}>{this.props.rank}</Text>
           </View>
-          
           <View style={styles.name}>
-            <Text>{this.props.name}</Text>
+            <Text style={styles.textStyle}>{this.props.name}</Text>
           </View>
           <View style={styles.score}>
-            <Text>{this.props.score}</Text>
+            <Text style={styles.textStyle}>{this.props.score}</Text>
           </View>
         </View>
       </View>
@@ -41,9 +40,9 @@ const styles = StyleSheet.create({
   rankContainer: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
     flexDirection: 'row',
     borderRadius: 5,
+    backgroundColor: COLORS.settingpress
   },
   rank: {
     flex: 1,
@@ -55,12 +54,15 @@ const styles = StyleSheet.create({
     flex: 5,
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   score: {
     flex: 1,
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  textStyle: {
+    color: COLORS.text
+  },
 })

@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     height: '87%',
     marginLeft: '5%',
     alignItems: 'center',
-    backgroundColor: COLORS.whitetransparent,
+    backgroundColor: COLORS.background,
   },
   scrollContainer: {
     width: '100%',
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: '85%',
     borderRadius: 7,
-    backgroundColor: COLORS.lightblue,
+    backgroundColor: COLORS.background,
     marginBottom: 8,
     paddingLeft: 15,
     fontSize: 15,

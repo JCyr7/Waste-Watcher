@@ -214,11 +214,12 @@ export default class HomePage extends Component {
     const today = new Date();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
     const todayDay = today.getDate().toString().padStart(2, '0');
-    const theOtherday = new Date(today.getDate() - 7);
 
-    const otherDay = new Date(today);
-    otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
-    console.log('otherday', otherDay);
+    //for passing getLastSeven a different date
+    // const theOtherday = new Date(today.getDate() - 7);
+    // const otherDay = new Date(today);
+    // otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
+    // console.log('otherday', otherDay);
 
     return (
       <View style={styles.container}>

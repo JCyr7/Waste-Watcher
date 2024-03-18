@@ -487,7 +487,7 @@ export default class HomePage extends Component {
               style={styles.checkBox}
               fillColor={COLORS.text}
               unfillColor={COLORS.background}
-              text="Resturaunt"
+              text="Restaurants"
 
               innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
               textStyle={styles.checkboxText}

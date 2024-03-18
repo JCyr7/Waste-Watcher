@@ -31,19 +31,33 @@ export default class WasteHistoryPopup extends Component {
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}>
           {this.props.data
-            .map((item, index) => {
-              return (
-                <WasteLog
-                  onDelete={this.onDelete}
-                  onWasteDeleted={this.props.onReload}
-                  key={index}
-                  date={item.date}
-                  category={item.category}
-                  amount={item.amount}
-                  unit={item.amountType}/>
-              )
-            })
-            .reverse()}
+          .slice() // Create a shallow copy of the array to avoid mutating the original props
+          .sort((a, b) => {
+            // Ensure the month and day are always two digits (e.g., "03/05")
+            const formatDate = (date) => {
+              const [month, day] = date.split('/');
+              return `${month.padStart(2, '0')}${day.padStart(2, '0')}`;
+            };
+        
+            const dateA = formatDate(a.date);
+            const dateB = formatDate(b.date);
+        
+            // Now, you can directly compare these string values
+            return dateA.localeCompare(dateB);
+          }).reverse()
+          .map((item, index) => {
+            return (
+              <WasteLog
+                onDelete={this.onDelete}
+                onWasteDeleted={this.props.onReload}
+                key={index} // Consider using a more stable key if possible
+                date={item.date}
+                category={item.category}
+                amount={item.amount}
+                unit={item.amountType}
+              />
+            );
+          })}
           <View style={styles.bottomMargin} />
         </ScrollView>
       </View>

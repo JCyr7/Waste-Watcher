@@ -25,16 +25,14 @@ import AddFriendsPopup from '../Popups/AddFriendsPopup'
 import StreakPopup from '../Popups/StreakPopup'
 import BadgesPopup from '../Popups/BadgesPopup'
 import ReferralPopup from '../Popups/ReferralPopup'
-import { addDoc, collection, getDoc, doc, getDocs } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 
 export default class ProfilePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName: 'loading...',
-      email: 'loading...',
+      userName: 'Frank Pug',
+      email: 'frankdapug',
       zipCode: '04473',
       settingsModal: false,
       notificationsModal: false,
@@ -44,39 +42,6 @@ export default class ProfilePage extends Component {
     }
     this.handleCallBack = this.handleCallBack.bind(this)
   }
-
-  updateName = async () => {
-    let username = "";
-    let email = "";
-
-    try {
-        if (!FIREBASE_AUTH.currentUser) {
-            console.log("No user signed in.");
-            return "";
-        }
-        const userId = FIREBASE_AUTH.currentUser.uid;
-        const userRef = doc(FIREBASE_DB, "users", userId);
-        const userDoc = await getDoc(userRef);
-        if (userDoc.exists()) {
-            username = userDoc.data().username; // Fetches username from the user's document
-            email = userDoc.data().email;
-          } else {
-            console.log("No such document!");
-        }
-    } catch (e) {
-        console.log(e.message);
-    }
-    this.setState({email: email});
-    this.setState({userName: username});
-    return username;
-};
-
-
-
-componentDidMount = () => {
-  this.updateName();
-}
-
 
   handleCallBack(userName, email, zipCode) {
     this.setState({userName: userName, email: email, zipCode: zipCode})

@@ -55,16 +55,16 @@ export default class HomePage extends Component {
     
 
     this.state = {
-      weightDropdown: '',
+      weightDropdown: 'Mixed',
       selectedMonth: new Date().getMonth() + 1,
       selectedDay: new Date().getDate(),
       weightUnit: 'lbs',
       weightValue: 0,
-      inHomeCheckbox: false,
+      inHomeCheckbox: true,
       edibleCheckbox: false,
       streak: 0,
-      wasteData: [],
       today: new Date(),
+      wasteData: [],
       streakModal: false,
     }
     this.getData();
@@ -419,7 +419,7 @@ export default class HomePage extends Component {
               dropdownItemStyles={styles.weightDropdownItems}
               dropdownTextStyles={styles.weightDropdownText}
               search = 'false'
-              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.element }} />}              defaultOption={data2[0]}
+              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.element }} />}              defaultOption={"lbs"}
               setSelected={(value) => {this.setState({weightUnit: value})}} 
               data={data2} 
               save="value"

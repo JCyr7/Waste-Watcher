@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
  fullmapContainer:{
     width: '90%',
     height: '32%',
-    marginTop: '3%',
     padding: 10, // Add padding
     borderRadius: 10,
     backgroundColor: COLORS.card,
@@ -189,8 +188,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: '25%',
     width: '90%',
-    marginTop: '3%',
-    marginBottom: '3%',
     borderRadius: 10,
     backgroundColor: COLORS.card,
     shadowOffset: {

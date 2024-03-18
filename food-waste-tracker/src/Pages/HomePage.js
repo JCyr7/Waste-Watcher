@@ -324,7 +324,7 @@ export default class HomePage extends Component {
 
                   <View style={styles.subDashTextContainer}>
                     <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
-                    <Text style={styles.subDashTextRight}> of CO2 Emissions</Text>
+                    <Text style={styles.subDashTextRight}> of GHG Emissions</Text>
 
                   </View>
                 </View>
@@ -487,7 +487,7 @@ export default class HomePage extends Component {
               style={styles.checkBox}
               fillColor={COLORS.text}
               unfillColor={COLORS.background}
-              text="Resturaunt"
+              text="Restaurants"
 
               innerIconStyle={{borderWidth: 1.9, borderRadius: 7}}
               textStyle={styles.checkboxText}
@@ -536,7 +536,7 @@ export default class HomePage extends Component {
               },
               styles.bottomButtonRight,
             ]}>
-            <Text style={styles.bottomButtonTextRight}>No Waste</Text>
+            <Text style={styles.bottomButtonTextRight}>Nothing Today!</Text>
           </Pressable>  
         </View>
       </View>

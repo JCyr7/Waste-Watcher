@@ -49,7 +49,7 @@ export default class LogoutPage extends Component {
             <SafeAreaView style={styles.container}>
                 {/* title */}
                 <View style={styles.headerContainer}>
-                    <Text style={styles.title}>Why Track My Food Waste?</Text>
+                    <Text style={styles.title}>Why Track Food Waste?</Text>
                 </View>
                 <View style={styles.infoContainer}>
                     <View style={styles.infoMessage}>
@@ -62,14 +62,14 @@ export default class LogoutPage extends Component {
                         <Text style={styles.infoText}>Save on your ever-increasing food spending.</Text>
                     </View>
                     <View style={styles.infoItem}>
+                        <Text style={styles.infoText}>Fight hunger in your community.</Text>
                         <Image 
                             source={require('../../images/donation.png')}
                             style={styles.infoImage}/>
-                        <Text style={styles.infoText}>Fight hunger in your community.</Text>
                     </View>
                     <View style={styles.infoItem}>
                         <Image 
-                            source={require('../../images/donation.png')}
+                            source={require('../../images/emissions.png')}
                             style={styles.infoImage}/>
                         <Text style={styles.infoText}>Reduce GHG emissions driving climate change impact.</Text>
                     </View>
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '82.5%',
         justifyContent: 'space-evenly',
+        
     },
     infoMessage: {
         width: '100%',
@@ -136,16 +137,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     messageText: {
-        width: '90%',
+        width: '75%',
         fontSize: 20,
         textAlign: 'center',
-        color: COLORS.blue,
+        color: '#000',
     },
     infoItem: {
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: ''
     },
     infoImage: {
         width: 120,
@@ -153,9 +155,11 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     infoText: {
-        width: '60%',
+        width: '55%',
         fontSize: 20,
-        color: COLORS.blue
+        color: '#000',
+        textAlign: 'center',
+
     },
     buttonContainer: {
         height: '10%',

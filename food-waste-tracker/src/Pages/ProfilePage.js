@@ -7,7 +7,7 @@ import {
   Pressable,
   Modal,
   Linking,
-  Image
+  Image,
 } from 'react-native'
 import {
   SimpleLineIcons,
@@ -26,6 +26,8 @@ import StreakPopup from '../Popups/StreakPopup'
 import BadgesPopup from '../Popups/BadgesPopup'
 import ReferralPopup from '../Popups/ReferralPopup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { NativeModules } from 'react-native';
+
 
 export default class ProfilePage extends Component {
   constructor(props) {
@@ -40,8 +42,10 @@ export default class ProfilePage extends Component {
       streakModal: false,
       badgesModal: false
     }
+    const { RestartModule } = NativeModules;
     this.handleCallBack = this.handleCallBack.bind(this)
   }
+  
 
   handleCallBack(userName, email, zipCode) {
     this.setState({userName: userName, email: email, zipCode: zipCode})
@@ -61,6 +65,7 @@ export default class ProfilePage extends Component {
   }
 
 
+
   referralOnPress() {
     const APPSTORE = 'https://www.apple.com/app-store/'
     const PLAYSTORE = 'https://play.google.com/store/apps'
@@ -70,7 +75,6 @@ export default class ProfilePage extends Component {
   }
 
   render() {
-    const {navigation} = this.props
     return (
       <View style={styles.container}>
         {/* Account Card Container */}
@@ -219,7 +223,7 @@ export default class ProfilePage extends Component {
               },
               styles.action,
             ]}
-            onPress={() => navigation.navigate('LogoutPage')}>
+            onPress={() => RestartModule.restartApp()}>
             <View style={styles.actionIcon}>
               <Image 
                 source={require('../../images/logout.png')}

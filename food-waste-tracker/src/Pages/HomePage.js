@@ -214,11 +214,12 @@ export default class HomePage extends Component {
     const today = new Date();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
     const todayDay = today.getDate().toString().padStart(2, '0');
-    const theOtherday = new Date(today.getDate() - 7);
 
-    const otherDay = new Date(today);
-    otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
-    console.log('otherday', otherDay);
+    //for passing getLastSeven... a different date
+    // const theOtherday = new Date(today.getDate() - 7);
+    // const otherDay = new Date(today);
+    // otherDay.setDate(this.state.today.getDate() - 7); //this looks dumb but that's how you go to a previous date
+    // console.log('otherday', otherDay);
 
     return (
       <View style={styles.container}>
@@ -308,7 +309,7 @@ export default class HomePage extends Component {
                 <View style={styles.dashTextContainer}>
 
                   <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>${parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
+                    <Text style={styles.subDashTextLeft}>${parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today) * 1.52).toFixed(2)} </Text>
                     <Text style={styles.subDashTextRight}> Wasted on Food</Text>
 
                   </View>
@@ -322,8 +323,8 @@ export default class HomePage extends Component {
                 <Image source={require('../../images/leaf.png')} style={styles.dashRightImage}/>
                 <View style={styles.dashTextContainer}>
 
-                  <View style={styles.subDashTextContainer}>
-                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today)).toFixed(2) * 1} lbs</Text>
+                  <View style={styles.subDashTextContainer}> 
+                    <Text style={styles.subDashTextLeft}>{parseFloat(this.getLastSevenDaysHomePageEdition(this.state.wasteData, this.state.today) * 3.8).toFixed(2)} lbs{/*source for 3.8 multiplier https://www.earthdayinitiative.org/waste-1#:~:text=It%20is%20estimated%20that%20every,1%2C000%20pounds%20of%20CO%E2%82%82%20%2Fyear. */}</Text>
                     <Text style={styles.subDashTextRight}> of GHG Emissions</Text>
 
                   </View>
@@ -418,7 +419,7 @@ export default class HomePage extends Component {
               dropdownItemStyles={styles.weightDropdownItems}
               dropdownTextStyles={styles.weightDropdownText}
               search = 'false'
-              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.element }} />}              defaultOption={data2[0]}
+              arrowicon={<FontAwesome name="chevron-down" marginLeft={6} size={12} style={{ color: COLORS.element }} />}              defaultOption={'lbs'}
               setSelected={(value) => {this.setState({weightUnit: value})}} 
               data={data2} 
               save="value"

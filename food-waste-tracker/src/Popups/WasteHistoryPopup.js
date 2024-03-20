@@ -30,20 +30,32 @@ export default class WasteHistoryPopup extends Component {
           style={styles.scrollContainer}
           contentContainerStyle={styles.contentContainer}
           showsVerticalScrollIndicator={false}>
-          {this.props.data
-            .map((item, index) => {
-              return (
-                <WasteLog
-                  onDelete={this.onDelete}
-                  onWasteDeleted={this.props.onReload}
-                  key={index}
-                  date={item.date}
-                  category={item.category}
-                  amount={item.amount}
-                  unit={item.amountType}/>
-              )
-            })
-            .reverse()}
+           {this.props.data
+          .slice()
+          .sort((a, b) => {
+            const formatDate = (date) => {
+              const [month, day] = date.split('/');
+              return `${month.padStart(2, '0')}${day.padStart(2, '0')}`;
+            };
+        
+            const dateA = formatDate(a.date);
+            const dateB = formatDate(b.date);
+        
+            return dateA.localeCompare(dateB);
+          }).reverse()
+          .map((item, index) => {
+            return (
+              <WasteLog
+                onDelete={this.onDelete}
+                onWasteDeleted={this.props.onReload}
+                key={index}
+                date={item.date}
+                category={item.category}
+                amount={item.amount}
+                unit={item.amountType}
+              />
+            );
+          })}
           <View style={styles.bottomMargin} />
         </ScrollView>
       </View>

@@ -979,7 +979,7 @@ const styles = StyleSheet.create({
   },
   bottomButtonLeft: {
     borderRadius: 10,
-    width: '40%',
+    width: '32%',
     height: '100%',
     padding: 10,
     justifyContent: 'center',
@@ -995,7 +995,7 @@ const styles = StyleSheet.create({
   },
   bottomButtonRight: {
     borderRadius: 10,
-    width: '40%',
+    width: '48%',
     height: '100%',
     padding: 10,
     justifyContent: 'center',

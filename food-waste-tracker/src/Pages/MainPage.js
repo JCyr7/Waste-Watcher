@@ -23,6 +23,7 @@ export default class MainPage extends Component {
       pageState: 2,
       popupVisible: false
     }
+    this.logOut = this.logOut.bind(this)
   }
 
   callStatisticsFunction = () => {
@@ -35,12 +36,20 @@ export default class MainPage extends Component {
     this.setState({pageState: value})
   }
 
+  logOut = () => {
+    const {navigation} = this.props;
+
+    navigation.navigate('LogoutPage');
+  }
+
   render() {
     BackHandler.addEventListener('hardwareBackPress', function () {
       BackHandler.exitApp()
       return true
     })
     const {navigation} = this.props
+
+    
     return (
       <SafeAreaView style={styles.container}>
         {/* put key prop directly into each custom component for each page */}
@@ -59,7 +68,7 @@ export default class MainPage extends Component {
           <HomePage key='1' navigation={navigation} onCallStatisticsFunction={this.callStatisticsFunction}/>
           <TrendsPage key='2' ref={(ref) => { this.statisticsPageRef = ref; }}></TrendsPage>
           <SolutionsPage key='3' />
-          <ProfilePage key='4' />
+          <ProfilePage key='4' callLogOut={this.logOut}/>
         </PagerView>
         {/* Navigation bar at the bottom of the page */}
         <View style={styles.navigationBar}>

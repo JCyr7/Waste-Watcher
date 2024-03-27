@@ -257,7 +257,7 @@ componentDidMount = () => {
               },
               styles.action,
             ]}
-            onPress={() => RestartModule.restartApp()}>
+            onPress={() => {this.props.callLogOut()}}>
             <View style={styles.actionIcon}>
               <Image 
                 source={require('../../images/logout.png')}

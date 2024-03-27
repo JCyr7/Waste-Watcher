@@ -206,7 +206,7 @@ componentDidMount = () => {
               },
               styles.action,
             ]}
-            onPress={() => this.referralOnPress()}>
+            onPress={() => {this.props.callChangePass()}}>
             <View style={styles.actionIcon}>
               <Image 
                 source={require('../../images/edit.png')}

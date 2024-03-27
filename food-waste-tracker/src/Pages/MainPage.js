@@ -42,6 +42,12 @@ export default class MainPage extends Component {
     navigation.navigate('LogoutPage');
   }
 
+  changePass = () => {
+    const {navigation} = this.props;
+
+    navigation.navigate('ForgotPassword');
+  }
+
   render() {
     BackHandler.addEventListener('hardwareBackPress', function () {
       BackHandler.exitApp()
@@ -68,7 +74,7 @@ export default class MainPage extends Component {
           <HomePage key='1' navigation={navigation} onCallStatisticsFunction={this.callStatisticsFunction}/>
           <TrendsPage key='2' ref={(ref) => { this.statisticsPageRef = ref; }}></TrendsPage>
           <SolutionsPage key='3' />
-          <ProfilePage key='4' callLogOut={this.logOut}/>
+          <ProfilePage key='4' callLogOut={this.logOut} callChangePass={this.changePass}/>
         </PagerView>
         {/* Navigation bar at the bottom of the page */}
         <View style={styles.navigationBar}>

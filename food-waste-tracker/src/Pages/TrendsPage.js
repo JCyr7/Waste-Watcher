@@ -14,6 +14,7 @@ import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
+import {getFriends, getNameFromID, getUserStreak} from '../ProfileComponents/FriendHandler';
 
 
 export default class StatisticsPage extends Component {
@@ -37,11 +38,12 @@ export default class StatisticsPage extends Component {
       this.setState({ wasteData: data });
     });
     this.setState({ loading: false });
-
+    
     this.getLeaderboardLocal().then((localLB) => {
       console.log("LB:", localLB);
-      this.setState({localLeaderboard: localLB});
-      console.log("state", this.state.localLeaderboard);
+      this.setState({ localLeaderboard: localLB });
+    }).catch((error) => {
+      console.error("Error fetching leaderboard:", error);
     });
   }
 
@@ -117,7 +119,6 @@ export default class StatisticsPage extends Component {
     for (let i = 0; i < friendIDs.length; i++) {
       retval.push({name: await getNameFromID(friendIDs[i]), score: await getUserStreak(friendIDs[i])});
     }
-
     return retval;
 
   }

@@ -7,8 +7,8 @@ on:
     branches:
       - main
 defaults:
-run:
-  working-directory: ./food-waste-tracker
+  run:
+    working-directory: ./food-waste-tracker
 jobs:
   build-android:
     runs-on: ubuntu-latest

@@ -6,7 +6,7 @@ import {deleteDoc} from "firebase/firestore";
 import { addDoc, collection, getDoc, doc, getDocs} from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
-import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
+//import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
 
 export default class WasteLog extends Component {
   constructor(props) {

@@ -2,10 +2,10 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { render } from '@testing-library/react';
-import ArcGISMap from '../src/Pages/ArcGISMap'
+//import ArcGISMap from '../src/Pages/ArcGISMap'
 import ForgotPassword from '../src/Pages/ForgotPassword'
 import HomePage from '../src/Pages/HomePage'
-import LeaderBoardPage from '../src/Pages/LeaderboardPage'
+//import LeaderBoardPage from '../src/Pages/LeaderboardPage'
 import LogoutPage from '../src/Pages/LogoutPage'
 import ProfilePage from '../src/Pages/ProfilePage'
 
@@ -21,7 +21,7 @@ test('renders correctly', () => {
   expect(tree).toMatchSnapshot()
 })
 
-test('renders correctly', () => {
+test('renders correctly', () => {//
   const tree = renderer.create(<HomePage />).toJSON()
   expect(tree).toMatchSnapshot()
 })

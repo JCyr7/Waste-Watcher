@@ -136,37 +136,37 @@ export default class StatisticsPage extends Component {
 
   getLastSevenDays(data) {
     let sortedData = [];
-    let count = 0;
-    let dates = [];
-
-    today = new Date();
+    const amountsByDate = {};
+  
+    data.forEach(item => {
+      const { date: itemDate, amount, amountType } = item;
+      if (!amountsByDate[itemDate]) {
+        //start at .01 or else graph gets mad
+        amountsByDate[itemDate] = 0.01; 
+      }
+      let amountInLbs = amount; 
+      if (amountType === "oz") {
+        amountInLbs /= 16; 
+      } else if (amountType === "g") {
+        amountInLbs /= 453.592; 
+      }
+      amountsByDate[itemDate] += amountInLbs;
+    });
+  
+    const today = new Date();
     for (let i = 0; i < 7; i++) {
       const day = new Date(today);
-      day.setDate(today.getDate() - i); // Subtract i days from today
-      dates.push(day);
-  }
-
-  
-    //really bad time complexity but it works for now. it goes through each food log 7 times
-    for (let i = 0; i < 7; i++) {
-      count = 0.01;
-      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
-
-      for (let x = 0; x < data.length; x++) { 
-        if (data[x].date === formattedDate) { 
-          if (data[x].amountType === "lbs") {count += data[x].amount;}
-          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
-          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
-          
-        } 
-      }
-      sortedData.push({ date: formattedDate, amount: count });
+      day.setDate(today.getDate() - i); 
+      const formattedDate = (day.getMonth() + 1) + '/' + day.getDate();
+      sortedData.push({
+        date: formattedDate,
+        amount: amountsByDate[formattedDate] || 0.01
+      });
     }
-
-    
+  
     return sortedData.reverse();
-    //return data.length <= 7 ? data : data.slice(data.length - 7);
   }
+  
 
   reloadHistoryPage = () => {
     console.log("Reload Stats");

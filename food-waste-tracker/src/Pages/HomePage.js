@@ -148,38 +148,37 @@ export default class HomePage extends Component {
     return wasteData;
     };
 
-  getLastSevenDaysHomePageEdition(data, date) {
-    let sortedData = 0;
-    let count = 0;
-    let dates = [];
-
-    today = new Date(date);
-    for (let i = 0; i < 7; i++) {
-      const day = new Date(today);
-      day.setDate(today.getDate() - i); // Subtract i days from today
-      dates.push(day);
-  }
-  
-    //really bad time complexity but it works for now. it goes through each food log 7 times
-    for (let i = 0; i < 7; i++) {
-      count = 0;
-      let formattedDate = (dates[i].getMonth() + 1) + '/' + (dates[i].getDate());
-
-      for (let x = 0; x < data.length; x++) { 
-        if (data[x].date === formattedDate) { 
-          if (data[x].amountType === "lbs") {count += data[x].amount;}
-          else if (data[x].amountType === "oz") {count += data[x].amount/16;}
-          else if (data[x].amountType === "g") {count += data[x].amount/453.592;}
-          
-        } 
+    getLastSevenDaysHomePageEdition(data, date) {
+      let totalAmount = 0;
+      const amountsByDate = {};
+    
+      data.forEach(item => {
+        const { date: itemDate, amount, amountType } = item;
+        if (!amountsByDate[itemDate]) {
+          amountsByDate[itemDate] = 0;
+        }
+        let amountInLbs = amount;
+        if (amountType === "oz") {
+          amountInLbs /= 16;
+        } else if (amountType === "g") {
+          amountInLbs /= 453.592;
+        }
+        amountsByDate[itemDate] += amountInLbs;
+      });
+    
+      const today = new Date(date);
+      for (let i = 0; i < 7; i++) {
+        const day = new Date(today);
+        day.setDate(today.getDate() - i);
+        const formattedDate = (day.getMonth() + 1) + '/' + day.getDate();
+        if (amountsByDate[formattedDate]) {
+          totalAmount += amountsByDate[formattedDate];
+        }
       }
-      sortedData += count;
+    
+      return totalAmount;
     }
-
-    return sortedData;
-    //return data.length <= 7 ? data : data.slice(data.length - 7);
-  }
-
+    
   updateStreak = async () => {
     let streakVal = [0];
 
